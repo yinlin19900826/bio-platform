@@ -23,7 +23,7 @@
         <module>visit-record</module>
         <module>file-service</module>
         <module>gate-guard</module>
-        <module>vedio</module>
+        <module>video</module>
         <module>service-center</module>
         <module>micro-service</module>
     </modules>
