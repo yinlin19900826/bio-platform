@@ -3,7 +3,6 @@ package com.biocome.platform.auth.util.user;
 import com.biocome.platform.auth.configuration.KeyConfiguration;
 import com.github.wxiaoqi.security.auth.common.util.jwt.IJWTInfo;
 import com.github.wxiaoqi.security.auth.common.util.jwt.JWTHelper;
-import com.github.wxiaoqi.security.auth.configuration.KeyConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;

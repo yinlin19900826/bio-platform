@@ -1,10 +1,10 @@
 package com.biocome.platform.auth.client.interceptor;
 
-import com.github.wxiaoqi.security.auth.client.annotation.IgnoreUserToken;
-import com.github.wxiaoqi.security.auth.client.config.UserAuthConfig;
-import com.github.wxiaoqi.security.auth.client.jwt.UserAuthUtil;
-import com.github.wxiaoqi.security.auth.common.util.jwt.IJWTInfo;
-import com.github.wxiaoqi.security.common.context.BaseContextHandler;
+import com.biocome.platform.auth.client.annotation.IgnoreUserToken;
+import com.biocome.platform.auth.client.config.UserAuthConfig;
+import com.biocome.platform.auth.client.jwt.UserAuthUtil;
+import com.biocome.platform.auth.common.util.jwt.IJWTInfo;
+import com.biocome.platform.common.context.BaseContextHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
     private Logger logger = LoggerFactory.getLogger(UserAuthRestInterceptor.class);
 
     @Autowired
-    private UserAuthUtil userAuthUtil;
+    protected UserAuthUtil userAuthUtil;
 
     @Autowired
     private UserAuthConfig userAuthConfig;

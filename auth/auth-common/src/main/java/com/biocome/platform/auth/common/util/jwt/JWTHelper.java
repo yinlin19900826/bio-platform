@@ -1,7 +1,7 @@
 package com.biocome.platform.auth.common.util.jwt;
 
-import com.github.wxiaoqi.security.auth.common.constatns.CommonConstants;
-import com.github.wxiaoqi.security.auth.common.util.StringHelper;
+import com.biocome.platform.auth.common.constatns.CommonConstants;
+import com.biocome.platform.auth.common.util.StringHelper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

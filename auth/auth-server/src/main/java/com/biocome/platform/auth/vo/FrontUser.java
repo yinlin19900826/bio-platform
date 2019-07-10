@@ -1,6 +1,7 @@
 package com.biocome.platform.auth.vo;
 
-import com.github.wxiaoqi.security.api.vo.authority.PermissionInfo;
+
+import com.biocome.platform.base.api.vo.authority.PermissionInfo;
 
 import java.util.List;
 

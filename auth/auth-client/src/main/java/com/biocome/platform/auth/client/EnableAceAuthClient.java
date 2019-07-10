@@ -1,7 +1,6 @@
 package com.biocome.platform.auth.client;
 
 import com.biocome.platform.auth.client.configuration.AutoConfiguration;
-import com.github.wxiaoqi.security.auth.client.configuration.AutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
