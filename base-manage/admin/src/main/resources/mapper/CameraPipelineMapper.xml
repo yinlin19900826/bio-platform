@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.admin.mapper.CameraPipelineMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.admin.entity.CameraPipeline" id="cameraPipelineMap">
+        <result property="id" column="id"/>
+        <result property="serialCode" column="serial_code"/>
+        <result property="serialNo" column="serial_no"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="shotEncode" column="shot_encode"/>
+        <result property="shotDecode" column="shot_decode"/>
+        <result property="shotType" column="shot_type"/>
+        <result property="ballAddress" column="ball_address"/>
+        <result property="relatedSerial" column="related_serial"/>
+        <result property="platformCtrl" column="platform_ctrl"/>
+        <result property="cameraConnect" column="camera_connect"/>
+        <result property="cameraId" column="camera_id"/>
+    </resultMap>
+
+    <!--    查找管道列表-->
+    <select id="selectCameraPiplineList" resultType="com.biocome.platform.admin.vo.camera.CameraPipelineVo">
+        SELECT p.id, p.`name`,p.serial_code AS serialCode,  p.serial_no AS serialNo,  p.`type`, t.dict_value AS typeName, p.shot_encode AS encode,
+        e.dict_value AS encodeName, p.shot_decode as decode,d.dict_value AS decodeName,  p.shot_type AS shotType, c.dict_value AS shotTypeName,
+        p.related_serial AS relatedSerial,platform_ctrl AS platformCtrl,camera_connect AS cameraConnect,camera_id AS comeraId
+        FROM
+        (
+            SELECT id, serial_code, `name`, serial_no, `type`, shot_encode, shot_decode, shot_type, ball_address,related_serial,
+            platform_ctrl,camera_connect,camera_id
+            FROM base_camera_pipeline
+            WHERE camera_id = #{cameraId}
+            <if test="serialNo != null and serialNo.trim() != '' ">
+                AND serial_no like CONCAT('%',#{serialNo},'%')
+            </if>
+            <if test="name != null and name.trim() != '' ">
+                AND name like CONCAT('%',#{name},'%')
+            </if>
+        ) p
+        LEFT JOIN
+        (
+            SELECT dict_key, dict_value FROM base_dict_detail
+            WHERE dict_code =
+            (
+                SELECT dict_code FROM base_dict
+                WHERE dict_code_name = "管道类型"
+            )
+        ) t
+        ON t.dict_key = p.type
+        LEFT JOIN
+        (
+            SELECT dict_key, dict_value FROM base_dict_detail
+            WHERE dict_code =
+            (
+                SELECT dict_code FROM base_dict
+                WHERE dict_code_name = "镜头编码类型"
+            )
+        ) e
+        ON e.dict_key = p.shot_encode
+        LEFT JOIN
+        (
+            SELECT dict_key, dict_value FROM base_dict_detail
+            WHERE dict_code =
+            (
+                SELECT dict_code FROM base_dict
+                WHERE dict_code_name = "镜头解码类型"
+            )
+        ) d
+        ON d.dict_key = p.shot_decode
+        LEFT JOIN
+        (
+            SELECT dict_key, dict_value FROM base_dict_detail
+            WHERE dict_code =
+            (
+                SELECT dict_code FROM base_dict
+                WHERE dict_code_name = "镜头类型"
+            )
+        ) c
+        ON c.dict_key = p.shot_type
+    </select>
+
+</mapper>

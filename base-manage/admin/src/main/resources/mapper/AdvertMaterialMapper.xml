@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.admin.mapper.AdvertMaterialMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.admin.entity.AdvertMaterial">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="materialname" jdbcType="VARCHAR" property="materialname"/>
+        <result column="originalname" jdbcType="VARCHAR" property="originalname"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="filepath" jdbcType="VARCHAR" property="filepath"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
+    <select id="selectByAttribute" resultMap="BaseResultMap" parameterType="com.biocome.platform.admin.entity.AdvertMaterial">
+        SELECT
+        id,materialname,originalname,type,filepath,remark,status,del,createtime,createcode,createname,updatetime,
+        updatecode,updatename
+        FROM
+        base_advert_material
+        <where>
+            <if test="model.materialname != null and model.materialname.trim() != ''">and materialname like concat(concat('%',
+                #{model.materialname,jdbcType=VARCHAR}), '%')
+            </if>
+            <if test="model.type != null and model.type.trim() != ''">
+                and type = #{model.type,jdbcType=VARCHAR}
+            </if>
+            <if test="model.filepath != null and model.filepath.trim() != ''">
+                and filepath = #{model.filepath,jdbcType=VARCHAR}
+            </if>
+            <if test="model.createcode != null and model.createcode.trim() != ''">
+                and createcode = #{model.createcode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.createname != null and model.createname.trim() != ''">
+                and createname = #{model.createname,jdbcType=VARCHAR}
+            </if>
+            <if test="model.updatecode != null and model.updatecode.trim() != ''">
+                and updatecode = #{model.updatecode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.updatename != null and model.updatename.trim() != ''">
+                and updatename = #{model.updatename,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY
+        updatetime DESC
+    </select>
+    <!--批量删除方法-->
+    <delete id="deleteByIdList" parameterType="java.util.List">
+        delete from base_advert_material where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+    <!--根据ID列表查询所有广告素材-->
+    <select id="selectByList" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        id,materialname,originalname,type,filepath,remark,status,del,createtime,createcode,createname,updatetime,
+        updatecode,updatename
+        FROM
+        base_advert_material
+        WHERE
+        id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <resultMap id="BaseResultMap1" type="com.biocome.platform.admin.vo.advert.AdvertPreviewResp">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="materialname" jdbcType="VARCHAR" property="materialname"/>
+        <result column="originalname" jdbcType="VARCHAR" property="originalname"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="filepath" jdbcType="VARCHAR" property="filepath"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+        <result column="begintime" jdbcType="VARCHAR" property="begintime"/>
+        <result column="endtime" jdbcType="VARCHAR" property="endtime"/>
+        <result column="speed" jdbcType="VARCHAR" property="speed"/>
+        <result column="priority" jdbcType="VARCHAR" property="priority"/>
+    </resultMap>
+    <select id="selectMaterialByPlanId" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        id,materialname,originalname,`type`,filepath,remark,status,del,createtime,createcode,createname,updatetime,
+        updatecode,updatename
+        FROM
+        base_advert_material
+        WHERE
+        id in
+        (SELECT materialid from base_material_plan WHERE planid = #{planid,jdbcType=INTEGER})
+    </select>
+    <select id="selectAdvertPreviewRespByPlanId" resultMap="BaseResultMap1" parameterType="java.util.List">
+        SELECT
+        bam.id,bam.materialname,bam.originalname,bam.`type`,bam.filepath,bam.remark,bam.status,bam.del,bam.createtime,bam.createcode,bam.createname,bam.updatetime,
+        bam.updatecode,bam.updatename,bap.begintime,bap.endtime,bap.speed,bap.priority
+        FROM
+        base_advert_material bam,
+		base_advert_plan bap
+        WHERE
+        bam.id in
+        (SELECT materialid from base_material_plan WHERE planid = #{planid,jdbcType=INTEGER}) AND bap.id = #{planid,jdbcType=INTEGER}
+    </select>
+</mapper>

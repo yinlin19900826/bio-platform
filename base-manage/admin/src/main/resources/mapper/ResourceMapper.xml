@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.admin.mapper.ResourceMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.admin.entity.Resource" id="resourceMap">
+        <result property="id" column="id"/>
+        <result property="resourceName" column="resource_name"/>
+        <result property="url" column="url"/>
+        <result property="resourceType" column="resource_type"/>
+        <result property="createtime" column="createtime"/>
+    </resultMap>
+
+</mapper>

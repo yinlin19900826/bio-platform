@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.admin.mapper.InstitutionUserMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.admin.entity.InstitutionUser" id="institutionUserMap">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="institutioncode" column="institutioncode"/>
+    </resultMap>
+
+    <select id="selectList" resultType="com.biocome.platform.common.vo.UINodeVo">
+        SELECT id, `name`, username AS attach, institutioncode AS parentId
+        FROM base_institution_user
+    </select>
+</mapper>

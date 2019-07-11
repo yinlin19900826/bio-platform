@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.admin.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.biocome.platform.admin.entity.User">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <result column="id" property="id"/>
+    <result column="username" property="username"/>
+    <result column="password" property="password"/>
+    <result column="name" property="name"/>
+    <result column="birthday" property="birthday"/>
+    <result column="address" property="address"/>
+    <result column="mobile_phone" property="mobilePhone"/>
+    <result column="tel_phone" property="telPhone"/>
+    <result column="email" property="email"/>
+    <result column="sex" property="sex"/>
+    <result column="type" property="type"/>
+    <result column="status" property="status"/>
+    <result column="description" property="description"/>
+    <result column="crt_time" property="crtTime"/>
+    <result column="crt_user" property="crtUser"/>
+    <result column="crt_name" property="crtName"/>
+    <result column="crt_host" property="crtHost"/>
+    <result column="upd_time" property="updTime"/>
+    <result column="upd_user" property="updUser"/>
+    <result column="upd_name" property="updName"/>
+    <result column="upd_host" property="updHost"/>
+    <result column="crt_date" property="crtDate"/>
+    <result column="expire_date" property="expireDate"/>
+    <result column="remark" property="remark"/>
+    <result column="cert_id" property="certId"/>
+    <result column="level" property="level"/>
+    <result column="priority" property="priority"/>
+    <result column="street" property="street"/>
+    <result column="street_id" property="streetId"/>
+    <result column="station" property="station"/>
+    <result column="station_id" property="stationId"/>
+    <result column="community" property="community"/>
+    <result column="community_id" property="communityId"/>
+    <result column="village" property="village"/>
+    <result column="village_id" property="villageId"/>
+    <result column="role_id" property="roleId" />
+    <result column="role_name" property="roleName"/>
+  </resultMap>
+
+  <resultMap id="UserVoMap" type="com.biocome.platform.admin.vo.UserVo">
+    <result column="id" property="id"/>
+    <result column="username" property="username"/>
+    <result column="name" property="name"/>
+    <result column="mobile_phone" property="mobilePhone"/>
+    <result column="crt_date" property="crtDate"/>
+    <result column="expire_date" property="expireDate"/>
+    <result column="status" property="enable"/>
+    <result column="role_name" property="roleName" />
+    <result column="remark" property="remark"/>
+  </resultMap>
+  
+  <select id="selectMemberByGroupId" resultMap="BaseResultMap">
+    select u.* from base_user u
+    left join  base_group_member gm
+    on gm.user_id = u.id where gm.group_id = #{groupId}
+  </select>
+  <select id="selectLeaderByGroupId" resultMap="BaseResultMap">
+    select u.* from base_user u
+    left join  base_group_leader gm
+    on gm.user_id = u.id where gm.group_id = #{groupId}
+  </select>
+
+  <select id="selectUserList" resultMap="UserVoMap">
+    select id, username, `name`, mobile_phone, crt_date, expire_date, role_name, remark, case `status` when '0' then "是" else "否" END `status`
+    from base_user
+  </select>
+</mapper>

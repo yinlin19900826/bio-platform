@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.admin.mapper.CardMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.admin.entity.Card">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="logic_cardno" jdbcType="VARCHAR" property="logicCardno"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="username" property="username"/>
+        <result column="phone" property="phone"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" property="buildname"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="createtime" jdbcType="VARCHAR" property="createtime"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <resultMap id="BaseResultMapForView" type="com.biocome.platform.admin.vo.card.CardInfoResp">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="logic_cardno" jdbcType="VARCHAR" property="logicCardno"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="username" jdbcType="VARCHAR" property="userName"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="createtime" jdbcType="VARCHAR" property="createtime"/>
+        <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
+    </resultMap>
+    <resultMap id="selectByAdditionForLesseeCardMsgPageResultMap"
+               type="com.biocome.platform.admin.vo.LesseeCardMsgResp">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usersex" jdbcType="VARCHAR" property="sex"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="idNumber"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="checkintime" jdbcType="VARCHAR" property="checkintime"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+
+
+    <select id="selectByAdditionForCardList" resultMap="BaseResultMapForView">
+        SELECT
+        bc.id,
+        bc.logic_cardno,
+        bc.physical_cardno,
+        bc.usercode,
+        bl.username,
+        bc.buildcode,
+        bb.buildname,
+        (
+        CASE bc.isalive
+        WHEN 0 THEN
+        '注销'
+        WHEN 1 THEN
+        '有效'
+        WHEN 2 THEN
+        '发卡'
+        WHEN 3 THEN
+        '禁用'
+        WHEN 4 THEN
+        '黑名单'
+        ELSE
+        ''
+        END
+        ) AS isalive,
+        bc.createtime,
+        (
+        CASE bc.cardtype
+        WHEN 1 THEN
+        'CPU卡'
+        WHEN 2 THEN
+        'IC卡'
+        WHEN 2 THEN
+        '深圳通卡'
+        ELSE
+        ''
+        END
+        ) AS cardtype
+
+        FROM
+        base_card bc
+        LEFT JOIN base_lessee bl ON bc.usercode = bl.usercode
+        LEFT JOIN base_build bb ON bc.buildcode = bb.buildcode
+        <where>
+            1=1
+            <if test="cardno != null and ''!= cardno">and (bc.logic_cardno = #{cardno,jdbcType=VARCHAR} or
+                bc.physical_cardno = #{cardno,jdbcType=VARCHAR})
+            </if>
+            <if test="cardType != null and ''!= cardType">and bc.cardtype = #{cardType,jdbcType=VARCHAR}</if>
+            <if test="cardStatus != null and ''!= cardStatus">and bc.isalive = #{cardStatus,jdbcType=VARCHAR}</if>
+            <if test="id != null and ''!= id">and bc.id = #{id,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+    <delete id="deleteCard" parameterType="java.util.List">
+        delete from base_card where 1>2
+        or id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="selectByAdditionForLesseeCardMsgPage" resultMap="selectByAdditionForLesseeCardMsgPageResultMap">
+        SELECT
+        bc.id,
+        bl.username,
+        (
+        CASE bl.usersex
+        WHEN 0 THEN
+        '未知'
+        WHEN 1 THEN
+        '男'
+        WHEN 2 THEN
+        '女'
+        ELSE
+        ''
+        END
+        ) AS usersex,
+        bl.papersnum,
+        bc.physical_cardno,
+        bl.checkintime,
+        bl.buildcode,
+        bl.buildname,
+        bl.estatecode,
+        bl.estatename,
+        bl.`status`
+        FROM
+        base_card bc
+        LEFT JOIN base_lessee bl ON bc.usercode = bl.usercode
+        <where>
+            1=1
+            <if test="username != null and ''!= username">and bl.username = #{username,jdbcType=VARCHAR}</if>
+            <if test="idNumber != null and ''!= idNumber">and bl.papersnum, = #{idNumber,jdbcType=VARCHAR}</if>
+            <if test="sex != null">and bl.usersex = #{sex,jdbcType=INTEGER}</if>
+            <if test="buildName != null and ''!= buildName">and bl.buildname LIKE
+                CONCAT(CONCAT('%',#{buildName,jdbcType=VARCHAR},'%'))
+            </if>
+            <if test="estateName != null and ''!= estateName">and bl.estatename LIKE
+                CONCAT(CONCAT('%',#{estateName,jdbcType=VARCHAR},'%'))
+            </if>
+        </where>
+    </select>
+    <resultMap id="lesseecardListResultMap" type="com.biocome.platform.admin.vo.lesseecard.LesseecardListResp">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="username" jdbcType="VARCHAR" property="userName"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="cardkind" jdbcType="VARCHAR" property="cardkind"/>
+        <result column="usersex" jdbcType="VARCHAR" property="usersex"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
+        <result column="checkintime" jdbcType="VARCHAR" property="checkintime"/>
+        <result column="registertime" jdbcType="VARCHAR" property="registertime"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+    </resultMap>
+    <select id="selectLesseecardList" resultMap="lesseecardListResultMap" parameterType="com.biocome.platform.admin.vo.lesseecard.LesseecardListReq">
+        SELECT
+        bc.id,
+        bc.physical_cardno,
+        bdd1.dict_value cardtype,
+        bl.checkintime,
+        bl.usercode,
+        bl.username,
+        (
+        CASE bl.usersex
+        WHEN 0 THEN
+        '男'
+        WHEN 1 THEN
+        '女'
+        WHEN 2 THEN
+        '未知'
+        ELSE
+        ''
+        END
+        ) AS usersex,
+        bl.tel,
+        bl.registertime,
+        bb.buildcode,
+        bb.buildname,
+        bdd2.dict_value cardkind,
+        (
+        CASE bc.isalive
+        WHEN 0 THEN
+        '注销'
+        WHEN 1 THEN
+        '有效'
+        WHEN 2 THEN
+        '发卡'
+        WHEN 3 THEN
+        '禁用'
+        WHEN 4 THEN
+        '黑名单'
+        ELSE
+        ''
+        END
+        ) AS isalive
+        FROM
+        base_card bc
+        LEFT JOIN base_lessee bl ON bc.usercode = bl.usercode
+        LEFT JOIN base_build bb ON bc.buildcode = bb.buildcode
+        LEFT JOIN base_dict_detail bdd1 ON bdd1.dict_code = '010' AND bc.cardtype = bdd1.dict_key
+        LEFT JOIN base_dict_detail bdd2 ON bdd2.dict_code = '003' AND bc.cardkind = bdd2.dict_key
+        <where>
+            1=1
+            <if test="req.buildcode != null and ''!= req.buildcode">and bc.buildcode = #{req.buildcode,jdbcType=VARCHAR}</if>
+            <if test="req.housecode != null and ''!= req.housecode">and bc.housecode = #{req.housecode,jdbcType=VARCHAR}</if>
+            <if test="req.username != null and ''!= req.username">and bl.username = #{req.username,jdbcType=VARCHAR}</if>
+            <if test="req.cardno != null and ''!= req.cardno">and bc.physical_cardno = #{req.cardno,jdbcType=VARCHAR}</if>
+            <if test="req.isalive != null and ''!= req.isalive">and bc.isalive = #{req.isalive,jdbcType=INTEGER}</if>
+            <if test="req.usersex != null and ''!= req.usersex">and bl.usersex = #{req.usersex,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+
+    <!--注销卡-->
+    <update id="updateCardStatus">
+        update base_card
+        set isalive = #{isalive}
+        where usercode = #{usercode} and physical_cardno = #{cardNo}
+    </update>
+
+    <!--移除卡-->
+    <update id="removeCard">
+        delete from base_card
+        where usercode = #{usercode} and physical_cardno = #{cardNo}
+    </update>
+
+    <!--    查询管理员名下门禁卡数量-->
+    <select id="selectAdminCardCount" resultType="java.util.Map">
+        SELECT b.usercode, COUNT(b.usercode) AS num FROM
+            (
+                SELECT usercode, buildcode FROM base_card
+                WHERE buildcode IN
+                (
+                    SELECT build_code FROM `admin_card_bind`
+                    WHERE `usercode` IN
+                    <foreach collection="codes" item="item" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                )
+            ) a
+            LEFT JOIN
+            (
+                SELECT usercode, build_code FROM `admin_card_bind`
+                WHERE `usercode` IN
+                <foreach collection="codes" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            ) b
+        ON a.buildcode = b.build_code
+        GROUP BY b.usercode
+    </select>
+
+    <!--    查询管理员自用卡-->
+    <select id="selectAdminOwnCards" resultType="java.util.Map">
+        select usercode, group_concat(physical_cardno separator ',') as cards from base_card
+        where usercode in
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by usercode
+    </select>
+
+    <!--    查询管理员所有门禁卡-->
+    <select id="selectAdminCardList" resultType="com.biocome.platform.admin.vo.admin.AdminSimpleCardVo">
+        SELECT usercode, physical_cardno AS cardNo,
+        CASE isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        DATE_FORMAT(createtime,'%Y-%m-%d %H:%i:%s') AS createTime FROM base_card
+        WHERE (1=1) AND usercode = #{admincode}
+        <if test="cardNo != null and cardNo.trim() != '' ">
+            AND physical_cardno like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="isalive != null">
+            AND isalive = #{isalive}
+        </if>
+    </select>
+
+    <!--    管理员管理的卡-->
+    <select id="adminManageCardList" resultType="com.biocome.platform.admin.vo.admin.AdminSimpleCardVo">
+        SELECT usercode, physical_cardno AS cardNo, DATE_FORMAT(createtime,'%Y-%m-%d %H:%i:%s') AS createTime,CASE isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus
+        FROM base_card
+        WHERE buildcode IN
+        (
+            SELECT build_code FROM `admin_card_bind`
+            WHERE `usercode` = #{admincode}
+        )
+        <if test="cardNo != null and cardNo.trim() != '' ">
+            AND physical_cardno like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="isalive != null">
+            AND isalive = #{isalive}
+        </if>
+    </select>
+
+    <!--    所有管理卡（通卡）-->
+    <select id="superCardList"  resultType="com.biocome.platform.admin.vo.admin.AdminCardVo">
+        SELECT a.usercode, a.username, a.tel, a.resideaddress as address, a.papersnum AS certNo, c.physical_cardno AS cardNo, b.estatename AS communityName, c.buildcode,
+				CASE c.isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        CASE a.landlordtype
+        WHEN 0 THEN "未知" WHEN 1 THEN "原房东" WHEN 2 THEN "管理员" WHEN 3 THEN "房东家属" WHEN 4 THEN "网格员"
+                            WHEN 5 THEN "警务人员" WHEN 6 THEN "治安科" WHEN 72 THEN "保洁人员" WHEN 8 THEN "代管" WHEN 9 THEN "维修人员"
+                            WHEN 10 THEN "申报义务人" WHEN 11 THEN "送气人员" WHEN 12 THEN "集成单位"
+        END adminType
+        FROM base_landlord a,
+        base_card c,
+				base_build b
+        WHERE c.usercode = a.usercode AND c.buildcode = b.buildcode AND cardtype = 4
+        <if test="username != null and username.trim() != '' ">
+            AND a.username like CONCAT('%',#{username},'%')
+        </if>
+        <if test="certNo != null and certNo.trim() != ''">
+            AND a.papersnum = like CONCAT('%',#{certNo},'%')
+        </if>
+        <if test="communityname != null and communityname.trim() != '' ">
+            AND b.estatename like CONCAT('%',#{communityname},'%')
+        </if>
+    </select>
+
+    <update id="updateIsaliveByCardno">
+        update base_card
+        set isalive = #{isalive}
+        where logic_cardno = #{cardNo}
+    </update>
+    <update id="updateIsaliveByCardnoList" parameterType="java.util.List">
+        update base_card
+        set isalive = #{isalive}
+        where logic_cardno in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.cardno}
+        </foreach>
+    </update>
+
+    <!--查询门禁卡详情-->
+    <select id="selectCardDetail" resultType="com.biocome.platform.admin.vo.card.CardDetailVo">
+        SELECT a.usercode, a.username, a.tel, a.resideaddress as address, c.isalive, c.physical_cardno AS cardNo, c.createtime,
+        CASE c.cardkind WHEN 1 THEN 'IC卡' WHEN 2 THEN 'CPU卡' WHEN 3 THEN '深圳通卡' END cardkind,
+        CASE c.isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        CASE a.landlordtype
+        WHEN 0 THEN "未知" WHEN 1 THEN "原房东" WHEN 2 THEN "管理员" WHEN 3 THEN "房东家属" WHEN 4 THEN "网格员"
+                            WHEN 5 THEN "警务人员" WHEN 6 THEN "治安科" WHEN 72 THEN "保洁人员" WHEN 8 THEN "代管" WHEN 9 THEN "维修人员"
+                            WHEN 10 THEN "申报义务人" WHEN 11 THEN "送气人员" WHEN 12 THEN "集成单位"
+        END adminType
+        FROM base_landlord a,
+        admin_card_bind c
+        WHERE c.usercode = a.usercode AND cardtype = 2 AND build_code = #{buildcode}
+    </select>
+</mapper>
