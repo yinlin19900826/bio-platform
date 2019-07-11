@@ -7,8 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
@@ -28,9 +27,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("${minio.endpoint.name:/minio}")
 @Api(value = "MinIO操作", tags = {"MinIO操作"})
+@Slf4j
 public class MinioEndpointController {
-
-    private Logger log = LoggerFactory.getLogger(MinioEndpointController.class);
 
     private static final Integer ONE_DAY = 3600 * 24;
 
