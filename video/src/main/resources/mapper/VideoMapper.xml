@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.wxiaoqi.security.admin.mapper.VideoMapper">
+    <resultMap id="BaseResultMap" type="com.github.wxiaoqi.security.admin.entity.Video">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="videocode" jdbcType="VARCHAR" property="videocode"/>
+        <result column="videoname" jdbcType="VARCHAR" property="videoname"/>
+        <result column="fullname" jdbcType="VARCHAR" property="fullname"/>
+        <result column="videotype" jdbcType="VARCHAR" property="videotype"/>
+        <result column="areacode" jdbcType="VARCHAR" property="areacode"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="detailedaddress" jdbcType="VARCHAR" property="detailedaddress"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="county" jdbcType="VARCHAR" property="county"/>
+        <result column="street" jdbcType="VARCHAR" property="street"/>
+        <result column="policestatio" jdbcType="VARCHAR" property="policestatio"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+        <result column="parentcode" jdbcType="VARCHAR" property="updatecode"/>
+    </resultMap>
+
+
+    <resultMap id="TreeVideoVoMap" type="com.github.wxiaoqi.security.admin.vo.tree.TreeVideoVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="videocode" jdbcType="VARCHAR" property="code"/>
+        <result column="videoname" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="parentcode" jdbcType="VARCHAR" property="parentcode"/>
+    </resultMap>
+
+    <!--根据所属行政区划代码查询所有小区，构建树-->
+    <!--<select id="selectByTree" resultMap="TreeEstateVoMap">-->
+        <!--SELECT v.id,-->
+               <!--v.videocode,-->
+               <!--v.videoname,-->
+               <!--v.parentcode,-->
+               <!--(select count(1) from base_build where estatecode = e.estatecode)  as countbuild,-->
+               <!--(select count(1) from base_device where estatecode = e.estatecode) as countdevice-->
+        <!--FROM base_video v-->
+        <!--WHERE areacode = #{areacode,jdbcType=VARCHAR}-->
+    <!--</select>-->
+    <select id="selectsixTree" parameterType="java.lang.String" resultMap="TreeVideoVoMap">
+        SELECT
+        v.id,v.videocode,v.videoname,v.type,v.parentcode,
+        (SELECT count(c.parentcode) FROM base_camera c WHERE c.parentcode = v.videocode or c.videocode =v.videocode and c.status=1) as countlivevideo,
+        (SELECT count(c.parentcode) FROM base_camera c WHERE c.parentcode = v.videocode or c.videocode =v.videocode) as countcamera
+        FROM
+        base_video v
+        <where>
+            <if test="type != null">
+                and v.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="parentcode != null and parentcode.trim() != ''">
+                and v.parentcode = #{parentcode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--查询对应的行政区划代码，不包含楼栋门禁总数-->
+    <select id="selectTree" parameterType="java.lang.String" resultMap="TreeVideoVoMap">
+        SELECT
+        v.id,v.videocode,v.videoname,v.type,v.parentcode,
+        (SELECT count(c.parentcode) FROM base_camera c WHERE c.parentcode = v.videocode and c.status=1) as countlivevideo,
+        (SELECT count(c.parentcode) FROM base_camera c WHERE c.parentcode = v.videocode ) as countcamera
+        FROM
+        base_video v
+        <where>
+            <if test="type != null">
+                and v.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="parentcode != null and parentcode.trim() != ''">
+                and v.parentcode = #{parentcode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+</mapper>

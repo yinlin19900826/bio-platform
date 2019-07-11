@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.github.wxiaoqi.security.admin.mapper.CameraMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.github.wxiaoqi.security.admin.entity.Camera" id="cameraMap">
+        <result property="id" column="id"/>
+        <result property="institutioncode" column="institutioncode"/>
+        <result property="videotype" column="videotype"/>
+        <result property="encodetype" column="encodetype"/>
+        <result property="jointype" column="jointype"/>
+        <result property="streamtotal" column="streamtotal"/>
+        <result property="factory" column="factory"/>
+        <result property="lanIp" column="lan_ip"/>
+        <result property="lanPort" column="lan_port"/>
+        <result property="wanIp" column="wan_ip"/>
+        <result property="wanPort" column="wan_port"/>
+        <result property="ctrlModel" column="ctrl_model"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="dnsParse" column="dns_parse"/>
+        <result property="gatewayMapping" column="gateway_mapping"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+        <result property="cameracode" column="cameracode"/>
+        <result property="totalChannels" column="total_channels"/>
+        <result property="parentcode" column="parentcode"/>
+        <result property="transfertype" column="transfertype"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="county" column="county"/>
+        <result property="street" column="street"/>
+        <result property="policestatio" column="policestatio"/>
+        <result property="monitorname" column="monitorname"/>
+        <result property="videocode" column="videocode"/>
+    </resultMap>
+
+
+    <select id="selectCameraList" resultType="com.github.wxiaoqi.security.admin.vo.camera.CameraVo">
+        select c.id, c.institutioncode, c.videotype, c.encodetype,c.jointype,c.transfertype,c.monitorname,c.lan_ip as
+        lanIp,c.lan_port as lanPort,c.wan_ip as wanIp,c.wan_port as wanPort,
+        c.ctrl_model as ctrlModel,c.`username`,c.`password`, c.dns_parse as dnsParse,c.gateway_mapping as
+        dns_parse,c.remark,c.`status`,t.dict_value as videotypeName
+        from
+        (
+            select * from base_camera
+            where (1=1)
+            <if test="institutioncode != null and institutioncode.trim() != '' ">
+                AND `institutioncode` = #{institutioncode}
+            </if>
+            <if test="name != null and name.trim() != '' ">
+                AND `name` like CONCAT('%',#{name},'%')
+            </if>
+            <if test="ip != null and ip.trim() != '' ">
+                AND lan_ip like CONCAT('%',#{ip},'%')
+            </if>
+        ) c
+        LEFT JOIN
+        (
+            SELECT dict_key, dict_value FROM base_dict_detail
+            WHERE dict_code =
+            (
+            SELECT dict_code FROM base_dict
+            WHERE dict_code = "012"
+            )
+        ) t
+        ON t.dict_key = c.videotype
+    </select>
+
+    <resultMap id="TreeCameraVoMap" type="com.github.wxiaoqi.security.admin.vo.camera.CameraVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="factory" jdbcType="VARCHAR" property="factory"/>
+        <result column="monitorname" jdbcType="VARCHAR" property="monitorname"/>
+        <result column="videotype" jdbcType="VARCHAR" property="videotype"/>
+        <result column="transfertype" jdbcType="VARCHAR" property="transfertype"/>
+        <result column="streamtotal" jdbcType="INTEGER" property="streamtotal"/>
+        <result column="lan_ip" jdbcType="VARCHAR" property="lanIp"/>
+        <result column="lan_port" jdbcType="VARCHAR" property="wanPort"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="total_channels" jdbcType="INTEGER" property="totalChannels"/>
+        <result column="parentcode" jdbcType="VARCHAR" property="parentcode"/>
+    </resultMap>
+
+    <select id="selectByTree" resultMap="TreeCameraVoMap">
+        SELECT c.id,
+               c.factory,
+               c.monitorname,
+               c.videotype,
+               c.transfertype,
+               c.streamtotal,
+               c.lan_ip,
+               c.lan_port,
+               c.username,
+               c.password,
+               c.status,
+               c.total_channels,
+               c.parentcode
+        FROM base_camera c
+
+             where   c.parentcode = #{parentcode,jdbcType=VARCHAR}
+
+    </select>
+
+</mapper>
