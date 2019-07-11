@@ -12,6 +12,11 @@
     <artifactId>video</artifactId>
     <dependencies>
         <dependency>
+            <groupId>com.biocome.platform</groupId>
+            <artifactId>micro-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-commons</artifactId>
             <version>2.1.0.RELEASE</version>
@@ -26,35 +31,35 @@
             <artifactId>spring-cloud-openfeign-core</artifactId>
             <version>2.1.0.RELEASE</version>
         </dependency>
-        <!--nacos config-->
+        &lt;!&ndash;nacos config&ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <!--nocos discovery-->
+        &lt;!&ndash;nocos discovery&ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <!--Alibaba sentinel-->
+        &lt;!&ndash;Alibaba sentinel&ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
 
-        <!--feign-->
+        &lt;!&ndash;feign&ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <!--hystrix-->
+        &lt;!&ndash;hystrix&ndash;&gt;
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
 
