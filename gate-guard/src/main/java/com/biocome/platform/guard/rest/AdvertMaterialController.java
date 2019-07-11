@@ -10,8 +10,7 @@ import com.biocome.platform.guard.entity.AdvertMaterial;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +24,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("advertMaterial")
 @Api(value = "广告素材", tags = {"广告素材操作"})
+@Slf4j
 public class AdvertMaterialController extends BaseController<AdvertMaterialBiz, AdvertMaterial> {
-
-    private Logger log = LoggerFactory.getLogger(AdvertMaterialController.class);
 
     @Autowired
     private AdvertMaterialBiz biz;

@@ -4,9 +4,8 @@ import com.biocome.platform.guard.constant.BrandEnum;
 import com.biocome.platform.guard.otherrpc.TokenResp;
 import com.biocome.platform.guard.otherrpc.TokenVo;
 import com.biocome.platform.guard.rpc.service.OtherRpc;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCluster;
@@ -18,6 +17,7 @@ import java.net.URI;
  * @date 2019/5/27 18:43
  */
 @Component
+@Slf4j
 public class RpcTokenUtil {
     @Autowired
     JedisCluster jedisCluster;
@@ -25,8 +25,6 @@ public class RpcTokenUtil {
     OtherRpc otherRpc;
     @Autowired
     UriUtil uriUtil;
-
-    Logger log = LoggerFactory.getLogger(RpcTokenUtil.class);
 
     /**
      *

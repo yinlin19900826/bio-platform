@@ -12,8 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -34,9 +33,9 @@ import java.util.Date;
 @Controller
 @RequestMapping("advertList")
 @Api(value = "广告列表操作", tags = {"广告列表操作"})
+@Slf4j
 public class AdvertListController extends BaseController<AdvertListBiz, Advert> {
 
-    private Logger log = LoggerFactory.getLogger(AdvertListController.class);
 
     @Autowired
     private AdvertListBiz biz;

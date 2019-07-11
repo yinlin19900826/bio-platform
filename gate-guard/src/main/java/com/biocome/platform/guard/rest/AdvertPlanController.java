@@ -20,8 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +35,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/advertplan")
 @Api(value = "广告计划操作", tags = {"广告计划操作"})
+@Slf4j
 public class AdvertPlanController extends BaseController<AdvertPlanBiz, AdvertPlan> {
-    Logger log = LoggerFactory.getLogger(AdvertPlanController.class);
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody

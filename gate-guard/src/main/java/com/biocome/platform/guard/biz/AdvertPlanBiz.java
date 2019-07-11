@@ -14,8 +14,7 @@ import com.biocome.platform.guard.rpc.service.AdvertRpc;
 import com.biocome.platform.guard.utils.RpcTokenUtil;
 import com.biocome.platform.guard.utils.UriUtil;
 import com.biocome.platform.guard.vo.advert.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +30,8 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class AdvertPlanBiz extends BaseBiz<AdvertPlanMapper, AdvertPlan> {
-    Logger log = LoggerFactory.getLogger(AdvertPlanBiz.class);
     @Autowired
     MaterialPlanMapper materialPlanMapper;
     @Autowired

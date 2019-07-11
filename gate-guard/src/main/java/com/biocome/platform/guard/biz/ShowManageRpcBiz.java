@@ -19,8 +19,7 @@ import com.biocome.platform.guard.vo.showmanage.BuildAndHouseVo;
 import com.biocome.platform.guard.vo.showmanage.DeviceAndStatusVo;
 import com.biocome.platform.guard.vo.showmanage.HouseVo;
 import com.biocome.platform.guard.vo.showmanage.ShowManageVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,9 +37,8 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class ShowManageRpcBiz {
-
-    Logger log = LoggerFactory.getLogger(ShowManageRpcBiz.class);
 
     @Value("${dictCode}")
     String dictCode;
