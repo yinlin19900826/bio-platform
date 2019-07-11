@@ -17,7 +17,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>commom</module>
+        <module>common</module>
         <module>auth</module>
         <module>base-manage</module>
         <module>visit-record</module>
@@ -26,6 +26,7 @@
         <module>video</module>
         <module>service-center</module>
         <module>micro-service</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
