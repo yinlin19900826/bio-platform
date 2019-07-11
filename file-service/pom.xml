@@ -11,18 +11,20 @@
 
     <artifactId>file-service</artifactId>
 
-    <properties>
-        <hystrix.version>1.5.12</hystrix.version>
-        <!-- 依赖版本 -->
-        <mapper.version>3.4.0</mapper.version>
-        <mybatis.version>3.3.1</mybatis.version>
-        <mybatis.spring.version>1.2.4</mybatis.spring.version>
-        <pagehelper.version>4.1.1</pagehelper.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.biocome.platform</groupId>
             <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.biocome.platform</groupId>
+            <artifactId>micro-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.biocome.platform</groupId>
+            <artifactId>auth-client</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -35,10 +37,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
 
@@ -48,11 +46,6 @@
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
             <version>6.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.biocome.platform</groupId>
-            <artifactId>base-interface</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- druid -->
@@ -107,16 +100,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>20.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.biocome.platform</groupId>
-            <artifactId>auth-client</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.wxiaoqi</groupId>
-            <artifactId>ace-cache</artifactId>
-            <version>0.0.2</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

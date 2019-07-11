@@ -1,13 +1,13 @@
 package com.biocome.platform.file;
 
+import com.biocome.platform.auth.client.EnableAceAuthClient;
 import com.spring4all.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @ClassName: FileServiceBootstrap
@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @SpringBootApplication
-@EnableScheduling
-@EnableTransactionManagement
+@EnableFeignClients({"com.biocome.platform.auth.client.feign"})
+@EnableAceAuthClient
 @MapperScan("com.biocome.platform.file.mapper")
 @EnableSwagger2Doc
 public class FileServiceBootstrap {
