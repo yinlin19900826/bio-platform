@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.guard.mapper.BuildMapper">
+    <resultMap id="TreeBuildVoMap" type="com.biocome.platform.guard.vo.tree.TreeDistrictVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="code"/>
+        <result column="buildname" jdbcType="VARCHAR" property="name"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="parentcode"/>
+        <result column="countdevice" jdbcType="VARCHAR" property="countdevice"/>
+    </resultMap>
+
+    <select id="selectByTree" resultMap="TreeBuildVoMap">
+        SELECT b.id, b.buildcode, b.buildname, b.estatecode,(select count(1) from base_device d where d.buildcode = b.buildcode) as countdevice
+        FROM base_build b
+        WHERE b.estatecode = #{estatecode,jdbcType=VARCHAR}
+    </select>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.guard.mapper.TreeDistrictMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.vo.tree.TreeDistrictVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="sortno" jdbcType="INTEGER" property="sortno"/>
+        <result column="fullname" jdbcType="VARCHAR" property="fullname"/>
+        <result column="parentcode" jdbcType="VARCHAR" property="parentcode"/>
+        <result column="countbuild" jdbcType="VARCHAR" property="countbuild"/>
+        <result column="countdevice" jdbcType="VARCHAR" property="countdevice"/>
+    </resultMap>
+
+    <resultMap id="TreeMap" type="com.biocome.platform.guard.vo.tree.TreeDistrictVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="sortno" jdbcType="INTEGER" property="sortno"/>
+        <result column="fullname" jdbcType="VARCHAR" property="fullname"/>
+        <result column="parentcode" jdbcType="VARCHAR" property="parentcode"/>
+    </resultMap>
+
+
+    <!--查询对应的行政区划代码-->
+    <select id="selectTreeDistrict" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        d.id,d.code,d.name,d.type,d.sortno,d.fullname,d.parentcode,(select count(1) from base_build b
+        <where>
+            <if test="type == null">
+                and (b.province = d.code or b.city = d.code or b.county = d.code or b.street = d.code or b.policestatio
+                = d.code or b.estatecode = d.code)
+            </if>
+            <if test="type == 1">
+                and b.province = d.code
+            </if>
+            <if test="type == 2">
+                and b.city = d.code
+            </if>
+            <if test="type == 3">
+                and b.county = d.code
+            </if>
+            <if test="type == 4">
+                and b.street = d.code
+            </if>
+            <if test="type == 5">
+                and b.policestatio = d.code
+            </if>
+        </where>
+        ) as countbuild,
+        (select count(1) from base_device bd where bd.estatecode in (select e.estatecode from base_estate e
+        <where>
+            <if test="type == null">
+                and (e.province = d.code or e.city = d.code or e.county = d.code or e.street = d.code or e.policestatio = d.code)
+            </if>
+            <if test="type == 1">
+                and e.province = d.code
+            </if>
+            <if test="type == 2">
+                and e.city = d.code
+            </if>
+            <if test="type == 3">
+                and e.county = d.code
+            </if>
+            <if test="type == 4">
+                and e.street = d.code
+            </if>
+            <if test="type == 5">
+                and e.policestatio = d.code
+            </if>
+        </where>
+        )) as countdevice
+        FROM
+        base_district d
+        where d.parentcode = #{parentcode,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--查询对应的行政区划代码，不包含楼栋门禁总数-->
+    <select id="selectTree" parameterType="java.lang.String" resultMap="TreeMap">
+        SELECT
+        d.id,d.code,d.name,d.type,d.sortno,d.fullname,d.parentcode
+        FROM
+        base_district d
+        <where>
+            <if test="type != null">
+                and d.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="parentcode != null and parentcode.trim() != ''">
+                and d.parentcode = #{parentcode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>
