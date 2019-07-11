@@ -1,4 +1,4 @@
-package com.biocome.platform.admin.vo;
+package com.biocome.platform.guard.vo.advert;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.biocome.platform.common.entity.Base;

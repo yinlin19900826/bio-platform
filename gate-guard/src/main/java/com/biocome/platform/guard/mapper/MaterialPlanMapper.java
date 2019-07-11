@@ -1,6 +1,6 @@
-package com.biocome.platform.admin.mapper;
+package com.biocome.platform.guard.mapper;
 
-import com.biocome.platform.admin.entity.MaterialPlan;
+import com.biocome.platform.guard.entity.MaterialPlan;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 

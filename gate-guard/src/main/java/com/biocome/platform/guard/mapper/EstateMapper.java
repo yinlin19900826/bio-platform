@@ -1,5 +1,6 @@
 package com.biocome.platform.guard.mapper;
 
+import com.biocome.platform.guard.entity.Estate;
 import com.biocome.platform.guard.vo.tree.TreeDistrictVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,5 +23,7 @@ public interface EstateMapper {
      * @Date 2019/5/20 11:40
      */
     List<TreeDistrictVO> selectByTree(@Param("areacode") String areacode);
+
+    List<Estate> queryEstateByEstatecode(@Param("list") List<String> estateCodes);
 
 }

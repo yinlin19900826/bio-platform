@@ -1,17 +1,16 @@
-package com.biocome.platform.admin.biz;
+package com.biocome.platform.guard.biz;
 
-import com.biocome.platform.admin.constant.AdminCommonConstant;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.biocome.platform.admin.entity.AdvertMaterial;
-import com.biocome.platform.admin.fastdfs.FastDFSClientUtil;
-import com.biocome.platform.admin.mapper.AdvertMaterialMapper;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.guard.constant.AdminCommonConstant;
+import com.biocome.platform.guard.entity.AdvertMaterial;
+import com.biocome.platform.guard.mapper.AdvertMaterialMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +32,6 @@ public class AdvertMaterialBiz extends BaseBiz<AdvertMaterialMapper, AdvertMater
     private JedisCluster jedisCluster;
     @Autowired
     private AdvertMaterialMapper mapper;
-    @Autowired
-    private FastDFSClientUtil fastDFSClientUtil;
 
     /**
      * 根据所传参数查询素材列表

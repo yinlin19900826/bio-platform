@@ -1,7 +1,7 @@
-package com.biocome.platform.admin.mapper;
+package com.biocome.platform.guard.mapper;
 
-import com.biocome.platform.admin.entity.AdvertMaterial;
-import com.biocome.platform.admin.vo.advert.AdvertPreviewResp;
+import com.biocome.platform.guard.entity.AdvertMaterial;
+import com.biocome.platform.guard.vo.advert.AdvertPreviewResp;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 

@@ -25,4 +25,6 @@ public interface BuildMapper extends Mapper<Build> {
      */
     List<TreeDistrictVO> selectByTree(@Param("estatecode") String estatecode);
 
+    List<Build> queryBuildByBuildcode(@Param("list") List<String> needBuildcodeList);
+
 }

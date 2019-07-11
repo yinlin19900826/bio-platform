@@ -1,8 +1,8 @@
-package com.biocome.platform.admin.mapper;
+package com.biocome.platform.guard.mapper;
 
-import com.biocome.platform.admin.entity.Advert;
-import com.biocome.platform.admin.vo.AdvertVo;
-import com.biocome.platform.admin.vo.advert.AdvertAddListRpcResp;
+import com.biocome.platform.guard.entity.Advert;
+import com.biocome.platform.guard.vo.advert.AdvertAddListRpcResp;
+import com.biocome.platform.guard.vo.advert.AdvertVo;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -49,5 +49,5 @@ public interface AdvertListMapper extends Mapper<Advert> {
      * @param advertAddListRpcResps
      * @return
      */
-    int updateList(@Param("list")List<AdvertAddListRpcResp> advertAddListRpcResps);
+    int updateList(@Param("list") List<AdvertAddListRpcResp> advertAddListRpcResps);
 }

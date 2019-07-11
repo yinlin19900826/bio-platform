@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.biocome.platform.guard.mapper.BuildMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.entity.Build">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="buildaddress" jdbcType="VARCHAR" property="buildaddress"/>
+        <result column="buildtype" jdbcType="VARCHAR" property="buildtype"/>
+        <result column="buildnature" jdbcType="INTEGER" property="buildnature"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="county" jdbcType="VARCHAR" property="county"/>
+        <result column="street" jdbcType="VARCHAR" property="street"/>
+        <result column="policestatio" jdbcType="VARCHAR" property="policestatio"/>
+        <result column="unitnum" jdbcType="VARCHAR" property="unitnum"/>
+        <result column="floornum" jdbcType="VARCHAR" property="floornum"/>
+        <result column="housenum" jdbcType="VARCHAR" property="housenum"/>
+        <result column="islift" jdbcType="INTEGER" property="islift"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
     <resultMap id="TreeBuildVoMap" type="com.biocome.platform.guard.vo.tree.TreeDistrictVO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="buildcode" jdbcType="VARCHAR" property="code"/>
@@ -13,5 +45,21 @@
         SELECT b.id, b.buildcode, b.buildname, b.estatecode,(select count(1) from base_device d where d.buildcode = b.buildcode) as countdevice
         FROM base_build b
         WHERE b.estatecode = #{estatecode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryBuildByBuildcode" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        b.id,b.buildcode,b.buildname,b.buildaddress,b.buildtype,b.buildnature,b.estatecode,b.estatename,
+        b.province,b.city,b.county,b.street,b.policestatio,b.floornum,b.islift,
+        (SELECT count(u.buildcode) FROM base_unit u WHERE u.buildcode = b.buildcode) as unitnum,
+        (SELECT count(h.buildcode) FROM base_house h WHERE h.buildcode = b.buildcode) as housenum,
+        b.remark,b.status,b.del,b.createtime,b.createcode,b.createname,b.updatetime,b.updatecode,b.updatename
+        FROM
+        base_build b
+        WHERE
+        b.buildcode IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 </mapper>

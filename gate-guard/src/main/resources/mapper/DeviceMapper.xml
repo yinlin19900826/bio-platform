@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.biocome.platform.guard.mapper.DeviceMapper">
 
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.entity.Device">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="device_name" jdbcType="VARCHAR" property="deviceName"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="device_type" jdbcType="VARCHAR" property="deviceType"/>
+        <result column="brand" jdbcType="VARCHAR" property="brand"/>
+        <result column="secretkey" jdbcType="VARCHAR" property="secretkey"/>
+        <result column="mac" jdbcType="VARCHAR" property="mac"/>
+        <result column="series_number" jdbcType="VARCHAR" property="seriesNumber"/>
+        <result column="c_number1" jdbcType="VARCHAR" property="camera1"/>
+        <result column="c_number2" jdbcType="VARCHAR" property="camera2"/>
+        <result column="c_number3" jdbcType="VARCHAR" property="camera3"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
+    </resultMap>
+
     <resultMap id="DeviceInfoRespMap" type="com.biocome.platform.guard.vo.device.DeviceInfoResp">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
@@ -54,5 +73,13 @@
             #{device.buildcode,jdbcType=VARCHAR}
         </if>
         <if test="device.ip != null and '' != device.ip">and d.ip= #{device.ip,jdbcType=VARCHAR}</if>
+    </select>
+
+    <select id="selectSnAndCardByBuildCodes" resultMap="BaseResultMap">
+        SELECT sn ,brand FROM base_device WHERE buildcode
+        IN
+        <foreach collection="codes" item="code" open="(" separator="," close=")">
+            #{code}
+        </foreach>
     </select>
 </mapper>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.biocome.platform.admin.mapper.AdvertListMapper">
+<mapper namespace="com.biocome.platform.guard.mapper.AdvertListMapper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap id="BaseResultMap" type="com.biocome.platform.admin.entity.Advert">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.entity.Advert">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="adno" jdbcType="VARCHAR" property="adno"/>
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
@@ -29,7 +29,7 @@
         <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
     </resultMap>
 
-    <select id="selectByAttribute" resultMap="BaseResultMap" parameterType="com.biocome.platform.admin.vo.AdvertVo">
+    <select id="selectByAttribute" resultMap="BaseResultMap" parameterType="com.biocome.platform.guard.vo.advert.AdvertVo">
         SELECT
         id,adno,sn,adname,materialname,type,filepath,begintime,endtime,speed,issue,priority,fileid,remark,
         status,del,createtime,createcode,createname,updatetime,updatecode,updatename

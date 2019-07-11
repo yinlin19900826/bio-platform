@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.biocome.platform.admin.mapper.AdvertMaterialMapper">
-    <resultMap id="BaseResultMap" type="com.biocome.platform.admin.entity.AdvertMaterial">
+<mapper namespace="com.biocome.platform.guard.mapper.AdvertMaterialMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.entity.AdvertMaterial">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="materialname" jdbcType="VARCHAR" property="materialname"/>
         <result column="originalname" jdbcType="VARCHAR" property="originalname"/>
@@ -18,7 +18,7 @@
         <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
     </resultMap>
 
-    <select id="selectByAttribute" resultMap="BaseResultMap" parameterType="com.biocome.platform.admin.entity.AdvertMaterial">
+    <select id="selectByAttribute" resultMap="BaseResultMap" parameterType="com.biocome.platform.guard.entity.AdvertMaterial">
         SELECT
         id,materialname,originalname,type,filepath,remark,status,del,createtime,createcode,createname,updatetime,
         updatecode,updatename
@@ -70,7 +70,7 @@
             #{item,jdbcType=INTEGER}
         </foreach>
     </select>
-    <resultMap id="BaseResultMap1" type="com.biocome.platform.admin.vo.advert.AdvertPreviewResp">
+    <resultMap id="BaseResultMap1" type="com.biocome.platform.guard.vo.advert.AdvertPreviewResp">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="materialname" jdbcType="VARCHAR" property="materialname"/>
         <result column="originalname" jdbcType="VARCHAR" property="originalname"/>

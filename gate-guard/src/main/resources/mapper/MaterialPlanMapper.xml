@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.biocome.platform.admin.mapper.MaterialPlanMapper">
+<mapper namespace="com.biocome.platform.guard.mapper.MaterialPlanMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.biocome.platform.admin.entity.MaterialPlan" id="materialPlanMap">
+    <resultMap type="com.biocome.platform.guard.entity.MaterialPlan" id="materialPlanMap">
         <result property="id" column="id"/>
         <result property="materialid" column="materialid"/>
         <result property="planid" column="planid"/>
@@ -19,7 +19,7 @@
         <result property="updatename" column="updatename"/>
     </resultMap>
 
-    <resultMap id="BaseMaterialResultMap" type="com.biocome.platform.admin.entity.AdvertMaterial">
+    <resultMap id="BaseMaterialResultMap" type="com.biocome.platform.guard.entity.AdvertMaterial">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="materialname" jdbcType="VARCHAR" property="materialname"/>
         <result column="originalname" jdbcType="VARCHAR" property="originalname"/>

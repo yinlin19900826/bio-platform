@@ -1,4 +1,4 @@
-package com.biocome.platform.admin.vo.advert;
+package com.biocome.platform.guard.vo.advert;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

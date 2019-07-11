@@ -1,4 +1,4 @@
-package com.biocome.platform.admin.constant;
+package com.biocome.platform.guard.constant;
 
 /**
  * @author hxy

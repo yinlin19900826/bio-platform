@@ -1,8 +1,9 @@
-package com.biocome.platform.admin.entity;
+package com.biocome.platform.guard.entity;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 
 
