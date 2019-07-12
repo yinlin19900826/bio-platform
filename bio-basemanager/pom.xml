@@ -10,29 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>bio-basemanager</artifactId>
-    <properties>
-        <hystrix.version>1.5.12</hystrix.version>
-        <!-- MyBatis Generator -->
-        <!-- Java接口和实体类 -->
-        <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
-        <targetMapperPackage>com.biocome.platform.basemanager.mapper
-        </targetMapperPackage>
-        <targetModelPackage>com.biocome.platform.basemanager.entity
-        </targetModelPackage>
-        <!-- XML生成路径 -->
-        <targetResourcesProject>${basedir}/src/main/resources
-        </targetResourcesProject>
-        <targetXMLPackage>mapper</targetXMLPackage>
-        <!-- 依赖版本 -->
-        <mapper.version>3.4.0</mapper.version>
-        <mybatis.version>3.3.1</mybatis.version>
-        <mybatis.spring.version>1.2.4</mybatis.spring.version>
-        <pagehelper.version>4.1.1</pagehelper.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.biocome.platform</groupId>
             <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.biocome.platform</groupId>
+            <artifactId>micro-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.biocome.platform</groupId>
+            <artifactId>auth-client</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -52,38 +43,13 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
 
-        <!--增加eureka-server的依赖-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-starter-consul-all</artifactId>-->
-        <!--</dependency>-->
 
         <!-- 链路追踪 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.amqp</groupId>-->
-        <!--<artifactId>spring-rabbit</artifactId>-->
-        <!--</dependency>-->
 
-        <!-- fastdfs -->
-        <dependency>
-            <groupId>com.github.tobato</groupId>
-            <artifactId>fastdfs-client</artifactId>
-            <version>1.26.5</version>
-        </dependency>
-        <!--用于测试的，本例可省略-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.biocome.platform</groupId>
             <artifactId>base-interface</artifactId>
@@ -133,12 +99,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.33</version>
-        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -148,11 +108,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>20.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.biocome.platform</groupId>
-            <artifactId>auth-client</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.github.wxiaoqi</groupId>
@@ -227,30 +182,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>com.spotify</groupId>-->
-            <!--<artifactId>docker-maven-plugin</artifactId>-->
-            <!--<version>${docker.plugin.version}</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<phase>package</phase>-->
-            <!--<goals>-->
-            <!--<goal>build</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<configuration>-->
-            <!--<imageName>${docker.image.prefix}/${project.build.finalName}</imageName>-->
-            <!--<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>-->
-            <!--<resources>-->
-            <!--<resource>-->
-            <!--<targetPath>/</targetPath>-->
-            <!--<directory>${project.build.directory}</directory>-->
-            <!--<include>${project.build.finalName}.jar</include>-->
-            <!--</resource>-->
-            <!--</resources>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
