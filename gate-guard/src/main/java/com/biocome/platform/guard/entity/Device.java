@@ -8,9 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @auther: hxy
- * @Date:2019/5/7 10:48
- * @Description:设备实体类
+ * @ClassName: Device
+ * @Author: shenlele
+ * @Date: 2019/7/11 10:48
+ * @Description: 设备实体类
  */
 @ApiModel(value = "设备模型")
 @Table(name = "base_device")

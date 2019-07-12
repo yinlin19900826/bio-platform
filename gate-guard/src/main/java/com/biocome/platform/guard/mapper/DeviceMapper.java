@@ -24,5 +24,13 @@ public interface DeviceMapper extends Mapper<Device> {
      */
     List<DeviceInfoResp> selectByDevice(@Param("device") DeviceInfoResp device);
 
+    /**
+     * 根据楼栋编号列表查询设备与卡信息
+     *
+     * @param codes 楼栋编号列表
+     * @return java.util.List<com.biocome.platform.guard.entity.Device>
+     * @Author shenlele
+     * @Date 2019/7/12 9:13
+     */
     List<Device> selectSnAndCardByBuildCodes(@Param("codes") List<String> codes);
 }

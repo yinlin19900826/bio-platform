@@ -113,4 +113,20 @@ public class DistrictVO {
     public void setCountdevice(String countdevice) {
         this.countdevice = countdevice;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("DistrictVO{");
+        sb.append("id=").append(id);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", type=").append(type);
+        sb.append(", sortno=").append(sortno);
+        sb.append(", fullname='").append(fullname).append('\'');
+        sb.append(", parentcode='").append(parentcode).append('\'');
+        sb.append(", countbuild='").append(countbuild).append('\'');
+        sb.append(", countdevice='").append(countdevice).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

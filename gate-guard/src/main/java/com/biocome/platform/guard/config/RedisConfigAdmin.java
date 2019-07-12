@@ -21,8 +21,9 @@ import java.util.Set;
 
 
 /**
- * @Auther: hxy
- * @Date:2018/11/26 16:10
+ * @ClassName: RedisConfigAdmin
+ * @Author: shenlele
+ * @Date: 2019/7/11 10:48
  * @Description:
  */
 @Configuration

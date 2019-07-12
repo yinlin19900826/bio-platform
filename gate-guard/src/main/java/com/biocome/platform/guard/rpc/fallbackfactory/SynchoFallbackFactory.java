@@ -31,7 +31,7 @@ public class SynchoFallbackFactory implements FallbackFactory<SynchoRpc> {
                 return resp;
             }
 
-            private List<EstateResp> EstateError() {
+            private List<EstateResp> estateError() {
                 List<EstateResp> list = new ArrayList<>();
                 EstateResp resp = new EstateResp();
                 resp.setErrorcode("105");
@@ -41,7 +41,7 @@ public class SynchoFallbackFactory implements FallbackFactory<SynchoRpc> {
                 return list;
             }
 
-            private List<BuildResp> BuildError() {
+            private List<BuildResp> buildError() {
                 List<BuildResp> list = new ArrayList<>();
                 BuildResp resp = new BuildResp();
                 resp.setErrorcode("105");
@@ -51,7 +51,7 @@ public class SynchoFallbackFactory implements FallbackFactory<SynchoRpc> {
                 return list;
             }
 
-            private List<UserResp> UserError() {
+            private List<UserResp> userError() {
                 List<UserResp> list = new ArrayList<>();
                 UserResp resp = new UserResp();
                 resp.setErrorcode("105");
@@ -63,17 +63,17 @@ public class SynchoFallbackFactory implements FallbackFactory<SynchoRpc> {
 
             @Override
             public List<EstateResp> estate(URI baseUri, CommonListVo<EstateVo> listVo) {
-                return EstateError();
+                return estateError();
             }
 
             @Override
             public List<BuildResp> build(URI baseUri, CommonListVo<BuildVo> listVo) {
-                return BuildError();
+                return buildError();
             }
 
             @Override
             public List<UserResp> user(URI baseUri, CommonListVo<LesseeUserVo> listVo) {
-                return UserError();
+                return userError();
             }
 
             @Override

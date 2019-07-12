@@ -28,7 +28,7 @@ public interface AdvertRpc {
      * @return
      */
     @RequestMapping(value = {"/doordevice/ad"}, method = {org.springframework.web.bind.annotation.RequestMethod.POST}, produces = {"application/json;charset=UTF-8"})
-    BaseRpcResponse Advert(URI baseUri, @RequestBody AddAdvert vo);
+    BaseRpcResponse advert(URI baseUri, @RequestBody AddAdvert vo);
 
     /**
      * 门禁广告批量下发
@@ -38,7 +38,7 @@ public interface AdvertRpc {
      * @return
      */
     @RequestMapping(value = {"/doordevice/adlist"}, method = {org.springframework.web.bind.annotation.RequestMethod.POST}, produces = {"application/json;charset=UTF-8"})
-    List<AdvertAddListRpcResp> AdvertList(URI baseUri, @RequestBody AddAdvertList vo);
+    List<AdvertAddListRpcResp> advertList(URI baseUri, @RequestBody AddAdvertList vo);
 
     /**
      * 门禁广告批量删除

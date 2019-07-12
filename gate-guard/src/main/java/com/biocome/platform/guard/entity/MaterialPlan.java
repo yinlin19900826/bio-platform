@@ -18,54 +18,77 @@ import java.util.Date;
 public class MaterialPlan {
 	private static final long serialVersionUID = 1L;
 
-	//主键编号
+	/**
+	 * 主键编号
+	 */
 	@Id
 	private Integer id;
 
-	//素材ID
+	/**
+	 * 素材ID
+	 */
 	@Column(name = "materialid")
 	private Integer materialid;
 
-	//广告计划ID
+	/**
+	 * 广告计划ID
+	 */
 	@Column(name = "planid")
 	private Integer planid;
 
-	//备注
+	/**
+	 * 备注
+	 */
 	@Column(name = "remark")
 	private String remark;
 
-	//数据有效(0有效1无效)
+	/**
+	 * 数据有效(0有效1无效)
+	 */
 	@Column(name = "status")
 	private Integer status;
 
-	//是否删除（0未删除1已删除）
+	/**
+	 * 是否删除（0未删除1已删除）
+	 */
 	@Column(name = "del")
 	private Integer del;
 
-	//创建时间
+	/**
+	 * 创建时间
+	 */
 	@Column(name = "createtime")
 	private Date createtime;
 
-	//创建人账号
+	/**
+	 * 创建人账号
+	 */
 	@Column(name = "createcode")
 	private String createcode;
 
-	//创建人昵称
+	/**
+	 * 创建人昵称
+	 */
 	@Column(name = "createname")
 	private String createname;
 
-	//更新时间
+	/**
+	 * 更新时间
+	 */
 	@Column(name = "updatetime")
 	private Date updatetime;
 
-	//更新人账号
+	/**
+	 * 更新人账号
+	 */
 	@Column(name = "updatecode")
 	private String updatecode;
 
-	//更新人昵称
+	/**
+	 * 更新人昵称
+	 */
 	@Column(name = "updatename")
 	private String updatename;
-
 
 	/**
 	 * 设置：主键编号

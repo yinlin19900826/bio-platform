@@ -36,13 +36,13 @@ public class AdvertFallbackFactory implements FallbackFactory<AdvertRpc> {
             }
 
             @Override
-            public BaseRpcResponse Advert(URI baseUri, AddAdvert vo) {
+            public BaseRpcResponse advert(URI baseUri, AddAdvert vo) {
                 return new BaseRpcResponse().error();
             }
 
             @Override
-            public List<AdvertAddListRpcResp> AdvertList(URI baseUri, AddAdvertList vo) {
-                return null;
+            public List<AdvertAddListRpcResp> advertList(URI baseUri, AddAdvertList vo) {
+                return removeAdListError();
             }
 
             @Override

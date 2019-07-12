@@ -299,7 +299,7 @@ public class AdvertPlanBiz extends BaseBiz<AdvertPlanMapper, AdvertPlan> {
                         URI uri = uriUtil.getUriByBrand(Integer.toString(j));
                         List<AdvertAddListRpcResp> advertAddListRpcResps = null;
                         try {
-                            advertAddListRpcResps = advertRpc.AdvertList(uri, addAdvertList);
+                            advertAddListRpcResps = advertRpc.advertList(uri, addAdvertList);
                             log.info("批量下发广告的响应结果为:{}",advertAddListRpcResps.toString());
                         }catch (Exception e){
                             log.info(e.getMessage());

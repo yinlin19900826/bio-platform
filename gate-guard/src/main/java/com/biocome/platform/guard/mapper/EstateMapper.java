@@ -24,6 +24,14 @@ public interface EstateMapper {
      */
     List<TreeDistrictVO> selectByTree(@Param("areacode") String areacode);
 
+    /**
+     * 根据小区编号列表查询小区信息
+     *
+     * @param estateCodes 小区编号列表
+     * @return java.util.List<com.biocome.platform.guard.entity.Estate>
+     * @Author shenlele
+     * @Date 2019/7/12 9:14
+     */
     List<Estate> queryEstateByEstatecode(@Param("list") List<String> estateCodes);
 
 }
