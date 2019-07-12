@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.github.wxiaoqi.security.admin.mapper.CameraMapper">
+<mapper namespace="com.biocome.video.mapper.CameraMapper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.github.wxiaoqi.security.admin.entity.Camera" id="cameraMap">
+    <resultMap type="com.biocome.video.entity.Camera" id="cameraMap">
         <result property="id" column="id"/>
         <result property="institutioncode" column="institutioncode"/>
         <result property="videotype" column="videotype"/>
@@ -37,7 +37,7 @@
     </resultMap>
 
 
-    <select id="selectCameraList" resultType="com.github.wxiaoqi.security.admin.vo.camera.CameraVo">
+    <select id="selectCameraList" resultType="com.biocome.video.vo.CameraVo">
         select c.id, c.institutioncode, c.videotype, c.encodetype,c.jointype,c.transfertype,c.monitorname,c.lan_ip as
         lanIp,c.lan_port as lanPort,c.wan_ip as wanIp,c.wan_port as wanPort,
         c.ctrl_model as ctrlModel,c.`username`,c.`password`, c.dns_parse as dnsParse,c.gateway_mapping as
@@ -68,7 +68,7 @@
         ON t.dict_key = c.videotype
     </select>
 
-    <resultMap id="TreeCameraVoMap" type="com.github.wxiaoqi.security.admin.vo.camera.CameraVo">
+    <resultMap id="TreeCameraVoMap" type="com.biocome.video.vo.CameraVo">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="factory" jdbcType="VARCHAR" property="factory"/>
         <result column="monitorname" jdbcType="VARCHAR" property="monitorname"/>
