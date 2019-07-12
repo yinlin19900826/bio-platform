@@ -23,7 +23,7 @@
  *
  */
 
-package com.biocome.platform.base.api.vo.search;
+package com.biocome.platform.common.vo.search;
 
 
 import java.io.Serializable;

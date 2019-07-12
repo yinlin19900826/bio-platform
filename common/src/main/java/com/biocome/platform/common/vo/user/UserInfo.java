@@ -1,4 +1,4 @@
-package com.biocome.platform.base.api.vo.user;
+package com.biocome.platform.common.vo.user;
 
 import java.io.Serializable;
 import java.util.Date;

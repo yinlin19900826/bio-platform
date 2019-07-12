@@ -1,6 +1,6 @@
 package com.biocome.platform.gateway.feign;
 
-import com.biocome.platform.base.api.vo.log.LogInfo;
+import com.biocome.platform.common.vo.log.LogInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

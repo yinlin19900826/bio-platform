@@ -1,4 +1,4 @@
-package com.biocome.platform.base.api.vo.authority;
+package com.biocome.platform.common.vo.authority;
 
 import java.io.Serializable;
 

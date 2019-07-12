@@ -1,6 +1,6 @@
 package com.biocome.platform.gateway.fallback;
 
-import com.biocome.platform.base.api.vo.authority.PermissionInfo;
+import com.biocome.platform.common.vo.authority.PermissionInfo;
 import com.biocome.platform.gateway.feign.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

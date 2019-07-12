@@ -1,6 +1,6 @@
 package com.biocome.platform.gateway.utils;
 
-import com.biocome.platform.base.api.vo.log.LogInfo;
+import com.biocome.platform.common.vo.log.LogInfo;
 import com.biocome.platform.gateway.feign.ILogService;
 import lombok.extern.slf4j.Slf4j;
 
