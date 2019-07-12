@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.basemanager.mapper.HouseMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.basemanager.entity.House">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="housecode" jdbcType="VARCHAR" property="housecode"/>
+        <result column="housename" jdbcType="VARCHAR" property="housename"/>
+        <result column="unitcode" jdbcType="VARCHAR" property="unitcode"/>
+        <result column="unitname" jdbcType="VARCHAR" property="unitname"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="housestruc" jdbcType="VARCHAR" property="housestruc"/>
+        <result column="typestruc" jdbcType="VARCHAR" property="typestruc"/>
+        <result column="housesite" jdbcType="VARCHAR" property="housesite"/>
+        <result column="housearea" jdbcType="VARCHAR" property="housearea"/>
+        <result column="usecase" jdbcType="VARCHAR" property="usecase"/>
+        <result column="usenature" jdbcType="INTEGER" property="usenature"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
+    <!--根据房屋名称，房屋地址查询房屋信息，查询所有时传参都为null-->
+    <select id="selectByAttribute" resultMap="BaseResultMap">
+        SELECT
+        h.id,h.housecode,h.housename,h.unitcode,h.unitname,h.buildcode,h.buildname,h.estatecode,h.estatename,
+        h.housestruc,h.typestruc,h.housesite,h.housearea,h.usecase,h.usenature,h.remark,h.status,h.del,
+        h.createtime,h.createcode,h.createname,h.updatetime,h.updatecode,h.updatename
+        FROM
+        base_house h
+        <where>
+            <if test="housename != null and housename.trim() != ''">and h.housename like concat('%',
+                #{housename,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="housesite != null and housesite.trim() != ''">and h.housesite like concat('%',
+                #{housesite,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+        ORDER BY
+        h.updatetime DESC
+    </select>
+    <!--删除方法-->
+    <delete id="deleteHouse" parameterType="java.util.List">
+        delete from base_house where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.basemanager.mapper.UnitMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.basemanager.entity.Unit">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="unitcode" jdbcType="VARCHAR" property="unitcode"/>
+        <result column="unitname" jdbcType="VARCHAR" property="unitname"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="housenum" jdbcType="VARCHAR" property="housenum"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
+    <!--根据小区名称，楼栋名称，单元名称查询所有单元信息，查询所有时传参都为null-->
+    <select id="selectByAttribute" resultMap="BaseResultMap">
+        SELECT
+        u.id,u.unitcode,u.unitname,u.buildcode,u.buildname,u.estatecode,u.estatename,
+        (SELECT count(h.unitcode) FROM base_house h WHERE h.unitcode = u.unitcode) as housenum,
+        u.remark,u.status,u.del,u.createtime,u.createcode,u.createname,u.updatetime,u.updatecode,u.updatename
+        FROM
+        base_unit u
+        <where>
+            <if test="unitname != null and unitname.trim() != ''">and u.unitname like concat('%',
+                #{unitname,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="buildname != null and buildname.trim() != ''">and u.buildname like concat('%',
+                #{buildname,jdbcType=VARCHAR},
+                '%')
+            </if>
+            <if test="estatename != null and estatename.trim() != ''">and u.estatename = #{estatename,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY
+        u.updatetime DESC
+    </select>
+    <!--删除方法-->
+    <delete id="deleteUnit" parameterType="java.util.List">
+        delete from base_unit where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+</mapper>
