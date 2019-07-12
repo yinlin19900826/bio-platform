@@ -74,8 +74,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2).groupName("管理员模块")
                 .apiInfo(apiAdminInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.biocome.platform.admin.rest"))//api接口包扫描路径
-                .paths(PathSelectors.regex("/admin.*/.*"))//可以根据url路径设置哪些请求加入文档，忽略哪些请求
+                .apis(RequestHandlerSelectors.basePackage("com.biocome.platform.basemanager.rest"))//api接口包扫描路径
+                .paths(PathSelectors.regex("/basemanager.*/.*"))//可以根据url路径设置哪些请求加入文档，忽略哪些请求
                 .build();
     }
 
@@ -91,7 +91,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2).groupName("视频设备模块")
                 .apiInfo(apiCameraInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.biocome.platform.admin.rest"))//api接口包扫描路径
+                .apis(RequestHandlerSelectors.basePackage("com.biocome.platform.basemanager.rest"))//api接口包扫描路径
                 .paths(PathSelectors.regex("/camera.*/.*"))//可以根据url路径设置哪些请求加入文档，忽略哪些请求
                 .build();
     }

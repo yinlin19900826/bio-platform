@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.basemanager.mapper.CameraGroupMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.basemanager.entity.CameraGroup" id="cameraGroupMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="nodeLevel" column="node_level"/>
+        <result property="nodeType" column="node_type"/>
+        <result property="pipelineId" column="pipeline_id"/>
+    </resultMap>
+
+    <!--    可选镜头组-->
+    <select id="selectableList" resultType="com.biocome.platform.common.vo.UINodeVo">
+        SELECT CONCAT("pipeline_",id) AS id, `name`,  CONCAT("camera_",id) AS parentId, NULL AS `attach`, 2 AS `type` FROM base_camera_pipeline p
+        WHERE NOT EXISTS (SELECT DISTINCT pipeline_id FROM base_camera_group g WHERE p.id = pipeline_id)
+        UNION
+        SELECT CONCAT("camera_",id) AS id, monitorname AS `name`, institutioncode AS parentId, `lan_ip` AS `attach`, 1 AS `type` FROM base_camera c
+        WHERE NOT EXISTS (SELECT DISTINCT camera_id FROM base_camera_group g WHERE c.id = g.camera_id)
+    </select>
+
+    <!--    添加到基础组  -->
+    <insert id="add2Group">
+        INSERT INTO base_camera_group
+        (`name`, `parent_id`, `node_level`, `node_type`, `camera_id`, `pipeline_id`)
+        values
+        <foreach collection="vos" item="vo" separator="," >
+            (#{vo.name}, #{vo.parentId}, #{vo.level}+1, 2, #{vo.camera_id}, #{vo.pipeline_id})
+        </foreach>
+    </insert>
+
+    <!--    根据id批量删除 -->
+    <delete id="deleteByIds">
+        delete from base_camera_group
+        where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getDupilicationCount" resultType="java.lang.Integer">
+        select count(0) from base_camera_group
+        where parent_id = #{parentId} and `name` = #{name}
+    </select>
+</mapper>

@@ -1,17 +1,16 @@
-package com.biocome.platform.admin.biz;
+package com.biocome.platform.basemanager.biz;
 
-import com.biocome.platform.admin.mapper.StreamMediaMapper;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.biocome.platform.admin.vo.camera.StreamMediaVo;
+import com.biocome.platform.basemanager.entity.StreamMedia;
+import com.biocome.platform.basemanager.mapper.StreamMediaMapper;
+import com.biocome.platform.basemanager.vo.camera.StreamMediaVo;
+import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.TableResultResponse;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import com.biocome.platform.admin.entity.StreamMedia;
-import com.biocome.platform.common.biz.BaseBiz;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
