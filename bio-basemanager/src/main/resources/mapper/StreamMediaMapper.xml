@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.basemanager.mapper.StreamMediaMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.basemanager.entity.StreamMedia" id="streamMediaMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="ip" column="ip"/>
+        <result property="port" column="port"/>
+        <result property="priority" column="priority"/>
+        <result property="cameraId" column="camera_id"/>
+    </resultMap>
+
+    <select id="selectStraemMediaList" resultType="com.biocome.platform.basemanager.vo.camera.StreamMediaVo">
+        SELECT id, `name`, ip , port, priority,camera_id AS cameraId
+        FROM base_stream_media
+        WHERE (1=1) AND camera_id IS NULL
+        <if test="cameraId != null">
+            OR camera_id = #{cameraId}
+        </if>
+        <if test="name != null and name.trim() != '' ">
+            AND `name` LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="ip != null and ip.trim() != '' ">
+            AND lan_ip LIKE CONCAT('%',#{ip},'%')
+        </if>
+    </select>
+
+    <!--    关联流媒体  -->
+    <update id="bindCamera">
+        update base_stream_media set camera_id = #{cameraId}
+        where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

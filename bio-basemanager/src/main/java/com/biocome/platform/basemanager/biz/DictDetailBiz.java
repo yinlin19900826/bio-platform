@@ -1,6 +1,9 @@
-package com.biocome.platform.admin.biz;
+package com.biocome.platform.basemanager.biz;
 
 import com.ace.cache.annotation.Cache;
+import com.biocome.platform.basemanager.entity.DictDetail;
+import com.biocome.platform.basemanager.mapper.DictDetailMapper;
+import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.tree.UITree;
@@ -9,10 +12,6 @@ import com.biocome.platform.common.vo.UINodeVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import com.biocome.platform.admin.entity.DictDetail;
-import com.biocome.platform.admin.mapper.DictDetailMapper;
-import com.biocome.platform.common.biz.BaseBiz;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
