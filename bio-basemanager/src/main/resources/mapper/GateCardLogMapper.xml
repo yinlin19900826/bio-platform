@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.wxiaoqi.security.admin.mapper.GateCardLogMapper" >
+  <resultMap id="BaseResultMap" type="com.biocome.platform.basemanager.entity.GateCardLog" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="physicalcard_no" property="physicalcardNo" jdbcType="VARCHAR" />
+    <result column="logicalcard_no" property="logicalcardNo" jdbcType="VARCHAR" />
+    <result column="credential_no" property="credentialNo" jdbcType="VARCHAR" />
+    <result column="credential_Type" property="credentialType" jdbcType="VARCHAR" />
+    <result column="change_type" property="changeType" jdbcType="VARCHAR" />
+    <result column="disable_startdate" property="disableStartdate" jdbcType="DATE" />
+    <result column="disable_deadline" property="disableDeadline" jdbcType="DATE" />
+    <result column="opt_name" property="optName" jdbcType="VARCHAR" />
+    <result column="opt_time" property="optTime" jdbcType="DATE" />
+  </resultMap>
+  <select id="selectByAttribute" resultMap="BaseResultMap">
+    SELECT
+      l.id,l.physicalcard_no,l.logicalcard_no,l.credential_no,l.credential_Type,l.change_type,l.disable_startdate,
+      l.disable_deadline,l.opt_name,l.opt_time
+    FROM
+    gatecard_log l
+    WHERE
+    l.id is not null
+    <if test="physicalcardNo != null and physicalcardNo.trim() != ''">and
+    l.physicalcard_no like concat(concat('%',
+      #{physicalcardNo,jdbcType=VARCHAR}), '%')
+    </if>
+    <if test="optName != null and optName.trim() != ''">and
+      l.opt_name like concat(concat('%',
+      #{optName,jdbcType=VARCHAR}), '%')
+    </if>
+    ORDER BY
+    l.opt_time DESC
+  </select>
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.basemanager.mapper.LesseeMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.basemanager.entity.Lessee">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="useralias" jdbcType="VARCHAR" property="useralias"/>
+        <result column="usersex" jdbcType="INTEGER" property="usersex"/>
+        <result column="usertype" jdbcType="INTEGER" property="usertype"/>
+        <result column="iscarepeople" jdbcType="INTEGER" property="iscarepeople"/>
+        <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
+        <result column="nation" jdbcType="VARCHAR" property="nation"/>
+        <result column="nativeplace" jdbcType="VARCHAR" property="nativeplace"/>
+        <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
+        <result column="nationality" jdbcType="VARCHAR" property="nationality"/>
+        <result column="validtime" jdbcType="TIMESTAMP" property="validtime"/>
+        <result column="politicsstatus" jdbcType="INTEGER" property="politicsstatus"/>
+        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="headphoto" jdbcType="VARCHAR" property="headphoto"/>
+        <result column="papersphoto" jdbcType="VARCHAR" property="papersphoto"/>
+        <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="emergencyname" jdbcType="VARCHAR" property="emergencyname"/>
+        <result column="emergencytel" jdbcType="VARCHAR" property="emergencytel"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="unitcode" jdbcType="VARCHAR" property="unitcode"/>
+        <result column="unitname" jdbcType="VARCHAR" property="unitname"/>
+        <result column="housecode" jdbcType="VARCHAR" property="housecode"/>
+        <result column="resideaddress" jdbcType="VARCHAR" property="resideaddress"/>
+        <result column="birthtime" jdbcType="TIMESTAMP" property="birthtime"/>
+        <result column="islogout" jdbcType="INTEGER" property="islogout"/>
+        <result column="logoutpeople" jdbcType="VARCHAR" property="logoutpeople"/>
+        <result column="logouttime" jdbcType="TIMESTAMP" property="logouttime"/>
+        <result column="leavetime" jdbcType="TIMESTAMP" property="leavetime"/>
+        <result column="checkintime" jdbcType="TIMESTAMP" property="checkintime"/>
+        <result column="iscard" jdbcType="INTEGER" property="iscard"/>
+        <result column="isapp" jdbcType="INTEGER" property="isapp"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="registertime" jdbcType="TIMESTAMP" property="registertime"/>
+        <result column="registerpeople" jdbcType="VARCHAR" property="registerpeople"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
+    <!--查询租户信息(可传值有estatecode，islogout，username，papersnum，usersex，occupation，politicsstatus，birthbegintime，birthendtime，registerbegintime，registerendtime)-->
+    <select id="selectByAttribute" parameterType="com.biocome.platform.basemanager.vo.LesseeVo"
+            resultMap="BaseResultMap">
+        SELECT *
+        FROM
+        base_lessee
+        <where>
+            <if test="estatecode != null">and estatecode = #{estatecode,jdbcType=VARCHAR}</if>
+            <if test="islogout != null">and islogout = #{islogout,jdbcType=INTEGER}</if>
+            <if test="username != null">and username = #{username,jdbcType=VARCHAR}</if>
+            <if test="usercode != null">and usercode = #{usercode,jdbcType=VARCHAR}</if>
+            <if test="papersnum != null">and papersnum = #{papersnum,jdbcType=VARCHAR}</if>
+            <if test="usersex != null">and usersex = #{usersex,jdbcType=INTEGER}</if>
+            <if test="occupation != null">and occupation = #{occupation,jdbcType=VARCHAR}</if>
+            <if test="politicsstatus != null">and politicsstatus = #{politicsstatus,jdbcType=VARCHAR}</if>
+            <if test="birthbegintime != null"><![CDATA[and birthtime <= #{birthbegintime,jdbcType=TIMESTAMP}]]></if>
+            <if test="birthendtime != null"><![CDATA[and birthtime >= #{birthendtime,jdbcType=TIMESTAMP}]]></if>
+            <if test="registerbegintime != null">
+                <![CDATA[and registertime >= #{registerbegintime,jdbcType=TIMESTAMP}]]></if>
+            <if test="registerendtime != null">
+                <![CDATA[and registertime <= #{registerendtime,jdbcType=TIMESTAMP}]]></if>
+        </where>
+        ORDER BY
+        updatetime DESC
+    </select>
+
+    <!--删除方法-->
+    <delete id="deleteLessee" parameterType="java.util.List">
+        delete from base_lessee where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+</mapper>
