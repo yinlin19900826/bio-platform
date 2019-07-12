@@ -20,6 +20,7 @@
         <module>common</module>
         <module>auth</module>
         <module>base-manage</module>
+        <module>bio-basemanager</module>
         <module>visit-record</module>
         <module>file-service</module>
         <module>gate-guard</module>
