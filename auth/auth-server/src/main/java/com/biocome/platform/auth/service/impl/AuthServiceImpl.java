@@ -2,7 +2,7 @@ package com.biocome.platform.auth.service.impl;
 
 import com.biocome.platform.auth.service.AuthService;
 import com.biocome.platform.auth.util.user.JwtAuthenticationRequest;
-import com.biocome.platform.base.api.vo.user.UserInfo;
+import com.biocome.platform.common.vo.user.UserInfo;
 import com.biocome.platform.common.exception.auth.UserInvalidException;
 import com.biocome.platform.auth.feign.IUserService;
 import com.biocome.platform.auth.util.user.JwtTokenUtil;

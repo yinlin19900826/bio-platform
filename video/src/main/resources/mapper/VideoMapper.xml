@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.wxiaoqi.security.admin.mapper.VideoMapper">
-    <resultMap id="BaseResultMap" type="com.github.wxiaoqi.security.admin.entity.Video">
+<mapper namespace="com.biocome.video.mapper.VideoMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.video.entity.Video">
         <!--
           WARNING - @mbg.generated
         -->
@@ -28,7 +28,7 @@
     </resultMap>
 
 
-    <resultMap id="TreeVideoVoMap" type="com.github.wxiaoqi.security.admin.vo.tree.TreeVideoVO">
+    <resultMap id="TreeVideoVoMap" type="com.biocome.video.vo.TreeVideoVO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="videocode" jdbcType="VARCHAR" property="code"/>
         <result column="videoname" jdbcType="VARCHAR" property="name"/>

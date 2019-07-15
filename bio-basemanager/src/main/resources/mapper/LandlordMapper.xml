@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.basemanager.mapper.LandlordMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.basemanager.entity.Landlord">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="usersex" jdbcType="INTEGER" property="usersex"/>
+        <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="papersphoto" jdbcType="VARCHAR" property="papersphoto"/>
+        <result column="resideaddress" jdbcType="VARCHAR" property="resideaddress"/>
+        <result column="roomcode" jdbcType="VARCHAR" property="roomcode"/>
+        <result column="landlordtype" jdbcType="INTEGER" property="landlordtype"/>
+        <result column="isapp" jdbcType="INTEGER" property="isapp"/>
+        <result column="registertime" jdbcType="TIMESTAMP" property="registertime"/>
+        <result column="registerpeople" jdbcType="VARCHAR" property="registerpeople"/>
+        <result column="adminjurisdiction" jdbcType="INTEGER" property="adminjurisdiction"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+    <!--根据姓名，手机号，证件号码，房东类型查询，查询全部时传参为null-->
+    <select id="selectByAttribute" resultMap="BaseResultMap">
+        SELECT
+        l.id,l.username,l.usercode,l.usersex,l.paperstype,l.papersnum,l.tel,l.photo,l.papersphoto,l.resideaddress,
+        l.roomcode,l.landlordtype,l.adminjurisdiction,l.remark,l.status,l.del,l.createtime,l.createcode,
+        l.createname,l.updatetime,l.updatecode,l.updatename,l.isapp,l.registertime,l.registerpeople
+        FROM
+        base_landlord l
+        <where>
+            <if test="username != null and username.trim() != ''">and l.username like concat('%',
+                #{username,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="tel != null">and l.tel = #{tel,jdbcType=VARCHAR}</if>
+            <if test="papersnum !=null">and l.papersnum = #{papersnum,jdbcType=VARCHAR}</if>
+            <if test="landlordtype !=null">and l.landlordtype = #{landlordtype,jdbcType=VARCHAR}</if>
+        </where>
+        ORDER BY
+        l.updatetime DESC
+    </select>
+    <!--删除方法-->
+    <delete id="deleteLandlord" parameterType="java.util.List">
+        delete from base_landlord where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+</mapper>
