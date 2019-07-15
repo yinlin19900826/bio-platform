@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.basemanager.mapper.CardMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.basemanager.entity.Card">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="logic_cardno" jdbcType="VARCHAR" property="logicCardno"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="username" property="username"/>
+        <result column="phone" property="phone"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" property="buildname"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="createtime" jdbcType="VARCHAR" property="createtime"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <resultMap id="BaseResultMapForView" type="com.biocome.platform.basemanager.vo.resp.card.CardInfoResp">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="logic_cardno" jdbcType="VARCHAR" property="logicCardno"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="username" jdbcType="VARCHAR" property="userName"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="createtime" jdbcType="VARCHAR" property="createtime"/>
+        <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
+    </resultMap>
+
+
+    <select id="selectByAdditionForCardList" resultMap="BaseResultMapForView">
+        SELECT
+        bc.id,
+        bc.logic_cardno,
+        bc.physical_cardno,
+        bc.usercode,
+        bl.username,
+        bc.buildcode,
+        bb.buildname,
+        (
+        CASE bc.isalive
+        WHEN 0 THEN
+        '注销'
+        WHEN 1 THEN
+        '有效'
+        WHEN 2 THEN
+        '发卡'
+        WHEN 3 THEN
+        '禁用'
+        WHEN 4 THEN
+        '黑名单'
+        ELSE
+        ''
+        END
+        ) AS isalive,
+        bc.createtime,
+        (
+        CASE bc.cardtype
+        WHEN 1 THEN
+        'CPU卡'
+        WHEN 2 THEN
+        'IC卡'
+        WHEN 2 THEN
+        '深圳通卡'
+        ELSE
+        ''
+        END
+        ) AS cardtype
+
+        FROM
+        base_card bc
+        LEFT JOIN base_lessee bl ON bc.usercode = bl.usercode
+        LEFT JOIN base_build bb ON bc.buildcode = bb.buildcode
+        <where>
+            1=1
+            <if test="cardno != null and ''!= cardno">and (bc.logic_cardno = #{cardno,jdbcType=VARCHAR} or
+                bc.physical_cardno = #{cardno,jdbcType=VARCHAR})
+            </if>
+            <if test="cardType != null and ''!= cardType">and bc.cardtype = #{cardType,jdbcType=VARCHAR}</if>
+            <if test="cardStatus != null and ''!= cardStatus">and bc.isalive = #{cardStatus,jdbcType=VARCHAR}</if>
+            <if test="id != null and ''!= id">and bc.id = #{id,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+    <delete id="deleteCard" parameterType="java.util.List">
+        delete from base_card where 1>2
+        or id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
