@@ -1,4 +1,4 @@
-package com.biocome.platform.guard.vo.tree;
+package com.biocome.platform.inter.basemanager.vo.tree;
 
 import java.util.List;
 
@@ -18,13 +18,5 @@ public class TreeDistrictVO<T> extends DistrictVO{
 
     public void setChildren(List<T> children) {
         this.children = children;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("TreeDistrictVO{");
-        sb.append("children=").append(children);
-        sb.append('}');
-        return sb.toString();
     }
 }

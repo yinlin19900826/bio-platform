@@ -1,18 +1,17 @@
-package com.biocome.platform.inter.basemanager.tree;
+package com.biocome.platform.inter.basemanager.vo.tree;
 
+import com.biocome.platform.common.util.ValidateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.util.List;
-
 /**
- * @ClassName: TreeDistrictVO
- * @Author: yinlin
- * @Date: 2019/6/5 10:22
+ * @ClassName: DistrictVO
+ * @Author: shenlele
+ * @Date: 2019/5/17 10:18
  * @Description:
  */
-@ApiModel(value = "视频树实体类")
-public class TreeVideoVO<T>{
+@ApiModel(value = "行政区划树实体类")
+public class DistrictVO {
 
     private Integer id;
 
@@ -34,29 +33,11 @@ public class TreeVideoVO<T>{
     @ApiModelProperty(value = "上级行政区划编码")
     private String parentcode;
 
-    @ApiModelProperty(value = "摄像机在线总数")
-    private Integer countlivevideo;
+    @ApiModelProperty(value = "楼栋总数")
+    private String countbuild;
 
-    @ApiModelProperty(value = "摄像机总数")
-    private Integer countcamera;
-
-    private List<T> children;
-
-    public Integer getCountlivevideo() {
-        return countlivevideo;
-    }
-
-    public void setCountlivevideo(Integer countlivevideo) {
-        this.countlivevideo = countlivevideo;
-    }
-
-    public Integer getCountcamera() {
-        return countcamera;
-    }
-
-    public void setCountcamera(Integer countcamera) {
-        this.countcamera = countcamera;
-    }
+    @ApiModelProperty(value = "门禁机总数")
+    private String countdevice;
 
     public Integer getId() {
         return id;
@@ -83,6 +64,9 @@ public class TreeVideoVO<T>{
     }
 
     public Integer getType() {
+        if (ValidateUtils.isEmpty(type)) {
+            type = 7;
+        }
         return type;
     }
 
@@ -114,12 +98,19 @@ public class TreeVideoVO<T>{
         this.parentcode = parentcode;
     }
 
-
-    public List<T> getChildren() {
-        return children;
+    public String getCountbuild() {
+        return countbuild;
     }
 
-    public void setChildren(List<T> children) {
-        this.children = children;
+    public void setCountbuild(String countbuild) {
+        this.countbuild = countbuild;
+    }
+
+    public String getCountdevice() {
+        return countdevice;
+    }
+
+    public void setCountdevice(String countdevice) {
+        this.countdevice = countdevice;
     }
 }

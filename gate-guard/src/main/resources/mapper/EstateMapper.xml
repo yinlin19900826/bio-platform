@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.biocome.platform.admin.mapper.EstateMapper">
-    <resultMap id="BaseResultMap" type="com.biocome.platform.admin.entity.Estate">
+<mapper namespace="com.biocome.platform.guard.mapper.EstateMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.entity.Estate">
         <!--
           WARNING - @mbg.generated
         -->
@@ -35,7 +35,7 @@
         <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
     </resultMap>
 
-    <resultMap id="TreeEstateVoMap" type="com.biocome.platform.admin.vo.tree.TreeDistrictVO">
+    <resultMap id="TreeEstateVoMap" type="com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="estatecode" jdbcType="VARCHAR" property="code"/>
         <result column="estatename" jdbcType="VARCHAR" property="name"/>

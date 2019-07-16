@@ -20,12 +20,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.biocome.platform.inter.basemanager.*")
 @EnableFeignClients({"com.biocome.platform.auth.client.feign","com.biocome.platform.guard.rpc.service"})
 @EnableScheduling
 @EnableAceAuthClient
 @EnableTransactionManagement
-@MapperScan("com.biocome.platform.guard.mapper")
+@MapperScan({"com.biocome.platform.guard.mapper", "com.biocome.platform.inter.basemanager.mapper"})
 @EnableSwagger2Doc
 public class GateGuardBootstrap {
     public static void main(String[] args) {

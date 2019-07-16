@@ -19,7 +19,7 @@
         <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
         <result column="remark" property="remark"/>
     </resultMap>
-    <resultMap id="BaseResultMapForView" type="com.biocome.platform.basemanager.vo.resp.card.CardInfoResp">
+    <resultMap id="BaseResultMapForView" type="com.biocome.platform.inter.basemanager.vo.card.CardInfoResp">
         <!--
           WARNING - @mbggenerated
         -->

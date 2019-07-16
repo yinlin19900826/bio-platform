@@ -1,6 +1,6 @@
 package com.biocome.platform.guard.vo.showmanage;
 
-import com.biocome.platform.guard.vo.device.DeviceInfoResp;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceInfoResp;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

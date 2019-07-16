@@ -6,7 +6,7 @@ import com.biocome.platform.guard.biz.ShowManageRpcBiz;
 import com.biocome.platform.guard.biz.TreeDistrictBiz;
 import com.biocome.platform.guard.vo.showmanage.DeviceAndStatusVo;
 import com.biocome.platform.guard.vo.showmanage.ShowManageVo;
-import com.biocome.platform.guard.vo.tree.TreeDistrictVO;
+import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

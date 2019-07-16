@@ -3,28 +3,20 @@ package com.biocome.platform.inter.basemanager.biz;
 import com.ace.cache.annotation.Cache;
 import com.ace.cache.annotation.CacheClear;
 import com.biocome.platform.inter.basemanager.LesseeCardMsgResp;
-import com.biocome.platform.inter.basemanager.constant.CardStatusEnum;
-import com.biocome.platform.inter.basemanager.constant.CardTypeEnum;
-import com.biocome.platform.inter.basemanager.entity.Build;
 import com.biocome.platform.inter.basemanager.entity.Card;
-import com.biocome.platform.inter.basemanager.entity.Landlord;
 import com.biocome.platform.inter.basemanager.mapper.CardMapper;
 /*import com.bicome.platform.inter.basemanager.vo.admin.AdminCardVo;
 import com.bicome.platform.inter.basemanager.vo.admin.AdminSimpleCardVo;
 import com.bicome.platform.inter.basemanager.vo.card.*;*/
-import com.biocome.platform.inter.basemanager.vo.card.AddCardParam;
 import com.biocome.platform.inter.basemanager.vo.card.CardInfoResp;
 import com.biocome.platform.inter.basemanager.vo.card.OpenblukVo;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListReq;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListResp;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
-import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
-import com.biocome.platform.common.util.ValidateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -374,163 +366,5 @@ public class CardBiz extends BaseBiz<CardMapper, Card> {
     public List<Map<String, Object>> getAdminOwnCards(List<String> userCodes) {
         return mapper.selectAdminOwnCards(userCodes);
     }
-
-    /**
-     * 管理员卡列表
-     *
-     * @param admincode
-     * @param cardNo
-     * @param isalive
-     * @param pageSize
-     * @param pageNo
-     * @return
-     */
-    /*public TableResultResponse<AdminSimpleCardVo> adminCardList(String admincode, String cardNo, Integer isalive,
-                                                                int pageSize, int pageNo) {
-        try {
-            Page<AdminSimpleCardVo> res = PageHelper.startPage(pageNo, pageSize);
-            mapper.selectAdminCardList(admincode, cardNo, isalive);
-            return new TableResultResponse<>(res.getTotal(), res.getResult());
-        } catch (Exception e) {
-            log.info(e.getStackTrace().toString());
-            return new TableResultResponse<>(CommonConstants.EX_OTHER_CODE, "查询管理员门禁卡失败，错误信息：数据库错误！");
-        }
-    }*/
-
-    /***
-     * 管理员管理的卡
-     * @param admincode
-     * @param cardNo
-     * @param isalive
-     * @param pageSize
-     * @param pageNo
-     * @return
-     */
-    /*public TableResultResponse<AdminSimpleCardVo> adminManageCardList(String admincode, String cardNo, Integer isalive, int pageSize, int pageNo) {
-        try {
-            Page<AdminSimpleCardVo> res = PageHelper.startPage(pageNo, pageSize);
-            mapper.adminManageCardList(admincode, cardNo, isalive);
-            return new TableResultResponse<>(res.getTotal(), res.getResult());
-        } catch (Exception e) {
-            log.info(e.getStackTrace().toString());
-            return new TableResultResponse<>(CommonConstants.EX_OTHER_CODE, "查询管理员门禁卡失败，错误信息：数据库错误！");
-        }
-    }*/
-
-    /**
-     * 所有管理卡（通卡）
-     *
-     *
-     * @param username
-     * @param certNo
-     * @param communityname
-     * @param pageSize
-     * @param pageNo
-     * @return
-     */
-    /*public TableResultResponse<AdminCardVo> superCardList(String username, String certNo, String communityname, int pageSize, int pageNo) {
-        try {
-            Page<AdminCardVo> res = PageHelper.startPage(pageNo, pageSize);
-            mapper.superCardList(username, certNo, communityname);
-            return new TableResultResponse<>(res.getTotal(), res.getResult());
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            return new TableResultResponse<>(CommonConstants.EX_OTHER_CODE, "查询所有管理卡失败，错误信息：数据库错误！");
-        }
-    }*/
-
-    /**
-     * 增加卡
-     * @param param
-     * @return
-     */
-    public ObjectRestResponse addCard(AddCardParam param) throws Exception{
-        if(ValidateUtils.isEmpty(param)){
-            log.info("请求参数不能为空！");
-            return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE,"请求参数不能为空！");
-        }
-        Card card = selectByPhysicalCardNo(param.getCardNo());
-        if(ValidateUtils.isNotEmpty(card)){
-            deleteById(card.getId());
-        }
-        card = new Card();
-        BeanUtils.copyProperties(card, param);
-        card.setPhysicalCardno(param.getCardNo());
-        card.setCreatetime(new Date());
-        card.setIsalive(CardStatusEnum.PUBLISHING.getCardStatusCode());
-        card.setLogicCardno(param.getLogicCardno());
-        if(ValidateUtils.isNotEmpty(param.getBuildcode())){
-            Build build = buildBiz.selectByBuildcode(param.getBuildcode());
-            if(ValidateUtils.isEmpty(build)){
-                log.info("未知的楼栋，楼栋编码："+param.getBuildcode());
-                return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE,"未知的楼栋，楼栋编码："+param.getBuildcode());
-            }
-            card.setBuildname(build.getBuildname());
-        }
-        if(param.getCardtype() != CardTypeEnum.NORMAL.getValue()){
-            //设置管理员卡信息
-            Landlord landlord = landlordBiz.selectByUserCode(param.getUsercode());
-            if(ValidateUtils.isEmpty(landlord)){
-                log.info("未知的管理员，管理员编码："+param.getAdmincode());
-                return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE,"未知的管理员，管理员编码："+param.getAdmincode());
-            }
-            card.setUsername(landlord.getUsername());
-            card.setPhone(landlord.getTel());
-            card.setRemark(landlord.getRemark());
-        }
-        insert(card);
-        return new ObjectRestResponse().success();
-    }
-
-    /***
-     * 管理员发卡通知(一张卡关联多个楼栋)
-     * @param card
-     * @return
-     */
-    /*public BaseRpcResponse deliverAdminCardNotify(Card card, List<String> codes) {
-        OpenCardVo openVo = new OpenCardVo();
-        //openVo.setToken();
-        openVo.setUsercode(card.getUsercode());
-        openVo.setCardno(card.getPhysicalCardno());
-        openVo.setCardtype(card.getCardtype());
-        List<CardSnVo> list = deviceBiz.selectSnByBuildCodes(codes);
-        openVo.setList(list);
-        return openCard(openVo);
-    }*/
-
-    /***
-     * 管理员注销卡通知
-     * @param card
-     * @return
-     */
-    /*public BaseRpcResponse unregisterAdminCardNotify(Card card, List<String> codes) {
-        LogoutCardVo logoutVo = new LogoutCardVo();
-        //openVo.setToken();
-        logoutVo.setUsercode(card.getUsercode());
-        logoutVo.setCardno(card.getPhysicalCardno());
-        logoutVo.setCardtype(card.getCardtype());
-        List<CardSnVo> list = deviceBiz.selectSnByBuildCodes(codes);
-        logoutVo.setSnList(list);
-        return logoutCard(logoutVo);
-    }
-
-    public BaseRpcResponse unregisterAdminCardNotify(String usercode, String cardNo) {
-        LogoutCardVo logoutCardVo = new LogoutCardVo();
-        Card card = selectByPhysicalCardNo(cardNo);
-        List<String> cardNoList = new ArrayList<>();
-        cardNoList.add(cardNo);
-        List<CardDeviceVo> voList = adminCardBindBiz.cardDeviceList(cardNoList);
-        if(ValidateUtils.isNotEmpty(voList)){
-            Map<String, CardDeviceVo> map = new HashMap<String, CardDeviceVo>();
-            for(CardDeviceVo vo : voList){
-                map.put(vo.getCardNo(), vo);
-            }
-            logoutCardVo.setUsercode(usercode);
-            logoutCardVo.setCardno(cardNo);
-            logoutCardVo.setCardtype(card.getCardtype());
-            logoutCardVo.setSnList(map.get(cardNo).getSnList());
-        }
-        return logoutCard(logoutCardVo);
-    }*/
 
 }

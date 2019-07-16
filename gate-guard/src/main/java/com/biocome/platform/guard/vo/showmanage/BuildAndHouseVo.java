@@ -1,6 +1,6 @@
 package com.biocome.platform.guard.vo.showmanage;
 
-import com.biocome.platform.guard.entity.Build;
+import com.biocome.platform.inter.basemanager.entity.Build;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
