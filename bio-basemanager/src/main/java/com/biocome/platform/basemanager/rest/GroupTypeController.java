@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("groupType")
-public class GroupTypeController extends BaseController<GroupTypeBiz,GroupType> {
+public class GroupTypeController extends BaseController<GroupTypeBiz, GroupType> {
 //
 //    @RequestMapping(value = "/page",method = RequestMethod.GET)
 //    @ResponseBody

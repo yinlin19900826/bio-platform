@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "通道管理", tags = {"通道管理"})
 @Controller
 @RequestMapping("cameraPipeline")
-public class CameraPipelineController extends BaseController<CameraPipelineBiz,CameraPipeline> {
+public class CameraPipelineController extends BaseController<CameraPipelineBiz, CameraPipeline> {
     @Autowired
     CameraPipelineBiz cameraPipelineBiz;
 
@@ -39,7 +39,7 @@ public class CameraPipelineController extends BaseController<CameraPipelineBiz,C
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public TableResultResponse<CameraPipelineVo> list(@RequestParam(defaultValue = "20") int pageSize,
-                                                      @RequestParam(defaultValue = "1") int pageNum,String cameraId, String serialNo, String name) {
+                                                      @RequestParam(defaultValue = "1") int pageNum, String cameraId, String serialNo, String name) {
         return cameraPipelineBiz.cameraPipelineList(cameraId, serialNo , name, pageNum, pageSize);
     }
 

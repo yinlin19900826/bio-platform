@@ -1,6 +1,6 @@
 package com.biocome.platform.basemanager.vo;
 
-import com.biocome.platform.base.api.vo.authority.PermissionInfo;
+import com.biocome.platform.common.vo.authority.PermissionInfo;
 
 import java.util.List;
 

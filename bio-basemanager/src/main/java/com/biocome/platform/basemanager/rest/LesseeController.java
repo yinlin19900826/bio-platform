@@ -1,8 +1,8 @@
 package com.biocome.platform.basemanager.rest;
 
-import com.biocome.platform.basemanager.biz.LesseeBiz;
-import com.biocome.platform.basemanager.entity.Lessee;
-import com.biocome.platform.basemanager.vo.LesseeVo;
+import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
+import com.biocome.platform.inter.basemanager.entity.Lessee;
+import com.biocome.platform.inter.basemanager.vo.LesseeVo;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;

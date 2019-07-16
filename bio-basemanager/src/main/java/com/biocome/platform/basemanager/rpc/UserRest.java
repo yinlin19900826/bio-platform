@@ -1,9 +1,9 @@
 package com.biocome.platform.basemanager.rpc;
 
 import com.ace.cache.annotation.Cache;
-import com.biocome.platform.base.api.vo.authority.PermissionInfo;
-import com.biocome.platform.base.api.vo.user.UserInfo;
 import com.biocome.platform.basemanager.rpc.service.PermissionService;
+import com.biocome.platform.common.vo.authority.PermissionInfo;
+import com.biocome.platform.common.vo.user.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

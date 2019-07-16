@@ -1,6 +1,6 @@
 package com.biocome.platform.basemanager.rpc;
 
-import com.biocome.platform.base.api.vo.log.LogInfo;
+import com.biocome.platform.common.vo.log.LogInfo;
 import com.biocome.platform.basemanager.biz.GateLogBiz;
 import com.biocome.platform.basemanager.entity.GateLog;
 import org.springframework.beans.BeanUtils;

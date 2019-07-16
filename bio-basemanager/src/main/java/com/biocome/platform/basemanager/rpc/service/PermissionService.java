@@ -1,12 +1,12 @@
 package com.biocome.platform.basemanager.rpc.service;
 
 import com.biocome.platform.auth.client.jwt.UserAuthUtil;
-import com.biocome.platform.base.api.vo.authority.PermissionInfo;
-import com.biocome.platform.base.api.vo.user.UserInfo;
-import com.biocome.platform.basemanager.biz.ElementBiz;
-import com.biocome.platform.basemanager.biz.MenuBiz;
 import com.biocome.platform.basemanager.biz.UserBiz;
 import com.biocome.platform.basemanager.constant.AdminCommonConstant;
+import com.biocome.platform.common.vo.authority.PermissionInfo;
+import com.biocome.platform.common.vo.user.UserInfo;
+import com.biocome.platform.basemanager.biz.ElementBiz;
+import com.biocome.platform.basemanager.biz.MenuBiz;
 import com.biocome.platform.basemanager.entity.Element;
 import com.biocome.platform.basemanager.entity.Menu;
 import com.biocome.platform.basemanager.entity.User;

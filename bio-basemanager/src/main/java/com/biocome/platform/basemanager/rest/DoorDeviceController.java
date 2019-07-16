@@ -1,8 +1,8 @@
 package com.biocome.platform.basemanager.rest;
 
-import com.biocome.platform.basemanager.biz.DeviceBiz;
+import com.biocome.platform.inter.basemanager.biz.DeviceBiz;
+import com.biocome.platform.inter.basemanager.entity.Device;
 import com.biocome.platform.basemanager.constant.BrandEnum;
-import com.biocome.platform.basemanager.entity.Device;
 import com.biocome.platform.basemanager.vo.resp.device.DeviceInfoResp;
 import com.biocome.platform.common.handler.ResultHandler;
 import com.biocome.platform.common.msg.MapMsgAndTableResultResponse;
@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

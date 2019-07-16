@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class StreamMediaBiz extends BaseBiz<StreamMediaMapper,StreamMedia> {
+public class StreamMediaBiz extends BaseBiz<StreamMediaMapper, StreamMedia> {
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**

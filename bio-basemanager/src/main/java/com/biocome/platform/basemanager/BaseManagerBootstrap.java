@@ -18,13 +18,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.biocome.platform.*.basemanager.*")
 @EnableFeignClients({"com.biocome.platform.auth.client.feign", "com.biocome.platform.basemanager.rpc.service"})
 @EnableScheduling
 @EnableAceAuthClient
 @EnableAceCache
 @EnableTransactionManagement
-@MapperScan("com.biocome.platform.basemanager.mapper")
+@MapperScan({"com.biocome.platform.basemanager.mapper", "com.biocome.platform.inter.basemanager.mapper"})
 @EnableSwagger2Doc
 public class BaseManagerBootstrap {
     public static void main(String[] args) {

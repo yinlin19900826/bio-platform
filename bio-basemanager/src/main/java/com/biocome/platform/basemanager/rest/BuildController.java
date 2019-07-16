@@ -1,7 +1,7 @@
 package com.biocome.platform.basemanager.rest;
 
-import com.biocome.platform.basemanager.biz.BuildBiz;
-import com.biocome.platform.basemanager.entity.Build;
+import com.biocome.platform.inter.basemanager.biz.BuildBiz;
+import com.biocome.platform.inter.basemanager.entity.Build;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 public class BuildController extends BaseController<BuildBiz, Build> {
 
     @Autowired
-    protected BuildBiz buildBiz;
+    BuildBiz buildBiz;
 
     @ApiOperation("获取楼栋列表,查询所有参数传null")
     @ApiImplicitParams({@ApiImplicitParam(name = "buildaddress", value = "楼栋地址", paramType = "query"),

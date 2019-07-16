@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "视频服务配置", tags = {"视频服务配置"})
 @Controller
 @RequestMapping("serviceConfig")
-public class ServiceConfigController extends BaseController<ServiceConfigBiz,ServiceConfig> {
+public class ServiceConfigController extends BaseController<ServiceConfigBiz, ServiceConfig> {
     @Autowired
     ServiceConfigBiz serviceConfigBiz;
 
