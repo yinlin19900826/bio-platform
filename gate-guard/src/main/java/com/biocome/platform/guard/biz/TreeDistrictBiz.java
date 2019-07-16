@@ -1,9 +1,9 @@
 package com.biocome.platform.guard.biz;
 
 import com.biocome.platform.common.util.ValidateUtils;
-import com.biocome.platform.guard.mapper.EstateMapper;
 import com.biocome.platform.guard.mapper.TreeDistrictMapper;
 import com.biocome.platform.inter.basemanager.mapper.BuildMapper;
+import com.biocome.platform.inter.basemanager.mapper.EstateMapper;
 import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
