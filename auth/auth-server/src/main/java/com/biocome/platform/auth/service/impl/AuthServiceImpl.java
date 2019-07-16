@@ -1,12 +1,12 @@
 package com.biocome.platform.auth.service.impl;
 
+import com.biocome.platform.auth.common.util.util.jwt.JWTInfo;
+import com.biocome.platform.common.exception.auth.UserInvalidException;
+import com.biocome.platform.common.vo.user.UserInfo;
 import com.biocome.platform.auth.service.AuthService;
 import com.biocome.platform.auth.util.user.JwtAuthenticationRequest;
-import com.biocome.platform.common.vo.user.UserInfo;
-import com.biocome.platform.common.exception.auth.UserInvalidException;
 import com.biocome.platform.auth.feign.IUserService;
 import com.biocome.platform.auth.util.user.JwtTokenUtil;
-import com.github.wxiaoqi.security.auth.common.util.jwt.JWTInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

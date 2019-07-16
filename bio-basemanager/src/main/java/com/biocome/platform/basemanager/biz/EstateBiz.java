@@ -38,7 +38,7 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
      * @param pageNum    分页页码
      * @param estatename 小区名称
      * @param estatecode 小区编号
-     * @return com.github.wxiaoqi.security.common.msg.TableResultResponse<Estate>
+     * @return com.github.wxiaoqi.security.TableResultResponse<Estate>
      * @Author shenlele
      * @Date 2019/5/8 14:09
      */
@@ -59,7 +59,7 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
      * 根据ID删除
      *
      * @param idList 主键列表
-     * @return com.github.wxiaoqi.security.common.msg.ObjectRestResponse<Estate>
+     * @return com.github.wxiaoqi.security.ObjectRestResponse<Estate>
      * @Author shenlele
      * @Date 2019/5/8 14:10
      */
@@ -74,7 +74,7 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
      * @param pageSize 分页数量
      * @param pageNum  分页页码
      * @param estate   小区信息
-     * @return com.github.wxiaoqi.security.common.msg.TableResultResponse<Estate>
+     * @return com.github.wxiaoqi.security.TableResultResponse<Estate>
      * @Author shenlele
      * @Date 2019/5/8 15:25
      */
@@ -98,7 +98,7 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
      * 保存小区信息（小区编号唯一）
      *
      * @param estate 小区信息
-     * @return com.github.wxiaoqi.security.common.msg.ObjectRestResponse
+     * @return com.github.wxiaoqi.security.ObjectRestResponse
      * @Author shenlele
      * @Date 2019/5/22 19:38
      */

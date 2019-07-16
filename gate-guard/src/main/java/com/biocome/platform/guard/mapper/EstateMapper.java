@@ -28,7 +28,7 @@ public interface EstateMapper {
      * 根据小区编号列表查询小区信息
      *
      * @param estateCodes 小区编号列表
-     * @return java.util.List<com.biocome.platform.guard.entity.Estate>
+     * @return java.util.List<Estate>
      * @Author shenlele
      * @Date 2019/7/12 9:14
      */

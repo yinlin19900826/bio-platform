@@ -3,7 +3,7 @@ package com.biocome.platform.auth.client.interceptor;
 import com.biocome.platform.auth.client.annotation.IgnoreUserToken;
 import com.biocome.platform.auth.client.config.UserAuthConfig;
 import com.biocome.platform.auth.client.jwt.UserAuthUtil;
-import com.biocome.platform.auth.common.util.jwt.IJWTInfo;
+import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
 import com.biocome.platform.common.context.BaseContextHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

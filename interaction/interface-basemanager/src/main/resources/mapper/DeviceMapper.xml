@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.basemanager.mapper.DeviceMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Device">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="device_name" jdbcType="VARCHAR" property="deviceName"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="device_type" jdbcType="VARCHAR" property="deviceType"/>
+        <result column="brand" jdbcType="VARCHAR" property="brand"/>
+        <result column="secretkey" jdbcType="VARCHAR" property="secretkey"/>
+        <result column="mac" jdbcType="VARCHAR" property="mac"/>
+        <result column="series_number" jdbcType="VARCHAR" property="seriesNumber"/>
+        <result column="c_number1" jdbcType="VARCHAR" property="camera1"/>
+        <result column="c_number2" jdbcType="VARCHAR" property="camera2"/>
+        <result column="c_number3" jdbcType="VARCHAR" property="camera3"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapForWeb" type="com.biocome.platform.basemanager.vo.resp.device.DeviceInfoResp">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="device_name" jdbcType="VARCHAR" property="deviceName"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="device_type" jdbcType="VARCHAR" property="deviceType"/>
+        <result column="brand" jdbcType="VARCHAR" property="brand"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
+    </resultMap>
+
+    <select id="selectByAdditionForList" resultMap="BaseResultMapForWeb">
+        SELECT
+        bd.id,
+        bd.sn,
+        bd.device_name,
+        bd.estatecode,
+        bd.buildcode,
+        bd.ip,
+        bd.device_type,
+        bbrand.brandname brand,
+        bb.buildname,
+        be.estatename
+        FROM
+        base_device bd
+        LEFT JOIN
+        base_build bb ON bd.buildcode = bb.buildcode
+        LEFT JOIN
+        base_estate be ON bd.estatecode = be.estatecode
+        LEFT JOIN
+        base_brand bbrand ON bd.brand = bbrand.brandcode
+        <where>
+            1=1
+            <if test="deviceName != null and '' != deviceName">and bd.device_name = #{deviceName,jdbcType=VARCHAR}</if>
+            <if test="sn != null and '' != sn">and bd.sn = #{sn,jdbcType=VARCHAR}</if>
+            <if test="brand != null and '' != brand">and bd.brand = #{brand,jdbcType=VARCHAR}</if>
+            <if test="estatecode != null and '' != estatecode">and bd.estatecode = #{estatecode,jdbcType=VARCHAR}</if>
+            <if test="id != null and '' != id">and bd.id = #{id,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+
+    <delete id="deleteDevice" parameterType="java.util.List">
+        delete from base_device where 1>2
+        or id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

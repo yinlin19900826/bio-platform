@@ -1,8 +1,8 @@
 package com.biocome.platform.guard.rpc.service;
 
-import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.guard.otherrpc.*;
 import com.biocome.platform.guard.rpc.fallbackfactory.OtherFallbackFactory;
+import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.guard.vo.device.DeviceSnVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +41,7 @@ public interface OtherRpc {
      *
      * @param baseUri 请求地址
      * @param vo      请求参数
-     * @return com.biocome.platform.common.msg.auth.BaseRpcResponse
+     * @return BaseRpcResponse
      * @Author shenlele
      * @Date 2019/5/20 16:31
      */
@@ -53,7 +53,7 @@ public interface OtherRpc {
      *
      * @param baseUri 请求地址
      * @param vo      请求参数
-     * @return com.biocome.platform.common.msg.auth.BaseRpcResponse
+     * @return BaseRpcResponse
      * @Author shenlele
      * @Date 2019/5/20 16:36
      */

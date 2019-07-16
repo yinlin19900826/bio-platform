@@ -1,21 +1,21 @@
 package com.biocome.platform.guard.biz;
 
 import com.alibaba.fastjson.JSON;
-import com.biocome.platform.common.biz.BaseBiz;
-import com.biocome.platform.common.msg.ObjectRestResponse;
-import com.biocome.platform.common.msg.TableResultResponse;
-import com.biocome.platform.common.msg.auth.BaseRpcResponse;
-import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.constant.AdminCommonConstant;
 import com.biocome.platform.guard.entity.Advert;
 import com.biocome.platform.guard.entity.Device;
-import com.biocome.platform.guard.mapper.AdvertListMapper;
-import com.biocome.platform.guard.mapper.DeviceMapper;
 import com.biocome.platform.guard.rpc.service.AdvertRpc;
 import com.biocome.platform.guard.utils.RpcTokenUtil;
 import com.biocome.platform.guard.utils.UriUtil;
 import com.biocome.platform.guard.vo.advert.*;
 import com.biocome.platform.guard.vo.device.DeviceSnVo;
+import com.biocome.platform.common.biz.BaseBiz;
+import com.biocome.platform.common.msg.ObjectRestResponse;
+import com.biocome.platform.common.msg.TableResultResponse;
+import com.biocome.platform.common.msg.auth.BaseRpcResponse;
+import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.guard.mapper.AdvertListMapper;
+import com.biocome.platform.guard.mapper.DeviceMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
@@ -54,7 +54,7 @@ public class AdvertListBiz extends BaseBiz<AdvertListMapper, Advert> {
      * @param pageSize 每页条数
      * @param pageNum  页码
      * @param advert   参数
-     * @return com.biocome.platform.common.msg.TableResultResponse<Advert>
+     * @return TableResultResponse<Advert>
      * @Author shenlele
      * @Date 2019/6/3 18:00
      */
@@ -69,7 +69,7 @@ public class AdvertListBiz extends BaseBiz<AdvertListMapper, Advert> {
      *
      * @param id 主键
      * @param sn 设备编号
-     * @return com.biocome.platform.common.msg.ObjectRestResponse
+     * @return ObjectRestResponse
      * @Author shenlele
      * @Date 2019/6/3 18:01
      */
@@ -121,7 +121,7 @@ public class AdvertListBiz extends BaseBiz<AdvertListMapper, Advert> {
      * 根据SN清空广告信息（含远程清空设备广告）
      *
      * @param sn 设备编号
-     * @return com.biocome.platform.common.msg.ObjectRestResponse
+     * @return ObjectRestResponse
      * @Author shenlele
      * @Date 2019/6/3 18:21
      */

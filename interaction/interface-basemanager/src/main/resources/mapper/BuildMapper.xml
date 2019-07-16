@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.inter.base.api.vo.">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Build">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="buildaddress" jdbcType="VARCHAR" property="buildaddress"/>
+        <result column="buildtype" jdbcType="VARCHAR" property="buildtype"/>
+        <result column="buildnature" jdbcType="INTEGER" property="buildnature"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="county" jdbcType="VARCHAR" property="county"/>
+        <result column="street" jdbcType="VARCHAR" property="street"/>
+        <result column="policestatio" jdbcType="VARCHAR" property="policestatio"/>
+        <result column="unitnum" jdbcType="VARCHAR" property="unitnum"/>
+        <result column="floornum" jdbcType="VARCHAR" property="floornum"/>
+        <result column="housenum" jdbcType="VARCHAR" property="housenum"/>
+        <result column="islift" jdbcType="INTEGER" property="islift"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
+    <!--根据楼栋名称或楼栋地址查询所有楼栋信息，查询所有时传参都为null-->
+    <select id="selectByAttribute" resultMap="BaseResultMap">
+        SELECT
+        b.id,b.buildcode,b.buildname,b.buildaddress,b.buildtype,b.buildnature,b.estatecode,b.estatename,
+        b.province,b.city,b.county,b.street,b.policestatio,b.floornum,b.islift,
+        (SELECT count(u.buildcode) FROM base_unit u WHERE u.buildcode = b.buildcode) as unitnum,
+        (SELECT count(h.buildcode) FROM base_house h WHERE h.buildcode = b.buildcode) as housenum,
+        b.remark,b.status,b.del,b.createtime,b.createcode,b.createname,b.updatetime,b.updatecode,b.updatename
+        FROM
+        base_build b
+        <where>
+            <if test="buildaddress != null and buildaddress.trim() != ''">and b.buildaddress like concat(concat('%',
+                #{buildaddress,jdbcType=VARCHAR}), '%')
+            </if>
+            <if test="buildname != null and buildname.trim() != ''">and b.buildname like concat(concat('%',
+                #{buildname,jdbcType=VARCHAR}), '%')
+            </if>
+        </where>
+        ORDER BY
+        b.updatetime DESC
+    </select>
+    <!--删除方法-->
+    <delete id="deleteBuild" parameterType="java.util.List">
+        delete from base_build where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+</mapper>

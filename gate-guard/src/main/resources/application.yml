@@ -1,10 +1,10 @@
 #logging:
 #  level:
 #    #        tk.mybatis: DEBUG
-#    com.biocome.platform.guard: DEBUG
+#    com.biocome.platform.admin: DEBUG
 #spring:
 #  application:
-#    name: gate-guard
+#    name: gate-admin
 #  jackson:
 #    date-format: yyyy-MM-dd HH:mm:ss
 #    time-zone: GMT+8
@@ -53,7 +53,7 @@
 #    enabled: false
 #
 #mybatis:
-#  basepackage: com.biocome.platform.guard.mapper
+#  basepackage: com.biocome.platform.admin.mapper
 #  xmlLocation: classpath:mapper/**/*.xml
 #  mapper-locations: "classpath*:mapper/*.xml"
 #
@@ -93,19 +93,19 @@
 ## 配置swagger
 #swagger:
 #  enabled: true
-#  base-package: com.biocome.platform.guard
-#  title: gate-guard
+#  base-package: com.biocome.platform.admin
+#  title: gate-admin
 #  version: 1.0.0.SNAPSHOT
 #  description: 门禁管理服务
 #  contact:
-#    name: gate-guard
+#    name: gate-admin
 #
 #auth:
 #  serviceId: auth
 #  user:
 #    token-header: Authorization
 #  client:
-#    id: gate-guard
+#    id: gate-admin
 #    secret: 123456
 #    token-header: x-client-token
 #
@@ -123,7 +123,7 @@
 #  timeout: 0
 #  commandTimeout: 5000
 #  # 服务或应用名
-#  sysName: gate-guard
+#  sysName: gate-admin
 #  enable: true
 #  database: 0
 #

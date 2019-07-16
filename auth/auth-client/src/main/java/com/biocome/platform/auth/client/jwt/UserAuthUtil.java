@@ -1,8 +1,8 @@
 package com.biocome.platform.auth.client.jwt;
 
 import com.biocome.platform.auth.client.config.UserAuthConfig;
-import com.biocome.platform.auth.common.util.jwt.IJWTInfo;
-import com.biocome.platform.auth.common.util.jwt.JWTHelper;
+import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
+import com.biocome.platform.auth.common.util.util.jwt.JWTHelper;
 import com.biocome.platform.common.exception.auth.UserTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;

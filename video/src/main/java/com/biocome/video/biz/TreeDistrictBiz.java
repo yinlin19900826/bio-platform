@@ -35,7 +35,7 @@ public class TreeDistrictBiz {
      *
      *
      * @param parentcode
-     * @return java.util.List<com.github.wxiaoqi.security.admin.vo.tree.TreeDistrictVO>
+     * @return java.util.List<com.github.wxiaoqi.security.admin.camera.tree.TreeDistrictVO>
      * @Author yinlin
      * @Date 2019/5/31 11:26
      */
@@ -64,7 +64,7 @@ public class TreeDistrictBiz {
      *
      *
      * @param
-     * @return java.util.List<com.github.wxiaoqi.security.admin.vo.tree.TreeDistrictVO>
+     * @return java.util.List<com.github.wxiaoqi.security.admin.camera.tree.TreeDistrictVO>
      * @Author yinlin
      * @Date 2019/6/3 11:26
      */

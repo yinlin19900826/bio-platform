@@ -1,10 +1,10 @@
 package com.biocome.platform.guard.rpc.service;
 
-import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.guard.rpc.fallbackfactory.SynchoFallbackFactory;
+import com.biocome.platform.guard.vo.syncho.*;
+import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.guard.vo.common.CommonListVo;
 import com.biocome.platform.guard.vo.device.DoorDeviceVo;
-import com.biocome.platform.guard.vo.syncho.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ public interface SynchoRpc {
      *
      * @param baseUri 同步地址
      * @param listVo  同步参数
-     * @return com.biocome.platform.admin.vo.EstateResp
+     * @return com.biocome.platform.guard.camera.EstateResp
      * @Author shenlele
      * @Date 2019/5/14 17:42
      */
@@ -38,7 +38,7 @@ public interface SynchoRpc {
      *
      * @param baseUri 同步地址
      * @param listVo  同步参数
-     * @return java.util.List<com.biocome.platform.admin.vo.BuildResp>
+     * @return java.util.List<com.biocome.platform.guard.camera.BuildResp>
      * @Author shenlele
      * @Date 2019/5/14 18:02
      */
@@ -50,7 +50,7 @@ public interface SynchoRpc {
      *
      * @param baseUri 同步地址
      * @param listVo  同步参数
-     * @return java.util.List<com.biocome.platform.admin.vo.UserResp>
+     * @return java.util.List<com.biocome.platform.guard.camera.UserResp>
      * @Author shenlele
      * @Date 2019/5/14 18:03
      */
@@ -62,7 +62,7 @@ public interface SynchoRpc {
      *
      * @param baseUri 同步地址
      * @param listVo  同步参数
-     * @return com.biocome.platform.admin.vo.common.CommonResp
+     * @return com.biocome.platform.guard.camera.com.biocome.platform.inter.common.CommonResp
      * @Author shenlele
      * @Date 2019/5/14 18:07
      */

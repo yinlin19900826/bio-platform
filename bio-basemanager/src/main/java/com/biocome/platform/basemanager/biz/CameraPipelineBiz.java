@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class CameraPipelineBiz extends BaseBiz<CameraPipelineMapper,CameraPipeline> {
+public class CameraPipelineBiz extends BaseBiz<CameraPipelineMapper, CameraPipeline> {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 

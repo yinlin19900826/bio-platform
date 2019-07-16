@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminHouseBindMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="AdminHouseBind" id="adminHouseBindMap">
+        <result property="id" column="id"/>
+        <result property="usercode" column="usercode"/>
+        <result property="buildCode" column="build_code"/>
+        <result property="buildName" column="build_name"/>
+        <result property="houseCode" column="house_code"/>
+        <result property="houseName" column="house_name"/>
+        <result property="communityCode" column="community_code"/>
+        <result property="communityName" column="community_name"/>
+    </resultMap>
+
+    <!--    查找楼栋绑定房间列表-->
+    <select id="bindBuildingHouseList" resultType="AdminHouseVo">
+            SELECT a.housecode, a.housename,IF(IFNULL(b.house_code, NULL),1,0) AS bind, b.id
+            FROM
+            (
+                SELECT housecode, housename from base_house WHERE buildcode =  #{buildcode}
+            ) a
+            LEFT JOIN
+            (
+                SELECT id,house_code, house_name, usercode FROM admin_house_bind WHERE build_code = #{buildcode}
+            ) b
+            ON a.housecode = b.house_code
+    </select>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into admin_house_bind
+        (build_code, build_name, house_code, house_name, community_code, community_name)
+        values
+        <foreach collection="list" item="item" separator="," >
+            (#{item.buildCode},#{item.buildName},#{item.houseCode},#{item.houseName},#{item.communityCode},#{item.communityName})
+        </foreach>
+    </insert>
+
+    <delete id="batchDeleteByIds" parameterType="java.util.List">
+        delete from admin_house_bind
+        where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="bindAll">
+        insert into admin_house_bind
+        (`build_code`, `build_name`, `house_code`, `house_name`, `community_code`, `community_name`, `unit_code`, `unit_name`)
+        select buildcode,buildname,housecode,housename,estatecode,estatename,unitcode,unitname
+        from base_house WHERE buildcode = #{buildcode}
+    </insert>
+
+    <delete id="removeAll">
+        delete from admin_house_bind where build_code = #{buildcode}
+    </delete>
+</mapper>

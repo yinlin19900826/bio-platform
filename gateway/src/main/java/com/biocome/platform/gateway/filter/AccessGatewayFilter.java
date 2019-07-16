@@ -5,7 +5,7 @@ import com.biocome.platform.auth.client.config.ServiceAuthConfig;
 import com.biocome.platform.auth.client.config.UserAuthConfig;
 import com.biocome.platform.auth.client.jwt.ServiceAuthUtil;
 import com.biocome.platform.auth.client.jwt.UserAuthUtil;
-import com.biocome.platform.auth.common.util.jwt.IJWTInfo;
+import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
 import com.biocome.platform.common.vo.authority.PermissionInfo;
 import com.biocome.platform.common.vo.log.LogInfo;
 import com.biocome.platform.common.context.BaseContextHandler;

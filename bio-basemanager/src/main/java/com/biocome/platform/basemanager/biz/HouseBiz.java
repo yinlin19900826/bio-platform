@@ -38,7 +38,7 @@ public class HouseBiz extends BaseBiz<HouseMapper, House> {
      * @param pageNum   分页页码
      * @param housename 房屋名称
      * @param housesite 房屋地址
-     * @return com.github.wxiaoqi.security.common.msg.TableResultResponse<House>
+     * @return com.github.wxiaoqi.security.TableResultResponse<House>
      * @Author shenlele
      * @Date 2019/5/8 14:10
      */
@@ -59,7 +59,7 @@ public class HouseBiz extends BaseBiz<HouseMapper, House> {
      * 根据ID删除
      *
      * @param idList 主键
-     * @return com.github.wxiaoqi.security.common.msg.ObjectRestResponse<House>
+     * @return com.github.wxiaoqi.security.ObjectRestResponse<House>
      * @Author shenlele
      * @Date 2019/5/8 14:11
      */
@@ -74,7 +74,7 @@ public class HouseBiz extends BaseBiz<HouseMapper, House> {
      * @param pageSize 分页大小
      * @param pageNum  分页页码
      * @param house    房屋信息
-     * @return com.github.wxiaoqi.security.common.msg.TableResultResponse<House>
+     * @return com.github.wxiaoqi.security.TableResultResponse<House>
      * @Author shenlele
      * @Date 2019/5/10 16:18
      */
@@ -98,7 +98,7 @@ public class HouseBiz extends BaseBiz<HouseMapper, House> {
      * 插入房屋操作（房屋编号唯一）
      *
      * @param house 房屋信息
-     * @return com.github.wxiaoqi.security.common.msg.ObjectRestResponse
+     * @return com.github.wxiaoqi.security.ObjectRestResponse
      * @Author shenlele
      * @Date 2019/5/22 19:41
      */

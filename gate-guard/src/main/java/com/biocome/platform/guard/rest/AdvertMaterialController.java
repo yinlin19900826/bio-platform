@@ -1,12 +1,12 @@
 package com.biocome.platform.guard.rest;
 
+import com.biocome.platform.guard.biz.AdvertMaterialBiz;
+import com.biocome.platform.guard.entity.AdvertMaterial;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.common.util.ValidateUtils;
-import com.biocome.platform.guard.biz.AdvertMaterialBiz;
-import com.biocome.platform.guard.entity.AdvertMaterial;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

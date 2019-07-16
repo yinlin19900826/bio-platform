@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class DictDetailBiz extends BaseBiz<DictDetailMapper,DictDetail> {
+public class DictDetailBiz extends BaseBiz<DictDetailMapper, DictDetail> {
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     public TableResultResponse<DictDetail> getListByName(String name) {

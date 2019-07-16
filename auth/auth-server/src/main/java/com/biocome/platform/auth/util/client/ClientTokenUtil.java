@@ -1,8 +1,8 @@
 package com.biocome.platform.auth.util.client;
 
+import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
+import com.biocome.platform.auth.common.util.util.jwt.JWTHelper;
 import com.biocome.platform.auth.configuration.KeyConfiguration;
-import com.github.wxiaoqi.security.auth.common.util.jwt.IJWTInfo;
-import com.github.wxiaoqi.security.auth.common.util.jwt.JWTHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

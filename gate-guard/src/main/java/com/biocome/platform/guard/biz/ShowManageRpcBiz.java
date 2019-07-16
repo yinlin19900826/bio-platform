@@ -1,16 +1,16 @@
 package com.biocome.platform.guard.biz;
 
 import com.alibaba.fastjson.JSON;
-import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.entity.Build;
 import com.biocome.platform.guard.entity.House;
 import com.biocome.platform.guard.mapper.AdminBuildingBindMapper;
+import com.biocome.platform.guard.utils.RpcTokenUtil;
+import com.biocome.platform.guard.utils.UriUtil;
+import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.mapper.BuildMapper;
 import com.biocome.platform.guard.mapper.DeviceMapper;
 import com.biocome.platform.guard.mapper.HouseMapper;
 import com.biocome.platform.guard.rpc.service.DeviceRpc;
-import com.biocome.platform.guard.utils.RpcTokenUtil;
-import com.biocome.platform.guard.utils.UriUtil;
 import com.biocome.platform.guard.vo.device.DeviceInfoResp;
 import com.biocome.platform.guard.vo.device.DeviceSnVo;
 import com.biocome.platform.guard.vo.device.DeviceStatusRes;

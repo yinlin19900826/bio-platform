@@ -1,7 +1,7 @@
 package com.biocome.platform.gateway.feign;
 
-import com.biocome.platform.common.vo.authority.PermissionInfo;
 import com.biocome.platform.gateway.fallback.UserServiceFallback;
+import com.biocome.platform.common.vo.authority.PermissionInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

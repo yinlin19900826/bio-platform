@@ -1,7 +1,7 @@
 package com.biocome.platform.auth.bean;
 
 
-import com.github.wxiaoqi.security.auth.common.util.jwt.IJWTInfo;
+import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
 
 /**
  * Created by ace on 2017/9/10.

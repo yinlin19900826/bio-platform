@@ -109,7 +109,7 @@ public class MinioTemplateBiz {
      * @param bucketName 桶的名称
      * @param prefix     前缀字符串
      * @param recursive  如果为false，则模拟一个目录结构，其中返回的每个列表都是完整对象或对象键的一部分，直到第一个'/'。具有相同前缀直到第一个'/'的所有对象将合并为一个条目
-     * @return java.util.List<com.github.wxiaoqi.security.admin.vo.minio.MinioItem>
+     * @return java.util.List<com.github.wxiaoqi.security.admin.camera.minio.MinioItem>
      * @throws Exception 异常信息
      * @Author shenlele
      * @Date 2019/7/9 14:33

@@ -28,7 +28,7 @@ public interface DeviceMapper extends Mapper<Device> {
      * 根据楼栋编号列表查询设备与卡信息
      *
      * @param codes 楼栋编号列表
-     * @return java.util.List<com.biocome.platform.guard.entity.Device>
+     * @return java.util.List<Device>
      * @Author shenlele
      * @Date 2019/7/12 9:13
      */

@@ -39,7 +39,7 @@ public class UnitBiz extends BaseBiz<UnitMapper, Unit> {
      * @param unitname   单元名称
      * @param buildname  楼栋名称
      * @param estatename 小区名称
-     * @return com.github.wxiaoqi.security.common.msg.TableResultResponse<Unit>
+     * @return com.github.wxiaoqi.security.TableResultResponse<Unit>
      * @Author shenlele
      * @Date 2019/5/8 14:13
      */
@@ -60,7 +60,7 @@ public class UnitBiz extends BaseBiz<UnitMapper, Unit> {
      * 根据ID删除
      *
      * @param idList 主键
-     * @return com.github.wxiaoqi.security.common.msg.ObjectRestResponse<Unit>
+     * @return com.github.wxiaoqi.security.ObjectRestResponse<Unit>
      * @Author shenlele
      * @Date 2019/5/8 14:14
      */
@@ -75,7 +75,7 @@ public class UnitBiz extends BaseBiz<UnitMapper, Unit> {
      * @param pageSize 分页大小
      * @param pageNum  分页页码
      * @param unit     单元信息
-     * @return com.github.wxiaoqi.security.common.msg.TableResultResponse<Unit>
+     * @return com.github.wxiaoqi.security.TableResultResponse<Unit>
      * @Author shenlele
      * @Date 2019/5/10 16:19
      */
@@ -99,7 +99,7 @@ public class UnitBiz extends BaseBiz<UnitMapper, Unit> {
      * 保存单元信息（单元编号唯一）
      *
      * @param unit 单元信息
-     * @return com.github.wxiaoqi.security.common.msg.ObjectRestResponse
+     * @return com.github.wxiaoqi.security.ObjectRestResponse
      * @Author shenlele
      * @Date 2019/5/22 19:53
      */

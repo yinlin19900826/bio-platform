@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.biocome.platform.guard.mapper.AdvertPlanMapper">
+<mapper namespace="AdvertPlanMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.biocome.platform.guard.entity.AdvertPlan" id="advertPlanMap">
+    <resultMap type="AdvertPlan" id="advertPlanMap">
         <id property="id" column="id"/>
         <result property="planname" column="planname"/>
         <result property="downestate" column="downestate"/>
@@ -82,7 +82,7 @@
             #{item.result,jdbcType=VARCHAR})
         </foreach>
     </insert>
-    <insert id="insertReturnId" useGeneratedKeys="true" keyColumn="id" keyProperty="plan.id" parameterType="com.biocome.platform.guard.entity.AdvertPlan">
+    <insert id="insertReturnId" useGeneratedKeys="true" keyColumn="id" keyProperty="plan.id" parameterType="AdvertPlan">
         INSERT INTO base_advert_plan
         (
             id,

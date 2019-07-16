@@ -1,7 +1,7 @@
 package com.biocome.platform.auth.runner;
 
+import com.biocome.platform.auth.common.util.util.jwt.RsaKeyHelper;
 import com.biocome.platform.auth.configuration.KeyConfiguration;
-import com.github.wxiaoqi.security.auth.common.util.jwt.RsaKeyHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;

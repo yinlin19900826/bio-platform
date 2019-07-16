@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class InstitutionUserBiz extends BaseBiz<InstitutionUserMapper,InstitutionUser> {
+public class InstitutionUserBiz extends BaseBiz<InstitutionUserMapper, InstitutionUser> {
     @Autowired
     DictDetailBiz dictDetailBiz;
 

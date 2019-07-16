@@ -1,13 +1,13 @@
 package com.biocome.platform.guard.biz;
 
+import com.biocome.platform.guard.constant.AdminCommonConstant;
+import com.biocome.platform.guard.entity.AdvertMaterial;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
-import com.biocome.platform.guard.constant.AdminCommonConstant;
-import com.biocome.platform.guard.entity.AdvertMaterial;
 import com.biocome.platform.guard.mapper.AdvertMaterialMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -39,7 +39,7 @@ public class AdvertMaterialBiz extends BaseBiz<AdvertMaterialMapper, AdvertMater
      * @param pageSize 分页数量
      * @param pageNum  分页页码
      * @param model    所传参数
-     * @return com.biocome.platform.common.msg.TableResultResponse<AdvertMaterial>
+     * @return TableResultResponse<AdvertMaterial>
      * @Author shenlele
      * @Date 2019/5/30 16:44
      */
@@ -53,7 +53,7 @@ public class AdvertMaterialBiz extends BaseBiz<AdvertMaterialMapper, AdvertMater
      * 根据所传idList批量删除数据
      *
      * @param idList id列表
-     * @return com.biocome.platform.common.msg.ObjectRestResponse
+     * @return ObjectRestResponse
      * @Author shenlele
      * @Date 2019/5/30 16:56
      */
@@ -78,7 +78,7 @@ public class AdvertMaterialBiz extends BaseBiz<AdvertMaterialMapper, AdvertMater
      * 插入广告素材
      *
      * @param model 广告素材
-     * @return com.biocome.platform.common.msg.ObjectRestResponse
+     * @return ObjectRestResponse
      * @Author shenlele
      * @Date 2019/5/30 17:50
      */

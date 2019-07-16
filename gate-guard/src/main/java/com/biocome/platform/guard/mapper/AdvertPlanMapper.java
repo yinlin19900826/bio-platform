@@ -1,7 +1,6 @@
 package com.biocome.platform.guard.mapper;
 
 import com.biocome.platform.guard.entity.AdvertPlan;
-import com.biocome.platform.guard.vo.advert.AdvertAddListRpcResp;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -21,7 +20,7 @@ public interface AdvertPlanMapper extends Mapper<AdvertPlan> {
      * @param isaudit 审核状态
      * @param starttime 开始时间
      * @param endtime 结束时间
-     * @return java.util.List<com.biocome.platform.guard.entity.AdvertPlan>
+     * @return java.util.List<AdvertPlan>
      * @Author shenlele
      * @Date 2019/7/12 9:20
      */

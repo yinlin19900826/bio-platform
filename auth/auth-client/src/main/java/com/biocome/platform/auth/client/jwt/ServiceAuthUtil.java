@@ -3,8 +3,8 @@ package com.biocome.platform.auth.client.jwt;
 
 import com.biocome.platform.auth.client.config.ServiceAuthConfig;
 import com.biocome.platform.auth.client.feign.ServiceAuthFeign;
-import com.biocome.platform.auth.common.util.jwt.IJWTInfo;
-import com.biocome.platform.auth.common.util.jwt.JWTHelper;
+import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
+import com.biocome.platform.auth.common.util.util.jwt.JWTHelper;
 import com.biocome.platform.common.exception.auth.ClientTokenException;
 import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.ObjectRestResponse;

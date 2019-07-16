@@ -1,10 +1,10 @@
 package com.biocome.platform.auth.interceptor;
 
+import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
 import com.biocome.platform.auth.configuration.ClientConfiguration;
 import com.biocome.platform.auth.service.AuthClientService;
 import com.biocome.platform.auth.util.client.ClientTokenUtil;
 import com.biocome.platform.common.exception.auth.ClientForbiddenException;
-import com.github.wxiaoqi.security.auth.common.util.jwt.IJWTInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
