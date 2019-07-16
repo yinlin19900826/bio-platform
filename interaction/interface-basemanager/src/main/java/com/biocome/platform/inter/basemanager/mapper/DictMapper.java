@@ -1,7 +1,7 @@
-package com.biocome.platform.basemanager.mapper;
+package com.biocome.platform.inter.basemanager.mapper;
 
 
-import com.biocome.platform.basemanager.entity.Dictionary;
+import com.biocome.platform.inter.basemanager.entity.Dictionary;
 import tk.mybatis.mapper.common.Mapper;
 
 /**

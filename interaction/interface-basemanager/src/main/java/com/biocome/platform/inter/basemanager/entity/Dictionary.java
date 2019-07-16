@@ -1,4 +1,4 @@
-package com.biocome.platform.basemanager.entity;
+package com.biocome.platform.inter.basemanager.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
