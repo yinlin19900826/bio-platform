@@ -1,8 +1,8 @@
 package com.biocome.platform.guard.utils;
 
 import com.biocome.platform.guard.constant.BrandEnum;
-import com.biocome.platform.guard.otherrpc.TokenResp;
-import com.biocome.platform.guard.otherrpc.TokenVo;
+import com.biocome.platform.guard.vo.otherrpc.TokenResp;
+import com.biocome.platform.guard.vo.otherrpc.TokenVo;
 import com.biocome.platform.guard.rpc.service.OtherRpc;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
