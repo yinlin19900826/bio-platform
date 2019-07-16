@@ -1,8 +1,8 @@
-package com.biocome.platform.basemanager.biz;
+package com.biocome.platform.inter.basemanager.biz;
 
-import com.biocome.platform.basemanager.entity.Dictionary;
-import com.biocome.platform.basemanager.mapper.DictMapper;
 import com.biocome.platform.common.biz.BaseBiz;
+import com.biocome.platform.inter.basemanager.entity.Dictionary;
+import com.biocome.platform.inter.basemanager.mapper.DictMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
