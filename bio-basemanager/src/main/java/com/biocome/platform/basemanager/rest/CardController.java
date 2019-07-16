@@ -1,8 +1,8 @@
 package com.biocome.platform.basemanager.rest;
 
 import com.biocome.platform.inter.basemanager.biz.CardBiz;
+import com.biocome.platform.inter.basemanager.biz.DictBiz;
 import com.biocome.platform.inter.basemanager.entity.Card;
-import com.biocome.platform.basemanager.biz.DictBiz;
 import com.biocome.platform.basemanager.constant.CardKindEnum;
 import com.biocome.platform.basemanager.constant.CardStatusEnum;
 import com.biocome.platform.basemanager.vo.resp.card.CardInfoResp;
