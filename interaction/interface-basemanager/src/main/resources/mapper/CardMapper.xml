@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.biocome.platform.basemanager.mapper.CardMapper">
+<mapper namespace="com.biocome.platform.inter.basemanager.mapper.CardMapper">
     <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Card">
         <!--
           WARNING - @mbggenerated
@@ -19,7 +19,7 @@
         <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
         <result column="remark" property="remark"/>
     </resultMap>
-    <resultMap id="BaseResultMapForView" type="com.biocome.platform.basemanager.vo.resp.card.CardInfoResp">
+    <resultMap id="BaseResultMapForView" type="com.biocome.platform.inter.basemanager.vo.card.CardInfoResp">
         <!--
           WARNING - @mbggenerated
         -->
