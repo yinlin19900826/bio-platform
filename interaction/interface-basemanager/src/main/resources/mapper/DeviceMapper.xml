@@ -19,6 +19,7 @@
         <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
         <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
     </resultMap>
+
     <resultMap id="BaseResultMapForWeb" type="com.biocome.platform.inter.basemanager.vo.device.DeviceInfoResp">
         <!--
           WARNING - @mbggenerated
@@ -35,36 +36,6 @@
         <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
     </resultMap>
 
-    <resultMap id="DeviceVoMap" type="com.biocome.platform.inter.basemanager.vo.device.DoorDeviceVo">
-        <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="device_name" jdbcType="VARCHAR" property="facilityname"/>
-        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
-        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
-        <result column="unitcode" jdbcType="VARCHAR" property="unitcode"/>
-        <result column="ip" jdbcType="VARCHAR" property="deviceip"/>
-        <result column="device_type" jdbcType="VARCHAR" property="facilitytype"/>
-        <result column="secretkey" jdbcType="VARCHAR" property="pwdkey"/>
-    </resultMap>
-
-    <resultMap id="DeviceInfoRespMap" type="com.biocome.platform.inter.basemanager.vo.device.DeviceInfoResp">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="device_name" jdbcType="VARCHAR" property="deviceName"/>
-        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
-        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
-        <result column="ip" jdbcType="VARCHAR" property="ip"/>
-        <result column="device_type" jdbcType="VARCHAR" property="deviceType"/>
-        <result column="brandcode" jdbcType="VARCHAR" property="brandcode"/>
-        <result column="brand" jdbcType="VARCHAR" property="brand"/>
-        <result column="secretkey" jdbcType="VARCHAR" property="secretkey"/>
-        <result column="mac" jdbcType="VARCHAR" property="mac"/>
-        <result column="series_number" jdbcType="VARCHAR" property="seriesNumber"/>
-        <result column="c_number1" jdbcType="VARCHAR" property="camera1"/>
-        <result column="c_number2" jdbcType="VARCHAR" property="camera2"/>
-        <result column="c_number3" jdbcType="VARCHAR" property="camera3"/>
-        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
-        <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
-    </resultMap>
     <select id="selectByAdditionForList" resultMap="BaseResultMapForWeb">
         SELECT
         bd.id,

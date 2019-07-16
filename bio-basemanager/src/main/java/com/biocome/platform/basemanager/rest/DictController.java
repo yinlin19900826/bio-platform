@@ -1,8 +1,8 @@
 package com.biocome.platform.basemanager.rest;
 
-import com.biocome.platform.basemanager.biz.DictBiz;
-import com.biocome.platform.basemanager.entity.Dictionary;
 import com.biocome.platform.common.rest.BaseController;
+import com.biocome.platform.inter.basemanager.biz.DictBiz;
+import com.biocome.platform.inter.basemanager.entity.Dictionary;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
