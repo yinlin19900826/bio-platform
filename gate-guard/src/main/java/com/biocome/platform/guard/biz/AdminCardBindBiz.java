@@ -13,7 +13,6 @@ import com.biocome.platform.guard.constant.CardStatusEnum;
 import com.biocome.platform.guard.entity.AdminCardBind;
 import com.biocome.platform.guard.mapper.AdminCardBindMapper;
 import com.biocome.platform.guard.vo.card.AddCardParam;
-import com.biocome.platform.guard.vo.card.CardSnVo;
 import com.biocome.platform.guard.vo.card.LogoutCardVo;
 import com.biocome.platform.guard.vo.card.OpenblukVo;
 import com.biocome.platform.guard.vo.device.CardDeviceVo;
@@ -25,6 +24,7 @@ import com.biocome.platform.inter.basemanager.constant.CardTypeEnum;
 import com.biocome.platform.inter.basemanager.entity.Build;
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Landlord;
+import com.biocome.platform.inter.basemanager.vo.card.CardSnVo;
 import com.biocome.platform.inter.basemanager.vo.card.OpenCardVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -154,7 +154,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
                         codes.add(bindVo.getBuildCode());
                     }
                 }
-                rpcResp = cardBiz.unregisterAdminCardNotify(card, codes);
+                rpcResp = unregisterAdminCardNotify(card, codes);
             }
             if(ValidateUtils.isNotEmpty(rpcResp)){
                 if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
@@ -167,6 +167,22 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         }*/
         return new ObjectRestResponse<>().success();
     }
+
+    /***
+     * 管理员注销卡通知
+     * @param card
+     * @return
+     */
+    /*public BaseRpcResponse unregisterAdminCardNotify(Card card, List<String> codes) {
+        LogoutCardVo logoutVo = new LogoutCardVo();
+        //openVo.setToken();
+        logoutVo.setUsercode(card.getUsercode());
+        logoutVo.setCardno(card.getPhysicalCardno());
+        logoutVo.setCardtype(card.getCardtype());
+        List<CardSnVo> list = deviceBiz.selectSnByBuildCodes(codes);
+        logoutVo.setSnList(list);
+        return logoutCard(logoutVo);
+    }*/
 
     /**
      * 注销卡
