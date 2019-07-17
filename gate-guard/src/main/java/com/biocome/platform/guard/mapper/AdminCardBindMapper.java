@@ -3,6 +3,8 @@ package com.biocome.platform.guard.mapper;
 import com.biocome.platform.guard.entity.AdminCardBind;
 import com.biocome.platform.guard.vo.admin.AdminCardBindVo;
 import com.biocome.platform.guard.vo.admin.AdminCardVo;
+import com.biocome.platform.guard.vo.admin.AdminSimpleCardVo;
+import com.biocome.platform.inter.basemanager.vo.card.CardDetailVo;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 import com.biocome.platform.inter.basemanager.vo.device.CardDeviceVo;
@@ -31,4 +33,13 @@ public interface AdminCardBindMapper extends Mapper<AdminCardBind> {
     List<AdminCardVo> adminCardListOnBuilding(@Param("buildcode") String buildcode);
 
     List<CardDeviceVo> cardDeviceList(@Param("cardNoList") List<String> cardNoList);
+
+    List<AdminSimpleCardVo> selectAdminCardList(@Param("admincode") String admincode, @Param("cardNo") String cardNo, @Param("isalive") Integer isalive);
+
+    List<AdminCardVo> superCardList(@Param("username") String username, @Param("certNo") String certNo, @Param("communityname") String communityname);
+
+    List<CardDetailVo> selectCardDetail(@Param("cardNo") String cardNo);
+
+    List<AdminSimpleCardVo> adminManageCardList(@Param("admincode") String admincode, @Param("cardNo") String cardNo, @Param("isalive") Integer isalive);
+
 }
