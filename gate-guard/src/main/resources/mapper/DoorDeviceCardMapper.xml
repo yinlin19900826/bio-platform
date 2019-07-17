@@ -4,7 +4,7 @@
 
 
     <resultMap id="selectByAdditionForLesseeCardMsgPageResultMap"
-               type="com.biocome.platform.admin.vo.LesseeCardMsgResp">
+               type="com.biocome.platform.inter.basemanager.LesseeCardMsgResp">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="usersex" jdbcType="VARCHAR" property="sex"/>
@@ -59,7 +59,7 @@
             </if>
         </where>
     </select>
-    <select id="selectSnByBuildCode" resultType="com.biocome.platform.admin.vo.card.CardSnVo">
+    <select id="selectSnByBuildCode" resultType="com.biocome.platform.inter.basemanager.vo.card.CardSnVo">
         SELECT sn FROM base_device where buildcode = #{buildcode,jdbcType=VARCHAR}
     </select>
 
