@@ -6,7 +6,7 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.biz.RpcBiz;
-import com.biocome.platform.guard.otherrpc.*;
+import com.biocome.platform.guard.vo.otherrpc.*;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.vo.device.DeviceSnBrandVo;
 import io.swagger.annotations.Api;
