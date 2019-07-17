@@ -10,6 +10,7 @@ import com.biocome.platform.guard.vo.showmanage.BuildAndHouseVo;
 import com.biocome.platform.guard.vo.showmanage.DeviceAndStatusVo;
 import com.biocome.platform.guard.vo.showmanage.ShowManageVo;
 import com.biocome.platform.inter.basemanager.vo.device.DeviceInfoResp;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
 import com.biocome.platform.inter.basemanager.vo.device.DeviceStatusRes;
 import com.biocome.platform.inter.basemanager.vo.device.DoorStatusRes;
 import com.biocome.platform.inter.basemanager.entity.Build;
