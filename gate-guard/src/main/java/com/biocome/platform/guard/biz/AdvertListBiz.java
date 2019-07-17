@@ -15,6 +15,7 @@ import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.mapper.AdvertListMapper;
 import com.biocome.platform.inter.basemanager.entity.Device;
 import com.biocome.platform.inter.basemanager.mapper.DeviceMapper;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
