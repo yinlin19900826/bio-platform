@@ -6,7 +6,7 @@ import com.biocome.platform.guard.vo.advert.AddAdvert;
 import com.biocome.platform.guard.vo.advert.AddAdvertList;
 import com.biocome.platform.guard.vo.advert.AdvertAddListRpcResp;
 import com.biocome.platform.guard.vo.advert.RemoveAdvertList;
-import com.biocome.platform.guard.vo.device.DeviceSnVo;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

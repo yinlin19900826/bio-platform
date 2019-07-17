@@ -1,7 +1,7 @@
 package com.biocome.platform.guard.mapper;
 
 import com.biocome.platform.guard.entity.Device;
-import com.biocome.platform.guard.vo.device.DeviceInfoResp;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceInfoResp;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 

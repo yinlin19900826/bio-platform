@@ -1,9 +1,9 @@
 package com.biocome.platform.guard.rpc.service;
 
 import com.biocome.platform.guard.rpc.fallbackfactory.DeviceFallbackFactory;
-import com.biocome.platform.guard.vo.device.DeviceSnVo;
-import com.biocome.platform.guard.vo.device.DeviceStatusRes;
-import com.biocome.platform.guard.vo.device.DoorStatusRes;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceStatusRes;
+import com.biocome.platform.inter.basemanager.vo.device.DoorStatusRes;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
