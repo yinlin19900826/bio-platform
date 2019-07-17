@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.record.mapper.InoutRecordMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.inter.basemanager.entity.InoutRecord" id="inoutRecordMap">
+        <result property="id" column="id"/>
+        <result property="usercode" column="usercode"/>
+        <result property="userdesc" column="userdesc"/>
+        <result property="createtime" column="createtime"/>
+        <result property="sn" column="sn"/>
+        <result property="opentype" column="opentype"/>
+        <result property="picpath" column="picpath"/>
+        <result property="picpath2" column="picpath2"/>
+        <result property="picpath3" column="picpath3"/>
+        <result property="videopath" column="videopath"/>
+        <result property="cardno" column="cardno"/>
+        <result property="accesskey" column="accesskey"/>
+    </resultMap>
+    <resultMap id="selectInoutRecordMap" type="com.biocome.platform.inter.basemanager.vo.inoutRecord.InoutRecordForListResp">
+        <result property="id" column="id"/>
+        <result property="createtime" column="createtime"/>
+        <result property="opentype" column="opentype"/>
+        <result property="cardno" column="cardno"/>
+        <result property="usercode" column="usercode"/>
+        <result property="username" column="username"/>
+        <result property="usersex" column="usersex"/>
+        <result property="tel" column="tel"/>
+        <result property="buildCode" column="buildcode"/>
+        <result property="buildName" column="buildname"/>
+        <result property="picpath" column="picpath"/>
+        <result property="videopath" column="videopath"/>
+    </resultMap>
+    <select id="selectInoutRecordForList" resultMap="selectInoutRecordMap">
+        SELECT
+            bir.id,
+            bir.createtime,
+            bdd.dict_value opentype,
+            bir.cardno,
+            bir.usercode,
+            bl.username,
+            (
+                CASE bl.usersex
+                WHEN 0 THEN
+                    '未知'
+                WHEN 1 THEN
+                    '男'
+                WHEN 2 THEN
+                    '女'
+                ELSE
+                    ''
+                END
+            ) AS usersex,
+            bl.tel,
+            bl.buildcode,
+            bl.buildname,
+            bir.picpath,
+            bir.videopath
+        FROM
+            base_inout_record bir
+        LEFT JOIN base_lessee bl ON bir.usercode = bl.usercode
+        LEFT JOIN base_dict_detail bdd ON bdd.dict_code = '007' AND bir.opentype = bdd.dict_key
+        <where>
+            1=1
+            <if test="id != null and '' != id">and bir.id = #{id,jdbcType=VARCHAR}</if>
+            <if test="opentype != null and '' != opentype">and bir.opentype = #{opentype,jdbcType=VARCHAR}</if>
+            <if test="cardno != null and '' != cardno">and bir.cardno = #{cardno,jdbcType=VARCHAR}</if>
+            <if test="starttime != null"><![CDATA[and bir.createtime >= #{starttime,jdbcType=TIMESTAMP}]]></if>
+            <if test="endtime != null"><![CDATA[and bir.createtime <= #{endtime,jdbcType=TIMESTAMP}]]></if>
+            <if test="buildcode != null and '' != buildcode">and  bl.buildcode = #{buildcode,jdbcType=VARCHAR}</if>
+        </where>
+    </select>
+    <insert id="addInoutRecord" parameterType="com.biocome.platform.inter.basemanager.entity.InoutRecord">
+        INSERT INTO base_inout_record  <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null and '' != id">id, </if>
+        <if test="usercode != null">usercode, </if>
+        <if test="userdesc != null">userdesc, </if>
+        <if test="createtime != null">createtime, </if>
+        <if test="sn != null">sn, </if>
+        <if test="opentype != null">opentype, </if>
+        <if test="picpath != null">picpath, </if>
+        <if test="picpath2 != null">picpath2, </if>
+        <if test="picpath3 != null">picpath3, </if>
+        <if test="videopath != null">videopath, </if>
+        <if test="cardno != null">cardno, </if>
+        <if test="accesskey != null">accesskey, </if>
+    </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null and '' != id">#{id,jdbcType=INTEGER}, </if>
+            <if test="usercode != null">#{usercode,jdbcType=VARCHAR}, </if>
+            <if test="userdesc != null">#{userdesc,jdbcType=VARCHAR}, </if>
+            <if test="createtime != null">#{createtime,jdbcType=VARCHAR}, </if>
+            <if test="sn != null">#{sn,jdbcType=VARCHAR}, </if>
+            <if test="opentype != null">#{opentype,jdbcType=VARCHAR}, </if>
+            <if test="picpath != null">#{picpath,jdbcType=VARCHAR}, </if>
+            <if test="picpath2 != null">#{picpath2,jdbcType=VARCHAR}, </if>
+            <if test="picpath3 != null">#{picpath3,jdbcType=VARCHAR}, </if>
+            <if test="videopath != null">#{videopath,jdbcType=INTEGER}, </if>
+            <if test="cardno != null">
+                <choose>
+                    <when test="opentype != 1">
+                        #{cardno,jdbcType=VARCHAR},
+                    </when>
+                    <otherwise>
+                        (SELECT physical_cardno FROM base_card bc WHERE bc.logic_cardno = #{cardno,jdbcType=VARCHAR}),
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="accesskey != null">#{accesskey,jdbcType=BIGINT}, </if>
+        </trim>
+    </insert>
+</mapper>
