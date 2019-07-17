@@ -1,7 +1,7 @@
 package com.biocome.platform.basemanager.rest;
 
-import com.biocome.platform.basemanager.biz.EstateBiz;
-import com.biocome.platform.basemanager.entity.Estate;
+import com.biocome.platform.inter.basemanager.biz.EstateBiz;
+import com.biocome.platform.inter.basemanager.entity.Estate;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;

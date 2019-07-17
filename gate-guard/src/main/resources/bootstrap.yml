@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gate-admin
+    name: gate-guard
   cloud:
     nacos:
       config:

@@ -51,7 +51,7 @@ public class DeviceBiz extends BaseBiz<DeviceMapper, Device> {
      * @param codes
      * @return
      */
-    public List<CardSnVo> selectSnByBuildCodes(List<String> codes) {
+    public List<CardSnVo>  selectSnByBuildCodes(List<String> codes) {
         return mapper.selectSnByBuildCodes(codes);
     }
 }

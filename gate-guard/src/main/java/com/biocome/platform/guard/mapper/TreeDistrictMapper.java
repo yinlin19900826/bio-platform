@@ -1,6 +1,6 @@
 package com.biocome.platform.guard.mapper;
 
-import com.biocome.platform.guard.vo.tree.TreeDistrictVO;
+import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

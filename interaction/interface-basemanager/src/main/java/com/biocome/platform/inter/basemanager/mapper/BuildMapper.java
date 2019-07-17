@@ -1,7 +1,7 @@
 package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Build;
-import com.biocome.platform.inter.basemanager.tree.TreeDistrictVO;
+import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
 import com.biocome.platform.inter.basemanager.vo.syncho.BuildAndBrandVo;
 import com.biocome.platform.inter.basemanager.vo.syncho.BuildVo;
 import org.apache.ibatis.annotations.Param;

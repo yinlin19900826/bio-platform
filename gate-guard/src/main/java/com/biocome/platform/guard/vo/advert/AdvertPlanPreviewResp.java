@@ -1,7 +1,7 @@
 package com.biocome.platform.guard.vo.advert;
 
-import com.biocome.platform.guard.entity.Build;
-import com.biocome.platform.guard.entity.Estate;
+import com.biocome.platform.inter.basemanager.entity.Build;
+import com.biocome.platform.inter.basemanager.entity.Estate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

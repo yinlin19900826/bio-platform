@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -20,13 +21,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.biocome.platform.inter.basemanager.*")
 @EnableFeignClients({"com.biocome.platform.auth.client.feign","com.biocome.platform.guard.rpc.service"})
 @EnableScheduling
 @EnableAceAuthClient
 @EnableTransactionManagement
-@MapperScan("com.biocome.platform.guard.mapper")
+@MapperScan({"com.biocome.platform.guard.mapper", "com.biocome.platform.inter.basemanager.mapper"})
 @EnableSwagger2Doc
+@ComponentScan({"com.biocome.platform"})
 public class GateGuardBootstrap {
     public static void main(String[] args) {
         new SpringApplicationBuilder(GateGuardBootstrap.class).run(args);

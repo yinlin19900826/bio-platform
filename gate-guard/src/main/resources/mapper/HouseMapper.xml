@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.biocome.platform.admin.mapper.HouseMapper">
-    <resultMap id="HouseVoMap" type="com.biocome.platform.admin.vo.showmanage.HouseVo">
+<mapper namespace="com.biocome.platform.guard.mapper.HouseMapper">
+    <resultMap id="HouseVoMap" type="com.biocome.platform.guard.vo.showmanage.HouseVo">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="housecode" jdbcType="VARCHAR" property="housecode"/>
         <result column="housename" jdbcType="VARCHAR" property="housename"/>

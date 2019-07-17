@@ -167,7 +167,6 @@ public class MinioTemplateBiz {
         String path = client.getObjectUrl(bucketName, objectName);
         MinIoResource minIo = new MinIoResource(objectName, bucketName, path, type);
         mapper.insertSelective(minIo);
-
     }
 
     /**
@@ -196,6 +195,9 @@ public class MinioTemplateBiz {
      */
     public void removeObject(String bucketName, String objectName) throws Exception {
         getMinioClient().removeObject(bucketName, objectName);
+        //数据库删除
+        MinIoResource resource = new MinIoResource(objectName, bucketName, null, null);
+        mapper.delete(resource);
     }
 
     /**
@@ -219,6 +221,9 @@ public class MinioTemplateBiz {
             }
         });
         client.removeObjects(bucketName, list);
+        //数据库删除
+        MinIoResource resource = new MinIoResource(null, bucketName, null, null);
+        mapper.delete(resource);
     }
 
     /**

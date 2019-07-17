@@ -1,6 +1,6 @@
 package com.biocome.platform.guard.rpc.service;
 
-import com.biocome.platform.guard.otherrpc.*;
+import com.biocome.platform.guard.vo.otherrpc.*;
 import com.biocome.platform.guard.rpc.fallbackfactory.OtherFallbackFactory;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;

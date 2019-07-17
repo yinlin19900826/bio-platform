@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="AdminCardBindMapper">
+<mapper namespace="com.biocome.platform.guard.mapper.AdminCardBindMapper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="AdminCardBind" id="adminCardBindMap">
+    <resultMap type="com.biocome.platform.guard.entity.AdminCardBind" id="adminCardBindMap">
         <result property="id" column="id"/>
         <result property="logicCardno" column="logic_cardno"/>
         <result property="physicalCardno" column="physical_cardno"/>
@@ -17,7 +17,7 @@
         <result property="cardtype" column="cardtype"/>
     </resultMap>
 
-    <select id="cardBindBuildingList" resultType="AdminCardBindVo">
+    <select id="cardBindBuildingList" resultType="com.biocome.platform.guard.vo.admin.AdminCardBindVo">
         SELECT a.build_code AS buildCode, a.build_name AS buildName, a.usercode, IF(IFNULL(b.usercode, NULL), 1, 0) AS bind, b.id
 		FROM
 		(
@@ -66,7 +66,7 @@
     </delete>
 
     <!--  楼栋管理员门禁卡列表  -->
-    <select id="adminCardListOnBuilding" resultType="AdminCardVo">
+    <select id="adminCardListOnBuilding" resultType="com.biocome.platform.guard.vo.admin.AdminCardVo">
         SELECT a.usercode, a.username, a.tel, a.resideaddress as address, c.isalive, c.physical_cardno AS cardNo, c.createtime,
         CASE c.cardkind WHEN 1 THEN 'IC卡' WHEN 2 THEN 'CPU卡' WHEN 3 THEN '深圳通卡' END cardkind,
         CASE c.isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
@@ -80,7 +80,7 @@
         WHERE c.usercode = a.usercode AND cardtype = 2 AND build_code = #{buildcode}
     </select>
 
-    <select id="cardDeviceList" resultType="CardDeviceVo">
+    <select id="cardDeviceList" resultType="com.biocome.platform.inter.basemanager.vo.device.CardDeviceVo">
         SELECT c.usercode, c.cardtype,c.physical_cardno as cardNo, GROUP_CONCAT(d.sn SEPARATOR ",") AS sn
         FROM (
             SELECT usercode, physical_cardno, cardtype, buildcode
