@@ -1,17 +1,19 @@
 package com.biocome.platform.file.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * @ClassName: MinIoResource
+ * @ClassName: OpenDoorImages
  * @Author: shenlele
  * @Date: 2019/7/11 10:09
  * @Description:
  */
-@Table(name = "base_minio_resource")
-public class MinIoResource {
+@Table(name = "bio_opendoor_images")
+public class OpenDoorImages {
 
     private Integer id;
     @Column(name = "object_name")
@@ -19,14 +21,12 @@ public class MinIoResource {
     @Column(name = "bucket_name")
     private String bucketName;
     private String url;
-    private String type;
     private Date createtime;
 
-    public MinIoResource(String objectName, String bucketName, String url, String type) {
+    public OpenDoorImages(String objectName, String bucketName, String url) {
         this.objectName = objectName;
         this.bucketName = bucketName;
         this.url = url;
-        this.type = type;
     }
 
     public Integer getId() {
@@ -61,14 +61,7 @@ public class MinIoResource {
         this.url = url;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     public Date getCreatetime() {
         return createtime;
     }
