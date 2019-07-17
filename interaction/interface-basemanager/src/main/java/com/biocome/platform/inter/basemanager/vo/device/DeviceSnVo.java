@@ -1,6 +1,6 @@
-package com.biocome.platform.guard.vo.device;
+package com.biocome.platform.inter.basemanager.vo.device;
 
-import com.biocome.platform.guard.vo.common.CommonVo;
+import com.biocome.platform.inter.basemanager.vo.common.CommonVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

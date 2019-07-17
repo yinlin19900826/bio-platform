@@ -1,5 +1,6 @@
 package com.biocome.video;
 
+import com.spring4all.swagger.EnableSwagger2Doc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -13,6 +14,7 @@ import org.mybatis.spring.annotation.MapperScan;
 @EnableFeignClients({"com.biocome.platform.auth.client.feign"})
 @EnableCircuitBreaker
 @MapperScan("com.biocome.video.mapper")
+@EnableSwagger2Doc
 //@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class VideoServiceApplication {
     public static void main(String[] args) {

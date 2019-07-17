@@ -4,7 +4,7 @@ import com.biocome.platform.guard.vo.syncho.*;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.guard.rpc.service.SynchoRpc;
 import com.biocome.platform.guard.vo.common.CommonListVo;
-import com.biocome.platform.guard.vo.device.DoorDeviceVo;
+import com.biocome.platform.inter.basemanager.vo.device.DoorDeviceVo;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 

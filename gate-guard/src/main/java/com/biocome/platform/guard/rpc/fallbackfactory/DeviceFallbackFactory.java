@@ -1,9 +1,9 @@
 package com.biocome.platform.guard.rpc.fallbackfactory;
 
 import com.biocome.platform.guard.rpc.service.DeviceRpc;
-import com.biocome.platform.guard.vo.device.DeviceSnVo;
-import com.biocome.platform.guard.vo.device.DeviceStatusRes;
-import com.biocome.platform.guard.vo.device.DoorStatusRes;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceStatusRes;
+import com.biocome.platform.inter.basemanager.vo.device.DoorStatusRes;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 

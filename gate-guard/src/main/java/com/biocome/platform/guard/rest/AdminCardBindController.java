@@ -1,6 +1,5 @@
 package com.biocome.platform.guard.rest;
 
-import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.guard.biz.AdminCardBindBiz;
 import com.biocome.platform.guard.entity.AdminCardBind;
 import com.biocome.platform.guard.vo.admin.AdminCardBindVo;
@@ -10,10 +9,6 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.rest.BaseController;
-import com.biocome.platform.guard.vo.card.AddCardParam;
-import com.biocome.platform.guard.vo.card.LogoutCardVo;
-import com.biocome.platform.guard.vo.card.ManagerCardVo;
-import com.biocome.platform.inter.basemanager.biz.CardBiz;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -30,7 +25,7 @@ import java.util.List;
 @Controller
 @RequestMapping("adminCardBind")
 public class AdminCardBindController extends BaseController<AdminCardBindBiz, AdminCardBind> {
-    Logger log = LoggerFactory.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     AdminCardBindBiz adminCardBindBiz;
@@ -98,91 +93,5 @@ public class AdminCardBindController extends BaseController<AdminCardBindBiz, Ad
     @RequestMapping(value = "/batchUnregisterAdminCard" , method = RequestMethod.POST)
     public BaseRpcResponse batchUnregisterAdminCard(@RequestParam List<AdminSimpleCardVo> list){
         return adminCardBindBiz.batchUnregisterAdminCard(list);
-    }
-
-    @ApiOperation("增加卡")
-    @ResponseBody
-    @RequestMapping(value = "/addCard", method = RequestMethod.POST)
-    public ObjectRestResponse addCard(@RequestBody AddCardParam param) {
-        try {
-            return adminCardBindBiz.addCard(param);
-        }catch(Exception e){
-            log.info(e.getMessage());
-            return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "添加卡失败，错误信息："+e.getMessage());
-        }
-    }
-
-    /*@ApiOperation("开卡")
-    @ResponseBody
-    @RequestMapping(value = "/openCard", method = RequestMethod.POST)
-    public BaseRpcResponse openCard(@RequestBody OpenCardVo req) {
-        return adminCardBindBiz.openCard(req);
-    }*/
-
-    /*@ApiOperation("批量开卡")
-    @ResponseBody
-    @RequestMapping(value = "/openbulk", method = RequestMethod.POST)
-    public List<OpenblukResp> openbulk(@RequestBody OpenblukVo req) {
-        return adminCardBindBiz.openbulk(req);
-    }*/
-
-    /*@ApiOperation("注销卡")
-    @ResponseBody
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public BaseRpcResponse logout(@RequestBody LogoutCardVo req) {
-        return adminCardBindBiz.logoutCard(req);
-    }*/
-
-    /*@ApiOperation("禁用/恢复卡")
-    @ResponseBody
-    @RequestMapping(value = "/manager", method = RequestMethod.POST)
-    public BaseRpcResponse manager(@RequestBody ManagerCardVo req) {
-        return baseBiz.managerCard(req);
-    }*/
-
-    /*@ApiOperation("根据楼栋编号获取租户和卡信息")
-    @ResponseBody
-    @RequestMapping(value = "/lesseecardList", method = RequestMethod.POST)
-    public TableResultResponse<LesseecardListResp> lesseecardList(@RequestBody LesseecardListReq req) throws Exception{
-        return baseBiz.selectLesseecardList(req);
-    }*/
-
-    @ApiOperation("管理员卡")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "admincode", value = "管理员编码", paramType = "query", required = true),
-            @ApiImplicitParam(name = "cardNo", value = "门禁卡号", paramType = "query"),
-            @ApiImplicitParam(name = "isalive", value = "门禁卡状态 0、注销，1、有效，2、发卡 3、禁用 4、黑名单", paramType = "query")
-    })
-    @ResponseBody
-    @RequestMapping(value = "/adminCardList", method = RequestMethod.GET)
-    public TableResultResponse<AdminSimpleCardVo> adminCardList(@RequestParam(defaultValue = "20") int pageSize, @RequestParam(defaultValue = "1") int pageNo,
-                                                                String admincode, String cardNo, Integer isalive) {
-        return adminCardBindBiz.adminCardList(admincode, cardNo, isalive, pageSize, pageNo);
-    }
-
-    @ApiOperation("管理员管理的卡列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "admincode", value = "管理员编码", paramType = "query", required = true),
-            @ApiImplicitParam(name = "cardNo", value = "门禁卡号", paramType = "query"),
-            @ApiImplicitParam(name = "isalive", value = "门禁卡状态 0、注销，1、有效，2、发卡 3、禁用 4、黑名单", paramType = "query")
-    })
-    @ResponseBody
-    @RequestMapping(value = "/adminManageCardList", method = RequestMethod.GET)
-    public TableResultResponse<AdminSimpleCardVo> adminManageCardList(@RequestParam(defaultValue = "20") int pageSize, @RequestParam(defaultValue = "1") int pageNo,
-                                                                      String admincode, String cardNo, Integer isalive) {
-        return adminCardBindBiz.adminManageCardList(admincode, cardNo, isalive, pageSize, pageNo);
-    }
-
-    @ApiOperation("所有管理卡(通卡)")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "姓名", paramType = "query"),
-            @ApiImplicitParam(name = "certNo", value = "证件号码", paramType = "query"),
-            @ApiImplicitParam(name = "communityname", value = "社区名称", paramType = "query")
-    })
-    @ResponseBody
-    @RequestMapping(value = "/superCardList", method = RequestMethod.GET)
-    public TableResultResponse<AdminCardVo> superCardList(@RequestParam(defaultValue = "20") int pageSize, @RequestParam(defaultValue = "1") int pageNo,
-                                                          String username, String certNo, String communityname) {
-        return adminCardBindBiz.superCardList(username, certNo, communityname, pageSize, pageNo);
     }
 }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.guard.mapper.DoorDeviceCardMapper">
+
+
+    <resultMap id="selectByAdditionForLesseeCardMsgPageResultMap"
+               type="com.biocome.platform.inter.basemanager.LesseeCardMsgResp">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usersex" jdbcType="VARCHAR" property="sex"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="idNumber"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="checkintime" jdbcType="VARCHAR" property="checkintime"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estateName"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+
+
+    <select id="selectByAdditionForLesseeCardMsgPage" resultMap="selectByAdditionForLesseeCardMsgPageResultMap">
+        SELECT
+        bc.id,
+        bl.username,
+        (
+        CASE bl.usersex
+        WHEN 0 THEN
+        '未知'
+        WHEN 1 THEN
+        '男'
+        WHEN 2 THEN
+        '女'
+        ELSE
+        ''
+        END
+        ) AS usersex,
+        bl.papersnum,
+        bc.physical_cardno,
+        bl.checkintime,
+        bl.buildcode,
+        bl.buildname,
+        bl.estatecode,
+        bl.estatename,
+        bl.`status`
+        FROM
+        base_card bc
+        LEFT JOIN base_lessee bl ON bc.usercode = bl.usercode
+        <where>
+            1=1
+            <if test="username != null and ''!= username">and bl.username = #{username,jdbcType=VARCHAR}</if>
+            <if test="idNumber != null and ''!= idNumber">and bl.papersnum, = #{idNumber,jdbcType=VARCHAR}</if>
+            <if test="sex != null">and bl.usersex = #{sex,jdbcType=INTEGER}</if>
+            <if test="buildName != null and ''!= buildName">and bl.buildname LIKE
+                CONCAT(CONCAT('%',#{buildName,jdbcType=VARCHAR},'%'))
+            </if>
+            <if test="estateName != null and ''!= estateName">and bl.estatename LIKE
+                CONCAT(CONCAT('%',#{estateName,jdbcType=VARCHAR},'%'))
+            </if>
+        </where>
+    </select>
+    <select id="selectSnByBuildCode" resultType="com.biocome.platform.inter.basemanager.vo.card.CardSnVo">
+        SELECT sn FROM base_device where buildcode = #{buildcode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCard" resultType="com.biocome.platform.guard.entity.Card"
+            parameterType="com.biocome.platform.guard.entity.Card">
+        SELECT
+        id,
+        logic_cardno,
+        physical_cardno,
+        usercode,
+        username,
+        phone,
+        admincode,
+        buildcode,
+        buildname,
+        housecode,
+        isalive,
+        createtime,
+        sn,
+        cardtype,
+        cardkind,
+        remark
+        FROM
+        base_card
+        <where>
+            1=1
+            <if test="id != null and id.trim() != '' ">AND id = #{id}</if>
+            <if test="logic_cardno != null and logic_cardno.trim() != '' ">AND logic_cardno = #{logic_cardno}</if>
+            <if test="physical_cardno != null and physical_cardno.trim() != '' ">AND physical_cardno =
+                #{physical_cardno}
+            </if>
+            <if test="usercode != null and usercode.trim() != '' ">AND usercode = #{usercode}</if>
+            <if test="username != null and username.trim() != '' ">AND username = #{username}</if>
+            <if test="phone != null and phone.trim() != '' ">AND phone = #{phone}</if>
+            <if test="admincode != null and admincode.trim() != '' ">AND admincode = #{admincode}</if>
+            <if test="buildcode != null and buildcode.trim() != '' ">AND buildcode = #{buildcode}</if>
+            <if test="buildname != null and buildname.trim() != '' ">AND buildname = #{buildname}</if>
+            <if test="housecode != null and housecode.trim() != '' ">AND housecode = #{housecode}</if>
+            <if test="isalive != null and isalive.trim() != '' ">AND isalive = #{isalive}</if>
+            <if test="createtime != null and createtime.trim() != '' ">AND createtime = #{createtime}</if>
+            <if test="sn != null and sn.trim() != '' ">AND sn = #{sn}</if>
+            <if test="cardtype != null and cardtype.trim() != '' ">AND cardtype = #{cardtype}</if>
+            <if test="cardkind != null and cardkind.trim() != '' ">AND cardkind = #{cardkind}</if>
+            <if test="remark != null and remark.trim() != '' ">AND remark = #{remark}</if>
+        </where>
+    </select>
+    <insert id="insertCard" parameterType="com.biocome.platform.guard.entity.Card">
+        INSERT INTO base_card ()
+    </insert>
+
+    <update id="updateIsaliveByCardno">
+        update base_card
+        set isalive = #{isalive}
+        where logic_cardno = #{cardNo}
+    </update>
+</mapper>

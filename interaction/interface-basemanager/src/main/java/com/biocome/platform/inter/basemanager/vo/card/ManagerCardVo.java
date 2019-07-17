@@ -1,4 +1,4 @@
-package com.biocome.platform.guard.vo.card;
+package com.biocome.platform.inter.basemanager.vo.card;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

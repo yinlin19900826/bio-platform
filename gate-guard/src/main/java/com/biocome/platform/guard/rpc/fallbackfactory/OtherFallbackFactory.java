@@ -3,7 +3,7 @@ package com.biocome.platform.guard.rpc.fallbackfactory;
 import com.biocome.platform.guard.vo.otherrpc.*;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.guard.rpc.service.OtherRpc;
-import com.biocome.platform.guard.vo.device.DeviceSnVo;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 

@@ -67,4 +67,5 @@ public interface DeviceMapper extends Mapper<Device> {
      * @Date 2019/5/28 10:28
      */
     List<DeviceInfoResp> selectByDevice(@Param("device") DeviceInfoResp device);
+
 }

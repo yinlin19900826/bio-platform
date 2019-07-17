@@ -3,7 +3,7 @@ package com.biocome.platform.guard.rpc.service;
 import com.biocome.platform.guard.vo.otherrpc.*;
 import com.biocome.platform.guard.rpc.fallbackfactory.OtherFallbackFactory;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
-import com.biocome.platform.guard.vo.device.DeviceSnVo;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
