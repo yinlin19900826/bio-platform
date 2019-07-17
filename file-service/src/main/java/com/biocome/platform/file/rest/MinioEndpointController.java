@@ -1,8 +1,8 @@
 package com.biocome.platform.file.rest;
 
-import com.biocome.platform.file.biz.MinioTemplateBiz;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.file.biz.MinioTemplateBiz;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -85,14 +85,14 @@ public class MinioEndpointController {
         }
     }
 
-    @ApiOperation("上传文件")
-    @ApiImplicitParam(name = "bucketName", value = "桶名称", paramType = "path")
-    @PostMapping("/object/{bucketName}")
-    public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String bucketName, String type) {
+    @ApiOperation("上传广告素材文件或升级文件")
+    @ApiImplicitParam(name = "type", value = "桶名称", paramType = "path")
+    @PostMapping("/object/{type}")
+    public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String type) {
         try {
             String name = object.getOriginalFilename();
-            template.saveObject(bucketName, name, object.getInputStream(), object.getSize(), object.getContentType(), type);
-            return new ObjectRestResponse().success();
+            String path = template.uploadAdvert(name, object.getInputStream(), object.getSize(), object.getContentType(), type);
+            return new ObjectRestResponse().success().data(path);
         } catch (Exception e) {
             log.info("上传文件失败，错误信息为：{}", e.getMessage());
             return new ObjectRestResponse().failure();
@@ -100,16 +100,41 @@ public class MinioEndpointController {
 
     }
 
-    @ApiOperation("上传文件并重命名")
-    @ApiImplicitParams({@ApiImplicitParam(name = "bucketName", value = "桶名称", paramType = "path"),
+    @ApiOperation("上传广告素材文件或升级文件并重命名")
+    @ApiImplicitParams({@ApiImplicitParam(name = "type", value = "桶名称", paramType = "path"),
             @ApiImplicitParam(name = "objectName", value = "文件名", paramType = "path")})
-    @PostMapping("/object/{bucketName}/{objectName}")
-    public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String bucketName, @PathVariable String objectName, String type) {
+    @PostMapping("/object/{objectName}/{type}")
+    public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String objectName, @PathVariable String type) {
         try {
-            template.saveObject(bucketName, objectName, object.getInputStream(), object.getSize(), object.getContentType(), type);
-            return new ObjectRestResponse().success();
+            String path = template.uploadAdvert(objectName, object.getInputStream(), object.getSize(), object.getContentType(), type);
+            return new ObjectRestResponse().success().data(path);
         } catch (Exception e) {
-            log.info("上传文件并重命名失败，错误信息为：{}", e.getMessage());
+            log.info("上传广告素材文件或升级文件并重命名失败，错误信息为：{}", e.getMessage());
+            return new ObjectRestResponse().failure();
+        }
+    }
+
+    @ApiOperation("上传用户图片")
+    @ApiImplicitParam(name = "estateCode", value = "社区编号", paramType = "path")
+    @PostMapping("/object/userImg/{estateCode}")
+    public ObjectRestResponse userImg(@RequestBody MultipartFile object, @PathVariable String estateCode) {
+        try {
+            String path = template.uploadUser(estateCode, object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
+            return new ObjectRestResponse().success().data(path);
+        } catch (Exception e) {
+            log.info("上传用户图片失败，错误信息为：{}", e.getMessage());
+            return new ObjectRestResponse().failure();
+        }
+    }
+
+    @ApiOperation("上传开门图片")
+    @PostMapping("/object/uploadOpenDoor")
+    public ObjectRestResponse userImg(@RequestBody MultipartFile object) {
+        try {
+            String path = template.uploadOpenDoor(object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
+            return new ObjectRestResponse().success().data(path);
+        } catch (Exception e) {
+            log.info("上传开门图片失败，错误信息为：{}", e.getMessage());
             return new ObjectRestResponse().failure();
         }
     }
@@ -149,12 +174,13 @@ public class MinioEndpointController {
 
     @ApiOperation("删除指定对象文件")
     @ApiImplicitParams({@ApiImplicitParam(name = "bucketName", value = "桶名称", paramType = "path"),
-            @ApiImplicitParam(name = "objectName", value = "文件名", paramType = "path")})
-    @DeleteMapping("/object/{bucketName}/{objectName}")
+            @ApiImplicitParam(name = "objectName", value = "文件名", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "删除的类型（0:广告或升级文件，1:用户图片，2:开门图片）", paramType = "path")})
+    @DeleteMapping("/object/{bucketName}/{objectName}/{type}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ObjectRestResponse deleteObject(@PathVariable String bucketName, @PathVariable String objectName) {
+    public ObjectRestResponse deleteObject(@PathVariable String bucketName, @PathVariable String objectName, @PathVariable String type) {
         try {
-            template.removeObject(bucketName, objectName);
+            template.removeObject(bucketName, objectName, type);
             return new ObjectRestResponse().success();
         } catch (Exception e) {
             log.info("删除指定对象文件失败，错误信息为：{}", e.getMessage());
@@ -162,13 +188,14 @@ public class MinioEndpointController {
         }
     }
 
-    @ApiOperation("删除指定桶内全部文件")
-    @ApiImplicitParam(name = "bucketName", value = "桶名称", paramType = "path")
-    @DeleteMapping("/object/all/{bucketName}")
+    @ApiOperation("删除指定桶内全部文件(因插件问题，现在这个接口无效)")
+    @ApiImplicitParams({@ApiImplicitParam(name = "bucketName", value = "桶名称", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "删除的类型（0:广告或升级文件，1:用户图片，2:开门图片）", paramType = "path")})
+    @DeleteMapping("/object/all/{bucketName}/{type}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ObjectRestResponse deleteObjectAll(@PathVariable String bucketName) {
+    public ObjectRestResponse deleteObjectAll(@PathVariable String bucketName, @PathVariable String type) {
         try {
-            template.removeObjectAll(bucketName);
+            template.removeObjectAll(bucketName, type);
             return new ObjectRestResponse().success();
         } catch (Exception e) {
             log.info("删除指定桶内全部文件失败，错误信息为：{}", e.getMessage());

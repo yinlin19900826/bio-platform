@@ -1,12 +1,12 @@
 #! /bin/bash
 
-REPOSITORIES='file-service'
+REPOSITORIES='visit-record'
 DATE=`date +%Y%m%d%H%M%S`
 
-mv /home/biocome/file-service/file-service.jar /home/biocome/backups/file-service-${DATE}.jar
+mv /home/biocome/visit-record/visit-record-1.0-SNAPSHOT.jar /home/biocome/backups/visit-record-1.0-SNAPSHOT-${DATE}.jar
 
-rm -rf /home/biocome/file-service/file-service.jar
-cp /home/jenkins/workspace/Automatic-deployment/file-service/target/file-service.jar /home/biocome/file-service/
+rm -rf /home/biocome/visit-record/visit-record-1.0-SNAPSHOT.jar
+cp /home/jenkins/workspace/new_bio_platform/visit-record/target/visit-record-1.0-SNAPSHOT.jar /home/biocome/visit-record/
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
@@ -25,21 +25,21 @@ if [ -n "${IMAGE_ID}" ];then
     docker rmi ${IMAGE_ID}
 fi
 
-rm -rf /home/biocome/file-service/Dockerfile
+rm -rf /home/biocome/visit-record/Dockerfile
 
-cat >>/home/biocome/file-service/Dockerfile<<EOF
+cat >>/home/biocome/visit-record/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD file-service.jar app.jar
+ADD visit-record-1.0-SNAPSHOT.jar app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 EOF
 
-cd /home/biocome/file-service
+cd /home/biocome/visit-record
 TAG=`date +%Y%m%d`
 PRE='bio'
 # Build
 docker build -t ${PRE}/${REPOSITORIES}:${TAG} . &>/dev/null
 
 # Run.
-docker run -d --name ${REPOSITORIES} -p 8777:8777 ${PRE}/${REPOSITORIES}:${TAG}
+docker run -d --name ${REPOSITORIES} -p 9700:9700 ${PRE}/${REPOSITORIES}:${TAG}

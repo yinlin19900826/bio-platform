@@ -1,12 +1,12 @@
 #! /bin/bash
 
-REPOSITORIES='file-service'
+REPOSITORIES='bio-basemanager'
 DATE=`date +%Y%m%d%H%M%S`
 
-mv /home/biocome/file-service/file-service.jar /home/biocome/backups/file-service-${DATE}.jar
+mv /home/biocome/bio-basemanager/bio-basemanager.jar /home/biocome/backups/bio-basemanager-${DATE}.jar
 
-rm -rf /home/biocome/file-service/file-service.jar
-cp /home/jenkins/workspace/Automatic-deployment/file-service/target/file-service.jar /home/biocome/file-service/
+rm -rf /home/biocome/bio-basemanager/bio-basemanager.jar
+cp /home/jenkins/workspace/Automatic-deployment/bio-basemanager/target/bio-basemanager.jar /home/biocome/bio-basemanager/
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
@@ -25,21 +25,21 @@ if [ -n "${IMAGE_ID}" ];then
     docker rmi ${IMAGE_ID}
 fi
 
-rm -rf /home/biocome/file-service/Dockerfile
+rm -rf /home/biocome/bio-basemanager/Dockerfile
 
-cat >>/home/biocome/file-service/Dockerfile<<EOF
+cat >>/home/biocome/bio-basemanager/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD file-service.jar app.jar
+ADD bio-basemanager.jar app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 EOF
 
-cd /home/biocome/file-service
+cd /home/biocome/bio-basemanager
 TAG=`date +%Y%m%d`
 PRE='bio'
 # Build
 docker build -t ${PRE}/${REPOSITORIES}:${TAG} . &>/dev/null
 
 # Run.
-docker run -d --name ${REPOSITORIES} -p 8777:8777 ${PRE}/${REPOSITORIES}:${TAG}
+docker run -d --name ${REPOSITORIES} -p 8762:8762 ${PRE}/${REPOSITORIES}:${TAG}
