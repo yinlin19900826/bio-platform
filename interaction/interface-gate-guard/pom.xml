@@ -11,10 +11,4 @@
     <packaging>jar</packaging>
 
     <artifactId>interface-gate-guard</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>com.biocome.platform</groupId>
-            <artifactId>interface-common</artifactId>
-        </dependency>
-    </dependencies>
 </project>
