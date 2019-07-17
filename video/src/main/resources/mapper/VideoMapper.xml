@@ -47,7 +47,7 @@
         <!--FROM base_video v-->
         <!--WHERE areacode = #{areacode,jdbcType=VARCHAR}-->
     <!--</select>-->
-    <select id="selectsixTree" parameterType="java.lang.String" resultMap="TreeVideoVoMap">
+ <!--   <select id="selectsixTree" parameterType="java.lang.String" resultMap="TreeVideoVoMap">
         SELECT
         v.id,v.videocode,v.videoname,v.type,v.parentcode,
         (SELECT count(c.parentcode) FROM base_camera c WHERE c.parentcode = v.videocode or c.videocode =v.videocode and c.status=1) as countlivevideo,
@@ -64,12 +64,46 @@
         </where>
     </select>
 
-    <!--查询对应的行政区划代码，不包含楼栋门禁总数-->
+    &lt;!&ndash;查询对应的行政区划代码，不包含楼栋门禁总数&ndash;&gt;
     <select id="selectTree" parameterType="java.lang.String" resultMap="TreeVideoVoMap">
         SELECT
         v.id,v.videocode,v.videoname,v.type,v.parentcode,
         (SELECT count(c.parentcode) FROM base_camera c WHERE c.parentcode = v.videocode and c.status=1) as countlivevideo,
         (SELECT count(c.parentcode) FROM base_camera c WHERE c.parentcode = v.videocode ) as countcamera
+        FROM
+        base_video v
+        <where>
+            <if test="type != null">
+                and v.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="parentcode != null and parentcode.trim() != ''">
+                and v.parentcode = #{parentcode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>-->
+    <select id="selectsixTree" parameterType="java.lang.String" resultMap="TreeVideoVoMap">
+        SELECT
+        v.id,v.videocode,v.videoname,v.type,v.parentcode,
+        (SELECT count(1) FROM base_camera c WHERE c.grandfathercode = v.videocode and c.status =1) as countlivevideo,
+        (SELECT sum(c.total_channels) FROM base_camera c WHERE c.grandfathercode = v.videocode ) as countcamera
+        FROM
+        base_video v
+        <where>
+            <if test="type != null">
+                and v.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="parentcode != null and parentcode.trim() != ''">
+                and v.parentcode = #{parentcode,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--查询对应的行政区划代码，不包含楼栋门禁总数-->
+    <select id="selectTree" parameterType="java.lang.String" resultMap="TreeVideoVoMap">
+        SELECT
+        v.id,v.videocode,v.videoname,v.type,v.parentcode,
+        (SELECT count(1) FROM base_camera c WHERE c.videocode = v.videocode and c.status =1) as countlivevideo,
+        (SELECT sum(c.total_channels) FROM base_camera c WHERE c.parentcode = v.videocode or c.videocode =v.videocode) as countcamera
         FROM
         base_video v
         <where>
