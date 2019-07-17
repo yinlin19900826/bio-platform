@@ -12,8 +12,12 @@ import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.constant.CardStatusEnum;
 import com.biocome.platform.guard.entity.AdminCardBind;
 import com.biocome.platform.guard.mapper.AdminCardBindMapper;
-import com.biocome.platform.guard.vo.card.OpenblukVo;
-import com.biocome.platform.guard.vo.device.CardDeviceVo;
+import com.biocome.platform.inter.basemanager.biz.BuildBiz;
+import com.biocome.platform.inter.basemanager.biz.CardBiz;
+import com.biocome.platform.inter.basemanager.biz.DeviceBiz;
+import com.biocome.platform.inter.basemanager.entity.Card;
+import com.biocome.platform.inter.basemanager.vo.card.OpenblukVo;
+import com.biocome.platform.inter.basemanager.vo.device.CardDeviceVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -268,7 +272,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             OpenblukVo openblukVo = new OpenblukVo();
             openblukVo.setList(bulkInVos);
             try{
-                cardBiz.openbulk(openblukVo);
+                //cardBiz.openbulk(openblukVo);
             }catch (Exception e){
                 log.info(e.getMessage());
                 return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "开卡失败！");
