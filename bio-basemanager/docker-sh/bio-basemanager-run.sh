@@ -6,7 +6,7 @@ DATE=`date +%Y%m%d%H%M%S`
 mv /home/biocome/bio-basemanager/bio-basemanager.jar /home/biocome/backups/bio-basemanager-${DATE}.jar
 
 rm -rf /home/biocome/bio-basemanager/bio-basemanager.jar
-cp /home/jenkins/workspace/Automatic-deployment/bio-basemanager/target/bio-basemanager.jar /home/biocome/bio-basemanager/
+cp /home/jenkins/workspace/new_bio_platform/bio-basemanager/target/bio-basemanager.jar /home/biocome/bio-basemanager/
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`

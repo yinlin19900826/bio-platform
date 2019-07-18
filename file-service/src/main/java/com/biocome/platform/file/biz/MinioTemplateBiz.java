@@ -12,7 +12,6 @@ import io.minio.MinioClient;
 import io.minio.ObjectStat;
 import io.minio.Result;
 import io.minio.messages.Bucket;
-import io.minio.messages.DeleteError;
 import io.minio.messages.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.JedisCluster;
@@ -33,7 +32,7 @@ public class MinioTemplateBiz {
     private static final String POLICY_CEN = "\"],\"Sid\":\"\"},{\"Action\":[\"s3:AbortMultipartUpload\",\"s3:DeleteObject\",\"s3:GetObject\",\"s3:ListMultipartUploadParts\",\"s3:PutObject\"],\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Resource\":[\"arn:aws:s3:::";
     private static final String POLICY_SUF = "/*\"],\"Sid\":\"\"}]}";
 
-    public static final SimpleDateFormat YYYYMMDDHH = new SimpleDateFormat("yyyyMMddHH");
+    private static final SimpleDateFormat YYYYMMDDHH = new SimpleDateFormat("yyyyMMddHH");
 
     private String endpoint, accessKey, secretKey;
 
@@ -294,7 +293,7 @@ public class MinioTemplateBiz {
                 new Exception(e);
             }
         });
-        Iterable<Result<DeleteError>> iterable1 = client.removeObjects(bucketName, list);
+        client.removeObjects(bucketName, list);
         //数据库删除
         if (type.equals(CommonConstant.DEFAULT_ZERO)) {
             AdvertResource model = new AdvertResource(null, bucketName, null, null);
