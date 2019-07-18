@@ -6,7 +6,7 @@ DATE=`date +%Y%m%d%H%M%S`
 mv /home/biocome/gate-guard/gate-guard.jar /home/biocome/backups/gate-guard-${DATE}.jar
 
 rm -rf /home/biocome/gate-guard/gate-guard.jar
-cp /home/jenkins/workspace/Automatic-deployment/gate-guard/target/gate-guard.jar /home/biocome/gate-guard/
+cp /home/jenkins/workspace/new_bio_platform/gate-guard/target/gate-guard.jar /home/biocome/gate-guard/
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
