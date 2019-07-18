@@ -6,7 +6,7 @@ DATE=`date +%Y%m%d%H%M%S`
 mv /home/biocome/file-service/file-service.jar /home/biocome/backups/file-service-${DATE}.jar
 
 rm -rf /home/biocome/file-service/file-service.jar
-cp /home/jenkins/workspace/new_bio_platform/file-service/target/file-service.jar /home/biocome/file-service/
+cp /home/jenkins/workspace/new_bio_platform/file-service/target/file-service-1.0-SNAPSHOT.jar /home/biocome/file-service/file-service.jar
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
