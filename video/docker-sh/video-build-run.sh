@@ -1,10 +1,13 @@
 #! /bin/bash
 
 REPOSITORIES='video'
-DATE='date +%Y%m%d%H%M%S'
-mv /home/biocome/video/video-1.0-SNAPSHOT.jar /home/biocome/backups/video-${DATE}.jar
+DATE=`date +%Y%m%d%H%M%S`
+
+mv /home/biocome/video/video.jar /home/biocome/backups/video-${DATE}.jar
+
 rm -rf /home/biocome/video/video-1.0-SNAPSHOT.jar
-cp /home/jenkins/workspace/new_bio_platform/video/target/video-1.0-SNAPSHOT.jar /home/biocome/video/
+cp /home/jenkins/workspace/new_bio_platform/video/target/video-1.0-SNAPSHOT.jar /home/biocome/video/video.jar
+
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
 if [ -n "$CONTAINER_ID" ]; then
@@ -27,7 +30,7 @@ rm -rf /home/biocome/video/Dockerfile
 cat >>/home/biocome/video/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD video-1.0-SNAPSHOT.jar app.jar
+ADD video.jar app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 EOF

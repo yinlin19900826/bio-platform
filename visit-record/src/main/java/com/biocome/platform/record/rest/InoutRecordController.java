@@ -30,7 +30,7 @@ import java.util.List;
  * @create:2019/5/7 15:25
  */
 @Controller
-@RequestMapping("inoutRecord")
+@RequestMapping("/inoutRecord")
 @Api(value = "出入记录", tags = {"出入记录操作"})
 public class InoutRecordController extends BaseController<InoutRecordBiz, InoutRecord> {
     Logger log = LoggerFactory.getLogger(InoutRecordController.class);

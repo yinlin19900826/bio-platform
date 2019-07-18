@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@SpringBootApplication
-@EnableFeignClients({"com.biocome.platform.auth.client.feign"})
+@SpringBootApplication(scanBasePackages = "com.biocome.platform.inter.basemanager.*")
+@EnableFeignClients("com.biocome.platform.auth.client.feign")
 @EnableScheduling
 @EnableAceAuthClient
 @EnableTransactionManagement
-@MapperScan({"com.biocome.platform.record.mapper","com.biocome.platform.inter.basemanager.mapper"})
+@MapperScan({"com.biocome.platform.record.mapper", "com.biocome.platform.inter.basemanager.mapper"})
 @EnableSwagger2Doc
 @ComponentScan({"com.biocome.platform"})
 public class VisitRecordBootstrap {

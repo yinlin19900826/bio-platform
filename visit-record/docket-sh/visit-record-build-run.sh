@@ -3,10 +3,11 @@
 REPOSITORIES='visit-record'
 DATE=`date +%Y%m%d%H%M%S`
 
-mv /home/biocome/visit-record/visit-record-1.0-SNAPSHOT.jar /home/biocome/backups/visit-record-1.0-SNAPSHOT-${DATE}.jar
+mv /home/biocome/visit-record/visit-record.jar /home/biocome/backups/visit-record-${DATE}.jar
 
-rm -rf /home/biocome/visit-record/visit-record-1.0-SNAPSHOT.jar
-cp /home/jenkins/workspace/new_bio_platform/visit-record/target/visit-record-1.0-SNAPSHOT.jar /home/biocome/visit-record/
+rm -rf /home/biocome/visit-record/visit-record.jar
+
+cp /home/jenkins/workspace/new_bio_platform/visit-record/target/visit-record.jar /home/biocome/visit-record/
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
@@ -30,7 +31,7 @@ rm -rf /home/biocome/visit-record/Dockerfile
 cat >>/home/biocome/visit-record/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD visit-record-1.0-SNAPSHOT.jar app.jar
+ADD visit-record.jar app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 EOF
