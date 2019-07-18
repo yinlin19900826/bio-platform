@@ -113,7 +113,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>bio-basemanager</finalName>
+        <finalName>visit-record</finalName>
         <plugins>
             <!-- 此插件用来生成通用mapper的代码 -->
             <plugin>
