@@ -12,10 +12,11 @@
     <artifactId>micro-service</artifactId>
 
     <dependencies>
-        <dependency>
+        <!-- 不可放公共模块 会影响gateway启动 各个模块要引用spring-boot-starter-web需单独引用-->
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!--nacos config-->
         <dependency>
