@@ -1,6 +1,8 @@
 package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Estate;
+import com.biocome.platform.inter.basemanager.vo.syncho.EstateVo;
+import com.biocome.platform.inter.basemanager.vo.syncho.SynchoVo;
 import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
@@ -56,5 +58,25 @@ public interface EstateMapper extends Mapper<Estate> {
      * @Date 2019/7/12 9:14
      */
     List<Estate> queryEstateByEstatecode(@Param("list") List<String> estateCodes);
+
+    /**
+     * 根据SynchoVo返回所属小区信息特定实体类
+     *
+     * @param vo 楼栋编号
+     * @return java.util.List<com.github.wxiaoqi.security.admin.vo.EstateVo>
+     * @Author shenlele
+     * @Date 2019/5/22 10:16
+     */
+    List<EstateVo> selectBySynchoVo(@Param("vo") SynchoVo vo);
+
+    /**
+     * 根据小区信息查询返回特定类
+     *
+     * @param estate 小区信息
+     * @return java.util.List<com.github.wxiaoqi.security.admin.vo.EstateVo>
+     * @Author shenlele
+     * @Date 2019/5/14 18:33
+     */
+    List<EstateVo> selectByEstate(@Param("estate") Estate estate);
 
 }

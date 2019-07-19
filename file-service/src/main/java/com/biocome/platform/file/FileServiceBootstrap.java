@@ -1,6 +1,5 @@
 package com.biocome.platform.file;
 
-import com.biocome.platform.auth.client.EnableAceAuthClient;
 import com.spring4all.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +18,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableCircuitBreaker
 @SpringBootApplication
 @EnableFeignClients({"com.biocome.platform.auth.client.feign"})
-@EnableAceAuthClient
 @MapperScan("com.biocome.platform.file.mapper")
 @EnableSwagger2Doc
 public class FileServiceBootstrap {
