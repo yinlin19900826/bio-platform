@@ -125,4 +125,78 @@
         </set>
         WHERE usercode = #{req.usercode,jdbcType=VARCHAR}
     </update>
+
+    <resultMap id="lesseecardListResultMap" type="com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListResp">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="username" jdbcType="VARCHAR" property="userName"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
+        <result column="cardkind" jdbcType="VARCHAR" property="cardkind"/>
+        <result column="usersex" jdbcType="VARCHAR" property="usersex"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
+        <result column="checkintime" jdbcType="VARCHAR" property="checkintime"/>
+        <result column="registertime" jdbcType="VARCHAR" property="registertime"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+    </resultMap>
+
+    <select id="selectLesseecardList" resultMap="lesseecardListResultMap" parameterType="com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListReq">
+        SELECT
+        bc.id,
+        bc.physical_cardno,
+        bdd1.dict_value cardtype,
+        bl.checkintime,
+        bl.usercode,
+        bl.username,
+        (
+        CASE bl.usersex
+        WHEN 0 THEN
+        '男'
+        WHEN 1 THEN
+        '女'
+        WHEN 2 THEN
+        '未知'
+        ELSE
+        ''
+        END
+        ) AS usersex,
+        bl.tel,
+        bl.registertime,
+        bb.buildcode,
+        bb.buildname,
+        bdd2.dict_value cardkind,
+        (
+        CASE bc.isalive
+        WHEN 0 THEN
+        '注销'
+        WHEN 1 THEN
+        '有效'
+        WHEN 2 THEN
+        '发卡'
+        WHEN 3 THEN
+        '禁用'
+        WHEN 4 THEN
+        '黑名单'
+        ELSE
+        ''
+        END
+        ) AS isalive
+        FROM
+        base_card bc
+        LEFT JOIN base_lessee bl ON bc.usercode = bl.usercode
+        LEFT JOIN base_build bb ON bc.buildcode = bb.buildcode
+        LEFT JOIN base_dict_detail bdd1 ON bdd1.dict_code = '010' AND bc.cardtype = bdd1.dict_key
+        LEFT JOIN base_dict_detail bdd2 ON bdd2.dict_code = '003' AND bc.cardkind = bdd2.dict_key
+        <where>
+            1=1
+            <if test="req.buildcode != null and ''!= req.buildcode">and bc.buildcode = #{req.buildcode,jdbcType=VARCHAR}</if>
+            <if test="req.housecode != null and ''!= req.housecode">and bc.housecode = #{req.housecode,jdbcType=VARCHAR}</if>
+            <if test="req.username != null and ''!= req.username">and bl.username = #{req.username,jdbcType=VARCHAR}</if>
+            <if test="req.cardno != null and ''!= req.cardno">and bc.physical_cardno = #{req.cardno,jdbcType=VARCHAR}</if>
+            <if test="req.isalive != null and ''!= req.isalive">and bc.isalive = #{req.isalive,jdbcType=INTEGER}</if>
+            <if test="req.usersex != null and ''!= req.usersex">and bl.usersex = #{req.usersex,jdbcType=INTEGER}</if>
+        </where>
+    </select>
 </mapper>
