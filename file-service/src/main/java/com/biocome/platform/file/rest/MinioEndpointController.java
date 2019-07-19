@@ -3,6 +3,7 @@ package com.biocome.platform.file.rest;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.file.biz.MinioTemplateBiz;
+import com.biocome.platform.file.vo.FileVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -182,6 +184,26 @@ public class MinioEndpointController {
         try {
             template.removeObject(bucketName, objectName, type);
             return new ObjectRestResponse().success();
+        } catch (Exception e) {
+            log.info("删除指定对象文件失败，错误信息为：{}", e.getMessage());
+            return new ObjectRestResponse().failure();
+        }
+    }
+
+    @ApiOperation("批量删除指定对象文件")
+    @DeleteMapping("/object/deleteListObject")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ObjectRestResponse deleteListObject(@RequestBody List<FileVo> list) {
+        try {
+            if (ValidateUtils.isNotEmpty(list)) {
+                for (FileVo vo : list) {
+                    template.removeObject(vo.getTopic(), vo.getFilename(), vo.getType());
+                }
+                return new ObjectRestResponse().success();
+            } else {
+                log.info("批量删除指定对象文件失败，文件参数异常");
+                return new ObjectRestResponse().error();
+            }
         } catch (Exception e) {
             log.info("删除指定对象文件失败，错误信息为：{}", e.getMessage());
             return new ObjectRestResponse().failure();

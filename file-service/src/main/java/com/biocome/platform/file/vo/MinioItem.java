@@ -1,9 +1,16 @@
 package com.biocome.platform.file.vo;
+
 import io.minio.messages.Item;
 import io.minio.messages.Owner;
 
 import java.util.Date;
 
+/**
+ * @ClassName: MinioItem
+ * @Author: shenlele
+ * @Date: 2019/7/9 10:36
+ * @Description:
+ */
 public class MinioItem {
 
     private String objectName;
