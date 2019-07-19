@@ -33,7 +33,7 @@
         <result property="videopath" column="videopath"/>
     </resultMap>
     <select id="selectInoutRecordForList" resultMap="selectInoutRecordMap">
-        SELECT
+            SELECT
             bir.id,
             bir.createtime,
             bdd.dict_value opentype,
@@ -41,26 +41,26 @@
             bir.usercode,
             bl.username,
             (
-                CASE bl.usersex
-                WHEN 0 THEN
-                    '未知'
-                WHEN 1 THEN
-                    '男'
-                WHEN 2 THEN
-                    '女'
-                ELSE
-                    ''
-                END
+            CASE bl.usersex
+            WHEN 0 THEN
+            '未知'
+            WHEN 1 THEN
+            '男'
+            WHEN 2 THEN
+            '女'
+            ELSE
+            ''
+            END
             ) AS usersex,
             bl.tel,
             bl.buildcode,
             bl.buildname,
             bir.picpath,
             bir.videopath
-        FROM
-            base_inout_record bir
-        LEFT JOIN base_lessee bl ON bir.usercode = bl.usercode
-        LEFT JOIN base_dict_detail bdd ON bdd.dict_code = '007' AND bir.opentype = bdd.dict_key
+            FROM
+            ag_inout_record_v1.base_inout_record bir
+            LEFT JOIN ag_admin_v1.base_lessee bl ON bir.usercode = bl.usercode
+            LEFT JOIN ag_admin_v1.base_dict_detail bdd ON bdd.dict_code = '007' AND bir.opentype = bdd.dict_key
         <where>
             1=1
             <if test="id != null and '' != id">and bir.id = #{id,jdbcType=VARCHAR}</if>
