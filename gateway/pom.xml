@@ -134,7 +134,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>bio-gate</finalName>
+        <finalName>gateway</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
