@@ -57,9 +57,6 @@ public interface CardMapper extends Mapper<Card> {
 
     void removeCard(@Param("usercode") String usercode, @Param("cardNo") String cardNo);
 
-    List<Map<String, Object>> selectAdminCardCount(@Param("codes") List<String> codes);
-
-    List<Map<String, Object>> selectAdminOwnCards(@Param("codes") List<String> userCodes);
 
 /*
     List<AdminSimpleCardVo> selectAdminCardList(@Param("admincode") String admincode, @Param("cardNo") String cardNo, @Param("isalive") Integer isalive);

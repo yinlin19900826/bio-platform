@@ -1,6 +1,6 @@
 package com.biocome.platform.guard.utils;
 
-import com.biocome.platform.guard.constant.BrandEnum;
+import com.biocome.platform.inter.basemanager.constant.BrandEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;

@@ -94,4 +94,95 @@
         WHERE c.buildcode = d.buildcode
         GROUP BY c.usercode, c.buildcode, c.cardtype, cardNo
     </select>
+
+    <!--    查询管理员名下门禁卡数量-->
+    <select id="selectAdminCardCount" resultType="java.util.Map">
+        SELECT b.usercode, COUNT(b.usercode) AS num FROM
+        (
+        SELECT usercode, buildcode FROM base_card
+        WHERE buildcode IN
+        (
+        SELECT build_code FROM `admin_card_bind`
+        WHERE `usercode` IN
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+        ) a
+        LEFT JOIN
+        (
+        SELECT usercode, build_code FROM `admin_card_bind`
+        WHERE `usercode` IN
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) b
+        ON a.buildcode = b.build_code
+        GROUP BY b.usercode
+    </select>
+
+    <!--    查询管理员自用卡-->
+    <select id="selectAdminOwnCards" resultType="java.util.Map">
+        select usercode, group_concat(physical_cardno separator ',') as cards from base_card
+        where usercode in
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by usercode
+    </select>
+
+    <!--    查询管理员所有门禁卡-->
+    <select id="selectAdminCardList" resultType="com.biocome.platform.guard.vo.admin.AdminSimpleCardVo">
+        SELECT usercode, physical_cardno AS cardNo,
+        CASE isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        DATE_FORMAT(createtime,'%Y-%m-%d %H:%i:%s') AS createTime FROM base_card
+        WHERE (1=1) AND usercode = #{admincode}
+        <if test="cardNo != null and cardNo.trim() != '' ">
+            AND physical_cardno like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="isalive != null">
+            AND isalive = #{isalive}
+        </if>
+    </select>
+
+    <!--    管理员管理的卡-->
+    <select id="adminManageCardList" resultType="com.biocome.platform.guard.vo.admin.AdminSimpleCardVo">
+        SELECT usercode, physical_cardno AS cardNo, DATE_FORMAT(createtime,'%Y-%m-%d %H:%i:%s') AS createTime,CASE isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus
+        FROM base_card
+        WHERE buildcode IN
+        (
+        SELECT build_code FROM `admin_card_bind`
+        WHERE `usercode` = #{admincode}
+        )
+        <if test="cardNo != null and cardNo.trim() != '' ">
+            AND physical_cardno like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="isalive != null">
+            AND isalive = #{isalive}
+        </if>
+    </select>
+
+    <!--    所有管理卡（通卡）-->
+    <select id="superCardList"  resultType="com.biocome.platform.guard.vo.admin.AdminCardVo">
+        SELECT a.usercode, a.username, a.tel, a.resideaddress as address, a.papersnum AS certNo, c.physical_cardno AS cardNo, b.estatename AS communityName, c.buildcode,
+        CASE c.isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        CASE a.landlordtype
+        WHEN 0 THEN "未知" WHEN 1 THEN "原房东" WHEN 2 THEN "管理员" WHEN 3 THEN "房东家属" WHEN 4 THEN "网格员"
+        WHEN 5 THEN "警务人员" WHEN 6 THEN "治安科" WHEN 72 THEN "保洁人员" WHEN 8 THEN "代管" WHEN 9 THEN "维修人员"
+        WHEN 10 THEN "申报义务人" WHEN 11 THEN "送气人员" WHEN 12 THEN "集成单位"
+        END adminType
+        FROM base_landlord a,
+        base_card c,
+        base_build b
+        WHERE c.usercode = a.usercode AND c.buildcode = b.buildcode AND cardtype = 4
+        <if test="username != null and username.trim() != '' ">
+            AND a.username like CONCAT('%',#{username},'%')
+        </if>
+        <if test="certNo != null and certNo.trim() != ''">
+            AND a.papersnum = like CONCAT('%',#{certNo},'%')
+        </if>
+        <if test="communityname != null and communityname.trim() != '' ">
+            AND b.estatename like CONCAT('%',#{communityname},'%')
+        </if>
+    </select>
 </mapper>

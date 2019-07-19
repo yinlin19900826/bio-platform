@@ -13,6 +13,7 @@ import io.minio.ObjectStat;
 import io.minio.Result;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.JedisCluster;
 
@@ -26,6 +27,7 @@ import java.util.*;
  * @Date: 2019/7/9 10:36
  * @Description:
  */
+@Slf4j
 public class MinioTemplateBiz {
 
     private static final String POLICY_PRE = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\",\"s3:ListBucketMultipartUploads\"],\"Effect\":\"Allow\",\"Principal\":{\"AWS\":[\"*\"]},\"Resource\":[\"arn:aws:s3:::";
@@ -343,7 +345,11 @@ public class MinioTemplateBiz {
 //        ServerSideEncryption sse = ServerSideEncryption.withCustomerKey(keyGen.generateKey());
 //        getMinioClient().client.putObject(bucketName, objectName, stream, size, null, sse contentType);
         MinioClient client = getMinioClient();
+        log.info("------------------------------------------------------------------------");
+        log.info("--------------文件服务器上传文件，准备好了，让我们开始吧！--------------");
         client.putObject(bucketName, objectName, stream, size, contentType);
+        log.info("--------------文件服务器上传文件，上传完了，让我们结束吧！--------------");
+        log.info("------------------------------------------------------------------------");
         //返回路径
         return client.getObjectUrl(bucketName, objectName);
     }

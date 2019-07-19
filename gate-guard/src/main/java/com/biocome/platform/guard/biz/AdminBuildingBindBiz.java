@@ -1,20 +1,20 @@
 package com.biocome.platform.guard.biz;
 
-import com.biocome.platform.inter.basemanager.biz.BuildBiz;
-import com.biocome.platform.inter.basemanager.biz.CardBiz;
-import com.biocome.platform.inter.basemanager.biz.LandlordBiz;
-import com.biocome.platform.inter.basemanager.entity.Build;
-import com.biocome.platform.inter.basemanager.entity.Landlord;
-import com.biocome.platform.guard.entity.AdminBuildingBind;
-import com.biocome.platform.guard.vo.admin.AdminBuildingVo;
-import com.biocome.platform.guard.vo.admin.AdminSummaryVo;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.ValidateUtils;
-import com.biocome.platform.guard.constant.DefaultPhoneOpen;
+import com.biocome.platform.guard.entity.AdminBuildingBind;
 import com.biocome.platform.guard.mapper.AdminBuildingBindMapper;
+import com.biocome.platform.guard.vo.admin.AdminBuildingVo;
+import com.biocome.platform.guard.vo.admin.AdminSummaryVo;
+import com.biocome.platform.inter.basemanager.biz.BuildBiz;
+import com.biocome.platform.inter.basemanager.biz.CardBiz;
+import com.biocome.platform.inter.basemanager.biz.LandlordBiz;
+import com.biocome.platform.inter.basemanager.constant.DefaultPhoneOpen;
+import com.biocome.platform.inter.basemanager.entity.Build;
+import com.biocome.platform.inter.basemanager.entity.Landlord;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -45,9 +45,9 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
     @Autowired
     AdminBuildingBindMapper adminBuildingBindMapper;
     @Autowired
-    LandlordBiz landlordBiz;
+    AdminCardBindBiz adminCardBindBiz;
     @Autowired
-    CardBiz cardBiz;
+    LandlordBiz landlordBiz;
     @Autowired
     BuildBiz buildBiz;
 
@@ -78,8 +78,8 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
             for(Iterator<AdminSummaryVo> it = list.iterator(); it.hasNext();){
                 userCodes.add(it.next().getUsercode());
             }
-            List<Map<String, Object>> cntListMap = cardBiz.getAdminCardCount(userCodes);
-            List<Map<String, Object>> ownCardListMap = cardBiz.getAdminOwnCards(userCodes);
+            List<Map<String, Object>> cntListMap = adminCardBindBiz.getAdminCardCount(userCodes);
+            List<Map<String, Object>> ownCardListMap = adminCardBindBiz.getAdminOwnCards(userCodes);
             if(ValidateUtils.isNotEmpty(cntListMap)){
                 for(Iterator<AdminSummaryVo> it = list.iterator(); it.hasNext();){
                     AdminSummaryVo vo  = it.next();
@@ -176,6 +176,7 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
             }
             return new ObjectRestResponse<>().success();
         }catch (Exception e){
+            e.printStackTrace();
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "授权楼栋失败，错误信息：数据库异常！");

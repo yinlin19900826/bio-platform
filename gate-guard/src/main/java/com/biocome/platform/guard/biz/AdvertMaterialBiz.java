@@ -1,14 +1,14 @@
 package com.biocome.platform.guard.biz;
 
-import com.biocome.platform.guard.constant.AdminCommonConstant;
-import com.biocome.platform.guard.entity.AdvertMaterial;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.guard.entity.AdvertMaterial;
 import com.biocome.platform.guard.mapper.AdvertMaterialMapper;
+import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

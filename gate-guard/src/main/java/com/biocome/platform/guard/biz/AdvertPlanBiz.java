@@ -6,8 +6,6 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.common.util.ThreadManager;
-import com.biocome.platform.guard.constant.AdvertConstant;
-import com.biocome.platform.guard.constant.BrandEnum;
 import com.biocome.platform.guard.entity.Advert;
 import com.biocome.platform.guard.entity.AdvertMaterial;
 import com.biocome.platform.guard.entity.AdvertPlan;
@@ -20,6 +18,8 @@ import com.biocome.platform.guard.rpc.service.AdvertRpc;
 import com.biocome.platform.guard.utils.RpcTokenUtil;
 import com.biocome.platform.guard.utils.UriUtil;
 import com.biocome.platform.guard.vo.advert.*;
+import com.biocome.platform.inter.basemanager.constant.AdvertConstant;
+import com.biocome.platform.inter.basemanager.constant.BrandEnum;
 import com.biocome.platform.inter.basemanager.entity.Device;
 import com.biocome.platform.inter.basemanager.mapper.BuildMapper;
 import com.biocome.platform.inter.basemanager.mapper.DeviceMapper;
@@ -213,7 +213,7 @@ public class AdvertPlanBiz extends BaseBiz<AdvertPlanMapper, AdvertPlan> {
      */
     public void rpcAdvert(Integer id) throws Exception {
         //获取广告计划
-          AdvertPlan advertPlan = mapper.selectByPrimaryKey(id);
+        AdvertPlan advertPlan = mapper.selectByPrimaryKey(id);
         //获取该广告计划下所有素材
         List<AdvertMaterial> materials = advertMaterialMapper.selectMaterialByPlanId(id);
         //下发广告的实体类
@@ -310,8 +310,8 @@ public class AdvertPlanBiz extends BaseBiz<AdvertPlanMapper, AdvertPlan> {
                         List<AdvertAddListRpcResp> advertAddListRpcResps = null;
                         try {
                             advertAddListRpcResps = advertRpc.advertList(uri, addAdvertList);
-                            log.info("批量下发广告的响应结果为:{}",advertAddListRpcResps.toString());
-                        }catch (Exception e){
+                            log.info("批量下发广告的响应结果为:{}", advertAddListRpcResps.toString());
+                        } catch (Exception e) {
                             log.info(e.getMessage());
                             System.out.println(JsonUtils.beanToJson(addAdvertList));
                             e.printStackTrace();
