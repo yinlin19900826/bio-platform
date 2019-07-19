@@ -115,4 +115,14 @@
         set isalive = #{isalive}
         where logic_cardno = #{cardNo}
     </update>
+
+    <update id="changeLesseePic">
+        UPDATE base_lessee
+        <set>
+            <if test="req.headphoto != null">headphoto = #{req.headphoto,jdbcType=VARCHAR}, </if>
+            <if test="req.photo != null">photo = #{req.photo,jdbcType=VARCHAR}, </if>
+            <if test="req.papersphoto != null">papersphoto = #{req.papersphoto,jdbcType=VARCHAR}, </if>
+        </set>
+        WHERE usercode = #{req.usercode,jdbcType=VARCHAR}
+    </update>
 </mapper>

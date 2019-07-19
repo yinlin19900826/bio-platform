@@ -1,6 +1,7 @@
 package com.biocome.platform.guard.biz;
 
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.DateUtils;
@@ -8,6 +9,7 @@ import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.guard.constant.CardTypeEnum;
 import com.biocome.platform.guard.mapper.DoorDeviceCardMapper;
 import com.biocome.platform.guard.rpc.service.CardRpc;
+import com.biocome.platform.guard.rpc.service.FileRpc;
 import com.biocome.platform.guard.utils.RpcTokenUtil;
 import com.biocome.platform.guard.utils.UriUtil;
 import com.biocome.platform.guard.vo.upload.ChangeLesseePicReq;
@@ -21,10 +23,12 @@ import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.basemanager.mapper.CardMapper;
 import com.biocome.platform.inter.basemanager.mapper.DeviceMapper;
 import com.biocome.platform.inter.basemanager.mapper.LesseeMapper;
+import com.biocome.platform.inter.basemanager.utils.FileUtils;
 import com.biocome.platform.inter.basemanager.vo.card.*;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseeCardVo;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListReq;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListResp;
+import com.biocome.platform.inter.basemanager.vo.upload.FileVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +75,9 @@ public class DoorDeviceCardBiz {
 
     @Autowired
     private CardRpc cardRpc;
+
+    @Autowired
+    private FileRpc fileRpc;
 
     /**
      * @param username
@@ -216,20 +223,18 @@ public class DoorDeviceCardBiz {
         }
     }
 
-    public BaseRpcResponse changeLesseePic(ChangeLesseePicReq req) {
-//        int result = mapper.changeLesseePic(req);
-//        if (result == 0) {
-//            return new BaseRpcResponse().failure();
-//        } else {
-//            try {
-//                fastDFSClientUtil.deleteFile(req.getHeadphoto());
-//                fastDFSClientUtil.deleteFile(req.getPhoto());
-//                fastDFSClientUtil.deleteFile(req.getPapersphoto());
-//            }catch (Exception e){
-//                log.info("找不到文件路径，删除失败");
-//            }
-        return new BaseRpcResponse().success();
-//        }
+    public BaseRpcResponse changeLesseePic(ChangeLesseePicReq req) throws Exception{
+        int result = doorDeviceCardMapper.changeLesseePic(req);
+        if (result == 0) {
+            return new BaseRpcResponse().failure();
+        } else {
+                List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
+                ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
+                if (objectRestResponse.getStatus() != 200) {
+                    throw new Exception("远程删除文件失败");
+                }
+            return new BaseRpcResponse().success();
+        }
     }
 
     public List<OpenblukResp> openbulk(OpenblukVo req) {

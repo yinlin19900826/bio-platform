@@ -1,5 +1,6 @@
 package com.biocome.platform.guard.mapper;
 
+import com.biocome.platform.guard.vo.upload.ChangeLesseePicReq;
 import com.biocome.platform.inter.basemanager.LesseeCardMsgResp;
 import com.biocome.platform.inter.basemanager.vo.card.OpenblukResp;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListReq;
@@ -32,4 +33,6 @@ public interface DoorDeviceCardMapper {
     public List<LesseecardListResp> selectLesseecardList(@Param("req") LesseecardListReq req);
 
     void updateIsaliveByCardnoList(@Param("isalive") int isalive, @Param("list") List<OpenblukResp> list);
+
+    int changeLesseePic(@Param("req") ChangeLesseePicReq req);
 }
