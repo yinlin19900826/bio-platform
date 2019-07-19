@@ -10,6 +10,8 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.rest.BaseController;
+import com.biocome.platform.inter.basemanager.biz.CardBiz;
+import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.vo.card.AddCardParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -30,6 +32,8 @@ public class AdminCardBindController extends BaseController<AdminCardBindBiz, Ad
 
     @Autowired
     AdminCardBindBiz adminCardBindBiz;
+    @Autowired
+    CardBiz cardBiz;
 
     @ApiOperation("所有管理员卡")
     @ApiImplicitParams({
@@ -146,5 +150,21 @@ public class AdminCardBindController extends BaseController<AdminCardBindBiz, Ad
     public TableResultResponse<AdminCardVo> superCardList(@RequestParam(defaultValue = "20") int pageSize, @RequestParam(defaultValue = "1") int pageNo,
                                                           String username, String certNo, String communityname) {
         return adminCardBindBiz.superCardList(username, certNo, communityname, pageSize, pageNo);
+    }
+
+    @ApiOperation("门禁卡用户详情")
+    @ApiImplicitParam(name = "cardNo", value = "门禁卡物理卡号", paramType = "query", required = true)
+    @ResponseBody
+    @RequestMapping(value = "/detail" , method = RequestMethod.GET)
+    public ObjectRestResponse<Card> detail(String cardNo){
+        ObjectRestResponse<Card> res = new ObjectRestResponse<>();
+        try{
+            Card card = cardBiz.selectByPhysicalCardNo(cardNo);
+            res.setData(card);
+            return res;
+        }catch (Exception e){
+            log.info("查找门禁卡详情失败，错误信息：数据库错误！");
+            return res.failure();
+        }
     }
 }
