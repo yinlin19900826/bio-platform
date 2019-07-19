@@ -287,6 +287,25 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
     }
 
     /**
+     * 批量获取管理员管理卡的数量
+     *
+     * @param userCodes
+     * @return
+     */
+    public List<Map<String, Object>> getAdminCardCount(List<String> userCodes) {
+        return mapper.selectAdminCardCount(userCodes);
+    }
+
+    /**
+     * 批量获取管理员自用门禁卡
+     *
+     * @param userCodes
+     * @return
+     */
+    public List<Map<String, Object>> getAdminOwnCards(List<String> userCodes) {
+        return mapper.selectAdminOwnCards(userCodes);
+    }
+    /**
      * 查找管理员卡的设备关联号列表
      * @param cardNoList
      * @return
@@ -383,7 +402,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             deleteById(card.getId());
         }
         card = new Card();
-        BeanUtils.copyProperties(card, param);
+        BeanUtils.copyProperties(param,card);
         card.setPhysicalCardno(param.getCardNo());
         card.setCreatetime(new Date());
         card.setIsalive(com.biocome.platform.inter.basemanager.constant.CardStatusEnum.PUBLISHING.getCardStatusCode());

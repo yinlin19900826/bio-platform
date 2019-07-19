@@ -57,4 +57,18 @@
             #{item,jdbcType=INTEGER}
         </foreach>
     </delete>
+
+    <update id="changePic">
+        UPDATE base_landlord
+        <set>
+            <if test="req.photo != null">photo = #{req.photo,jdbcType=VARCHAR}, </if>
+            <if test="req.papersphoto != null">papersphoto = #{req.papersphoto,jdbcType=VARCHAR}, </if>
+        </set>
+        WHERE usercode = #{req.usercode,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByUserCode" resultMap="BaseResultMap">
+        select * from base_landlord
+        where usercode = #{usercode}
+    </select>
 </mapper>

@@ -45,9 +45,9 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
     @Autowired
     AdminBuildingBindMapper adminBuildingBindMapper;
     @Autowired
-    LandlordBiz landlordBiz;
+    AdminCardBindBiz adminCardBindBiz;
     @Autowired
-    CardBiz cardBiz;
+    LandlordBiz landlordBiz;
     @Autowired
     BuildBiz buildBiz;
 
@@ -78,8 +78,8 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
             for(Iterator<AdminSummaryVo> it = list.iterator(); it.hasNext();){
                 userCodes.add(it.next().getUsercode());
             }
-            List<Map<String, Object>> cntListMap = cardBiz.getAdminCardCount(userCodes);
-            List<Map<String, Object>> ownCardListMap = cardBiz.getAdminOwnCards(userCodes);
+            List<Map<String, Object>> cntListMap = adminCardBindBiz.getAdminCardCount(userCodes);
+            List<Map<String, Object>> ownCardListMap = adminCardBindBiz.getAdminOwnCards(userCodes);
             if(ValidateUtils.isNotEmpty(cntListMap)){
                 for(Iterator<AdminSummaryVo> it = list.iterator(); it.hasNext();){
                     AdminSummaryVo vo  = it.next();
@@ -176,6 +176,7 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
             }
             return new ObjectRestResponse<>().success();
         }catch (Exception e){
+            e.printStackTrace();
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "授权楼栋失败，错误信息：数据库异常！");

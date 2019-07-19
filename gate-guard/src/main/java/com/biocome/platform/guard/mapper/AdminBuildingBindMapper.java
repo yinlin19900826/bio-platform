@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 管理员楼栋授权
@@ -38,4 +39,5 @@ public interface AdminBuildingBindMapper extends Mapper<AdminBuildingBind> {
     List<AdminBuildingVo> adminBindBuildingList(@Param("usercode") String usercode, @Param("buildName") String buildName, @Param("communityName") String communityName, @Param("username") String username, @Param("phone") String phone);
 
     List<AdminBuildingBind> selectByAdmin(@Param("usercode") String usercode, @Param("buildcode") String buildcode);
+
 }

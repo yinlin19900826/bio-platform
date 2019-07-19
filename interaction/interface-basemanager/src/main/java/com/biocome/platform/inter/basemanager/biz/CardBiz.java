@@ -347,24 +347,4 @@ public class CardBiz extends BaseBiz<CardMapper, Card> {
         mapper.removeCard(usercode, cardNo);
     }
 
-    /**
-     * 批量获取管理员管理卡的数量
-     *
-     * @param userCodes
-     * @return
-     */
-    public List<Map<String, Object>> getAdminCardCount(List<String> userCodes) {
-        return mapper.selectAdminCardCount(userCodes);
-    }
-
-    /**
-     * 批量获取管理员自用门禁卡
-     *
-     * @param userCodes
-     * @return
-     */
-    public List<Map<String, Object>> getAdminOwnCards(List<String> userCodes) {
-        return mapper.selectAdminOwnCards(userCodes);
-    }
-
 }

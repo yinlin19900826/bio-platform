@@ -10,6 +10,7 @@ import tk.mybatis.mapper.common.Mapper;
 import com.biocome.platform.inter.basemanager.vo.device.CardDeviceVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 管理员卡
@@ -30,16 +31,20 @@ public interface AdminCardBindMapper extends Mapper<AdminCardBind> {
 
     void removeCard(@Param("usercode") String usercode, @Param("cardNo") String cardNo);
 
+
     List<AdminCardVo> adminCardListOnBuilding(@Param("buildcode") String buildcode);
 
     List<CardDeviceVo> cardDeviceList(@Param("cardNoList") List<String> cardNoList);
+
+    /*以下为迁移部分*/
 
     List<AdminSimpleCardVo> selectAdminCardList(@Param("admincode") String admincode, @Param("cardNo") String cardNo, @Param("isalive") Integer isalive);
 
     List<AdminCardVo> superCardList(@Param("username") String username, @Param("certNo") String certNo, @Param("communityname") String communityname);
 
-    List<CardDetailVo> selectCardDetail(@Param("cardNo") String cardNo);
-
     List<AdminSimpleCardVo> adminManageCardList(@Param("admincode") String admincode, @Param("cardNo") String cardNo, @Param("isalive") Integer isalive);
 
+    List<Map<String, Object>> selectAdminCardCount(@Param("codes") List<String> codes);
+
+    List<Map<String, Object>> selectAdminOwnCards(@Param("codes") List<String> userCodes);
 }
