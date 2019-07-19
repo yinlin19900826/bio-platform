@@ -53,6 +53,18 @@
         <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
     </resultMap>
 
+    <resultMap id="UserVoMap" type="com.biocome.platform.inter.basemanager.vo.syncho.LesseeUserVo">
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="usertype" jdbcType="VARCHAR" property="usertype"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="unitcode" jdbcType="VARCHAR" property="unitcode"/>
+        <result column="housecode" jdbcType="VARCHAR" property="roomcode"/>
+        <result column="iscard" jdbcType="VARCHAR" property="iscard"/>
+        <result column="isapp" jdbcType="VARCHAR" property="isapp"/>
+    </resultMap>
+
     <!--查询租户信息(可传值有estatecode，islogout，username，papersnum，usersex，occupation，politicsstatus，birthbegintime，birthendtime，registerbegintime，registerendtime)-->
     <select id="selectByAttribute" parameterType="com.biocome.platform.inter.basemanager.vo.LesseeVo"
             resultMap="BaseResultMap">
@@ -86,4 +98,46 @@
             #{item,jdbcType=INTEGER}
         </foreach>
     </delete>
+
+    <select id="selectByVo" resultMap="UserVoMap" parameterType="com.biocome.platform.inter.basemanager.vo.syncho.BuildAndBrandVo">
+        SELECT
+        l.username,
+        l.usercode,
+        l.usertype,
+        l.estatecode,
+        l.buildcode,
+        l.unitcode,
+        l.housecode,
+        l.isapp,
+        l.iscard
+        FROM
+        base_build b,
+        base_device d,
+        base_lessee l
+        WHERE
+        b.buildcode = d.buildcode
+        AND b.buildcode = l.buildcode
+        AND d.brand = #{vo.brand,jdbcType=VARCHAR}
+        <if test="vo.province != null and vo.province.trim() != ''">
+            AND b.province = #{vo.province,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.city != null and vo.city.trim() != ''">
+            AND b.city = #{vo.city,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.county != null and vo.county.trim() != ''">
+            AND b.county = #{vo.county,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.street != null and vo.street.trim() != ''">
+            AND b.street = #{vo.street,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.policestatio != null and vo.policestatio.trim() != ''">
+            AND b.policestatio = #{vo.policestatio,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.estatecode != null and vo.estatecode.trim() != ''">
+            AND b.estatecode = #{vo.estatecode,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.buildcode != null and vo.buildcode.trim() != ''">
+            AND b.buildcode = #{vo.buildcode,jdbcType=VARCHAR}
+        </if>
+    </select>
 </mapper>

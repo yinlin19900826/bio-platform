@@ -2,6 +2,8 @@ package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.basemanager.vo.LesseeVo;
+import com.biocome.platform.inter.basemanager.vo.syncho.BuildAndBrandVo;
+import com.biocome.platform.inter.basemanager.vo.syncho.LesseeUserVo;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -34,5 +36,15 @@ public interface LesseeMapper extends Mapper<Lessee> {
      * @Date 2019/5/8 13:56
      */
     void deleteLessee(@Param("list") List<Integer> list);
+
+    /**
+     * 根据楼栋所属区域代码与厂家编号返回特定类
+     *
+     * @param vo 参数
+     * @return java.util.List<com.github.wxiaoqi.security.admin.vo.LesseeUserVo>
+     * @Author shenlele
+     * @Date 2019/5/15 14:25
+     */
+    List<LesseeUserVo> selectByVo(@Param("vo") BuildAndBrandVo vo);
 
 }
