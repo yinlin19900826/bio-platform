@@ -33,6 +33,14 @@
         <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
     </resultMap>
 
+    <resultMap id="TreeBuildVoMap" type="com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="code"/>
+        <result column="buildname" jdbcType="VARCHAR" property="name"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="parentcode"/>
+        <result column="countdevice" jdbcType="VARCHAR" property="countdevice"/>
+    </resultMap>
+
     <!--根据楼栋名称或楼栋地址查询所有楼栋信息，查询所有时传参都为null-->
     <select id="selectByAttribute" resultMap="BaseResultMap">
         SELECT
@@ -61,5 +69,11 @@
             #{item,jdbcType=INTEGER}
         </foreach>
     </delete>
+
+    <select id="selectByTree" resultMap="TreeBuildVoMap">
+        SELECT b.id, b.buildcode, b.buildname, b.estatecode,(select count(1) from base_device d where d.buildcode = b.buildcode) as countdevice
+        FROM base_build b
+        WHERE b.estatecode = #{estatecode,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

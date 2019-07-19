@@ -103,7 +103,7 @@ public class MinioEndpointController {
     }
 
     @ApiOperation("上传广告素材文件或升级文件并重命名")
-    @ApiImplicitParams({@ApiImplicitParam(name = "type", value = "桶名称", paramType = "path"),
+    @ApiImplicitParams({@ApiImplicitParam(name = "type", value = "类型（0：图片，1：视频，2：文字，3：声音，4:：文件）", paramType = "path"),
             @ApiImplicitParam(name = "objectName", value = "文件名", paramType = "path")})
     @PostMapping("/object/{objectName}/{type}")
     public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String objectName, @PathVariable String type) {
