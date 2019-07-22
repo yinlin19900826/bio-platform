@@ -1,5 +1,6 @@
 package com.biocome.platform.file.biz;
 
+import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.file.constant.CommonConstant;
 import com.biocome.platform.file.entity.AdvertResource;
 import com.biocome.platform.file.entity.OpenDoorImages;
@@ -7,6 +8,7 @@ import com.biocome.platform.file.entity.UserImages;
 import com.biocome.platform.file.mapper.AdvertResourceMapper;
 import com.biocome.platform.file.mapper.OpenDoorImagesMapper;
 import com.biocome.platform.file.mapper.UserImagesMapper;
+import com.biocome.platform.file.vo.FileVo;
 import com.biocome.platform.file.vo.MinioItem;
 import io.minio.MinioClient;
 import io.minio.ObjectStat;
@@ -247,7 +249,7 @@ public class MinioTemplateBiz {
     }
 
     /**
-     * 删除指定文件
+     * 删除指定文件,放到redis
      *
      * @param bucketName 桶名称
      * @param objectName 文件名称
@@ -257,8 +259,7 @@ public class MinioTemplateBiz {
      * @Author shenlele
      * @Date 2019/7/9 15:20
      */
-    public void removeObject(String bucketName, String objectName, String type) throws Exception {
-        getMinioClient().removeObject(bucketName, objectName);
+    public void removeObjectToRedis(String bucketName, String objectName, String type) throws Exception {
         //数据库删除
         if (type.equals(CommonConstant.DEFAULT_ZERO)) {
             AdvertResource model = new AdvertResource(objectName, bucketName, null, null);
@@ -272,6 +273,23 @@ public class MinioTemplateBiz {
         } else {
             throw new Exception("删除文件类型未知，所传数据类型为：type:" + type);
         }
+        //文件地址放入到redis
+        FileVo fileVo = new FileVo(type, bucketName, objectName);
+        jedisCluster.lpush(CommonConstant.DELETE_KEY, JsonUtils.beanToJson(fileVo));
+    }
+
+    /**
+     * 删除文件服务器文件
+     *
+     * @param bucketName 桶名
+     * @param objectName 文件名
+     * @return void
+     * @throws Exception 异常信息
+     * @Author shenlele
+     * @Date 2019/7/22 9:53
+     */
+    public void removeObject(String bucketName, String objectName) throws Exception {
+        getMinioClient().removeObject(bucketName, objectName);
     }
 
     /**

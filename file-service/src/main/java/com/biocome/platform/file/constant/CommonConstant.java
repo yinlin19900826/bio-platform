@@ -24,6 +24,11 @@ public class CommonConstant {
     public final static String ADVERT_BUCKET_NAME = "advertbucketname";
 
     /**
+     * redis文件服务器待删除key
+     */
+    public final static String DELETE_KEY = "file_delete";
+
+    /**
      * 公用字符串数字
      */
     public final static String DEFAULT_ZERO = "0";

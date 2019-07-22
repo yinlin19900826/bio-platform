@@ -23,4 +23,13 @@ public class FileUtils {
         }
         return fileVos;
     }
+
+    public static FileVo getFileDetailByUrl(String type, String url) {
+        String[] details = url.split("/");
+        FileVo vo = new FileVo();
+        vo.setType(type);
+        vo.setTopic(details[3]);
+        vo.setFilename(details[4]);
+        return vo;
+    }
 }

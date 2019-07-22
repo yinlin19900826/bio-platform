@@ -18,6 +18,14 @@ import java.util.List;
 @FeignClient(name = "file", url = "${file.service.uri}", fallbackFactory = FileFallbackFactory.class)
 public interface FileRpc {
 
+    /**
+     * 远程调用批量删除广告文件
+     *
+     * @param fileVos
+     * @return com.biocome.platform.common.msg.ObjectRestResponse
+     * @Author shenlele
+     * @Date 2019/7/22 10:07
+     */
     @RequestMapping(value = {"/object/deleteListObject"}, method = {RequestMethod.DELETE}, produces = {"application/json;charset=UTF-8"})
     ObjectRestResponse fileDel(@RequestBody List<FileVo> fileVos);
 }

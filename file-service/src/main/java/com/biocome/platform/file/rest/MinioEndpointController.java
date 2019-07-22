@@ -103,7 +103,7 @@ public class MinioEndpointController {
     }
 
     @ApiOperation("上传广告素材文件或升级文件并重命名")
-    @ApiImplicitParams({@ApiImplicitParam(name = "type", value = "类型（0：图片，1：视频，2：文字，3：声音，4:：文件）", paramType = "path"),
+    @ApiImplicitParams({@ApiImplicitParam(name = "type", value = "类型（0：图片，1：视频，2：文字，3：声音，4:：文件，5：未知）", paramType = "path"),
             @ApiImplicitParam(name = "objectName", value = "文件名", paramType = "path")})
     @PostMapping("/object/{objectName}/{type}")
     public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String objectName, @PathVariable String type) {
@@ -182,7 +182,7 @@ public class MinioEndpointController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ObjectRestResponse deleteObject(@PathVariable String bucketName, @PathVariable String objectName, @PathVariable String type) {
         try {
-            template.removeObject(bucketName, objectName, type);
+            template.removeObjectToRedis(bucketName, objectName, type);
             return new ObjectRestResponse().success();
         } catch (Exception e) {
             log.info("删除指定对象文件失败，错误信息为：{}", e.getMessage());
@@ -197,7 +197,7 @@ public class MinioEndpointController {
         try {
             if (ValidateUtils.isNotEmpty(list)) {
                 for (FileVo vo : list) {
-                    template.removeObject(vo.getTopic(), vo.getFilename(), vo.getType());
+                    template.removeObjectToRedis(vo.getTopic(), vo.getFilename(), vo.getType());
                 }
                 return new ObjectRestResponse().success();
             } else {
