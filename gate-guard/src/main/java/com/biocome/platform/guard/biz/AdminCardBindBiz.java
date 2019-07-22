@@ -20,8 +20,7 @@ import com.biocome.platform.inter.basemanager.constant.CardTypeEnum;
 import com.biocome.platform.inter.basemanager.entity.Build;
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Landlord;
-import com.biocome.platform.inter.basemanager.vo.card.AddCardParam;
-import com.biocome.platform.inter.basemanager.vo.card.OpenblukVo;
+import com.biocome.platform.inter.basemanager.vo.card.*;
 import com.biocome.platform.inter.basemanager.vo.device.CardDeviceVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -54,6 +53,8 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
     DeviceBiz deviceBiz;
     @Autowired
     LandlordBiz landlordBiz;
+    @Autowired
+    DoorDeviceCardBiz doorDeviceCardBiz;
 
     /***
      * 查找管理员卡和楼栋绑定列表
@@ -132,7 +133,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "更新门禁卡失败，错误信息：数据库错误！");
         }
         //TODO(待调整) 下发卡、注销卡
-        /*try{
+        try{
             BaseRpcResponse rpcResp = null;
             if(ValidateUtils.isNotEmpty(bindVos)){
                 List<String> codes = new ArrayList<String>();
@@ -141,7 +142,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
                         codes.add(bindVo.getBuildCode());
                     }
                 }
-                rpcResp = cardBiz.deliverAdminCardNotify(card, codes);
+                rpcResp = deliverAdminCardNotify(card, codes);
             }
             if(ValidateUtils.isNotEmpty(removeVos)){
                 List<String> codes = new ArrayList<String>();
@@ -150,7 +151,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
                         codes.add(bindVo.getBuildCode());
                     }
                 }
-                rpcResp = cardBiz.unregisterAdminCardNotify(card, codes);
+                rpcResp = unregisterAdminCardNotify(card, codes);
             }
             if(ValidateUtils.isNotEmpty(rpcResp)){
                 if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
@@ -160,7 +161,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         }catch (Exception e){
             log.info(e.getMessage());
             return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "门禁卡下发、注销失败，失败原因："+e.getMessage());
-        }*/
+        }
         return new ObjectRestResponse<>().success();
     }
 
@@ -179,10 +180,10 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "注销卡失败！错误信息：数据库错误！");
         }
         //注销卡通知
-        /*BaseRpcResponse rpcResp = cardBiz.unregisterAdminCardNotify(camera.getUsercode(), camera.getCardNo());
+        BaseRpcResponse rpcResp = unregisterAdminCardNotify(vo.getUsercode(), vo.getCardNo());
         if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
             return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "通知注销卡失败！");
-        }*/
+        }
         return new ObjectRestResponse<>().success();
     }
 
@@ -277,7 +278,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             OpenblukVo openblukVo = new OpenblukVo();
             openblukVo.setList(bulkInVos);
             try{
-                /*cardBiz.openbulk(openblukVo);*/
+                doorDeviceCardBiz.openbulk(openblukVo);
             }catch (Exception e){
                 log.info(e.getMessage());
                 return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "开卡失败！");
@@ -435,7 +436,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
      * @param card
      * @return
      */
-    /*public BaseRpcResponse deliverAdminCardNotify(Card card, List<String> codes) {
+    public BaseRpcResponse deliverAdminCardNotify(Card card, List<String> codes) {
         OpenCardVo openVo = new OpenCardVo();
         //openVo.setToken();
         openVo.setUsercode(card.getUsercode());
@@ -443,15 +444,15 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         openVo.setCardtype(card.getCardtype());
         List<CardSnVo> list = deviceBiz.selectSnByBuildCodes(codes);
         openVo.setList(list);
-        return openCard(openVo);
-    }*/
+        return doorDeviceCardBiz.openCard(openVo);
+    }
 
     /***
      * 管理员注销卡通知
      * @param card
      * @return
      */
-    /*public BaseRpcResponse unregisterAdminCardNotify(Card card, List<String> codes) {
+    public BaseRpcResponse unregisterAdminCardNotify(Card card, List<String> codes) {
         LogoutCardVo logoutVo = new LogoutCardVo();
         //openVo.setToken();
         logoutVo.setUsercode(card.getUsercode());
@@ -459,10 +460,10 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         logoutVo.setCardtype(card.getCardtype());
         List<CardSnVo> list = deviceBiz.selectSnByBuildCodes(codes);
         logoutVo.setSnList(list);
-        return logoutCard(logoutVo);
-    }*/
+        return doorDeviceCardBiz.logoutCard(logoutVo);
+    }
 
-    /*public BaseRpcResponse unregisterAdminCardNotify(String usercode, String cardNo) {
+    public BaseRpcResponse unregisterAdminCardNotify(String usercode, String cardNo) {
         LogoutCardVo logoutCardVo = new LogoutCardVo();
         Card card = cardBiz.selectByPhysicalCardNo(cardNo);
         List<String> cardNoList = new ArrayList<>();
@@ -478,7 +479,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             logoutCardVo.setCardtype(card.getCardtype());
             logoutCardVo.setSnList(map.get(cardNo).getSnList());
         }
-        return logoutCard(logoutCardVo);
-    }*/
+        return doorDeviceCardBiz.logoutCard(logoutCardVo);
+    }
 
 }
