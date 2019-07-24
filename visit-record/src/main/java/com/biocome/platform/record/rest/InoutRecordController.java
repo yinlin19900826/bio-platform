@@ -1,8 +1,12 @@
 package com.biocome.platform.record.rest;
 
+import com.alibaba.rocketmq.client.producer.DefaultMQProducer;
+import com.alibaba.rocketmq.client.producer.SendResult;
+import com.alibaba.rocketmq.common.message.Message;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.rest.BaseController;
+import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.inter.basemanager.entity.InoutRecord;
 import com.biocome.platform.inter.basemanager.vo.inoutRecord.InoutRecordBulkReq;
 import com.biocome.platform.inter.basemanager.vo.inoutRecord.InoutRecordBulkResp;
@@ -17,6 +21,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +41,13 @@ import java.util.List;
 public class InoutRecordController extends BaseController<InoutRecordBiz, InoutRecord> {
     Logger log = LoggerFactory.getLogger(InoutRecordController.class);
 
+    @Autowired
+    private DefaultMQProducer defaultMQProducer;
+    @Value("${rocketmq.producer.topics}")
+    private String topicid;
+    @Value("${rocketmq.producer.tags}")
+    private String tags;
+
     @ApiOperation("出入记录上传")
     @PostMapping("/recordinfo")
     @ResponseBody
@@ -43,14 +56,20 @@ public class InoutRecordController extends BaseController<InoutRecordBiz, InoutR
         try {
             if (req.getInfo() != null) {
                 req.getInfo().setAccesskey(req.getAccesskey());
-                baseBiz.addInoutRecord(req.getInfo());
+                String msg = JsonUtils.beanToJson(req.getInfo());
+
+                Message sendMsg = new Message(topicid, tags, msg.getBytes());
+
+                SendResult sendResult = defaultMQProducer.send(sendMsg);
+
+                //baseBiz.addInoutRecord(record);
                 return new BaseRpcResponse().success();
             } else {
                 resp.setResult("0");
                 resp.setErrorcode("100");
                 resp.setMessage("参数格式错误");
                 return resp;
-             }
+            }
         } catch (Exception e) {
             log.info("------上报进出记录时发生异常------");
             log.info(e.getMessage());
@@ -72,7 +91,13 @@ public class InoutRecordController extends BaseController<InoutRecordBiz, InoutR
             for (InoutRecord record : req.getList()) {
                 record.setAccesskey(accesskey);
                 try {
-                    baseBiz.addInoutRecord(record);
+                    String msg = JsonUtils.beanToJson(record);
+
+                    Message sendMsg = new Message(topicid, tags, msg.getBytes());
+
+                    SendResult sendResult = defaultMQProducer.send(sendMsg);
+
+                    //baseBiz.addInoutRecord(record);
                     resp.setId(record.getId());
                     resp.setResult("1");
                     resp.setErrorcode("");
@@ -114,7 +139,7 @@ public class InoutRecordController extends BaseController<InoutRecordBiz, InoutR
                                                             String opentype,
                                                             String cardno,
                                                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date starttime,
-                                                            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")Date endtime,
+                                                            @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endtime,
                                                             String buildcode) {
         Page<InoutRecordForListResp> result = PageHelper.startPage(pageNum, pageSize);
         baseBiz.selectInoutRecordForList(id, opentype, cardno, starttime, endtime, buildcode);

@@ -12,6 +12,13 @@
     <artifactId>visit-record</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.biocome.platform</groupId>
+            <artifactId>micro-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>com.biocome.platform</groupId>
             <artifactId>auth-client</artifactId>
@@ -24,6 +31,10 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
@@ -46,6 +57,19 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
+        <!-- 通用mapper -->
+        <!--<dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.3</version>
+        </dependency>-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -84,14 +108,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-
-        <!--nocos discovery-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>com.biocome.platform</groupId>
+            <artifactId>rocketmq</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>
