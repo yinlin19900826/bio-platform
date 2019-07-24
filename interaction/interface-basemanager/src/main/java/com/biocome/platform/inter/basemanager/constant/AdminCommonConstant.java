@@ -54,5 +54,5 @@ public class AdminCommonConstant {
     /**
      * redis广告素材待删除key
      */
-    public final static String DELETE_KEY = "advert_material_delete";
+    public final static String DELETE_KEY = "file_delete";
 }

@@ -20,13 +20,13 @@
             SELECT a.housecode, a.housename,IF(IFNULL(b.house_code, NULL),1,0) AS bind, b.id
             FROM
             (
-                SELECT housecode, housename from base_house WHERE buildcode =  #{buildcode}
+                SELECT id, housecode, housename from base_house WHERE buildcode =  #{buildcode}
             ) a
             LEFT JOIN
             (
                 SELECT id,house_code, house_name, usercode FROM admin_house_bind WHERE build_code = #{buildcode}
             ) b
-            ON a.housecode = b.house_code
+            ON a.housecode = b.house_code order by a.id
     </select>
 
     <insert id="batchInsert" parameterType="java.util.List">

@@ -18,6 +18,15 @@ public class FileVo {
     @ApiModelProperty(value = "文件名")
     private String filename;
 
+    public FileVo() {
+    }
+
+    public FileVo(String type, String topic, String filename) {
+        this.type = type;
+        this.topic = topic;
+        this.filename = filename;
+    }
+
     public String getType() {
         return type;
     }

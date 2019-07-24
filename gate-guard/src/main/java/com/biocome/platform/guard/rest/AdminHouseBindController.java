@@ -44,7 +44,7 @@ public class AdminHouseBindController extends BaseController<AdminHouseBindBiz, 
     }
 
     @ApiOperation("全部授权")
-    @ApiImplicitParam(name = "buildcode", value = "楼栋编号", paramType = "query")
+    @ApiImplicitParam(name = "buildcode", value = "楼栋编号", paramType = "query", required = true)
     @ResponseBody
     @RequestMapping(value = "/bindAll", method = RequestMethod.POST)
     public ObjectRestResponse bindAll(String buildcode){
@@ -52,7 +52,7 @@ public class AdminHouseBindController extends BaseController<AdminHouseBindBiz, 
     }
 
     @ApiOperation("全部取消")
-    @ApiImplicitParam(name = "buildcode", value = "楼栋编号", paramType = "query")
+    @ApiImplicitParam(name = "buildcode", value = "楼栋编号", paramType = "query", required = true)
     @ResponseBody
     @RequestMapping(value = "/removeAll", method = RequestMethod.POST)
     public ObjectRestResponse removeAll(String buildcode){
