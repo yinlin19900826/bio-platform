@@ -27,6 +27,4 @@ public class MinioAutoConfiguration {
     MinioTemplateBiz template() {
         return new MinioTemplateBiz(minioUrl, minioAccess, minioSecret);
     }
-
-
 }

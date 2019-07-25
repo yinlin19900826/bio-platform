@@ -41,13 +41,13 @@ public class MinioTemplateBiz {
     private String endpoint, accessKey, secretKey;
 
     @Autowired
+    private JedisCluster jedisCluster;
+    @Autowired
     private UserImagesMapper userImagesMapper;
     @Autowired
     private AdvertResourceMapper advertResourceMapper;
     @Autowired
     private OpenDoorImagesMapper openDoorImagesMapper;
-    @Autowired
-    private JedisCluster jedisCluster;
 
     /**
      * 构造方法
@@ -187,12 +187,12 @@ public class MinioTemplateBiz {
      * @param stream      文件流
      * @param size        文件大小
      * @param contentType 文件类型
-     * @return java.lang.String
+     * @return com.biocome.platform.file.entity.UserImages
      * @throws Exception 异常信息
      * @Author shenlele
      * @Date 2019/7/17 15:09
      */
-    public String uploadUser(String estateCode, String objectName, InputStream stream, long size, String contentType) throws Exception {
+    public UserImages uploadUser(String estateCode, String objectName, InputStream stream, long size, String contentType) throws Exception {
         String bucketName = CommonConstant.PRE + estateCode;
         String key = CommonConstant.MINIO_BUCKET_IF + bucketName;
         //拼接判断桶是否存在的key,没有则创建
@@ -203,8 +203,7 @@ public class MinioTemplateBiz {
         //上传文件
         String path = this.uploadFile(bucketName, objectName, stream, size, contentType);
         UserImages model = new UserImages(objectName, bucketName, path);
-        userImagesMapper.insertSelective(model);
-        return path;
+        return model;
     }
 
     /**
@@ -214,12 +213,12 @@ public class MinioTemplateBiz {
      * @param stream      文件流
      * @param size        文件大小
      * @param contentType 文件类型
-     * @return java.lang.String
+     * @return com.biocome.platform.file.entity.OpenDoorImages
      * @throws Exception 异常信息
      * @Author shenlele
      * @Date 2019/7/17 16:43
      */
-    public String uploadOpenDoor(String objectName, InputStream stream, long size, String contentType) throws Exception {
+    public OpenDoorImages uploadOpenDoor(String objectName, InputStream stream, long size, String contentType) throws Exception {
         String bucketName = CommonConstant.PRE + YYYYMMDDHH.format(new Date());
         String key = CommonConstant.MINIO_BUCKET_IF + bucketName;
         //拼接判断桶是否存在的key,没有则创建
@@ -229,9 +228,7 @@ public class MinioTemplateBiz {
         }
         //上传文件
         String path = this.uploadFile(bucketName, objectName, stream, size, contentType);
-        OpenDoorImages model = new OpenDoorImages(objectName, bucketName, path);
-        openDoorImagesMapper.insertSelective(model);
-        return path;
+        return new OpenDoorImages(objectName, bucketName, path);
     }
 
     /**
