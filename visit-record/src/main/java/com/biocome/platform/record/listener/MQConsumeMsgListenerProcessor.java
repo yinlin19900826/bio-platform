@@ -38,25 +38,22 @@ public class MQConsumeMsgListenerProcessor implements MessageListenerConcurrentl
             logger.info("接收到的消息为空，不做任何处理");
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         }
-        msgs.stream().forEach(msg -> {
-            try{
-                String info = new String(msg.getBody());
-                logger.info("接收到的消息是：" + info);
-                if (msg.getTopic().equals(topics)) {
-                    if (msg.getTags().equals(tags)) {
-                        int reconsumeTimes = msg.getReconsumeTimes();
-                        if (reconsumeTimes == 3) {
-                            return;
-                        }
-                        InoutRecord inoutRecord = JsonUtils.jsonToBean(info, InoutRecord.class);
-                        biz.addInoutRecord(inoutRecord);
-                    }
+        MessageExt msg = msgs.get(0);
+        try {
+            String info = new String(msg.getBody());
+            logger.info("接收到的消息是：" + info);
+            if (msg.getTopic().equals(topics)) {
+                if (msg.getTags().equals(tags)) {
+                    InoutRecord inoutRecord = JsonUtils.jsonToBean(info, InoutRecord.class);
+                    biz.addInoutRecord(inoutRecord);
                 }
-            }catch (Exception e){
-                logger.info("出入记录保存失败：" + e.getMessage());
             }
-        });
+        } catch (Exception e) {
+            if (msg.getReconsumeTimes() == 3) {
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            }
+            return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+        }
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     }
-
 }
