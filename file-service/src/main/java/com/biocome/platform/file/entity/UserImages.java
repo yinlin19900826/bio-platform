@@ -23,6 +23,8 @@ public class UserImages {
     private String url;
     private Date createtime;
 
+    public  UserImages(){}
+
     public UserImages(String objectName, String bucketName, String url) {
         this.objectName = objectName;
         this.bucketName = bucketName;

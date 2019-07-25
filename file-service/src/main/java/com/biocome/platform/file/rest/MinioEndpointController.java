@@ -1,8 +1,13 @@
 package com.biocome.platform.file.rest;
 
+import com.alibaba.rocketmq.client.producer.DefaultMQProducer;
+import com.alibaba.rocketmq.common.message.Message;
 import com.biocome.platform.common.msg.ObjectRestResponse;
+import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.file.biz.MinioTemplateBiz;
+import com.biocome.platform.file.entity.OpenDoorImages;
+import com.biocome.platform.file.entity.UserImages;
 import com.biocome.platform.file.vo.FileVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -10,6 +15,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +40,17 @@ public class MinioEndpointController {
 
     private static final Integer ONE_DAY = 3600 * 24;
 
+    @Value("${rocketmq.producer.topics}")
+    private String topics;
+    @Value("${rocketmq.producer.userTags}")
+    private String userTags;
+    @Value("${rocketmq.producer.openDoorTags}")
+    private String openDoorTags;
+
     @Autowired
     private MinioTemplateBiz template;
+    @Autowired
+    private DefaultMQProducer defaultMQProducer;
 
     @ApiOperation("创建新存储桶")
     @ApiImplicitParam(name = "bucketName", value = "桶名称", paramType = "path")
@@ -121,8 +136,10 @@ public class MinioEndpointController {
     @PostMapping("/object/userImg/{estateCode}")
     public ObjectRestResponse userImg(@RequestBody MultipartFile object, @PathVariable String estateCode) {
         try {
-            String path = template.uploadUser(estateCode, object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
-            return new ObjectRestResponse().success().data(path);
+            UserImages model = template.uploadUser(estateCode, object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
+            Message sendMsg = new Message(topics, userTags, JsonUtils.beanToJson(model).getBytes());
+            defaultMQProducer.send(sendMsg);
+            return new ObjectRestResponse().success().data(model.getUrl());
         } catch (Exception e) {
             log.info("上传用户图片失败，错误信息为：{}", e.getMessage());
             return new ObjectRestResponse().failure();
@@ -133,8 +150,10 @@ public class MinioEndpointController {
     @PostMapping("/object/uploadOpenDoor")
     public ObjectRestResponse userImg(@RequestBody MultipartFile object) {
         try {
-            String path = template.uploadOpenDoor(object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
-            return new ObjectRestResponse().success().data(path);
+            OpenDoorImages model = template.uploadOpenDoor(object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
+            Message sendMsg = new Message(topics, openDoorTags, JsonUtils.beanToJson(model).getBytes());
+            defaultMQProducer.send(sendMsg);
+            return new ObjectRestResponse().success().data(model.getUrl());
         } catch (Exception e) {
             log.info("上传开门图片失败，错误信息为：{}", e.getMessage());
             return new ObjectRestResponse().failure();

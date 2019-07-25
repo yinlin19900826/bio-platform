@@ -34,8 +34,6 @@ public class CommonConstant {
     public final static String DEFAULT_ZERO = "0";
     public final static String DEFAULT_ONE = "1";
     public final static String DEFAULT_TWO = "2";
-    public final static String DEFAULT_THREE = "3";
-    public final static String DEFAULT_FOUR = "4";
-    public final static String DEFAULT_FIVE = "5";
+    public final static int DEFAULT_INT_THREE = 3;
 
 }

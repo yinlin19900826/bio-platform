@@ -24,6 +24,8 @@ public class AdvertResource {
     private String type;
     private Date createtime;
 
+    public AdvertResource(){}
+
     public AdvertResource(String objectName, String bucketName, String url, String type) {
         this.objectName = objectName;
         this.bucketName = bucketName;

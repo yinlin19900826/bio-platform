@@ -23,6 +23,8 @@ public class OpenDoorImages {
     private String url;
     private Date createtime;
 
+    public OpenDoorImages(){}
+
     public OpenDoorImages(String objectName, String bucketName, String url) {
         this.objectName = objectName;
         this.bucketName = bucketName;
