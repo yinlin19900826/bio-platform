@@ -26,8 +26,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan({"com.biocome.platform.wechatapplet.mapper", "com.biocome.platform.inter.basemanager.mapper"})
 @EnableSwagger2Doc
 @ComponentScan({"com.biocome.platform"})
-public class WetCartAppletBootstrap {
+public class WecartAppletBootstrap {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(WetCartAppletBootstrap.class).run(args);
+        new SpringApplicationBuilder(WecartAppletBootstrap.class).run(args);
     }
 }
