@@ -1,4 +1,4 @@
-package com.biocome.platform.wechatApplet;
+package com.biocome.platform.wechatapplet;
 
 import com.biocome.platform.auth.client.EnableAceAuthClient;
 import com.spring4all.swagger.EnableSwagger2Doc;
@@ -19,11 +19,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @SpringBootApplication
-@EnableFeignClients({"com.biocome.platform.auth.client.feign", "com.biocome.platform.wechatApplet.rpc.service"})
+@EnableFeignClients({"com.biocome.platform.auth.client.feign", "com.biocome.platform.wechatapplet.rpc.service"})
 @EnableScheduling
 @EnableAceAuthClient
 @EnableTransactionManagement
-@MapperScan({"com.biocome.platform.wechatApplet.mapper", "com.biocome.platform.inter.basemanager.mapper"})
+@MapperScan({"com.biocome.platform.wechatapplet.mapper", "com.biocome.platform.inter.basemanager.mapper"})
 @EnableSwagger2Doc
 @ComponentScan({"com.biocome.platform"})
 public class WetCartAppletBootstrap {
