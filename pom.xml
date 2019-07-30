@@ -28,6 +28,7 @@
         <module>gateway</module>
         <module>interaction</module>
         <module>rocketmq</module>
+        <module>wechatapplet</module>
     </modules>
 
     <properties>
