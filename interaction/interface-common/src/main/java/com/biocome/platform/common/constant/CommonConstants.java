@@ -21,4 +21,8 @@ public class CommonConstants {
     public static final String JWT_KEY_NAME = "name";
 
     public static final String RESP_RESULT_SUCCESS = "1";
+
+    public static final String DYNAMIC_PASSWORD_OPENTYPE= "2";
+
+
 }
