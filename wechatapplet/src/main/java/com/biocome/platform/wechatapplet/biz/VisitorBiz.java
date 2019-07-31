@@ -1,18 +1,18 @@
 package com.biocome.platform.wechatapplet.biz;
 
+import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.inter.basemanager.entity.VisitorRecord;
 import com.biocome.platform.wechatapplet.mapper.DeviceDetailMapper;
 import com.biocome.platform.wechatapplet.mapper.VisitorMapper;
 import com.biocome.platform.wechatapplet.rpc.service.OpenDoorPasswordRpc;
-import com.biocome.platform.wechatapplet.vo.visitor.OpendoorpasswordResp;
-import com.biocome.platform.wechatapplet.vo.visitor.VisitorPasswordReq;
-import com.biocome.platform.wechatapplet.vo.visitor.VisitorPasswordVo;
+import com.biocome.platform.wechatapplet.vo.visitor.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author hxy
@@ -51,5 +51,18 @@ public class VisitorBiz {
         vo.setUserdesc(req.getRemark());
         OpendoorpasswordResp opendoorpassword = openDoorPasswordRpc.opendoorpassword(vo);
         return opendoorpassword;
+    }
+
+    public List<GetRecordResp> getRecord(GetRecordReq req) {
+        VisitorRecord record = new VisitorRecord();
+        record.setCreatetime(DateUtils.getCurrentTime());
+        record.setUsercode(req.getUsercode());
+        if ("1".equals(req.getStatus())){
+            //获取待使用记录
+            record.setStatus("1");
+            return visitorMapper.getActiveRecord(record);
+        }else {
+            return visitorMapper.getInactiveRecord(record);
+        }
     }
 }

@@ -1,12 +1,17 @@
-package com.biocome.platform.wechatapplet.controller;
+package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.inter.basemanager.entity.VisitorRecord;
 import com.biocome.platform.wechatapplet.biz.VisitorBiz;
 import com.biocome.platform.wechatapplet.rpc.service.OpenDoorPasswordRpc;
+import com.biocome.platform.wechatapplet.vo.visitor.GetRecordReq;
+import com.biocome.platform.wechatapplet.vo.visitor.GetRecordResp;
 import com.biocome.platform.wechatapplet.vo.visitor.OpendoorpasswordResp;
 import com.biocome.platform.wechatapplet.vo.visitor.VisitorPasswordReq;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/visit")
+@Api(value = "访客记录相关", tags = {"访客记录相关"})
 public class VisitorController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -34,6 +40,7 @@ public class VisitorController {
     @Value("${gateguard.url}")
     private String url;
 
+    @ApiOperation("发送动态密码")
     @PostMapping("/password")
     public ObjectRestResponse<String> password(@RequestBody VisitorPasswordReq req) {
         ObjectRestResponse resp = new ObjectRestResponse();
@@ -69,8 +76,10 @@ public class VisitorController {
         resp.setData(password);
         return resp;
     }
-//    @PostMapping("/getRecord")
-//    public List<VisitorRecord> getRecord(@RequestBody ){
-//        return null;
-//    }
+
+    @ApiOperation("获取访客记录")
+    @PostMapping("/getRecord")
+    public ObjectRestResponse<List<GetRecordResp>> getRecord(@RequestBody GetRecordReq req) {
+        return new ObjectRestResponse<>().data(biz.getRecord(req));
+    }
 }

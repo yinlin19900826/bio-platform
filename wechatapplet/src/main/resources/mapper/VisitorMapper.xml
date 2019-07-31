@@ -3,7 +3,8 @@
 
 <mapper namespace="com.biocome.platform.wechatapplet.mapper.VisitorMapper">
 
-    <insert id="insert" parameterType="com.biocome.platform.inter.basemanager.entity.VisitorRecord" useGeneratedKeys="false">
+    <insert id="insert" parameterType="com.biocome.platform.inter.basemanager.entity.VisitorRecord"
+            useGeneratedKeys="false">
         insert into base_visitor_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -28,5 +29,52 @@
             <if test="status != null">#{status},</if>
         </trim>
     </insert>
+    <resultMap id="active" type="com.biocome.platform.wechatapplet.vo.visitor.GetRecordResp">
+        <result property="createtime" column="createtime"/>
+        <result property="overduetime" column="overduetime"/>
+        <result property="phone" column="visitor_phone"/>
+        <result property="deviceName" column="device_name"/>
+        <result property="statusStr" column="statusStr"/>
+    </resultMap>
+    <select id="getActiveRecord" resultMap="active" parameterType="com.biocome.platform.inter.basemanager.entity.VisitorRecord">
+        SELECT
+            device_name,
+            createtime,
+            overduetime,
+            visitor_phone,
+            '待使用' statusStr
+        FROM
+            base_visitor_record
+        WHERE
+            usercode = #{usercode}
+        AND
+            overduetime > #{createtime}
+    </select>
+
+    <select id="getInactiveRecord" resultMap="active" parameterType="com.biocome.platform.inter.basemanager.entity.VisitorRecord">
+        SELECT
+        device_name,
+        createtime,
+        overduetime,
+        visitor_phone,
+        (
+        CASE
+        WHEN `status` = '2' THEN
+        '已使用'
+        ELSE
+        '已失效'
+        END
+        ) AS statusStr
+        FROM
+        base_visitor_record
+        WHERE
+        usercode = #{usercode}
+        AND (
+        (
+        `status` = '1'
+        AND overduetime &lt; #{createtime}
+        )
+        OR (`status` = '2') )
+    </select>
 
 </mapper>
