@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.CardVoMapper">
+
+    <select id="selectCardsByCode" resultType="java.lang.String">
+        SELECT physical_cardno
+        FROM base_card
+        WHERE usercode = #{usercode}
+          AND isalive = 1
+    </select>
+
+    <select id="selectCardsByCardNo" resultType="com.biocome.platform.inter.basemanager.entity.Card">
+        SELECT id,
+               logic_cardno,
+               physical_cardno,
+               usercode,
+               username,
+               phone,
+               admincode,
+               buildcode,
+               buildname,
+               housecode,
+               isalive,
+               createtime,
+               sn,
+               cardtype,
+               cardkind,
+               remark
+        FROM base_card
+        WHERE physical_cardno = #{cardNo}
+    </select>
+
+    <update id="updateIsaliveByCardno">
+        update base_card
+        set isalive = #{isalive}
+        where logic_cardno = #{cardNo}
+    </update>
+</mapper>
