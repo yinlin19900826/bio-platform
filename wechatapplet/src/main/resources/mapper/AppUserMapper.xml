@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.AppUserMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.wechatapplet.entity.AppUser" id="appUserMap">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="phoneChecked" column="phone_checked"/>
+        <result property="residenceAddress" column="residence_address"/>
+        <result property="marriage" column="marriage"/>
+        <result property="education" column="education"/>
+        <result property="career" column="career"/>
+        <result property="residenceType" column="residence_type"/>
+        <result property="workOrganization" column="work_organization"/>
+        <result property="fromPlace" column="from_place"/>
+        <result property="comeReason" column="come_reason"/>
+        <result property="realtionship" column="realtionship"/>
+        <result property="height" column="height"/>
+        <result property="politicPosition" column="politic_position"/>
+        <result property="profession" column="profession"/>
+        <result property="dwellType" column="dwell_type"/>
+        <result property="professionalTitle" column="professional_title"/>
+        <result property="arriveDate" column="arrive_date"/>
+        <result property="residePermitNotify" column="reside_permit_notify"/>
+        <result property="placeChangeNotify" column="place_change_notify"/>
+        <result property="reproduction" column="reproduction"/>
+        <result property="contraception" column="contraception"/>
+        <result property="cardDynamic" column="card_dynamic"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUser" column="create_user"/>
+        <result property="loginTime" column="login_time"/>
+        <result property="loginIp" column="login_ip"/>
+    </resultMap>
+
+</mapper>
