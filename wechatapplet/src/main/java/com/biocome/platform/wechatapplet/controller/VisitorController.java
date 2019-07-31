@@ -69,8 +69,8 @@ public class VisitorController {
         resp.setData(password);
         return resp;
     }
-    @PostMapping("/getRecord")
-    public List<VisitorRecord> getRecord(@RequestBody ){
-        return null;
-    }
+//    @PostMapping("/getRecord")
+//    public List<VisitorRecord> getRecord(@RequestBody ){
+//        return null;
+//    }
 }
