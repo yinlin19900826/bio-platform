@@ -71,6 +71,6 @@ public class VisitorController {
     }
     @PostMapping("/getRecord")
     public List<VisitorRecord> getRecord(@RequestBody ){
-
+        return null;
     }
 }
