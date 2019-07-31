@@ -110,4 +110,8 @@
             <if test="accesskey != null">#{accesskey,jdbcType=BIGINT}, </if>
         </trim>
     </insert>
+
+    <update id="updateVisitRecord" parameterType="com.biocome.platform.inter.basemanager.entity.VisitorRecord">
+        UPDATE base_visitor_record SET `status` = #{status} WHERE sn = #{status} AND `password` = #{password}
+    </update>
 </mapper>
