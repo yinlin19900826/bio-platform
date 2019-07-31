@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.BuildDetailMapper">
+    <resultMap id="buildDetail" type="com.biocome.platform.wechatapplet.vo.build.BuildDetailResp">
+        <result property="buildName" column="buildName"/>
+        <result property="buildCode" column="buildCode"/>
+    </resultMap>
+    <select id="getBuildByUsercode" resultMap="buildDetail">
+        SELECT
+            buildname,
+            buildcode
+        FROM
+            base_lessee bl
+        WHERE
+            usercode = #{usercode}
+    </select>
+</mapper>
