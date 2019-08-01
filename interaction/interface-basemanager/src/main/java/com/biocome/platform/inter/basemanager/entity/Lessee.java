@@ -337,6 +337,18 @@ public class Lessee extends Base {
     private Integer sfgzdzgx;
 
     /**
+     * 无证原因
+     */
+    @ApiModelProperty(value = "无证原因")
+    private String wzyy;
+
+    /**
+     * 有无证件(0有1无)
+     */
+    @ApiModelProperty(value = "有无证件(0有1无)")
+    private Integer ispapers;
+
+    /**
      * 获取主键编号
      *
      * @return id - 主键编号
