@@ -126,7 +126,7 @@ public class AppUser {
 	
 	    //创建人
     @Column(name = "create_user")
-    private Date createUser;
+    private String createUser;
 	
 	    //登录时间
     @Column(name = "login_time")
@@ -461,13 +461,13 @@ public class AppUser {
 	/**
 	 * 设置：创建人
 	 */
-	public void setCreateUser(Date createUser) {
+	public void setCreateUser(String createUser) {
 		this.createUser = createUser;
 	}
 	/**
 	 * 获取：创建人
 	 */
-	public Date getCreateUser() {
+	public String getCreateUser() {
 		return createUser;
 	}
 	/**
