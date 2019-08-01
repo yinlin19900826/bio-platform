@@ -27,6 +27,10 @@ public class AppUser {
 	    //密码
     @Column(name = "password")
     private String password;
+
+	//usercode
+	@Column(name = "usercode")
+	private String usercode;
 	
 	    //手机
     @Column(name = "phone")
@@ -169,6 +173,15 @@ public class AppUser {
 	public String getPassword() {
 		return password;
 	}
+
+	public String getUsercode() {
+		return usercode;
+	}
+
+	public void setUsercode(String usercode) {
+		this.usercode = usercode;
+	}
+
 	/**
 	 * 设置：手机
 	 */

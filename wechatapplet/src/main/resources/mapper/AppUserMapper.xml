@@ -8,6 +8,7 @@
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
+        <result property="usercode" column="usercode"/>
         <result property="phone" column="phone"/>
         <result property="phoneChecked" column="phone_checked"/>
         <result property="residenceAddress" column="residence_address"/>
