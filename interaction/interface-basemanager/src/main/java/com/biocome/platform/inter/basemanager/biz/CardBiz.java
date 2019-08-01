@@ -196,7 +196,6 @@ public class CardBiz extends BaseBiz<CardMapper, Card> {
             return list;
         }
     }*/
-
     private boolean OpenblukVoHandler(OpenblukVo req) {
         boolean b = false;
         if (req != null && req.getList() != null && req.getList().size() > 0) {
@@ -345,6 +344,13 @@ public class CardBiz extends BaseBiz<CardMapper, Card> {
     @CacheClear(key = "physicalCard:{2}")
     public void removeCard(String usercode, String cardNo) {
         mapper.removeCard(usercode, cardNo);
+    }
+
+    /**
+     * 根据物理卡号更新卡用户信息
+     */
+    public void updateUserByCardNo(Card card) {
+        mapper.updateUserByCardNo(card);
     }
 
 }
