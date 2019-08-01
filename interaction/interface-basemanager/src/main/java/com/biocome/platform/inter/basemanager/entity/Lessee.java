@@ -337,6 +337,12 @@ public class Lessee extends Base {
     private Integer sfgzdzgx;
 
     /**
+     * 是否审核(0是1否)
+     */
+    @ApiModelProperty(value = "是否审核(0是1否)")
+    private Integer isaudit;
+
+    /**
      * 无证原因
      */
     @ApiModelProperty(value = "无证原因")
@@ -1127,5 +1133,29 @@ public class Lessee extends Base {
 
     public void setSfgzdzgx(Integer sfgzdzgx) {
         this.sfgzdzgx = sfgzdzgx;
+    }
+
+    public Integer getIsaudit() {
+        return isaudit;
+    }
+
+    public void setIsaudit(Integer isaudit) {
+        this.isaudit = isaudit;
+    }
+
+    public String getWzyy() {
+        return wzyy;
+    }
+
+    public void setWzyy(String wzyy) {
+        this.wzyy = wzyy;
+    }
+
+    public Integer getIspapers() {
+        return ispapers;
+    }
+
+    public void setIspapers(Integer ispapers) {
+        this.ispapers = ispapers;
     }
 }
