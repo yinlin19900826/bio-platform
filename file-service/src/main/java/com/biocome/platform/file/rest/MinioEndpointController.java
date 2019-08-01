@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -104,8 +105,8 @@ public class MinioEndpointController {
 
     @ApiOperation("上传广告素材文件或升级文件")
     @ApiImplicitParam(name = "type", value = "桶名称", paramType = "path")
-    @PostMapping("/object/{type}")
-    public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String type) {
+    @PostMapping(value = "/object/{type}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ObjectRestResponse createObject(@RequestPart("object") MultipartFile object, @PathVariable String type) {
         try {
             String name = object.getOriginalFilename();
             String path = template.uploadAdvert(name, object.getInputStream(), object.getSize(), object.getContentType(), type);
@@ -120,8 +121,8 @@ public class MinioEndpointController {
     @ApiOperation("上传广告素材文件或升级文件并重命名")
     @ApiImplicitParams({@ApiImplicitParam(name = "type", value = "类型（0：图片，1：视频，2：文字，3：声音，4:：文件，5：未知）", paramType = "path"),
             @ApiImplicitParam(name = "objectName", value = "文件名", paramType = "path")})
-    @PostMapping("/object/{objectName}/{type}")
-    public ObjectRestResponse createObject(@RequestBody MultipartFile object, @PathVariable String objectName, @PathVariable String type) {
+    @PostMapping(value = "/object/{objectName}/{type}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ObjectRestResponse createObject(@RequestPart("object") MultipartFile object, @PathVariable String objectName, @PathVariable String type) {
         try {
             String path = template.uploadAdvert(objectName, object.getInputStream(), object.getSize(), object.getContentType(), type);
             return new ObjectRestResponse().success().data(path);
@@ -133,8 +134,8 @@ public class MinioEndpointController {
 
     @ApiOperation("上传用户图片")
     @ApiImplicitParam(name = "estateCode", value = "社区编号", paramType = "path")
-    @PostMapping("/object/userImg/{estateCode}")
-    public ObjectRestResponse userImg(@RequestBody MultipartFile object, @PathVariable String estateCode) {
+    @PostMapping(value = "/object/userImg/{estateCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ObjectRestResponse userImg(@RequestPart("object") MultipartFile object, @PathVariable String estateCode) {
         try {
             UserImages model = template.uploadUser(estateCode, object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
             Message sendMsg = new Message(topics, userTags, JsonUtils.beanToJson(model).getBytes());
@@ -147,8 +148,8 @@ public class MinioEndpointController {
     }
 
     @ApiOperation("上传开门图片")
-    @PostMapping("/object/uploadOpenDoor")
-    public ObjectRestResponse userImg(@RequestBody MultipartFile object) {
+    @PostMapping(value = "/object/uploadOpenDoor", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ObjectRestResponse userImg(@RequestPart("object") MultipartFile object) {
         try {
             OpenDoorImages model = template.uploadOpenDoor(object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
             Message sendMsg = new Message(topics, openDoorTags, JsonUtils.beanToJson(model).getBytes());
