@@ -259,6 +259,84 @@ public class Lessee extends Base {
     private String registerpeople;
 
     /**
+     * 户口所在地类型（0：本地城镇1：本地农村2：省内城镇3：省内农村4：省外城镇5：省外农村）
+     */
+    @ApiModelProperty(value = "户口所在地类型（0：本地城镇1：本地农村2：省内城镇3：省内农村4：省外城镇5：省外农村）")
+    private Integer domiciletype;
+
+    /**
+     * 婚姻状况（0：未婚1：已婚2：离异）
+     */
+    @ApiModelProperty(value = "婚姻状况（0：未婚1：已婚2：离异）")
+    private Integer maritalstatus;
+
+    /**
+     * 文化程度（0：博士1：硕士2：本科3：大专4：中专5：中技6：技工学校7：高中8：初中9：小学10：文盲11：半文盲）
+     */
+    @ApiModelProperty(value = "文化程度（0：博士1：硕士2：本科3：大专4：中专5：中技6：技工学校7：高中8：初中9：小学10：文盲11：半文盲）")
+    private Integer culture;
+
+    /**
+     * 工作单位
+     */
+    @ApiModelProperty(value = "工作单位")
+    private String workunit;
+
+    /**
+     * 来深圳事由（0：工作1：嫁娶2：旅游）
+     */
+    @ApiModelProperty(value = "来深圳事由（0：工作1：嫁娶2：旅游）")
+    private Integer reason;
+
+    /**
+     * 与户主关系（0：合租人1：直系亲属2：承租人）
+     */
+    @ApiModelProperty(value = "与户主关系（0：合租人1：直系亲属2：承租人）")
+    private Integer relation;
+
+    /**
+     * 身高
+     */
+    @ApiModelProperty(value = "身高")
+    private String high;
+
+    /**
+     * 居住方式（0：合租1：整租2：购买）
+     */
+    @ApiModelProperty(value = "居住方式（0：合租1：整租2：购买）")
+    private Integer residentmanner;
+
+    /**
+     * 首次来深日期
+     */
+    @ApiModelProperty(value = "首次来深日期")
+    private Date firsttime;
+
+    /**
+     * 生育动态(0：无1：待孕2：已孕3：有子女)
+     */
+    @ApiModelProperty(value = "生育动态(0：无1：待孕2：已孕3：有子女)")
+    private Integer fertility;
+
+    /**
+     * 避孕动态(0：有1：无)
+     */
+    @ApiModelProperty(value = "避孕动态(0：有1：无)")
+    private Integer birthcontrol;
+
+    /**
+     * 是否告知办理居住证(0是1否)
+     */
+    @ApiModelProperty(value = "是否告知办理居住证(0是1否)")
+    private Integer sfgzbljzz;
+
+    /**
+     * 是否告知地址改写(0是1否)
+     */
+    @ApiModelProperty(value = "是否告知地址改写(0是1否)")
+    private Integer sfgzdzgx;
+
+    /**
      * 获取主键编号
      *
      * @return id - 主键编号
@@ -932,5 +1010,110 @@ public class Lessee extends Base {
 
     public void setHeadphoto(String headphoto) {
         this.headphoto = headphoto;
+    }
+
+    public Integer getDomiciletype() {
+        return domiciletype;
+    }
+
+    public void setDomiciletype(Integer domiciletype) {
+        this.domiciletype = domiciletype;
+    }
+
+    public Integer getMaritalstatus() {
+        return maritalstatus;
+    }
+
+    public void setMaritalstatus(Integer maritalstatus) {
+        this.maritalstatus = maritalstatus;
+    }
+
+    public Integer getCulture() {
+        return culture;
+    }
+
+    public void setCulture(Integer culture) {
+        this.culture = culture;
+    }
+
+    public String getWorkunit() {
+        return workunit;
+    }
+
+    public void setWorkunit(String workunit) {
+        this.workunit = workunit;
+    }
+
+    public Integer getReason() {
+        return reason;
+    }
+
+    public void setReason(Integer reason) {
+        this.reason = reason;
+    }
+
+    public Integer getRelation() {
+        return relation;
+    }
+
+    public void setRelation(Integer relation) {
+        this.relation = relation;
+    }
+
+    public String getHigh() {
+        return high;
+    }
+
+    public void setHigh(String high) {
+        this.high = high;
+    }
+
+    public Integer getResidentmanner() {
+        return residentmanner;
+    }
+
+    public void setResidentmanner(Integer residentmanner) {
+        this.residentmanner = residentmanner;
+    }
+
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    public Date getFirsttime() {
+        return firsttime;
+    }
+
+    public void setFirsttime(Date firsttime) {
+        this.firsttime = firsttime;
+    }
+
+    public Integer getFertility() {
+        return fertility;
+    }
+
+    public void setFertility(Integer fertility) {
+        this.fertility = fertility;
+    }
+
+    public Integer getBirthcontrol() {
+        return birthcontrol;
+    }
+
+    public void setBirthcontrol(Integer birthcontrol) {
+        this.birthcontrol = birthcontrol;
+    }
+
+    public Integer getSfgzbljzz() {
+        return sfgzbljzz;
+    }
+
+    public void setSfgzbljzz(Integer sfgzbljzz) {
+        this.sfgzbljzz = sfgzbljzz;
+    }
+
+    public Integer getSfgzdzgx() {
+        return sfgzdzgx;
+    }
+
+    public void setSfgzdzgx(Integer sfgzdzgx) {
+        this.sfgzdzgx = sfgzdzgx;
     }
 }
