@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -35,7 +32,7 @@ public class VersionController extends BaseController<VersionBiz, Version> {
     @RequestMapping(value = "/uploadClient", method = RequestMethod.POST)
     @ApiOperation(value = "上传客户端版本")
     @ResponseBody
-    public BaseResponse uploadClient(@ApiParam(name = "file", value = "文件内容", required = true) @RequestParam("file") MultipartFile file
+    public BaseResponse uploadClient(@RequestPart("object") MultipartFile object
             , String filename, String version) {
         BaseResponse resp = new BaseResponse();
         String newVersion = baseBiz.verifyVersion(version);
@@ -45,7 +42,7 @@ public class VersionController extends BaseController<VersionBiz, Version> {
             return resp;
         }
         try {
-            versionBiz.uploadClient(file, filename, newVersion);
+            versionBiz.uploadClient(object, filename, newVersion);
         } catch (Exception e) {
             logger.error("上传客户端版本发生异常：{}", e.getMessage());
             resp.setMessage("上传失败");

@@ -2,7 +2,7 @@ package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.wechatapplet.biz.CardVoBiz;
-import com.biocome.platform.wechatapplet.vo.card.CardVo;
+import com.biocome.platform.wechatapplet.vo.common.CommonRes;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -38,12 +38,12 @@ public class CardController {
     @ApiImplicitParam(name = "code", value = "用户编码", paramType = "path")
     @ResponseBody
     @RequestMapping(value = "/admin/{code}", method = RequestMethod.POST)
-    public CardVo openDoor(@PathVariable String code) {
+    public CommonRes openDoor(@PathVariable String code) {
         try {
             return biz.selectCardsByCode(code);
         } catch (Exception e) {
             log.info("获取所有管理员卡失败，错误信息为：{}", e.getMessage());
-            return new CardVo().error();
+            return new CommonRes().error();
         }
     }
 

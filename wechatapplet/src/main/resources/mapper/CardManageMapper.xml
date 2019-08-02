@@ -22,7 +22,7 @@
         <result column="cardkind" jdbcType="VARCHAR" property="cardkind"/>
         <result column="remark" property="remark"/>
     </resultMap>
-    <resultMap id="BaseResultCardManage" type="com.biocome.platform.wechatapplet.vo.card.CardManageVo">
+    <resultMap id="BaseResultCardManage" type="com.biocome.platform.wechatapplet.vo.common.CardManageVo">
         <!--
           WARNING - @mbggenerated
         -->
@@ -47,6 +47,28 @@
             AND bc.isalive = 1
         </where>
     </select>
+
+    <select id="selectCardByCardNo" resultMap="BaseResultMap">
+        SELECT id,
+               logic_cardno,
+               physical_cardno,
+               usercode,
+               username,
+               phone,
+               admincode,
+               buildcode,
+               buildname,
+               housecode,
+               isalive,
+               createtime,
+               sn,
+               cardtype,
+               cardkind,
+               remark
+        FROM base_card
+        WHERE physical_cardno = #{cardNo}
+    </select>
+
     <delete id="deleteCard" parameterType="java.util.List">
         delete from base_card where 1>2
         or id in

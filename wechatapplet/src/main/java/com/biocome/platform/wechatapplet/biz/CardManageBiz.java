@@ -7,18 +7,18 @@ import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.inter.basemanager.biz.DeviceBiz;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
+
+
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Device;
 import com.biocome.platform.inter.basemanager.mapper.CardMapper;
 import com.biocome.platform.inter.basemanager.vo.card.LogoutCardVo;
-import com.biocome.platform.wechatapplet.entity.Fault;
 import com.biocome.platform.wechatapplet.mapper.CardManageMapper;
 import com.biocome.platform.wechatapplet.mapper.CardVoMapper;
-import com.biocome.platform.wechatapplet.mapper.FaultMapper;
 import com.biocome.platform.wechatapplet.rpc.service.CardRpc;
 import com.biocome.platform.wechatapplet.utils.RpcTokenUtil;
 import com.biocome.platform.wechatapplet.utils.UriUtil;
-import com.biocome.platform.wechatapplet.vo.card.CardManageVo;
+import com.biocome.platform.wechatapplet.vo.common.CardManageVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
     }
 
     /**
-     *
+     * 获取不同权限用户下的所有门禁卡
      *
      * @return
      * @Author yinlin
@@ -92,7 +92,7 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
      * @Date 2019/7/31 11:19
      */
     public String cardLossOperation(String userCode, String cardNo, String buildCode) throws Exception {
-        Card model = cardVoMapper.selectCardsByCardNo(cardNo);
+        Card model = cardManageMapper.selectCardByCardNo(cardNo);
         if (model.getCardtype().equals("1")) {
             Device device = new Device();
             device.setSn(model.getSn());

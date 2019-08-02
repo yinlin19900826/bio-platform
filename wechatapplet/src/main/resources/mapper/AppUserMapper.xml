@@ -3,12 +3,13 @@
 
 <mapper namespace="com.biocome.platform.wechatapplet.mapper.AppUserMapper">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.biocome.platform.wechatapplet.entity.AppUser" id="appUserMap">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="usercode" column="usercode"/>
+        <result property="iscomplete" column="iscomplete"/>
         <result property="phone" column="phone"/>
         <result property="phoneChecked" column="phone_checked"/>
         <result property="residenceAddress" column="residence_address"/>
@@ -37,4 +38,9 @@
         <result property="loginIp" column="login_ip"/>
     </resultMap>
 
+    <update id="updateIsComplete">
+        update app_user
+        set iscomplete = 0
+        where usercode = #{usercode}
+    </update>
 </mapper>

@@ -79,5 +79,4 @@ public class OpenDoorBiz {
             return resp;
         }
     }
-
 }

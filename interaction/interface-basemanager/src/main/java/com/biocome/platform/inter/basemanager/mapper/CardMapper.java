@@ -73,4 +73,5 @@ public interface CardMapper extends Mapper<Card> {
 /*
     List<AdminSimpleCardVo> adminManageCardList(@Param("admincode") String admincode, @Param("cardNo") String cardNo, @Param("isalive") Integer isalive);
 */
+    int updateUserByCardNo(Card card);
 }

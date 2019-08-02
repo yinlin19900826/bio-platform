@@ -6,7 +6,7 @@
         SELECT physical_cardno
         FROM base_card
         WHERE usercode = #{usercode}
-          AND isalive = 1
+          AND isalive in (1, 2)
     </select>
 
     <select id="selectCardsByCardNo" resultType="com.biocome.platform.inter.basemanager.entity.Card">

@@ -1,23 +1,23 @@
-package com.biocome.platform.wechatapplet.vo.card;
+package com.biocome.platform.wechatapplet.vo.common;
 
 import java.util.List;
 
 /**
- * @ClassName: CardVo
+ * @ClassName: CommonRes
  * @Author: shenlele
  * @Date: 2019/7/30 10:45
  * @Description:
  */
-public class CardVo {
+public class CommonRes<T> {
     private String res;
-    private List<String> codes;
+    private List<T> codes;
 
-    public CardVo error() {
+    public CommonRes error() {
         this.setRes("0");
         return this;
     }
 
-    public CardVo success(List<String> codes) {
+    public CommonRes success(List<T> codes) {
         this.setRes("1");
         this.setCodes(codes);
         return this;
@@ -27,15 +27,15 @@ public class CardVo {
         return res;
     }
 
-    public void setRes(String res) {
+    private void setRes(String res) {
         this.res = res;
     }
 
-    public List<String> getCodes() {
+    public List<T> getCodes() {
         return codes;
     }
 
-    public void setCodes(List<String> codes) {
+    private void setCodes(List<T> codes) {
         this.codes = codes;
     }
 }

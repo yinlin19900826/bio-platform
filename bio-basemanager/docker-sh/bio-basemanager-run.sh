@@ -30,9 +30,9 @@ rm -rf /home/biocome/bio-basemanager/Dockerfile
 cat >>/home/biocome/bio-basemanager/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD bio-basemanager.jar app.jar
-RUN bash -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ADD bio-basemanager.jar bio-basemanager.jar
+RUN bash -c 'touch /bio-basemanager.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/bio-basemanager.jar"]
 EOF
 
 cd /home/biocome/bio-basemanager

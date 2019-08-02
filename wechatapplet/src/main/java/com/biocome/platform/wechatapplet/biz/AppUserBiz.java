@@ -19,6 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class AppUserBiz extends BaseBiz<AppUserMapper,AppUser> {
+
+    /**
+     * 根据用户编号修改完善信息状态
+     *
+     * @param usercode 用户编号
+     * @return void
+     * @throws Exception 异常信息
+     * @Author shenlele
+     * @Date 2019/8/2 10:40
+     */
+    public void updateIsComplete(String usercode) throws Exception{
+        mapper.updateIsComplete(usercode);
+    }
+
     /**
      * 根据用户名获取用户信息
      * @param username

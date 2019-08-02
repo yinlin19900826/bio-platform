@@ -96,4 +96,7 @@
             #{item}
         </foreach>
     </delete>
+    <update id="updateUserByCardNo" parameterType="com.biocome.platform.inter.basemanager.entity.Card">
+        update base_card set usercode = #{usercode} , username = #{username} where physical_cardno = #{physicalCardno}
+    </update>
 </mapper>

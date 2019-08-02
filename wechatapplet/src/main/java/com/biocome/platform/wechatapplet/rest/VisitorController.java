@@ -76,8 +76,7 @@ public class VisitorController {
         resp.setData(password);
         return resp;
     }
-
-    @ApiOperation("获取访客记录")
+    @ApiOperation("发送动态密码")
     @PostMapping("/getRecord")
     public ObjectRestResponse<List<GetRecordResp>> getRecord(@RequestBody GetRecordReq req) {
         return new ObjectRestResponse<>().data(biz.getRecord(req));

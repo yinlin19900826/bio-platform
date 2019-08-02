@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.AuditOperateMapper">
+   <!-- <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Lessee">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="useralias" jdbcType="VARCHAR" property="useralias"/>
+        <result column="usersex" jdbcType="INTEGER" property="usersex"/>
+        <result column="usertype" jdbcType="INTEGER" property="usertype"/>
+        <result column="iscarepeople" jdbcType="INTEGER" property="iscarepeople"/>
+        <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
+        <result column="nation" jdbcType="VARCHAR" property="nation"/>
+        <result column="nativeplace" jdbcType="VARCHAR" property="nativeplace"/>
+        <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
+        <result column="nationality" jdbcType="VARCHAR" property="nationality"/>
+        <result column="validtime" jdbcType="TIMESTAMP" property="validtime"/>
+        <result column="politicsstatus" jdbcType="INTEGER" property="politicsstatus"/>
+        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="headphoto" jdbcType="VARCHAR" property="headphoto"/>
+        <result column="papersphoto" jdbcType="VARCHAR" property="papersphoto"/>
+        <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="emergencyname" jdbcType="VARCHAR" property="emergencyname"/>
+        <result column="emergencytel" jdbcType="VARCHAR" property="emergencytel"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="unitcode" jdbcType="VARCHAR" property="unitcode"/>
+        <result column="unitname" jdbcType="VARCHAR" property="unitname"/>
+        <result column="housecode" jdbcType="VARCHAR" property="housecode"/>
+        <result column="resideaddress" jdbcType="VARCHAR" property="resideaddress"/>
+        <result column="birthtime" jdbcType="TIMESTAMP" property="birthtime"/>
+        <result column="islogout" jdbcType="INTEGER" property="islogout"/>
+        <result column="logoutpeople" jdbcType="VARCHAR" property="logoutpeople"/>
+        <result column="logouttime" jdbcType="TIMESTAMP" property="logouttime"/>
+        <result column="leavetime" jdbcType="TIMESTAMP" property="leavetime"/>
+        <result column="checkintime" jdbcType="TIMESTAMP" property="checkintime"/>
+        <result column="iscard" jdbcType="INTEGER" property="iscard"/>
+        <result column="isapp" jdbcType="INTEGER" property="isapp"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="registertime" jdbcType="TIMESTAMP" property="registertime"/>
+        <result column="registerpeople" jdbcType="VARCHAR" property="registerpeople"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+        <result column="isaudit" jdbcType="INTEGER" property="isaudit"/>
+    </resultMap>-->
+    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Lessee">
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usersex" jdbcType="INTEGER" property="usersex"/>
+        <result column="usertype" jdbcType="INTEGER" property="usertype"/>
+        <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
+        <result column="maritalstatus" jdbcType="INTEGER" property="maritalstatus"/>
+        <result column="domiciletype" jdbcType="INTEGER" property="domiciletype"/>
+        <result column="culture" jdbcType="INTEGER" property="culture"/>
+        <result column="reason" jdbcType="INTEGER" property="reason"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
+        <result column="nation" jdbcType="VARCHAR" property="nation"/>
+        <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
+        <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="unitname" jdbcType="VARCHAR" property="unitname"/>
+        <result column="birthtime" jdbcType="TIMESTAMP" property="birthtime"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+
+    </resultMap>
+
+    <select id="selectByAudit" resultMap="BaseResultMap">
+        SELECT
+        l.username,
+        l.estatename,
+        l.buildname,
+        l.unitname,
+        l.createtime,
+        l.paperstype,
+        l.papersnum,
+        l.usersex,
+        l.nation,
+        l.birthtime,
+        l.domicileaddress,
+        l.maritalstatus,
+        l.domiciletype,
+        l.culture,
+        l.occupation,
+        l.reason,
+        l.tel
+        FROM
+        base_lessee l
+        <where>
+            <if test="isaudit != null">and l.isaudit = #{isaudit,jdbcType=INTEGER}</if>
+        </where>
+        ORDER BY
+        updatetime DESC
+    </select>
+</mapper>
