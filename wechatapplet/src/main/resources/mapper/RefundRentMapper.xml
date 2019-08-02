@@ -22,53 +22,26 @@
         <result column="cardkind" jdbcType="VARCHAR" property="cardkind"/>
         <result column="remark" property="remark"/>
     </resultMap>
-    <resultMap id="BaseResultCardManage" type="com.biocome.platform.wechatapplet.vo.card.CardManageVo">
-        <!--
-          WARNING - @mbggenerated
-        -->
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="logic_cardno" jdbcType="VARCHAR" property="logicCardno"/>
-        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
-        <result column="buildname" jdbcType="VARCHAR" property="buildName"/>
-    </resultMap>
 
-
-    <select id="selectByUserName" resultMap="BaseResultCardManage">
+    <select id="getHouseCode" resultType="java.lang.String">
         SELECT
-        bc.id,
-        bc.logic_cardno,
-        bc.physical_cardno,
-        bc.buildname
-        FROM
-        base_card bc
-        <where>
-            1=1
-            <if test="username != null and ''!= username">and bc.username = #{username,jdbcType=VARCHAR}</if>
-            AND bc.isalive = 1
-        </where>
+          housecode
+        FROM base_lessee
+        WHERE username=#{username}
     </select>
 
-    <select id="selectCardByCardNo" resultMap="BaseResultMap">
-        SELECT id,
-               logic_cardno,
-               physical_cardno,
-               usercode,
-               username,
-               phone,
-               admincode,
-               buildcode,
-               buildname,
-               housecode,
-               isalive,
-               createtime,
-               sn,
-               cardtype,
-               cardkind,
-               remark
-        FROM base_card
-        WHERE physical_cardno = #{cardNo}
+    <select id="getAllUserName" resultType="java.lang.String">
+        SELECT
+          username
+        FROM base_lessee
+        WHERE housecode=#{housecode}
     </select>
 
+    <delete id="deleteAllByUserName" parameterType="java.util.List">
+       delete a,b,c from base_lessee as a join
+        base_card as b on a.username = b.username join
+        app_user as c on a.username = c.username where a.username=#{username}
+    </delete>
     <delete id="deleteByUserName" parameterType="java.util.List">
        delete a,b,c from base_lessee as a join
         base_card as b on a.username = b.username join
