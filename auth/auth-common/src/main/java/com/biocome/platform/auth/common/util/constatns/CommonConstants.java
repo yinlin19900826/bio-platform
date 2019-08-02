@@ -19,4 +19,11 @@ public class CommonConstants {
     public static final String CONTEXT_KEY_USER_TOKEN = "currentUserToken";
     public static final String JWT_KEY_USER_ID = "userId";
     public static final String JWT_KEY_NAME = "name";
+    public static final String JWT_KEY_EFFECTIVE_CODE = "effectiveCode";
+
+    public static final String JWT_REFRESH_TOKEN_KEY_PRIFIX = "refresh_token";
+    public static final String JWT_ACCESS_TOKEN_EFFECTIVE_CODE = "effectiveCode";
+    public static final String ACCESS_TOKEN_HEADER = "ACCESS_TOKEN";
+    public static final String REFRESH_TOKEN_HEADER = "REFRESH_TOKEN";
+    public static final String NEW_ACCESS_TOKEN = "NEW_ACCESS_TOKEN";
 }

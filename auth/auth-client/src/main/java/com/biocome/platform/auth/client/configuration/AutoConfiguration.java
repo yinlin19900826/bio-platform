@@ -1,5 +1,6 @@
 package com.biocome.platform.auth.client.configuration;
 
+import com.biocome.platform.auth.client.config.AppAuthConfig;
 import com.biocome.platform.auth.client.config.ServiceAuthConfig;
 import com.biocome.platform.auth.client.config.UserAuthConfig;
 import org.springframework.context.annotation.Bean;
@@ -22,4 +23,8 @@ public class AutoConfiguration {
         return new UserAuthConfig();
     }
 
+    @Bean
+    AppAuthConfig getAppAuthConfig(){
+        return new AppAuthConfig();
+    }
 }

@@ -34,6 +34,47 @@ public class JWTHelper {
     }
 
     /**
+     * 密钥加密access_token
+     *
+     * @param jwtInfo
+     * @param priKey
+     * @param expire
+     * @return
+     * @throws Exception
+     */
+    public static String generateAccessToken(AppJWTInfo jwtInfo, byte priKey[], int expire) throws Exception {
+        String compactJws = Jwts.builder()
+                .setSubject(jwtInfo.getUniqueName())
+                .claim(CommonConstants.JWT_KEY_USER_ID, jwtInfo.getId())
+                .claim(CommonConstants.JWT_KEY_NAME, jwtInfo.getName())
+                .claim(CommonConstants.JWT_KEY_EFFECTIVE_CODE, jwtInfo.getEffectiveCode() )
+                .setExpiration(DateTime.now().plusSeconds(expire).toDate())
+                .signWith(SignatureAlgorithm.RS256, rsaKeyHelper.getPrivateKey(priKey))
+                .compact();
+        return compactJws;
+    }
+
+    /**
+     * 密钥加密refresh_token
+     *
+     * @param jwtInfo
+     * @param priKey
+     * @param expire
+     * @return
+     * @throws Exception
+     */
+    public static String generateRefreshToken(AppJWTInfo jwtInfo, byte priKey[], int expire) throws Exception {
+        String compactJws = Jwts.builder()
+                .setSubject(jwtInfo.getUniqueName())
+                .claim(CommonConstants.JWT_KEY_USER_ID, jwtInfo.getId())
+                .claim(CommonConstants.JWT_KEY_NAME, jwtInfo.getName())
+                .setExpiration(DateTime.now().plusSeconds(expire).toDate())
+                .signWith(SignatureAlgorithm.RS256, rsaKeyHelper.getPrivateKey(priKey))
+                .compact();
+        return compactJws;
+    }
+
+    /**
      * 密钥加密token
      *
      * @param jwtInfo
@@ -100,5 +141,20 @@ public class JWTHelper {
         Jws<Claims> claimsJws = parserToken(token, pubKey);
         Claims body = claimsJws.getBody();
         return new JWTInfo(body.getSubject(), StringHelper.getObjectValue(body.get(CommonConstants.JWT_KEY_USER_ID)), StringHelper.getObjectValue(body.get(CommonConstants.JWT_KEY_NAME)));
+    }
+
+    /**
+     * 获取token中的用户信息
+     *
+     * @param token
+     * @param pubKey
+     * @return
+     * @throws Exception
+     */
+    public static AppJWTInfo getAccessInfoFromToken(String token, byte[] pubKey) throws Exception {
+        Jws<Claims> claimsJws = parserToken(token, pubKey);
+        Claims body = claimsJws.getBody();
+        return new AppJWTInfo(body.getSubject(), StringHelper.getObjectValue(body.get(CommonConstants.JWT_KEY_USER_ID)),
+                StringHelper.getObjectValue(body.get(CommonConstants.JWT_KEY_NAME)));
     }
 }

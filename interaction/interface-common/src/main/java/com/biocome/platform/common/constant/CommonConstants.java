@@ -9,6 +9,8 @@ public class CommonConstants {
     // 用户token异常
     public static final Integer EX_USER_INVALID_CODE = 40101;
     public static final Integer EX_USER_PASS_INVALID_CODE = 40001;
+    public static final Integer EX_USER_TOKEN_EXPIRE = 40002;
+    public static final Integer EX_USER_REFRESH_TOKEN_INVALID = 40003;
     // 客户端token异常
     public static final Integer EX_CLIENT_INVALID_CODE = 40301;
     public static final Integer EX_CLIENT_FORBIDDEN_CODE = 40331;
@@ -17,12 +19,12 @@ public class CommonConstants {
     public static final String CONTEXT_KEY_USERNAME = "currentUserName";
     public static final String CONTEXT_KEY_USER_NAME = "currentUser";
     public static final String CONTEXT_KEY_USER_TOKEN = "currentUserToken";
+    public static final String CONTEXT_KEY_USERCODE = "currentUserCode";
     public static final String JWT_KEY_USER_ID = "userId";
     public static final String JWT_KEY_NAME = "name";
 
     public static final String RESP_RESULT_SUCCESS = "1";
 
     public static final String DYNAMIC_PASSWORD_OPENTYPE= "2";
-
 
 }

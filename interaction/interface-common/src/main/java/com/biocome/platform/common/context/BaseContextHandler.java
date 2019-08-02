@@ -77,6 +77,15 @@ public class BaseContextHandler {
         threadLocal.remove();
     }
 
+    public static void setUsercode(String usercode) {
+        set(CommonConstants.CONTEXT_KEY_USERCODE,usercode);
+    }
+
+    public static String getUsercode(String usercode){
+        Object value = get(CommonConstants.CONTEXT_KEY_USERCODE);
+        return StringHelper.getObjectValue(value);
+    }
+
     @RunWith(MockitoJUnitRunner.class)
     public static class UnitTest {
         private Logger logger = LoggerFactory.getLogger(UnitTest.class);

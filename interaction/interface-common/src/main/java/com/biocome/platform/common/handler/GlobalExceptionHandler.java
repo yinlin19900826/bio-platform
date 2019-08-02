@@ -2,9 +2,7 @@ package com.biocome.platform.common.handler;
 
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.exception.BaseException;
-import com.biocome.platform.common.exception.auth.ClientTokenException;
-import com.biocome.platform.common.exception.auth.UserInvalidException;
-import com.biocome.platform.common.exception.auth.UserTokenException;
+import com.biocome.platform.common.exception.auth.*;
 import com.biocome.platform.common.msg.BaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by ace on 2017/9/8.
  */
-@ControllerAdvice("com.github.wxiaoqi.security")
+@ControllerAdvice("com.biocome.platform")
 @ResponseBody
 public class GlobalExceptionHandler {
     private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -57,4 +55,17 @@ public class GlobalExceptionHandler {
         return new BaseResponse(CommonConstants.EX_OTHER_CODE, ex.getMessage());
     }
 
+    @ExceptionHandler(UserTokenExpireException.class)
+    public BaseResponse userTokenExpireExceptionHandler(HttpServletResponse response, UserTokenExpireException ex) {
+        response.setStatus(CommonConstants.EX_USER_TOKEN_EXPIRE);
+        logger.error(ex.getMessage(),ex);
+        return new BaseResponse(ex.getStatus(), ex.getMessage());
+    }
+
+    @ExceptionHandler(UserRefreshTokenInvalidException.class)
+    public BaseResponse userRefreshTokenInvalidException(HttpServletResponse response, UserRefreshTokenInvalidException ex) {
+        response.setStatus(CommonConstants.EX_USER_REFRESH_TOKEN_INVALID);
+        logger.error(ex.getMessage(),ex);
+        return new BaseResponse(ex.getStatus(), ex.getMessage());
+    }
 }

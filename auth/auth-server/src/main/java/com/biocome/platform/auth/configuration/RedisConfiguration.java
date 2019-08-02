@@ -19,7 +19,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 @Configuration
 public class RedisConfiguration {
 
-    @Bean
+    /*@Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate template = new RedisTemplate();
         template.setConnectionFactory(factory);
@@ -31,6 +31,6 @@ public class RedisConfiguration {
         template.setValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
         return template;
-    }
+    }*/
 
 }
