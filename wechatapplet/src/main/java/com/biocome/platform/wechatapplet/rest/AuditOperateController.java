@@ -1,10 +1,12 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.wechatapplet.biz.AuditOperateBiz;
 import com.biocome.platform.wechatapplet.biz.RefundRentBiz;
+import com.biocome.platform.wechatapplet.vo.common.CardManageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,10 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName: AuditOperateController
@@ -33,6 +32,16 @@ public class AuditOperateController extends BaseController<AuditOperateBiz, Less
 
     @Autowired
     private AuditOperateBiz auditOperateBiz;
+
+    @ApiOperation("获取待审核列表和已审核列表")
+    @ApiImplicitParams(@ApiImplicitParam(name = "isaudit", value = "是否审核", paramType = "query"))
+    @ResponseBody
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public TableResultResponse<Lessee> list(@RequestParam(defaultValue = "20") int pageSize,
+                                                  @RequestParam(defaultValue = "1") int pageNum,
+                                                 int isaudit) {
+        return auditOperateBiz.selectByAttribute(pageSize, pageNum,isaudit);
+    }
 
    /* @ApiOperation("单个租户退租(0失败，1成功)")
     @ApiImplicitParams({@ApiImplicitParam(name = "cardNo", value = "卡号", paramType = "path"),
