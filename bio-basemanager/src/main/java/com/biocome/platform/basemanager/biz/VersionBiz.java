@@ -45,8 +45,8 @@ public class VersionBiz extends BaseBiz<VersionMapper, Version> {
         return mapper.updateAllMilestone(version);
     }
 
-    public void uploadClient(MultipartFile file, String filename, String version) throws Exception {
-        ObjectRestResponse objectRestResponse = fileRpc.fileUpload(file, "4");
+    public void uploadClient(MultipartFile object, String filename, String version) throws Exception {
+        ObjectRestResponse objectRestResponse = fileRpc.fileUpload(object, "4");
         String str = objectRestResponse.getData().toString();
                 //存库
         Version result = selectByVersion(version);
