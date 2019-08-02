@@ -7,9 +7,12 @@ import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.inter.basemanager.biz.CardBiz;
 import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
+import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.wechatapplet.mapper.UserDetailMapper;
+import com.biocome.platform.wechatapplet.vo.userdetail.CompleteVo;
 import com.biocome.platform.wechatapplet.vo.userdetail.UserDetailReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,12 +29,18 @@ import java.util.Date;
 @Transactional(rollbackFor = Exception.class)
 public class UserDetailBiz {
 
+    private final LesseeBiz lesseeBiz;
+    private final CardBiz cardBiz;
+    private final AppUserBiz appUserBiz;
+    private final UserDetailMapper mapper;
+
     @Autowired
-    private LesseeBiz lesseeBiz;
-    @Autowired
-    private CardBiz cardBiz;
-    @Autowired
-    private AppUserBiz appUserBiz;
+    public UserDetailBiz(LesseeBiz lesseeBiz, CardBiz cardBiz, AppUserBiz appUserBiz, UserDetailMapper mapper) {
+        this.lesseeBiz = lesseeBiz;
+        this.cardBiz = cardBiz;
+        this.appUserBiz = appUserBiz;
+        this.mapper = mapper;
+    }
 
     public ObjectRestResponse insertUserDetail(UserDetailReq req) throws Exception {
         //①添加租户信息
@@ -88,6 +97,23 @@ public class UserDetailBiz {
         lessee.setRegisterpeople(req.getRegistrant());
         lesseeBiz.insertLessee(lessee);
         return lessee;
+    }
+
+    /**
+     * 完善信息
+     *
+     * @param vo 参数
+     * @return java.lang.String
+     * @throws Exception 异常信息
+     * @Author shenlele
+     * @Date 2019/8/2 10:58
+     */
+    public String updateSelectiveById(CompleteVo vo) throws Exception {
+        //更新完善信息
+        mapper.updateSelectiveById(vo);
+        //设置为已完善信息
+        appUserBiz.updateIsComplete(vo.getUsercode());
+        return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
     }
 
 }

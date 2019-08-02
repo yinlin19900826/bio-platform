@@ -30,9 +30,9 @@ rm -rf /home/biocome/file-service/Dockerfile
 cat >>/home/biocome/file-service/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD file-service.jar app.jar
-RUN bash -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ADD file-service.jar file-service.jar
+RUN bash -c 'touch /file-service.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/file-service.jar"]
 EOF
 
 cd /home/biocome/file-service

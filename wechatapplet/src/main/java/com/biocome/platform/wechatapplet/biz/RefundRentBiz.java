@@ -58,10 +58,10 @@ public class RefundRentBiz extends BaseBiz<CardManageMapper, CardManageVo> {
     public String refundRent(String cardNo, String username) throws Exception {
         try {
             refundRentMapper.deleteByUserName(username);
+            return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
         }catch(Exception e ) {
             throw new Exception("单个租户退租失败");
         }
-        return null;
     }
 
     /**
@@ -75,7 +75,21 @@ public class RefundRentBiz extends BaseBiz<CardManageMapper, CardManageVo> {
      * @Date 2019/7/31 11:19
      */
     public String refundAllRent(String cardNo, String username) throws Exception {
+        try {
+            List<String> housecodes = refundRentMapper.getHouseCode(username);
+            List<String> allUserList = new ArrayList<>();
+            for(String housecode:housecodes){
+                List<String> userList = refundRentMapper.getAllUserName(housecode);
+                allUserList.addAll(userList);
 
-        return null;
+            }
+
+            for(String user:allUserList){
+                refundRentMapper.deleteAllByUserName(user);
+            }
+            return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+        }catch(Exception e ) {
+            throw new Exception("单个租户退租失败");
+        }
     }
 }
