@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.AuditOperateMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Card">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="logic_cardno" jdbcType="VARCHAR" property="logicCardno"/>
+        <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="username" property="username"/>
+        <result column="phone" property="phone"/>
+        <result column="admincode" property="admincode"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="buildname" property="buildname"/>
+        <result column="housecode" property="housecode"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="createtime" jdbcType="VARCHAR" property="createtime"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="cardtype" jdbcType="VARCHAR" property="cardtype"/>
+        <result column="cardkind" jdbcType="VARCHAR" property="cardkind"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <select id="getHouseCode" resultType="java.lang.String">
+        SELECT
+          housecode
+        FROM base_lessee
+        WHERE username=#{username}
+    </select>
+
+    <select id="getAllUserName" resultType="java.lang.String">
+        SELECT
+          username
+        FROM base_lessee
+        WHERE housecode=#{housecode}
+    </select>
+
+    <delete id="deleteAllByUserName" parameterType="java.util.List">
+       delete a,b,c from base_lessee as a join
+        base_card as b on a.username = b.username join
+        app_user as c on a.username = c.username where a.username=#{username}
+    </delete>
+    <delete id="deleteByUserName" parameterType="java.util.List">
+       delete a,b,c from base_lessee as a join
+        base_card as b on a.username = b.username join
+        app_user as c on a.username = c.username where a.username=#{username}
+    </delete>
+</mapper>

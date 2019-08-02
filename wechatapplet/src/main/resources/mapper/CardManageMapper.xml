@@ -22,7 +22,7 @@
         <result column="cardkind" jdbcType="VARCHAR" property="cardkind"/>
         <result column="remark" property="remark"/>
     </resultMap>
-    <resultMap id="BaseResultCardManage" type="com.biocome.platform.wechatapplet.vo.card.CardManageVo">
+    <resultMap id="BaseResultCardManage" type="com.biocome.platform.wechatapplet.vo.common.CardManageVo">
         <!--
           WARNING - @mbggenerated
         -->
