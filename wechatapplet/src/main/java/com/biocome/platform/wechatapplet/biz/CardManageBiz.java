@@ -18,7 +18,7 @@ import com.biocome.platform.wechatapplet.mapper.CardVoMapper;
 import com.biocome.platform.wechatapplet.rpc.service.CardRpc;
 import com.biocome.platform.wechatapplet.utils.RpcTokenUtil;
 import com.biocome.platform.wechatapplet.utils.UriUtil;
-import com.biocome.platform.wechatapplet.vo.card.CardManageVo;
+import com.biocome.platform.wechatapplet.vo.common.CardManageVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;

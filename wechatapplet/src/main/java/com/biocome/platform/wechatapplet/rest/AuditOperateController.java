@@ -2,9 +2,9 @@ package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
-import com.biocome.platform.wechatapplet.biz.CardManageBiz;
+import com.biocome.platform.inter.basemanager.entity.Lessee;
+import com.biocome.platform.wechatapplet.biz.AuditOperateBiz;
 import com.biocome.platform.wechatapplet.biz.RefundRentBiz;
-import com.biocome.platform.wechatapplet.vo.common.CardManageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,25 +13,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @ClassName: RefundRentController
+ * @ClassName: AuditOperateController
  * @Author: yinlin
- * @Date: 2019/8/1 13:49
+ * @Date: 2019/8/2 13:49
  * @Description:
  */
 @Controller
-@RequestMapping("refund")
-@Api(value = "退租操作", tags = {"退租操作"})
-public class RefundRentController extends BaseController<CardManageBiz, CardManageVo> {
+@RequestMapping("audit")
+@Api(value = "审核操作", tags = {"审核操作"})
+public class AuditOperateController extends BaseController<AuditOperateBiz, Lessee> {
 
-    private Logger log = LoggerFactory.getLogger(RefundRentController.class);
+    private Logger log = LoggerFactory.getLogger(AuditOperateController.class);
 
     @Autowired
-    private RefundRentBiz refundRentBiz;
+    private AuditOperateBiz auditOperateBiz;
 
-    @ApiOperation("单个租户退租(0失败，1成功)")
+   /* @ApiOperation("单个租户退租(0失败，1成功)")
     @ApiImplicitParams({@ApiImplicitParam(name = "cardNo", value = "卡号", paramType = "path"),
             @ApiImplicitParam(name = "username", value = "租户姓名", paramType = "path")})
     @ResponseBody
@@ -58,5 +61,5 @@ public class RefundRentController extends BaseController<CardManageBiz, CardMana
             return AdminCommonConstant.BOOLEAN_NUMBER_FALSE;
         }
     }
-
+*/
 }

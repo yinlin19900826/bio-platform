@@ -1,7 +1,7 @@
 package com.biocome.platform.wechatapplet.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Card;
-import com.biocome.platform.wechatapplet.vo.card.CardManageVo;
+import com.biocome.platform.wechatapplet.vo.common.CardManageVo;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 

@@ -1,4 +1,4 @@
-package com.biocome.platform.wechatapplet.vo.card;
+package com.biocome.platform.wechatapplet.vo.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
