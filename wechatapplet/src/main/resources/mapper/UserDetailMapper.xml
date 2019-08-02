@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.UserDetailMapper">
+
+    <update id="updateSelectiveById" parameterType="com.biocome.platform.wechatapplet.vo.userdetail.CompleteVo">
+        UPDATE base_lessee
+        <set>
+            <if test="vo.tel != null">tel = #{vo.tel,jdbcType=VARCHAR},</if>
+            <if test="vo.domiciletype != null">domiciletype = #{vo.domiciletype,jdbcType=INTEGER},</if>
+            <if test="vo.maritalstatus != null">maritalstatus = #{vo.maritalstatus,jdbcType=INTEGER},</if>
+            <if test="vo.culture != null">culture = #{vo.culture,jdbcType=INTEGER},</if>
+            <if test="vo.occupation != null">occupation = #{vo.occupation,jdbcType=VARCHAR},</if>
+            <if test="vo.emergencyname != null">emergencyname = #{vo.emergencyname,jdbcType=VARCHAR},</if>
+            <if test="vo.emergencytel != null">emergencytel = #{vo.emergencytel,jdbcType=VARCHAR},</if>
+            <if test="vo.workunit != null">workunit = #{vo.workunit,jdbcType=VARCHAR},</if>
+            <if test="vo.reason != null">reason = #{vo.reason,jdbcType=INTEGER},</if>
+            <if test="vo.relation != null">relation = #{vo.relation,jdbcType=INTEGER},</if>
+            <if test="vo.high != null">high = #{vo.high,jdbcType=VARCHAR},</if>
+            <if test="vo.politicsstatus != null">politicsstatus = #{vo.politicsstatus,jdbcType=INTEGER},</if>
+            <if test="vo.residentmanner != null">residentmanner = #{vo.residentmanner,jdbcType=INTEGER},</if>
+            <if test="vo.firsttime != null">firsttime = #{vo.firsttime,jdbcType=TIMESTAMP},</if>
+            <if test="vo.sfgzbljzz != null">sfgzbljzz = #{vo.sfgzbljzz,jdbcType=INTEGER},</if>
+            <if test="vo.sfgzdzgx != null">sfgzdzgx = #{vo.sfgzdzgx,jdbcType=INTEGER},</if>
+            <if test="vo.fertility != null">fertility = #{vo.fertility,jdbcType=INTEGER},</if>
+            <if test="vo.birthcontrol != null">birthcontrol = #{vo.birthcontrol,jdbcType=INTEGER},</if>
+            <if test="vo.iscard != null">iscard = #{vo.iscard,jdbcType=INTEGER},</if>
+        </set>
+        WHERE usercode = #{vo.usercode,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

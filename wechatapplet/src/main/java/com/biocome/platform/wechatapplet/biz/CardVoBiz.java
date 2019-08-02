@@ -10,13 +10,14 @@ import com.biocome.platform.inter.basemanager.entity.Device;
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.basemanager.mapper.CardMapper;
 import com.biocome.platform.inter.basemanager.mapper.LesseeMapper;
+import com.biocome.platform.inter.basemanager.vo.card.CardSnVo;
 import com.biocome.platform.inter.basemanager.vo.card.LogoutCardVo;
 import com.biocome.platform.inter.basemanager.vo.card.OpenCardVo;
 import com.biocome.platform.wechatapplet.mapper.CardVoMapper;
 import com.biocome.platform.wechatapplet.rpc.service.CardRpc;
 import com.biocome.platform.wechatapplet.utils.RpcTokenUtil;
 import com.biocome.platform.wechatapplet.utils.UriUtil;
-import com.biocome.platform.wechatapplet.vo.card.CardVo;
+import com.biocome.platform.wechatapplet.vo.common.CommonRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,9 +65,9 @@ public class CardVoBiz {
      * @Author shenlele
      * @Date 2019/7/30 11:11
      */
-    public CardVo selectCardsByCode(String usercode) throws Exception {
+    public CommonRes selectCardsByCode(String usercode) throws Exception {
         List<String> list = cardVoMapper.selectCardsByCode(usercode);
-        return new CardVo().success(list);
+        return new CommonRes().success(list);
     }
 
     /**
@@ -106,8 +107,11 @@ public class CardVoBiz {
                         logoutCardVo.setToken(token);
                         logoutCardVo.setCardno(card1.getPhysicalCardno());
                         logoutCardVo.setCardtype(card1.getCardtype());
-                        List<String> sns = new ArrayList<>();
-                        sns.add(card1.getSn());
+                        logoutCardVo.setUsercode(userCode);
+                        List<CardSnVo> sns = new ArrayList<>();
+                        CardSnVo cardSnVo = new CardSnVo();
+                        cardSnVo.setSn(card1.getSn());
+                        logoutCardVo.setSnList(sns);
                         BaseRpcResponse res = rpc.logoutCard(uriByBrand, logoutCardVo);
                         if (CommonConstants.RESP_RESULT_SUCCESS.equals(res.getResult())) {
                             //修改表该卡注销
@@ -125,6 +129,8 @@ public class CardVoBiz {
                 model.setUsername(lessee.getUsername());
                 model.setPhone(lessee.getTel());
                 model.setHousecode(lessee.getHousecode());
+                //将卡类型设为租户卡
+                model.setCardtype(AdminCommonConstant.DEFAULT_ONE);
                 model.setIsalive(AdminCommonConstant.DEFAULT_ONE);
                 //将该卡信息更新为住户的信息，设置为发卡状态
                 cardMapper.updateByPrimaryKey(model);
