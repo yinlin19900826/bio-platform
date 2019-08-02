@@ -39,7 +39,7 @@ public class FaultDeclareController extends BaseController<FaultDeclareBiz, Faul
         try {
             res = faultDeclareBiz.insertFaultDeclare(fault);
         } catch (Exception e) {
-            log.error("保存失败！错误信息为：" + e.getMessage());
+            log.error("故障申报失败！错误信息为：" + e.getMessage());
             return new ObjectRestResponse(204, "保存失败！");
         }
         return res;
