@@ -6,7 +6,7 @@ DATE=`date +%Y%m%d%H%M%S`
 mv /home/biocome/gate-guard/gate-guard.jar /home/biocome/backups/gate-guard-${DATE}.jar
 
 rm -rf /home/biocome/gate-guard/gate-guard.jar
-cp /home/jenkins/workspace/new_bio_platform/gate-guard/target/gate-guard.jar /home/biocome/gate-guard/
+cp /home/jenkins/workspace/new_bio_platform/gate-guard/target/gate-guard.jar /home/biocome/gate-guard/gate-guard.jar
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
@@ -30,9 +30,9 @@ rm -rf /home/biocome/gate-guard/Dockerfile
 cat >>/home/biocome/gate-guard/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD gate-guard.jar app.jar
-RUN bash -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ADD gate-guard.jar gate-guard.jar
+RUN bash -c 'touch /gate-guard.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/gate-guard.jar"]
 EOF
 
 cd /home/biocome/gate-guard
@@ -42,4 +42,4 @@ PRE='bio'
 docker build -t ${PRE}/${REPOSITORIES}:${TAG} . &>/dev/null
 
 # Run.
-docker run -d --name ${REPOSITORIES} -p 8777:8777 ${PRE}/${REPOSITORIES}:${TAG}
+docker run -d --name ${REPOSITORIES} -p 8778:8778 ${PRE}/${REPOSITORIES}:${TAG}

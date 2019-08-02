@@ -1,13 +1,12 @@
 #! /bin/bash
 
-REPOSITORIES='visit-record'
+REPOSITORIES='gate'
 DATE=`date +%Y%m%d%H%M%S`
 
-mv /home/biocome/visit-record/visit-record.jar /home/biocome/backups/visit-record-${DATE}.jar
+mv /home/biocome/gate/gate.jar /home/biocome/backups/gate-${DATE}.jar
 
-rm -rf /home/biocome/visit-record/visit-record.jar
-
-cp /home/jenkins/workspace/new_bio_platform/visit-record/target/visit-record-1.0-SNAPSHOT.jar /home/biocome/visit-record/visit-record.jar
+rm -rf /home/biocome/gate/gate.jar
+cp /home/jenkins/workspace/new_bio_platform/gateway/target/gateway.jar /home/biocome/gate/gate.jar
 
 # Stop container, and delete the container.
 CONTAINER_ID=`docker ps | grep ${REPOSITORIES} | awk '{print $1}'`
@@ -26,21 +25,21 @@ if [ -n "${IMAGE_ID}" ];then
     docker rmi ${IMAGE_ID}
 fi
 
-rm -rf /home/biocome/visit-record/Dockerfile
+rm -rf /home/biocome/gate/Dockerfile
 
-cat >>/home/biocome/visit-record/Dockerfile<<EOF
+cat >>/home/biocome/gate/Dockerfile<<EOF
 FROM livingobjects/jre8
 VOLUME /tmp
-ADD visit-record.jar visit-record.jar
-RUN bash -c 'touch /visit-record.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/visit-record.jar"]
+ADD gate.jar gate.jar
+RUN bash -c 'touch /gate.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/gate.jar"]
 EOF
 
-cd /home/biocome/visit-record
+cd /home/biocome/gate
 TAG=`date +%Y%m%d`
 PRE='bio'
 # Build
 docker build -t ${PRE}/${REPOSITORIES}:${TAG} . &>/dev/null
 
 # Run.
-docker run -d --name ${REPOSITORIES} -p 9700:9700 ${PRE}/${REPOSITORIES}:${TAG}
+docker run -d --name ${REPOSITORIES} -p 8765:8765 ${PRE}/${REPOSITORIES}:${TAG}
