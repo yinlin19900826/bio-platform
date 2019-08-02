@@ -337,9 +337,9 @@ public class Lessee extends Base {
     private Integer sfgzdzgx;
 
     /**
-     * 是否审核(0是1否)
+     * 是否审核(0待审核1通过2未通过)
      */
-    @ApiModelProperty(value = "是否审核(0是1否)")
+    @ApiModelProperty(value = "是否审核(0待审核1通过2未通过)")
     private Integer isaudit;
 
     /**
