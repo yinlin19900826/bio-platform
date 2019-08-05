@@ -43,7 +43,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     private ArrayList<String> getIncludePathPatterns() {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
-                "/**"
+                "/app/user/**"
         };
         Collections.addAll(list, urls);
         return list;
@@ -56,7 +56,8 @@ public class WebConfiguration implements WebMvcConfigurer {
     private ArrayList<String> excludePatPatterns() {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
-                "/app/user/validate"
+                "/app/user/validate",
+                "/swagger-ui.html#/**"
         };
         Collections.addAll(list, urls);
         return list;
