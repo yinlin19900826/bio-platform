@@ -21,4 +21,12 @@ public interface IJWTInfo {
      * @return
      */
     String getName();
+
+    String getUsercode();
+
+    String getEffectiveCode();
+
+    String getEndtime();
+
+    void setEndtime(String endtime);
 }

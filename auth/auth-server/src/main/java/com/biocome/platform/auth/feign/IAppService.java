@@ -18,6 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @FeignClient(value = "wechat-applet",configuration = FeignConfiguration.class)
 public interface IAppService {
-  @RequestMapping(value = "/api/app/user/validate", method = RequestMethod.POST)
+  @RequestMapping(value = "app/user/validate", method = RequestMethod.POST)
   public AppUserInfo validate(@RequestBody JwtAuthenticationRequest authenticationRequest);
 }

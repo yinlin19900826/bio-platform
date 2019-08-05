@@ -17,12 +17,6 @@ import java.util.Map;
 @RequestMapping("jwt/app")
 @Slf4j
 public class AppController {
-    @Value("${jwt.access.token-header}")
-    private String accessTokenHeader;
-
-    @Value("${jwt.refresh.token-header}")
-    private String refreshTokenHeader;
-
     @Autowired
     private AuthService authService;
 
@@ -30,7 +24,7 @@ public class AppController {
     public ObjectRestResponse<String> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
         log.info(authenticationRequest.getUsername()+"app require logging...");
-        Map<String, String> token = authService.appLogin(authenticationRequest);
+        String token = authService.appLogin(authenticationRequest);
         return new ObjectRestResponse<>().data(token);
     }
 

@@ -47,4 +47,24 @@ public class ClientInfo implements IJWTInfo {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String getUsercode() {
+        return null;
+    }
+
+    @Override
+    public String getEffectiveCode() {
+        return null;
+    }
+
+    @Override
+    public String getEndtime() {
+        return null;
+    }
+
+    @Override
+    public void setEndtime(String endtime) {
+
+    }
 }

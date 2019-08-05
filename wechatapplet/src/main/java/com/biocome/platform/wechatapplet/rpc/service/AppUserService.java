@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.rpc.service;
 
+import com.biocome.platform.auth.common.util.constatns.CommonConstants;
 import com.biocome.platform.common.constant.UserConstant;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
@@ -35,7 +36,8 @@ public class AppUserService {
         if (encoder.matches(password, user.getPassword())) {
             BeanUtils.copyProperties(user, info);
             info.setId(user.getId().toString());
-            info.setEffectiveCode(DateUtils.getFormatDate(new Date())+"_"+ UUIDUtils.generateShortUuid());
+            info.setEffectiveCode(DateUtils.getCurrentTimeStr()+"_"+ UUIDUtils.generateShortUuid());
+            jedisCluster.del(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+info.getUsername());
         }
         return info;
     }

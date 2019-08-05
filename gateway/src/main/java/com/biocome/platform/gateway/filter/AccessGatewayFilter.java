@@ -65,6 +65,9 @@ public class AccessGatewayFilter implements GlobalFilter {
 //    private String zuulPrefix;
 
     private static final String GATE_WAY_PREFIX = "/api";
+
+    private static final String GATE_WAY_PREFIX_APPLET = "applet";
+
     @Autowired
     private UserAuthUtil userAuthUtil;
 
@@ -107,14 +110,18 @@ public class AccessGatewayFilter implements GlobalFilter {
             log.error("用户Token过期异常", e);
             return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Token Forbidden or Expired!"));
         }
-        List<PermissionInfo> permissionIfs = userService.getAllPermissionInfo();
-        // 判断资源是否启用权限约束
-        Stream<PermissionInfo> stream = getPermissionIfs(requestUri, method, permissionIfs);
-        List<PermissionInfo> result = stream.collect(Collectors.toList());
-        PermissionInfo[] permissions = result.toArray(new PermissionInfo[]{});
-        if (permissions.length > 0) {
-            if (checkUserPermission(permissions, serverWebExchange, user)) {
-                return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Forbidden!Does not has Permission!"));
+        if(requestUri.contains(GATE_WAY_PREFIX_APPLET)){
+            //后续加上小程序的权限约束
+        }else{
+            List<PermissionInfo> permissionIfs = userService.getAllPermissionInfo();
+            // 判断资源是否启用权限约束
+            Stream<PermissionInfo> stream = getPermissionIfs(requestUri, method, permissionIfs);
+            List<PermissionInfo> result = stream.collect(Collectors.toList());
+            PermissionInfo[] permissions = result.toArray(new PermissionInfo[]{});
+            if (permissions.length > 0) {
+                if (checkUserPermission(permissions, serverWebExchange, user)) {
+                    return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Forbidden!Does not has Permission!"));
+                }
             }
         }
         // 申请客户端密钥头
@@ -190,7 +197,6 @@ public class AccessGatewayFilter implements GlobalFilter {
         BaseContextHandler.setToken(authToken);
         return userAuthUtil.getInfoFromToken(authToken);
     }
-
 
     private boolean checkUserPermission(PermissionInfo[] permissions, ServerWebExchange ctx, IJWTInfo user) {
         List<PermissionInfo> permissionInfos = userService.getPermissionByUsername(user.getUniqueName());

@@ -9,11 +9,23 @@ public class JWTInfo implements Serializable,IJWTInfo {
     private String username;
     private String userId;
     private String name;
+    private String usercode;
+    private String effectiveCode;
+    private String endtime;
 
     public JWTInfo(String username, String userId, String name) {
         this.username = username;
         this.userId = userId;
         this.name = name;
+    }
+
+    public JWTInfo(String username, String userId, String name, String usercode, String effectiveCode, String endtime){
+        this.username = username;
+        this.usercode = usercode;
+        this.userId = userId;
+        this.name = name;
+        this.effectiveCode = effectiveCode;
+        this.endtime = endtime;
     }
 
     @Override
@@ -66,5 +78,37 @@ public class JWTInfo implements Serializable,IJWTInfo {
         int result = username != null ? username.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUsercode() {
+        return usercode;
+    }
+
+    public void setUsercode(String usercode) {
+        this.usercode = usercode;
+    }
+
+    public String getEffectiveCode() {
+        return effectiveCode;
+    }
+
+    public void setEffectiveCode(String effectiveCode) {
+        this.effectiveCode = effectiveCode;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
     }
 }

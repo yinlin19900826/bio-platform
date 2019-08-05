@@ -27,14 +27,14 @@ public class AppUserController extends BaseController<AppUserBiz,AppUser> {
     @Autowired
     AppUserService appUserService;
 
-    @RequestMapping(value = "/user/validate", method = RequestMethod.POST)
+    @RequestMapping(value = "/validate", method = RequestMethod.POST)
     public @ResponseBody AppUserInfo validate(@RequestBody Map<String,String> body){
         return appUserService.validate(body.get("username"),body.get("password"));
     }
 
-    @RequestMapping(value = "/user/search", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/search", method = RequestMethod.GET)
     public @ResponseBody AppUser detail(){
         String username = BaseContextHandler.getUsername();
         return appUserService.search(username);
-    }
+    }*/
 }

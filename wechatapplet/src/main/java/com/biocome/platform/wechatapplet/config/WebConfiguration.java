@@ -1,6 +1,6 @@
 package com.biocome.platform.wechatapplet.config;
 
-import com.biocome.platform.auth.client.interceptor.AppAuthRestInterceptor;
+import com.biocome.platform.auth.client.interceptor.UserAuthRestInterceptor;
 import com.biocome.platform.common.handler.GlobalExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,14 +26,14 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getAppAuthRestInterceptor())
+        registry.addInterceptor(getUserAuthRestInterceptor())
                 .addPathPatterns(getIncludePathPatterns())
                 .excludePathPatterns(excludePatPatterns());
     }
 
     @Bean
-    AppAuthRestInterceptor getAppAuthRestInterceptor(){
-        return new AppAuthRestInterceptor();
+    UserAuthRestInterceptor getUserAuthRestInterceptor(){
+        return new UserAuthRestInterceptor();
     }
 
     /**
@@ -43,7 +43,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     private ArrayList<String> getIncludePathPatterns() {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
-                "*"
+                "/**"
         };
         Collections.addAll(list, urls);
         return list;
@@ -56,6 +56,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     private ArrayList<String> excludePatPatterns() {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
+                "/app/user/validate"
         };
         Collections.addAll(list, urls);
         return list;
