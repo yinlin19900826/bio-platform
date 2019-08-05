@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.wechatapplet.biz.CardVoBiz;
 import com.biocome.platform.wechatapplet.vo.common.CommonRes;
@@ -37,9 +38,10 @@ public class CardController {
     @ApiOperation("获取所有管理员卡(res=0失败，1成功)")
     @ApiImplicitParam(name = "code", value = "用户编码", paramType = "path")
     @ResponseBody
-    @RequestMapping(value = "/admin/{code}", method = RequestMethod.POST)
-    public CommonRes openDoor(@PathVariable String code) {
+    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    public CommonRes adminCard() {
         try {
+            String code = BaseContextHandler.getUsercode();
             return biz.selectCardsByCode(code);
         } catch (Exception e) {
             log.info("获取所有管理员卡失败，错误信息为：{}", e.getMessage());

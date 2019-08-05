@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.wechatapplet.biz.UserDetailBiz;
@@ -41,6 +42,8 @@ public class UserDetailController {
     @PostMapping("/complete")
     public String complete(@RequestBody CompleteVo vo) {
         try {
+            String code = BaseContextHandler.getUsercode();
+            vo.setUsercode(code);
             return biz.updateSelectiveById(vo);
         } catch (Exception e) {
             log.info("完善信息方法失败：{}", e.getMessage());

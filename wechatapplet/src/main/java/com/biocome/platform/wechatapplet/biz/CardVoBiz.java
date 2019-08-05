@@ -2,6 +2,7 @@ package com.biocome.platform.wechatapplet.biz;
 
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
+import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.inter.basemanager.biz.DeviceBiz;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
@@ -118,7 +119,7 @@ public class CardVoBiz {
                             card1.setIsalive(AdminCommonConstant.DEFAULT_ZERO);
                             cardMapper.updateByPrimaryKey(model);
                         } else {
-                            throw new Exception("请求小平台注销接口失败");
+                            throw new Exception("请求小平台注销接口失败," + JsonUtils.beanToJson(res));
                         }
                     }
                 }
@@ -149,7 +150,7 @@ public class CardVoBiz {
                     cardMapper.updateByPrimaryKey(model);
                     return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
                 } else {
-                    throw new Exception("请求小平台发卡接口失败");
+                    throw new Exception("请求小平台发卡接口失败,"+ JsonUtils.beanToJson(res));
                 }
             } else {
                 throw new Exception("设备品牌对应URI获取异常");
