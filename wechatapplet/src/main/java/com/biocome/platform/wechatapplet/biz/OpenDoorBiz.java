@@ -1,8 +1,12 @@
 package com.biocome.platform.wechatapplet.biz;
 
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
+import com.biocome.platform.common.util.JsonUtils;
+import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.entity.Device;
+import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.basemanager.mapper.DeviceMapper;
+import com.biocome.platform.inter.basemanager.mapper.LesseeMapper;
 import com.biocome.platform.wechatapplet.rpc.service.OtherRpc;
 import com.biocome.platform.wechatapplet.utils.RpcTokenUtil;
 import com.biocome.platform.wechatapplet.utils.UriUtil;
@@ -24,59 +28,52 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class OpenDoorBiz {
 
+    private final OtherRpc rpc;
     private final UriUtil uriUtil;
     private final DeviceMapper mapper;
-    private final OtherRpc rpc;
+    private final LesseeMapper lesseeMapper;
     private final RpcTokenUtil rpcTokenUtil;
 
     @Autowired
-    public OpenDoorBiz(DeviceMapper mapper, UriUtil uriUtil, OtherRpc rpc, RpcTokenUtil rpcTokenUtil) {
+    public OpenDoorBiz(DeviceMapper mapper, UriUtil uriUtil, OtherRpc rpc, LesseeMapper lesseeMapper, RpcTokenUtil rpcTokenUtil) {
+        this.rpc = rpc;
         this.mapper = mapper;
         this.uriUtil = uriUtil;
-        this.rpc = rpc;
+        this.lesseeMapper = lesseeMapper;
         this.rpcTokenUtil = rpcTokenUtil;
     }
 
-    public BaseRpcResponse openDoor(OpenDoorVo req) {
-        BaseRpcResponse resp = new BaseRpcResponse();
-        try {
-            if (req.getSn() != null) {
-                Device device = new Device();
-                device.setSn(req.getSn());
-                //根据sn获取对应设备信息和厂家编号
-                List<Device> devices = mapper.select(device);
-                if (devices.size() > 0) {
-                    Device dev = devices.get(0);
-                    //获取对应厂家token
-                    req.setToken(rpcTokenUtil.getRpcToken(dev.getBrand()));
-                    //根据厂家编号获取URI
-                    URI uriByBrand = uriUtil.getUriByBrand(dev.getBrand());
-                    if (uriByBrand != null) {
-                        return rpc.openDoor(uriByBrand, req);
-                    } else {
-                        resp.setResult("0");
-                        resp.setErrorcode("110");
-                        resp.setMessage("设备品牌对应URI获取异常");
-                        return resp;
-                    }
+    public String openDoor(String sn, String userCode) throws Exception {
+        OpenDoorVo req = new OpenDoorVo();
+        Lessee model = new Lessee();
+        model.setUsercode(userCode);
+        model = lesseeMapper.selectOne(model);
+        req.setSn(sn);
+        req.setUsercode(userCode);
+        req.setUserdesc(model.getUsername());
+        req.setUsertype(String.valueOf(model.getUsertype()));
+        Device device = new Device();
+        device.setSn(sn);
+        //根据sn获取对应设备信息和厂家编号
+        List<Device> devices = mapper.select(device);
+        if (devices.size() > 0) {
+            Device dev = devices.get(0);
+            //获取对应厂家token
+            req.setToken(rpcTokenUtil.getRpcToken(dev.getBrand()));
+            //根据厂家编号获取URI
+            URI uriByBrand = uriUtil.getUriByBrand(dev.getBrand());
+            if (uriByBrand != null) {
+                BaseRpcResponse resp = rpc.openDoor(uriByBrand, req);
+                if (AdminCommonConstant.BOOLEAN_NUMBER_TRUE.equals(resp.getResult())) {
+                    return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
                 } else {
-                    resp.setResult("0");
-                    resp.setErrorcode("106");
-                    resp.setMessage("设备序号不存在");
-                    return resp;
+                    throw new Exception("请求小平台远程开门失败，" + JsonUtils.beanToJson(resp));
                 }
             } else {
-                resp.setResult("0");
-                resp.setErrorcode("100");
-                resp.setMessage("参数格式错误,sn为空");
-                return resp;
+                throw new Exception("设备品牌对应URI获取异常");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            resp.setResult("0");
-            resp.setErrorcode("105");
-            resp.setMessage("服务调用异常");
-            return resp;
+        } else {
+            throw new Exception("设备序号不存在");
         }
     }
 }
