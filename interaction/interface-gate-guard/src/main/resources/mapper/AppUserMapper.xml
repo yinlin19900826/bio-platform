@@ -4,7 +4,7 @@
 <mapper namespace="com.biocome.platform.wechatapplet.mapper.AppUserMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.biocome.platform.wechatapplet.entity.AppUser" id="appUserMap">
+    <resultMap type="com.biocome.platform.inter.gateguard.entity.AppUser" id="appUserMap">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
