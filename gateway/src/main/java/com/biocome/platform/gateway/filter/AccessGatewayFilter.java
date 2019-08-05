@@ -108,10 +108,11 @@ public class AccessGatewayFilter implements GlobalFilter {
             user = getJWTUser(request, mutate);
         } catch (Exception e) {
             log.error("用户Token过期异常", e);
-            return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Token Forbidden or Expired!"));
+            return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Token Forbidden or Expired!123123"));
         }
         if(requestUri.contains(GATE_WAY_PREFIX_APPLET)){
             //后续加上小程序的权限约束
+
         }else{
             List<PermissionInfo> permissionIfs = userService.getAllPermissionInfo();
             // 判断资源是否启用权限约束

@@ -1,4 +1,4 @@
-package com.biocome.platform.wechatapplet.vo.user;
+package com.biocome.platform.inter.gateguard.vo.user;
 
 /**
  * @ClassName: ResetPasswordParam

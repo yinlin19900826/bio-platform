@@ -1,4 +1,4 @@
-package com.biocome.platform.wechatapplet.mapper;
+package com.biocome.platform.inter.gateguard.mapper;
 
 import com.biocome.platform.inter.gateguard.entity.AppUser;
 import org.apache.ibatis.annotations.Param;

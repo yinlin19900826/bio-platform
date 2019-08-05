@@ -23,7 +23,7 @@
         where usercode = #{usercode}
     </update>
 
-    <select id="detail" resultType="com.biocome.platform.wechatapplet.vo.user.AppUserVo">
+    <select id="detail" resultType="com.biocome.platform.inter.gateguard.vo.user.AppUserVo">
         select a.username, a.usercode, a.iscomplete
         from app_user a
 		left join base_lessee l

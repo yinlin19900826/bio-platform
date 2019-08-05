@@ -1,4 +1,4 @@
-package com.biocome.platform.wechatapplet.entity;
+package com.biocome.platform.inter.gateguard.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

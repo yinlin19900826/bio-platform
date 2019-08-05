@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.biocome.platform</groupId>
-            <artifactId>interface-common</artifactId>
+            <artifactId>interface-gate-guard</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

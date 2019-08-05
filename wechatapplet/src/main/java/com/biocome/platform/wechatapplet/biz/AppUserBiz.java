@@ -2,7 +2,7 @@ package com.biocome.platform.wechatapplet.biz;
 
 import com.ace.cache.annotation.Cache;
 import com.biocome.platform.common.biz.BaseBiz;
-import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.inter.gateguard.entity.AppUser;
 import org.springframework.stereotype.Service;
 
 import com.biocome.platform.wechatapplet.mapper.AppUserMapper;

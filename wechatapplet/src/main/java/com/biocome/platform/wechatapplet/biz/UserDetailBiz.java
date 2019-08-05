@@ -10,7 +10,7 @@ import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Lessee;
-import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.inter.gateguard.entity.AppUser;
 import com.biocome.platform.wechatapplet.mapper.UserDetailMapper;
 import com.biocome.platform.wechatapplet.vo.userdetail.CompleteVo;
 import com.biocome.platform.wechatapplet.vo.userdetail.UserDetailReq;
