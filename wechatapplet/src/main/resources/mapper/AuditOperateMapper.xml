@@ -53,26 +53,24 @@
         <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
         <result column="isaudit" jdbcType="INTEGER" property="isaudit"/>
     </resultMap>-->
-    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Lessee">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.wechatapplet.vo.common.AuditOperateVo">
         <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="usersex" jdbcType="INTEGER" property="usersex"/>
-        <result column="usertype" jdbcType="INTEGER" property="usertype"/>
-        <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
-        <result column="maritalstatus" jdbcType="INTEGER" property="maritalstatus"/>
-        <result column="domiciletype" jdbcType="INTEGER" property="domiciletype"/>
-        <result column="culture" jdbcType="INTEGER" property="culture"/>
-        <result column="reason" jdbcType="INTEGER" property="reason"/>
-        <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
-        <result column="nation" jdbcType="VARCHAR" property="nation"/>
-        <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
-        <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
-        <result column="tel" jdbcType="VARCHAR" property="tel"/>
         <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
         <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
         <result column="unitname" jdbcType="VARCHAR" property="unitname"/>
-        <result column="birthtime" jdbcType="TIMESTAMP" property="birthtime"/>
         <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
-
+        <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
+        <result column="usersex" jdbcType="INTEGER" property="usersex"/>
+        <result column="nation" jdbcType="VARCHAR" property="nation"/>
+        <result column="birthtime" jdbcType="TIMESTAMP" property="birthtime"/>
+        <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
+        <result column="maritalstatus" jdbcType="INTEGER" property="maritalstatus"/>
+        <result column="domiciletype" jdbcType="INTEGER" property="domiciletype"/>
+        <result column="culture" jdbcType="INTEGER" property="culture"/>
+        <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
+        <result column="reason" jdbcType="INTEGER" property="reason"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
     </resultMap>
 
     <select id="selectByAudit" resultMap="BaseResultMap">
@@ -102,4 +100,12 @@
         ORDER BY
         updatetime DESC
     </select>
+
+    <update id="updateIsAudit" parameterType="com.biocome.platform.inter.basemanager.entity.Lessee">
+        UPDATE base_lessee
+        <set>
+            <if test="isaudit != null">isaudit = #{isaudit,jdbcType=INTEGER}</if>
+        </set>
+        WHERE username = #{username,jdbcType=VARCHAR}
+    </update>
 </mapper>
