@@ -20,4 +20,6 @@ public interface AppUserMapper extends Mapper<AppUser> {
      * @Date 2019/8/2 10:38
      */
     void updateIsComplete(@Param("usercode") String usercode);
+
+    AppUser detail(@Param("username") String username);
 }

@@ -1,21 +1,20 @@
 package com.biocome.platform.wechatapplet.rpc.service;
 
 import com.biocome.platform.auth.common.util.constatns.CommonConstants;
-import com.biocome.platform.common.constant.UserConstant;
+import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.common.vo.user.AppUserInfo;
 import com.biocome.platform.wechatapplet.biz.AppUserBiz;
 import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.wechatapplet.mapper.AppUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisCluster;
-
-import java.util.Date;
 
 /**
  * @ClassName: AppUserService
@@ -25,7 +24,7 @@ import java.util.Date;
  */
 @Service
 @Slf4j
-public class AppUserService {
+public class AppUserService extends BaseBiz<AppUserMapper, AppUser> {
     @Autowired
     AppUserBiz appUserBiz;
     @Autowired
@@ -54,7 +53,7 @@ public class AppUserService {
         return info;
     }
 
-    public AppUser search(String username) {
-        return appUserBiz.getUserByUsername(username);
+    public AppUser detail(String username) {
+        return mapper.detail(username);
     }
 }

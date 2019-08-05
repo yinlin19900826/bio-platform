@@ -10,28 +10,7 @@
         <result property="password" column="password"/>
         <result property="usercode" column="usercode"/>
         <result property="iscomplete" column="iscomplete"/>
-        <result property="phone" column="phone"/>
-        <result property="phoneChecked" column="phone_checked"/>
-        <result property="residenceAddress" column="residence_address"/>
-        <result property="marriage" column="marriage"/>
-        <result property="education" column="education"/>
-        <result property="career" column="career"/>
-        <result property="residenceType" column="residence_type"/>
-        <result property="workOrganization" column="work_organization"/>
-        <result property="fromPlace" column="from_place"/>
-        <result property="comeReason" column="come_reason"/>
-        <result property="realtionship" column="realtionship"/>
-        <result property="height" column="height"/>
-        <result property="politicPosition" column="politic_position"/>
-        <result property="profession" column="profession"/>
-        <result property="dwellType" column="dwell_type"/>
-        <result property="professionalTitle" column="professional_title"/>
-        <result property="arriveDate" column="arrive_date"/>
-        <result property="residePermitNotify" column="reside_permit_notify"/>
-        <result property="placeChangeNotify" column="place_change_notify"/>
-        <result property="reproduction" column="reproduction"/>
-        <result property="contraception" column="contraception"/>
-        <result property="cardDynamic" column="card_dynamic"/>
+        <result property="type" column="type"/>
         <result property="createTime" column="create_time"/>
         <result property="createUser" column="create_user"/>
         <result property="loginTime" column="login_time"/>
@@ -43,4 +22,12 @@
         set iscomplete = 0
         where usercode = #{usercode}
     </update>
+
+    <select id="detail" resultType="com.biocome.platform.wechatapplet.vo.user.AppUserVo">
+        select a.username, a.usercode, a.iscomplete
+        from app_user a
+		left join base_lessee l
+        on a.usercode = l.usercode
+        where a.username = #{username}
+    </select>
 </mapper>

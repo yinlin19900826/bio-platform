@@ -1,10 +1,9 @@
 package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.context.BaseContextHandler;
-import com.biocome.platform.common.msg.ObjectRestResponse;
+import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.common.vo.user.AppUserInfo;
-import com.biocome.platform.common.vo.user.UserInfo;
 import com.biocome.platform.wechatapplet.biz.AppUserBiz;
 import com.biocome.platform.wechatapplet.entity.AppUser;
 import com.biocome.platform.wechatapplet.rpc.service.AppUserService;
@@ -23,7 +22,7 @@ import java.util.Map;
 @Api(value = "app用户操作", tags = {"app用户操作"})
 @Controller
 @RequestMapping("app/user")
-public class AppUserController extends BaseController<AppUserBiz,AppUser> {
+public class AppUserController extends BaseController<AppUserBiz, AppUser> {
     @Autowired
     AppUserService appUserService;
 
@@ -32,9 +31,16 @@ public class AppUserController extends BaseController<AppUserBiz,AppUser> {
         return appUserService.validate(body.get("username"),body.get("password"));
     }
 
-    /*@RequestMapping(value = "/search", method = RequestMethod.GET)
-    public @ResponseBody AppUser detail(){
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public @ResponseBody
+    AppUser detail(){
         String username = BaseContextHandler.getUsername();
-        return appUserService.search(username);
-    }*/
+        return appUserService.detail(username);
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse resetPassword(){
+        return null;
+    }
 }
