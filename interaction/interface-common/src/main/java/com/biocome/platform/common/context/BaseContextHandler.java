@@ -81,7 +81,7 @@ public class BaseContextHandler {
         set(CommonConstants.CONTEXT_KEY_USERCODE,usercode);
     }
 
-    public static String getUsercode(String usercode){
+    public static String getUsercode(){
         Object value = get(CommonConstants.CONTEXT_KEY_USERCODE);
         return StringHelper.getObjectValue(value);
     }
