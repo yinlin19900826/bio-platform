@@ -69,15 +69,17 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
             }
         }
         String endTime = infoFromToken.getEndtime();
-        Date endDate = DateUtils.parseTime(endTime);
-        Date now = new Date();
-        if(endDate.before(now)){
-            throw new UserTokenExpireException("token已过期，请重新登录!");
-        }
-        if(endDate.after(now) && endDate.before(DateUtils.getAddMinuteTime(now, CommonConstants.TOKEN_CHANGE_MINITE))){
-            infoFromToken.setEndtime(DateUtils.getAddDaysDateStr(new Date(), CommonConstants.TOKEN_EFFETIVE_DAY));
-            String newToken = userAuthUtil.generateNewToken(infoFromToken);
-            response.setHeader(CommonConstants.NEW_TOKEN, newToken);
+        if(!ValidateUtils.isEmpty(endTime)){
+            Date endDate = DateUtils.parseTime(endTime);
+            Date now = new Date();
+            if(endDate.before(now)){
+                throw new UserTokenExpireException("token已过期，请重新登录!");
+            }
+            if(endDate.after(now) && endDate.before(DateUtils.getAddMinuteTime(now, CommonConstants.TOKEN_CHANGE_MINITE))){
+                infoFromToken.setEndtime(DateUtils.getAddDaysDateStr(new Date(), CommonConstants.TOKEN_EFFETIVE_DAY));
+                String newToken = userAuthUtil.generateNewToken(infoFromToken);
+                response.setHeader(CommonConstants.NEW_TOKEN, newToken);
+            }
         }
         BaseContextHandler.setUsername(infoFromToken.getUniqueName());
         BaseContextHandler.setName(infoFromToken.getName());

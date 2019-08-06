@@ -7,6 +7,7 @@ import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.common.vo.user.AppUserInfo;
 import com.biocome.platform.inter.gateguard.entity.AppUser;
+import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
 import com.biocome.platform.wechatapplet.biz.AppUserBiz;
 import com.biocome.platform.wechatapplet.mapper.AppUserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,7 @@ public class AppUserService extends BaseBiz<AppUserMapper, AppUser> {
         return info;
     }
 
-    public AppUser detail(String username) {
+    public AppUserVo detail(String username) {
         return mapper.detail(username);
     }
 }

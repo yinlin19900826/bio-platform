@@ -1,6 +1,7 @@
 package com.biocome.platform.wechatapplet.mapper;
 
 import com.biocome.platform.inter.gateguard.entity.AppUser;
+import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -21,5 +22,5 @@ public interface AppUserMapper extends Mapper<AppUser> {
      */
     void updateIsComplete(@Param("usercode") String usercode);
 
-    AppUser detail(@Param("username") String username);
+    AppUserVo detail(@Param("username") String username);
 }

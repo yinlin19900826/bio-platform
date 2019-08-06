@@ -5,6 +5,7 @@ import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.common.vo.user.AppUserInfo;
 import com.biocome.platform.inter.gateguard.entity.AppUser;
+import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
 import com.biocome.platform.wechatapplet.biz.AppUserBiz;
 import com.biocome.platform.wechatapplet.rpc.service.AppUserService;
 import io.swagger.annotations.Api;
@@ -33,7 +34,7 @@ public class AppUserController extends BaseController<AppUserBiz, AppUser> {
 
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public @ResponseBody
-    AppUser detail(){
+    AppUserVo detail(){
         String username = BaseContextHandler.getUsername();
         return appUserService.detail(username);
     }
