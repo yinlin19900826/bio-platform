@@ -84,6 +84,9 @@ public class VisitorController {
     public TableResultResponse<GetRecordResp> getRecord(@RequestParam(defaultValue = "20") int pageSize,
                                                         @RequestParam(defaultValue = "1") int pageNum,
                                                         @RequestBody GetRecordReq req) {
+        if (ValidateUtils.isEmpty(req.getUsercode())){
+            req.setUsercode(BaseContextHandler.getUsercode());
+        }
         Page<GetRecordResp> result = PageHelper.startPage(pageNum, pageSize);
         biz.getRecord(req);
         return new TableResultResponse<>(result.getTotal(), result.getResult());
