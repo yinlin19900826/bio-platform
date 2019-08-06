@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.net.InetAddress;
 
-@Configuration
-@Slf4j
+/*@Configuration
+@Slf4j*/
 public class ElasticSearchConfig {
     @Value("${elasticsearch.nodes}")
     private String nodes;
