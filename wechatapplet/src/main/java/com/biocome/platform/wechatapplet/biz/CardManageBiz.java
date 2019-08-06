@@ -85,14 +85,14 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
     /**
      * 挂失卡操作
      *
-     * @param userCode  用户编号
+     * @param
      * @param cardNo    卡号
      * @param buildCode 楼栋编号
      * @return java.lang.String
      * @Author yinlin
      * @Date 2019/7/31 11:19
      */
-    public ObjectRestResponse cardLossOperation(String userCode, String cardNo, String buildCode) throws Exception {
+    public ObjectRestResponse cardLossOperation(String cardNo, String buildCode) throws Exception {
         Card model = cardManageMapper.selectCardByCardNo(cardNo);
         if (model.getCardtype().equals("1")) {
             Device device = new Device();

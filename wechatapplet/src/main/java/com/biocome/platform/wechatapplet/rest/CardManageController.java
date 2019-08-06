@@ -49,10 +49,10 @@ public class CardManageController extends BaseController<CardManageBiz, CardMana
             @ApiImplicitParam(name = "cardNo", value = "卡号", paramType = "path"),
             @ApiImplicitParam(name = "buildCode", value = "楼栋编号", paramType = "path")})
     @ResponseBody
-    @RequestMapping(value = "/loss/{userCode}/{cardNo}/{buildCode}", method = RequestMethod.POST)
-    public BaseResponse cardOperation(@PathVariable String userCode, @PathVariable String cardNo, @PathVariable String buildCode) {
+    @RequestMapping(value = "/loss/{cardNo}/{buildCode}", method = RequestMethod.POST)
+    public BaseResponse cardOperation(@PathVariable String cardNo, @PathVariable String buildCode) {
         try {
-            return cardManageBiz.cardLossOperation(userCode, cardNo, buildCode);
+            return cardManageBiz.cardLossOperation(cardNo, buildCode);
             //return null;
         } catch (Exception e) {
             log.info("挂失卡操作失败，错误信息为：{}", e.getMessage());
