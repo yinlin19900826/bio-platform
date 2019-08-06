@@ -75,7 +75,7 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
             }
             return new ObjectRestResponse().success();
         }catch(Exception e ) {
-            throw new Exception("单个租户退租失败");
+            throw new Exception("全部租户退租失败");
         }
     }
 }
