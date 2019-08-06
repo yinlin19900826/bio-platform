@@ -80,10 +80,12 @@ public class VisitorController {
     }
 
     @ApiOperation("访客记录列表")
-    @PostMapping("/getRecord")
+    @GetMapping("/getRecord")
     public TableResultResponse<GetRecordResp> getRecord(@RequestParam(defaultValue = "20") int pageSize,
                                                         @RequestParam(defaultValue = "1") int pageNum,
-                                                        @RequestBody GetRecordReq req) {
+                                                        @RequestParam("status") String status) {
+        GetRecordReq req = new GetRecordReq();
+        req.setStatus(status);
         if (ValidateUtils.isEmpty(req.getUsercode())){
             req.setUsercode(BaseContextHandler.getUsercode());
         }
