@@ -24,9 +24,8 @@ public class DeviceDetailController {
     private DeviceDetailBiz biz;
 
     @ApiOperation("根据楼栋编号获取相关设备信息")
-    @ApiImplicitParam(name = "buildcode", value = "楼栋编号", paramType = "body")
     @GetMapping("/getdevice")
-    public ObjectRestResponse<List<DeviceDetailResp>> getDevice(@RequestBody String buildcode){
+    public ObjectRestResponse<List<DeviceDetailResp>> getDevice(@RequestParam("buildcode") String buildcode){
         return new ObjectRestResponse<>().data(biz.getDeviceByBuildcode(buildcode));
     }
 }
