@@ -62,6 +62,7 @@ public class UserDetailBiz {
         appUser.setCreateTime(DateUtils.getCurrentTime());
         appUser.setPassword(password);
         appUser.setCreateUser(req.getRegistrant());
+        appUser.setType(2);
         appUserBiz.insertSelective(appUser);
     }
 
