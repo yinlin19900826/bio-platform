@@ -1,11 +1,14 @@
 package com.biocome.platform.guard.biz;
 
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.constant.UserConstant;
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
+import com.biocome.platform.common.vo.user.AppUserInfo;
 import com.biocome.platform.guard.mapper.DoorDeviceCardMapper;
 import com.biocome.platform.guard.rpc.service.CardRpc;
 import com.biocome.platform.guard.rpc.service.FileRpc;
@@ -29,9 +32,12 @@ import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseeCardVo;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListReq;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListResp;
 import com.biocome.platform.inter.basemanager.vo.upload.FileVo;
+import com.biocome.platform.inter.gateguard.entity.AppUser;
+import com.biocome.platform.inter.gateguard.mapper.AppUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +84,9 @@ public class DoorDeviceCardBiz {
 
     @Autowired
     private FileRpc fileRpc;
+
+    @Autowired
+    private AppUserMapper appUserMapper;
 
     /**
      * @param username
@@ -151,6 +160,18 @@ public class DoorDeviceCardBiz {
         int cardResult = cardMapper.insert(card);
         int lesseeResult = lesseeMapper.insert(lessee);
 
+        //加入APP登录默认信息
+        AppUser appUser = new AppUser();
+        String papersnum = vo.getPapersnum();
+        String password = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode(papersnum.substring(papersnum.length() - 6));
+        appUser.setUsername(vo.getUsername());
+        appUser.setUsercode(usercode);
+        appUser.setCreateTime(DateUtils.getCurrentTime());
+        appUser.setPassword(password);
+        appUser.setCreateUser(BaseContextHandler.getUsercode());
+        appUser.setType(2);
+        appUserMapper.insertSelective(appUser);
+
         if (cardResult == 1 && lesseeResult == 1) {
             //判断是否需要激活，并下发卡
             return ifaliveAndOpenCard(vo, sns);
@@ -223,16 +244,16 @@ public class DoorDeviceCardBiz {
         }
     }
 
-    public BaseRpcResponse changeLesseePic(ChangeLesseePicReq req) throws Exception{
+    public BaseRpcResponse changeLesseePic(ChangeLesseePicReq req) throws Exception {
         int result = doorDeviceCardMapper.changeLesseePic(req);
         if (result == 0) {
             return new BaseRpcResponse().failure();
         } else {
-                List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
-                ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
-                if (objectRestResponse.getStatus() != 200) {
-                    throw new Exception("远程删除文件失败");
-                }
+            List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
+            ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
+            if (objectRestResponse.getStatus() != 200) {
+                throw new Exception("远程删除文件失败");
+            }
             return new BaseRpcResponse().success();
         }
     }

@@ -33,6 +33,7 @@ public class UserDetailController {
             resp = biz.insertUserDetail(req);
         } catch (Exception e) {
             log.error("用户注册基本信息失败：{}", e.getMessage());
+            resp.customError("发生异常");
         }
         return resp;
     }

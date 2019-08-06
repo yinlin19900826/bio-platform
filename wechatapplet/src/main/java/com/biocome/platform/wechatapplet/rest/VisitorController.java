@@ -1,27 +1,27 @@
 package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.ObjectRestResponse;
-import com.biocome.platform.inter.basemanager.entity.VisitorRecord;
+import com.biocome.platform.common.msg.TableResultResponse;
+import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.inter.basemanager.vo.device.DeviceInfoResp;
 import com.biocome.platform.wechatapplet.biz.VisitorBiz;
 import com.biocome.platform.wechatapplet.rpc.service.OpenDoorPasswordRpc;
 import com.biocome.platform.wechatapplet.vo.visitor.GetRecordReq;
 import com.biocome.platform.wechatapplet.vo.visitor.GetRecordResp;
 import com.biocome.platform.wechatapplet.vo.visitor.OpendoorpasswordResp;
 import com.biocome.platform.wechatapplet.vo.visitor.VisitorPasswordReq;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * @author hxy
@@ -45,7 +45,9 @@ public class VisitorController {
     public ObjectRestResponse<String> password(@RequestBody VisitorPasswordReq req) {
         ObjectRestResponse resp = new ObjectRestResponse();
         String password = null;
-
+        if (ValidateUtils.isEmpty(req.getUsercode())) {
+            req.setUsercode(BaseContextHandler.getUsercode());
+        }
         try {
             //远程调用，向小平台发送开门密码
             OpendoorpasswordResp opendoorpassword = biz.opendoorpassword(req);
@@ -76,9 +78,14 @@ public class VisitorController {
         resp.setData(password);
         return resp;
     }
-    @ApiOperation("发送动态密码")
+
+    @ApiOperation("访客记录列表")
     @PostMapping("/getRecord")
-    public ObjectRestResponse<List<GetRecordResp>> getRecord(@RequestBody GetRecordReq req) {
-        return new ObjectRestResponse<>().data(biz.getRecord(req));
+    public TableResultResponse<GetRecordResp> getRecord(@RequestParam(defaultValue = "20") int pageSize,
+                                                        @RequestParam(defaultValue = "1") int pageNum,
+                                                        @RequestBody GetRecordReq req) {
+        Page<GetRecordResp> result = PageHelper.startPage(pageNum, pageSize);
+        biz.getRecord(req);
+        return new TableResultResponse<>(result.getTotal(), result.getResult());
     }
 }

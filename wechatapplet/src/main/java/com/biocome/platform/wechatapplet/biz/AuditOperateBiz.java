@@ -65,10 +65,9 @@ public class AuditOperateBiz extends BaseBiz<AuditOperateMapper, AuditOperateVo>
      * @Author yinlin
      * @Date 2019/8/5 10:58
      */
-    public String updateIsAudit(String username ,int isaudit) throws Exception {
+    public ObjectRestResponse updateIsAudit(String username ,int isaudit) throws Exception {
         //更新审核状态
         auditOperateMapper.updateIsAudit(username,isaudit);
-
-        return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+        return new ObjectRestResponse().success();
     }
 }

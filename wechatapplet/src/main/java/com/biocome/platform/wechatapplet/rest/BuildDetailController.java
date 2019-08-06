@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.wechatapplet.biz.BuildDetailBiz;
 import com.biocome.platform.wechatapplet.vo.build.BuildDetailResp;
@@ -29,7 +30,8 @@ public class BuildDetailController {
     @ApiOperation("根据用户编号获取相关楼栋")
     @ApiImplicitParam(name = "usercode", value = "用户编码", paramType = "body")
     @PostMapping("/getbuild")
-    public ObjectRestResponse<List<BuildDetailResp>> getBuild(@RequestBody String usercode) {
+    public ObjectRestResponse<List<BuildDetailResp>> getBuild() {
+        String usercode = BaseContextHandler.getUsercode();
         List<BuildDetailResp> resp = biz.getBuildByUsercode(usercode);
         return new ObjectRestResponse<>().data(resp);
     }
