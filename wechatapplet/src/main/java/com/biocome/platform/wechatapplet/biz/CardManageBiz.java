@@ -3,6 +3,7 @@ package com.biocome.platform.wechatapplet.biz;
 
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.inter.basemanager.biz.DeviceBiz;
@@ -91,7 +92,7 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
      * @Author yinlin
      * @Date 2019/7/31 11:19
      */
-    public String cardLossOperation(String userCode, String cardNo, String buildCode) throws Exception {
+    public ObjectRestResponse cardLossOperation(String userCode, String cardNo, String buildCode) throws Exception {
         Card model = cardManageMapper.selectCardByCardNo(cardNo);
         if (model.getCardtype().equals("1")) {
             Device device = new Device();
@@ -126,6 +127,6 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
             }
 
         }
-        return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+        return new ObjectRestResponse().success();
     }
 }

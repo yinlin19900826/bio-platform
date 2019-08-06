@@ -1,5 +1,7 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.msg.BaseResponse;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
@@ -47,12 +49,12 @@ public class AuditOperateController extends BaseController<AuditOperateBiz, Audi
     @ApiOperation(" 根据用户名更改审核状态（0失败，1成功）")
     @ResponseBody
     @PostMapping("/change")
-    public String updateIsAudit(String username ,int isaudit) {
+    public BaseResponse updateIsAudit(String username , int isaudit) {
         try {
             return auditOperateBiz.updateIsAudit(username,isaudit);
         } catch (Exception e) {
             log.info("根据用户名更改审核状态失败：{}", e.getMessage());
-            return AdminCommonConstant.BOOLEAN_NUMBER_FALSE;
+            return new ObjectRestResponse().customError("根据用户名更改审核状态失败!");
         }
     }
 }

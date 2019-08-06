@@ -2,6 +2,7 @@ package com.biocome.platform.wechatapplet.biz;
 
 
 import com.biocome.platform.common.biz.BaseBiz;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.wechatapplet.mapper.RefundRentMapper;
@@ -40,10 +41,10 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
      * @Author yinlin
      * @Date 2019/8/1 11:19
      */
-    public String refundRent(String cardNo, String username) throws Exception {
+    public ObjectRestResponse refundRent(String cardNo, String username) throws Exception {
         try {
             refundRentMapper.deleteByUserName(username);
-            return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+            return new ObjectRestResponse().success();
         }catch(Exception e ) {
             throw new Exception("单个租户退租失败");
         }
@@ -59,7 +60,7 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
      * @Author yinlin
      * @Date 2019/7/31 11:19
      */
-    public String refundAllRent(String cardNo, String username) throws Exception {
+    public ObjectRestResponse refundAllRent(String cardNo, String username) throws Exception {
         try {
             List<String> housecodes = refundRentMapper.getHouseCode(username);
             List<String> allUserList = new ArrayList<>();
@@ -72,7 +73,7 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
             for(String user:allUserList){
                 refundRentMapper.deleteAllByUserName(user);
             }
-            return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+            return new ObjectRestResponse().success();
         }catch(Exception e ) {
             throw new Exception("单个租户退租失败");
         }
