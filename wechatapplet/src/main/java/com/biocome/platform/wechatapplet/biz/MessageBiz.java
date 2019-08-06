@@ -1,13 +1,13 @@
 package com.biocome.platform.wechatapplet.biz;
 
-import com.biocome.platform.common.msg.ObjectRestResponse;
+import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.wechatapplet.mapper.MessageMapper;
 import com.biocome.platform.wechatapplet.vo.message.MessageVo;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @ClassName: MessageBiz
@@ -33,8 +33,9 @@ public class MessageBiz {
      * @Author shenlele
      * @Date 2019/7/31 14:15
      */
-    public ObjectRestResponse selectList() throws Exception {
-        List<MessageVo> list = mapper.selectList();
-        return new ObjectRestResponse().success().data(list);
+    public TableResultResponse<MessageVo> selectList(int pageSize, int pageNum) throws Exception {
+        Page<MessageVo> result = PageHelper.startPage(pageNum, pageSize);
+        mapper.selectList();
+        return new TableResultResponse<>(result.getTotal(), result.getResult());
     }
 }

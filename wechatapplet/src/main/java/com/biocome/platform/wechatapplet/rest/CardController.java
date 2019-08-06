@@ -37,14 +37,14 @@ public class CardController {
     @ApiOperation("获取所有管理员卡(res=0失败，1成功)")
     @ApiImplicitParam(name = "code", value = "用户编码", paramType = "path")
     @ResponseBody
-    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ObjectRestResponse adminCard() {
         try {
             String code = BaseContextHandler.getUsercode();
             return biz.selectCardsByCode(code);
         } catch (Exception e) {
             log.info("获取所有管理员卡失败，错误信息为：{}", e.getMessage());
-            return new ObjectRestResponse().failure();
+            return new ObjectRestResponse().customError("获取卡信息失败!");
         }
     }
 
