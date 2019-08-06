@@ -187,7 +187,7 @@ public class CompleteVo {
         this.residentmanner = residentmanner;
     }
 
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd")
     public Date getFirsttime() {
         return firsttime;
     }

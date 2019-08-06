@@ -1,6 +1,7 @@
 package com.biocome.platform.wechatapplet.biz;
 
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.common.util.ValidateUtils;
@@ -18,7 +19,6 @@ import com.biocome.platform.wechatapplet.mapper.CardVoMapper;
 import com.biocome.platform.wechatapplet.rpc.service.CardRpc;
 import com.biocome.platform.wechatapplet.utils.RpcTokenUtil;
 import com.biocome.platform.wechatapplet.utils.UriUtil;
-import com.biocome.platform.wechatapplet.vo.common.CommonRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,9 +66,9 @@ public class CardVoBiz {
      * @Author shenlele
      * @Date 2019/7/30 11:11
      */
-    public CommonRes selectCardsByCode(String usercode) throws Exception {
+    public ObjectRestResponse selectCardsByCode(String usercode) throws Exception {
         List<String> list = cardVoMapper.selectCardsByCode(usercode);
-        return new CommonRes().success(list);
+        return new ObjectRestResponse().success().data(list);
     }
 
     /**
@@ -81,7 +81,7 @@ public class CardVoBiz {
      * @Author shenlele
      * @Date 2019/7/30 11:19
      */
-    public String cardOperation(String userCode, String cardNo, String buildCode) throws Exception {
+    public ObjectRestResponse cardOperation(String userCode, String cardNo, String buildCode) throws Exception {
         //查询卡信息，因为这张卡页面展示是后台查出来的，所以数据库绝对有这条数据，不用判断
         Card model = cardVoMapper.selectCardsByCardNo(cardNo);
         Device device = new Device();
@@ -103,6 +103,7 @@ public class CardVoBiz {
                 card.setIsalive("1");
                 List<Card> list = cardMapper.select(card);
                 if (ValidateUtils.isNotEmpty(list)) {
+                    //下发租户卡时，需先将其在本楼栋下的其他卡注销
                     for (Card card1 : list) {
                         //获取对应厂家token
                         logoutCardVo.setToken(token);
@@ -148,9 +149,9 @@ public class CardVoBiz {
                     //修改表该卡有效
                     model.setIsalive(AdminCommonConstant.DEFAULT_TWO);
                     cardMapper.updateByPrimaryKey(model);
-                    return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+                    return new ObjectRestResponse().success();
                 } else {
-                    throw new Exception("请求小平台发卡接口失败,"+ JsonUtils.beanToJson(res));
+                    throw new Exception("请求小平台发卡接口失败," + JsonUtils.beanToJson(res));
                 }
             } else {
                 throw new Exception("设备品牌对应URI获取异常");

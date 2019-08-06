@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.biz;
 
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
@@ -43,7 +44,7 @@ public class OpenDoorBiz {
         this.rpcTokenUtil = rpcTokenUtil;
     }
 
-    public String openDoor(String sn, String userCode) throws Exception {
+    public ObjectRestResponse openDoor(String sn, String userCode) throws Exception {
         OpenDoorVo req = new OpenDoorVo();
         Lessee model = new Lessee();
         model.setUsercode(userCode);
@@ -65,7 +66,7 @@ public class OpenDoorBiz {
             if (uriByBrand != null) {
                 BaseRpcResponse resp = rpc.openDoor(uriByBrand, req);
                 if (AdminCommonConstant.BOOLEAN_NUMBER_TRUE.equals(resp.getResult())) {
-                    return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+                    return new ObjectRestResponse().success();
                 } else {
                     throw new Exception("请求小平台远程开门失败，" + JsonUtils.beanToJson(resp));
                 }

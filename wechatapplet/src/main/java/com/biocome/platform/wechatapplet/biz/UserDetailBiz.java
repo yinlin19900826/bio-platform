@@ -7,7 +7,6 @@ import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.inter.basemanager.biz.CardBiz;
 import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
-import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.gateguard.entity.AppUser;
@@ -108,12 +107,12 @@ public class UserDetailBiz {
      * @Author shenlele
      * @Date 2019/8/2 10:58
      */
-    public String updateSelectiveById(CompleteVo vo) throws Exception {
+    public ObjectRestResponse updateSelectiveById(CompleteVo vo) throws Exception {
         //更新完善信息
         mapper.updateSelectiveById(vo);
         //设置为已完善信息
         appUserBiz.updateIsComplete(vo.getUsercode());
-        return AdminCommonConstant.BOOLEAN_NUMBER_TRUE;
+        return new ObjectRestResponse().success();
     }
 
 }

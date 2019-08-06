@@ -1,7 +1,8 @@
 package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.context.BaseContextHandler;
-import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
+import com.biocome.platform.common.msg.BaseResponse;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.wechatapplet.biz.OpenDoorBiz;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,13 +36,13 @@ public class OpenDoorController {
     @ApiOperation("远程开门（0失败，1成功）")
     @ResponseBody
     @RequestMapping(value = "/openDoor/{sn}", method = RequestMethod.POST)
-    public String openDoor(@PathVariable String sn) {
+    public BaseResponse openDoor(@PathVariable String sn) {
         try {
             String code = BaseContextHandler.getUsercode();
             return biz.openDoor(sn, code);
         } catch (Exception e) {
             log.info("远程开门失败，错误信息为：{}", e.getMessage());
-            return AdminCommonConstant.BOOLEAN_NUMBER_FALSE;
+            return new ObjectRestResponse().customError("开门失败!");
         }
     }
 }

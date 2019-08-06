@@ -62,4 +62,9 @@ public class ObjectRestResponse<T> extends BaseResponse {
         this.setMessage("异常，请检查参数格式");
         return this;
     }
+    public ObjectRestResponse customError(String message){
+        this.setStatus(204);
+        this.setMessage(message);
+        return this;
+    }
 }
