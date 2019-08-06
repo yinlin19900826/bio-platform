@@ -7,10 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,9 +24,8 @@ public class DeviceDetailController {
     private DeviceDetailBiz biz;
 
     @ApiOperation("根据楼栋编号获取相关设备信息")
-    @ApiImplicitParam(name = "buildcode", value = "楼栋编号", paramType = "body")
-    @PostMapping("/getdevice")
-    public ObjectRestResponse<List<DeviceDetailResp>> getDevice(@RequestBody String buildcode){
+    @GetMapping("/getdevice")
+    public ObjectRestResponse<List<DeviceDetailResp>> getDevice(@RequestParam("buildcode") String buildcode){
         return new ObjectRestResponse<>().data(biz.getDeviceByBuildcode(buildcode));
     }
 }
