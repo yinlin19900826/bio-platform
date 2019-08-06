@@ -32,5 +32,4 @@ public class CommonConstants {
     //token有效期
     public static final Integer TOKEN_EFFETIVE_DAY = 30;
     public static final Integer TOKEN_CHANGE_MINITE = 5;
-    public static final int REFRESH_TOKEN_EXPIRE = 60 * 15;
 }

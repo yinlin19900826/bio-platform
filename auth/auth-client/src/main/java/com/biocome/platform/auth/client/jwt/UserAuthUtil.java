@@ -17,6 +17,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class UserAuthUtil {
+    @Value("${auth.user.token-expire}")
+    private int appTokenExpire;
     @Autowired
     private UserAuthConfig userAuthConfig;
 
@@ -34,6 +36,6 @@ public class UserAuthUtil {
 
     public String generateNewToken(IJWTInfo info) throws Exception {
         return JWTHelper.generateToken(new JWTInfo(info.getUniqueName(), info.getId(), info.getName(), info.getUsercode(), info.getEffectiveCode(), info.getEndtime()),
-                userAuthConfig.getPubKeyByte(), CommonConstants.REFRESH_TOKEN_EXPIRE);
+                userAuthConfig.getPubKeyByte(), appTokenExpire);
     }
 }

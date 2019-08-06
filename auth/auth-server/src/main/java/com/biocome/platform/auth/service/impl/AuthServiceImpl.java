@@ -27,6 +27,9 @@ public class AuthServiceImpl implements AuthService {
     private IAppService appService;
     private JedisCluster jedisCluster;
 
+    @Value("${jwt.token.app.expire}")
+    private int appTokenExpire;
+
 
     @Autowired
     public AuthServiceImpl(JwtTokenUtil jwtTokenUtil, IUserService userService, IAppService appService, JedisCluster jedisCluster) {
@@ -60,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
     public String appLogin(JwtAuthenticationRequest authenticationRequest) throws Exception {
         AppUserInfo info = appService.validate(authenticationRequest);
         if (!StringUtils.isEmpty(info.getId())) {
-            String token = jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId(), info.getName(), info.getUsercode(), info.getEffectiveCode(), DateUtils.getAddDaysDateStr(new Date(),CommonConstants.TOKEN_EFFETIVE_DAY)), CommonConstants.REFRESH_TOKEN_EXPIRE);
+            String token = jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId(), info.getName(), info.getUsercode(), info.getEffectiveCode(), DateUtils.getAddDaysDateStr(new Date(),CommonConstants.TOKEN_EFFETIVE_DAY)), appTokenExpire);
             //将effectiveCode保存在redis
             jedisCluster.set(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+info.getUsername(), info.getEffectiveCode());
             return token;

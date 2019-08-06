@@ -36,7 +36,8 @@ public class AppUserController extends BaseController<AppUserBiz, AppUser> {
     public @ResponseBody
     AppUserVo detail(){
         String username = BaseContextHandler.getUsername();
-        return appUserService.detail(username);
+        String usercode = BaseContextHandler.getUsercode();
+        return appUserService.detail(usercode);
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
