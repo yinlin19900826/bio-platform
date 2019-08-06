@@ -1,5 +1,7 @@
 package com.biocome.platform.wechatapplet.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiParam;
 
@@ -56,6 +58,7 @@ public class Fault {
      */
     @ApiParam(name = "createtime", value = "创建时间")
     @Column(name = "createtime")
+    @JsonFormat( pattern="yyyy-MM-dd")
     private Date createtime;
 
     /**
@@ -63,39 +66,8 @@ public class Fault {
      */
     @ApiParam(name = "updatetime", value = "修改时间")
     @Column(name = "updatetime")
+    @JsonFormat( pattern="yyyy-MM-dd")
     private Date updatetime;
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public Date getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
-    }
-
-    public String getCreatename() {
-        return createname;
-    }
-
-    public void setCreatename(String createname) {
-        this.createname = createname;
-    }
-
-    public String getUpdatename() {
-        return updatename;
-    }
-
-    public void setUpdatename(String updatename) {
-        this.updatename = updatename;
-    }
 
     /**
      * 创建人
@@ -150,4 +122,39 @@ public class Fault {
     public void setDetaildescription(String detaildescription) {
         this.detaildescription = detaildescription;
     }
+
+    @JSONField(format = "yyyy-MM-dd")
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    @JSONField(format = "yyyy-MM-dd")
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getCreatename() {
+        return createname;
+    }
+
+    public void setCreatename(String createname) {
+        this.createname = createname;
+    }
+
+    public String getUpdatename() {
+        return updatename;
+    }
+
+    public void setUpdatename(String updatename) {
+        this.updatename = updatename;
+    }
+
 }

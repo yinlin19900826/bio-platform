@@ -1,6 +1,6 @@
 package com.biocome.platform.wechatapplet.rest;
 
-import com.biocome.platform.common.msg.ObjectRestResponse;
+import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.wechatapplet.biz.MessageBiz;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -32,13 +33,14 @@ public class MessageController {
 
     @ApiOperation("请求消息通知列表（0失败，1成功）")
     @ResponseBody
-    @RequestMapping(value = "/select", method = RequestMethod.POST)
-    public ObjectRestResponse selectMessage() {
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    public TableResultResponse selectMessage(@RequestParam(defaultValue = "2") int pageSize,
+                                             @RequestParam(defaultValue = "1") int pageNum) {
         try {
-            return biz.selectList();
+            return biz.selectList(pageSize, pageNum);
         } catch (Exception e) {
             log.info("查询消息通知失败,错误信息为：{}", e.getMessage());
-            return new ObjectRestResponse().customError("未获取到消息列表!");
+            return new TableResultResponse(204, "获取通知消息失败!");
         }
     }
 }

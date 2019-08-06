@@ -1,5 +1,7 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.msg.BaseResponse;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
@@ -48,13 +50,13 @@ public class CardManageController extends BaseController<CardManageBiz, CardMana
             @ApiImplicitParam(name = "buildCode", value = "楼栋编号", paramType = "path")})
     @ResponseBody
     @RequestMapping(value = "/loss/{userCode}/{cardNo}/{buildCode}", method = RequestMethod.POST)
-    public String cardOperation(@PathVariable String userCode, @PathVariable String cardNo, @PathVariable String buildCode) {
+    public BaseResponse cardOperation(@PathVariable String userCode, @PathVariable String cardNo, @PathVariable String buildCode) {
         try {
             return cardManageBiz.cardLossOperation(userCode, cardNo, buildCode);
             //return null;
         } catch (Exception e) {
             log.info("挂失卡操作失败，错误信息为：{}", e.getMessage());
-            return AdminCommonConstant.BOOLEAN_NUMBER_FALSE;
+            return new ObjectRestResponse().customError("挂失卡操作失败!");
         }
     }
 
