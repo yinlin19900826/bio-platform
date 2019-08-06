@@ -28,7 +28,6 @@ public class BuildDetailController {
     BuildDetailBiz biz;
 
     @ApiOperation("根据用户编号获取相关楼栋")
-    @ApiImplicitParam(name = "usercode", value = "用户编码", paramType = "body")
     @PostMapping("/getbuild")
     public ObjectRestResponse<List<BuildDetailResp>> getBuild() {
         String usercode = BaseContextHandler.getUsercode();
