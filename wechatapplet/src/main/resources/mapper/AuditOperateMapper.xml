@@ -20,7 +20,7 @@
         <result column="photo" jdbcType="VARCHAR" property="photo"/>
         <result column="headphoto" jdbcType="VARCHAR" property="headphoto"/>
         <result column="papersphoto" jdbcType="VARCHAR" property="papersphoto"/>
-        <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
+        <result column="occupation" jdbcType="INTEGER" property="occupation"/>
         <result column="tel" jdbcType="VARCHAR" property="tel"/>
         <result column="emergencyname" jdbcType="VARCHAR" property="emergencyname"/>
         <result column="emergencytel" jdbcType="VARCHAR" property="emergencytel"/>
@@ -68,7 +68,7 @@
         <result column="maritalstatus" jdbcType="INTEGER" property="maritalstatus"/>
         <result column="domiciletype" jdbcType="INTEGER" property="domiciletype"/>
         <result column="culture" jdbcType="INTEGER" property="culture"/>
-        <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
+        <result column="occupation" jdbcType="INTEGER" property="occupation"/>
         <result column="reason" jdbcType="INTEGER" property="reason"/>
         <result column="tel" jdbcType="VARCHAR" property="tel"/>
     </resultMap>

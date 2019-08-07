@@ -35,7 +35,6 @@ public class CardController {
     }
 
     @ApiOperation("获取所有管理员卡")
-    @ApiImplicitParam(name = "code", value = "用户编码", paramType = "path")
     @ResponseBody
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ObjectRestResponse adminCard() {

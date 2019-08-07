@@ -127,10 +127,10 @@ public class Lessee extends Base {
     private String papersphoto;
 
     /**
-     * 职业
+     * 职业（0：工业1：商业2：服务业3：交通运输业4：农业养殖业5：建筑业6：其他7：无业8：非劳动年龄）
      */
-    @ApiModelProperty(value = "职业")
-    private String occupation;
+    @ApiModelProperty(value = "职业（0：工业1：商业2：服务业3：交通运输业4：农业养殖业5：建筑业6：其他7：无业8：非劳动年龄）")
+    private Integer occupation;
 
     /**
      * 手机号码
@@ -313,15 +313,15 @@ public class Lessee extends Base {
     private Date firsttime;
 
     /**
-     * 生育动态(0：无1：待孕2：已孕3：有子女)
+     * 生育动态(0：一孩1：二孩2：三孩3：其他4：无)
      */
-    @ApiModelProperty(value = "生育动态(0：无1：待孕2：已孕3：有子女)")
+    @ApiModelProperty(value = "生育动态(0：一孩1：二孩2：三孩3：其他4：无)")
     private Integer fertility;
 
     /**
-     * 避孕动态(0：有1：无)
+     * 避孕动态(0：药具1：结扎2：上环3：无)
      */
-    @ApiModelProperty(value = "避孕动态(0：有1：无)")
+    @ApiModelProperty(value = "避孕动态(0：药具1：结扎2：上环3：无)")
     private Integer birthcontrol;
 
     /**
@@ -353,6 +353,30 @@ public class Lessee extends Base {
      */
     @ApiModelProperty(value = "有无证件(0有1无)")
     private Integer ispapers;
+
+    /**
+     * 居住处所类型 （0：租赁房屋1：旅店2：居民家中3：工地现场4：其他5：自购房6：单位/学校）
+     */
+    @ApiModelProperty(value = "居住处所类型 （0：租赁房屋1：旅店2：居民家中3：工地现场4：其他5：自购房6：单位/学校）")
+    private Integer jzcslx;
+
+    /**
+     * 来自地区（0：大陆1：香港2：澳门3：台湾4：外国5：无国籍）
+     */
+    @ApiModelProperty(value = "来自地区（0：大陆1：香港2：澳门3：台湾4：外国5：无国籍）")
+    private Integer lzdq;
+
+    /**
+     * 职称（0：正高级职称1：副高级职称2：中级职称3：初级职称4：技术员5：无职称6：其他）
+     */
+    @ApiModelProperty(value = "职称（0：正高级职称1：副高级职称2：中级职称3：初级职称4：技术员5：无职称6：其他）")
+    private Integer zc;
+
+    /**
+     * 持卡动态（0：服务证1：婚育证2：无证）
+     */
+    @ApiModelProperty(value = "持卡动态（0：服务证1：婚育证2：无证）")
+    private Integer ckdt;
 
     /**
      * 获取主键编号
@@ -620,7 +644,7 @@ public class Lessee extends Base {
      *
      * @return occupation - 职业
      */
-    public String getOccupation() {
+    public Integer getOccupation() {
         return occupation;
     }
 
@@ -629,7 +653,7 @@ public class Lessee extends Base {
      *
      * @param occupation 职业
      */
-    public void setOccupation(String occupation) {
+    public void setOccupation(Integer occupation) {
         this.occupation = occupation;
     }
 
@@ -1157,5 +1181,37 @@ public class Lessee extends Base {
 
     public void setIspapers(Integer ispapers) {
         this.ispapers = ispapers;
+    }
+
+    public Integer getJzcslx() {
+        return jzcslx;
+    }
+
+    public void setJzcslx(Integer jzcslx) {
+        this.jzcslx = jzcslx;
+    }
+
+    public Integer getLzdq() {
+        return lzdq;
+    }
+
+    public void setLzdq(Integer lzdq) {
+        this.lzdq = lzdq;
+    }
+
+    public Integer getZc() {
+        return zc;
+    }
+
+    public void setZc(Integer zc) {
+        this.zc = zc;
+    }
+
+    public Integer getCkdt() {
+        return ckdt;
+    }
+
+    public void setCkdt(Integer ckdt) {
+        this.ckdt = ckdt;
     }
 }

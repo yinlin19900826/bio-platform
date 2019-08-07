@@ -9,7 +9,7 @@
             <if test="vo.domiciletype != null">domiciletype = #{vo.domiciletype,jdbcType=INTEGER},</if>
             <if test="vo.maritalstatus != null">maritalstatus = #{vo.maritalstatus,jdbcType=INTEGER},</if>
             <if test="vo.culture != null">culture = #{vo.culture,jdbcType=INTEGER},</if>
-            <if test="vo.occupation != null">occupation = #{vo.occupation,jdbcType=VARCHAR},</if>
+            <if test="vo.occupation != null">occupation = #{vo.occupation,jdbcType=INTEGER},</if>
             <if test="vo.emergencyname != null">emergencyname = #{vo.emergencyname,jdbcType=VARCHAR},</if>
             <if test="vo.emergencytel != null">emergencytel = #{vo.emergencytel,jdbcType=VARCHAR},</if>
             <if test="vo.workunit != null">workunit = #{vo.workunit,jdbcType=VARCHAR},</if>
