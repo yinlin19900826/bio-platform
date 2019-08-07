@@ -34,7 +34,7 @@ public class CardController {
         this.biz = biz;
     }
 
-    @ApiOperation("获取所有管理员卡(res=0失败，1成功)")
+    @ApiOperation("获取所有管理员卡")
     @ApiImplicitParam(name = "code", value = "用户编码", paramType = "path")
     @ResponseBody
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -48,7 +48,7 @@ public class CardController {
         }
     }
 
-    @ApiOperation("只用于管理员下发卡(0失败，1成功)")
+    @ApiOperation("只用于管理员下发卡")
 
     @ApiImplicitParams({@ApiImplicitParam(name = "userCode", value = "用户编码", paramType = "path"),
             @ApiImplicitParam(name = "cardNo", value = "卡号", paramType = "path"),
