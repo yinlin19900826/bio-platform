@@ -58,7 +58,7 @@ public class CompleteVo {
     private Integer residentmanner;
 
     @ApiModelProperty(value = "首次来深日期")
-    private Date firsttime;
+    private String firsttime;
 
     @ApiModelProperty(value = "是否告知办理居住证(0是1否)")
     private Integer sfgzbljzz;
@@ -187,11 +187,11 @@ public class CompleteVo {
         this.residentmanner = residentmanner;
     }
 
-    public Date getFirsttime() {
+    @JSONField(format = "yyyy-MM-dd")
+    public String getFirsttime() {
         return firsttime;
     }
-    @JSONField(format = "yyyy-MM-dd")
-    public void setFirsttime(Date firsttime) {
+    public void setFirsttime(String firsttime) {
         this.firsttime = firsttime;
     }
 

@@ -127,10 +127,16 @@ public class Lessee extends Base {
     private String papersphoto;
 
     /**
-     * 职业（0：工业1：商业2：服务业3：交通运输业4：农业养殖业5：建筑业6：其他7：无业8：非劳动年龄）
+     * 职业 (0：国家公务员1：专业技术人员2：职员3：企业管理人员4：工人5：农名6：学生7：现役军人8：自由职业者9：个体经营者10：无业人员11：离(退休)人员12：其他）
      */
-    @ApiModelProperty(value = "职业（0：工业1：商业2：服务业3：交通运输业4：农业养殖业5：建筑业6：其他7：无业8：非劳动年龄）")
+    @ApiModelProperty(value = "职业 (0：国家公务员1：专业技术人员2：职员3：企业管理人员4：工人5：农名6：学生7：现役军人8：自由职业者9：个体经营者10：无业人员11：离(退休)人员12：其他）")
     private Integer occupation;
+
+    /**
+     * 行业（0：工业1：商业2：服务业3：交通运输业4：农业养殖业5：建筑业6：其他7：无业8：非劳动年龄）
+     */
+    @ApiModelProperty(value = "行业（0：工业1：商业2：服务业3：交通运输业4：农业养殖业5：建筑业6：其他7：无业8：非劳动年龄）")
+    private Integer industry;
 
     /**
      * 手机号码
@@ -1213,5 +1219,13 @@ public class Lessee extends Base {
 
     public void setCkdt(Integer ckdt) {
         this.ckdt = ckdt;
+    }
+
+    public Integer getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(Integer industry) {
+        this.industry = industry;
     }
 }
