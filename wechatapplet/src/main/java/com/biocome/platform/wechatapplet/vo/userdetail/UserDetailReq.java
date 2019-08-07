@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.vo.userdetail;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -32,17 +33,27 @@ public class UserDetailReq {
     @ApiModelProperty(value = "无证原因")
     private String nopaperreason;
     @ApiModelProperty(value = "入住日期")
-    private String checkintime;
+    private Date checkintime;
     @ApiModelProperty(value = "门禁物理卡号")
     private String cardno;
-    @ApiModelProperty(value="楼栋编号")
+    @ApiModelProperty(value = "楼栋编号")
     private String buildcode;
-    @ApiModelProperty(value="社区编号")
+    @ApiModelProperty(value = "社区编号")
     private String estatecode;
-    @ApiModelProperty(value="房间编号")
+    @ApiModelProperty(value = "房间编号")
     private String housecode;
-    @ApiModelProperty(value="登记人")
-    private String registrant ;
+    @ApiModelProperty(value = "登记人")
+    private String registrant;
+    @ApiModelProperty(value = "有无证件0有1无")
+    private Integer ispapers;
+
+    public Integer getIspapers() {
+        return ispapers;
+    }
+
+    public void setIspapers(Integer ispapers) {
+        this.ispapers = ispapers;
+    }
 
     public String getPapersphoto() {
         return papersphoto;
@@ -83,7 +94,7 @@ public class UserDetailReq {
     public void setNation(String nation) {
         this.nation = nation;
     }
-
+    @JSONField(format = "yyyy-MM-dd")
     public Date getBirthday() {
         return birthday;
     }
@@ -123,12 +134,12 @@ public class UserDetailReq {
     public void setNopaperreason(String nopaperreason) {
         this.nopaperreason = nopaperreason;
     }
-
-    public String getCheckintime() {
+    @JSONField(format = "yyyy-MM-dd")
+    public Date getCheckintime() {
         return checkintime;
     }
 
-    public void setCheckintime(String checkintime) {
+    public void setCheckintime(Date checkintime) {
         this.checkintime = checkintime;
     }
 

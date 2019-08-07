@@ -42,6 +42,11 @@ public class UserDetailBiz {
     }
 
     public ObjectRestResponse insertUserDetail(UserDetailReq req) throws Exception {
+        boolean result = validateReq(req);
+        if (!result){
+            //如果没有通过校验
+            return new ObjectRestResponse().customError("缺少参数");
+        }
         //①添加租户信息
         Lessee lessee = insertLessee(req);
         //②添加租户与卡关联
@@ -51,6 +56,35 @@ public class UserDetailBiz {
         //③增加租户登录app
         insertAppUser(req, lessee);
         return new ObjectRestResponse();
+    }
+
+    private boolean validateReq(UserDetailReq req) {
+        boolean result = true;
+        if (ValidateUtils.isEmpty(req.getUsername())
+                ||ValidateUtils.isEmpty(req.getSex())
+                ||ValidateUtils.isEmpty(req.getNation())
+                ||ValidateUtils.isEmpty(req.getBirthday())
+                ||ValidateUtils.isEmpty(req.getDomicileaddress())
+                ||ValidateUtils.isEmpty(req.getIspapers())
+                ){
+            result = false;
+            return result;
+        }
+        if ("0".equals(req.getIspapers())){
+            if (ValidateUtils.isEmpty(req.getPaperstype())
+                    ||ValidateUtils.isEmpty(req.getPapersphoto())
+                    ||ValidateUtils.isEmpty(req.getPhoto())
+                    ||ValidateUtils.isEmpty(req.getPapersnum())
+                    ||ValidateUtils.isEmpty(req.getCheckintime())
+                    ){
+                result = false;
+            }
+        }else if("1".equals(req.getIspapers())){
+            if (ValidateUtils.isEmpty(req.getNopaperreason())){
+                result = false;
+            }
+        }
+        return result;
     }
 
     private void insertAppUser(UserDetailReq req, Lessee lessee) {
@@ -95,6 +129,7 @@ public class UserDetailBiz {
         lessee.setRegistertime(date);
         lessee.setCreatetime(date);
         lessee.setRegisterpeople(req.getRegistrant());
+        lessee.setIspapers(req.getIspapers());
         lesseeBiz.insertLessee(lessee);
         return lessee;
     }
