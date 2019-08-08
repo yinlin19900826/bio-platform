@@ -26,25 +26,28 @@
     <select id="getHouseCode" resultType="java.lang.String">
         SELECT
           housecode
-        FROM base_lessee
+        FROM base_card
         WHERE username=#{username}
+        and physical_cardno=#{physicalcardno}
     </select>
 
     <select id="getAllUserName" resultType="java.lang.String">
         SELECT
-          username
+          usercode
         FROM base_lessee
         WHERE housecode=#{housecode}
     </select>
 
     <delete id="deleteAllByUserName" parameterType="java.util.List">
-       delete a,b,c from base_lessee as a join
-        base_card as b on a.username = b.username join
-        app_user as c on a.username = c.username where a.username=#{username}
+         delete a,b,c from base_lessee as a join base_card as b
+          on  a.usercode = b.usercode
+          join app_user as c on a.usercode = c.usercode
+          where a.usercode=#{usercode}
     </delete>
     <delete id="deleteByUserName" parameterType="java.util.List">
-       delete a,b,c from base_lessee as a join
-        base_card as b on a.username = b.username join
-        app_user as c on a.username = c.username where a.username=#{username}
+         delete a,b,c from base_lessee as a join base_card as b
+          on a.username = b.username and a.usercode = b.usercode
+          join app_user as c on a.username = c.username
+          where a.username=#{username} and b.physical_cardno=#{physicalcardno}
     </delete>
 </mapper>
