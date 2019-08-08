@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
  * @author hxy
  * @date 2019/7/30 16:12
  */
-@Component
 public class OpenDoorPasswordFallbackFactory implements FallbackFactory<OpenDoorPasswordRpc> {
     @Override
     public OpenDoorPasswordRpc create(Throwable throwable) {

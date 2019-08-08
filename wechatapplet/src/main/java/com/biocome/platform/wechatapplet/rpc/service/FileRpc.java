@@ -4,6 +4,9 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.wechatapplet.rpc.fallbackfactory.FileFallbackFactory;
 import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;
+import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +24,7 @@ public interface FileRpc {
     @PostMapping(value = "/object/userImg/{estateCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ObjectRestResponse userImg(@RequestPart("object") MultipartFile object,@PathVariable("estateCode") String estateCode);
 
-    @Configuration
+
     class MultipartSupportConfig {
         @Bean
         public Encoder feignFormEncoder() {
