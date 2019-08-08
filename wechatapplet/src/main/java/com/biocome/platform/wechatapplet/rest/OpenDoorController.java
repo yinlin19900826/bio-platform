@@ -33,7 +33,7 @@ public class OpenDoorController {
         this.biz = biz;
     }
 
-    @ApiOperation("远程开门（0失败，1成功）")
+    @ApiOperation("远程开门")
     @ResponseBody
     @RequestMapping(value = "/openDoor/{sn}", method = RequestMethod.POST)
     public BaseResponse openDoor(@PathVariable String sn) {

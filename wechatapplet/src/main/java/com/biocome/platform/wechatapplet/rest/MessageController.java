@@ -31,7 +31,7 @@ public class MessageController {
         this.biz = biz;
     }
 
-    @ApiOperation("请求消息通知列表（0失败，1成功）")
+    @ApiOperation("请求消息通知列表")
     @ResponseBody
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     public TableResultResponse selectMessage(@RequestParam(defaultValue = "2") int pageSize,

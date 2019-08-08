@@ -14,7 +14,7 @@ import java.util.List;
  * @Description:
  */
 public interface CardManageMapper extends Mapper<CardManageVo> {
-    List<Card> selectByUserName(@Param("username") String username);
+    List<CardManageVo> selectByUserCode(@Param("usercode") String usercode);
 
 
     Card selectCardByCardNo(@Param("cardNo") String cardNo);

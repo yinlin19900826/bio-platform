@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
@@ -34,25 +35,26 @@ public class CardManageController extends BaseController<CardManageBiz, CardMana
     private CardManageBiz cardManageBiz;
 
     @ApiOperation("获取不同权限用户下的所有门禁卡")
-    @ApiImplicitParams(@ApiImplicitParam(name = "username", value = "用户名", paramType = "query"))
+   // @ApiImplicitParams(@ApiImplicitParam(name = "username", value = "用户名", paramType = "query"))
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public TableResultResponse<CardManageVo> list(@RequestParam(defaultValue = "20") int pageSize,
-                                           @RequestParam(defaultValue = "1") int pageNum,
-                                           String username) {
-        return cardManageBiz.selectByAttribute(pageSize, pageNum,username);
+                                           @RequestParam(defaultValue = "1") int pageNum) {
+        String usercode = BaseContextHandler.getUsercode();
+        return cardManageBiz.selectByAttribute(pageSize, pageNum,usercode);
     }
 
     @ApiOperation("不同权限用户挂失其丢失的门禁卡(0失败，1成功)")
 
-    @ApiImplicitParams({@ApiImplicitParam(name = "userCode", value = "用户编码", paramType = "path"),
-            @ApiImplicitParam(name = "cardNo", value = "卡号", paramType = "path"),
-            @ApiImplicitParam(name = "buildCode", value = "楼栋编号", paramType = "path")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "physicalcardno", value = "物理卡号", paramType = "path"),
+            @ApiImplicitParam(name = "logiccardno", value = "逻辑卡号", paramType = "path"),
+            @ApiImplicitParam(name = "buildname", value = "楼栋名", paramType = "path")})
     @ResponseBody
-    @RequestMapping(value = "/loss/{cardNo}/{buildCode}", method = RequestMethod.POST)
-    public BaseResponse cardOperation(@PathVariable String cardNo, @PathVariable String buildCode) {
+    @RequestMapping(value = "/loss", method = RequestMethod.GET)
+    //@RequestMapping(value = "/loss", method = RequestMethod.POST)
+    public BaseResponse cardOperation(String physicalcardno, String logiccardno, String buildname) {
         try {
-            return cardManageBiz.cardLossOperation(cardNo, buildCode);
+            return cardManageBiz.cardLossOperation(physicalcardno, logiccardno,buildname);
             //return null;
         } catch (Exception e) {
             log.info("挂失卡操作失败，错误信息为：{}", e.getMessage());

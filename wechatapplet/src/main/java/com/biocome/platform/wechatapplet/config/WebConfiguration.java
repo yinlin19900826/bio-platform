@@ -7,6 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,8 +33,8 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getUserAuthRestInterceptor())
-                .addPathPatterns(getIncludePathPatterns())
-                .excludePathPatterns(excludePatPatterns());
+                .excludePathPatterns(excludePatPatterns())
+                .addPathPatterns(getIncludePathPatterns());
     }
 
     @Bean
@@ -44,7 +50,16 @@ public class WebConfiguration implements WebMvcConfigurer {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
                 "/app/user/**",
-                "/**"
+                "/audit/**",
+                "/buildDetail/**",
+                "/card/**",
+                "/cardmanage/**",
+                "/deviceDetail/**",
+                "/faultdeclare/**",
+                "/openDoor/**",
+                "/refund/**",
+                "/userDetail/**",
+                "/visit/**",
         };
         Collections.addAll(list, urls);
         return list;
@@ -58,7 +73,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
                 "/app/user/validate",
-                "/swagger-ui.html#/**"
+                "**/swagger**"
         };
         Collections.addAll(list, urls);
         return list;

@@ -31,7 +31,7 @@ public class CompleteVo {
     private Integer culture;
 
     @ApiModelProperty(value = "职业")
-    private String occupation;
+    private Integer occupation;
 
     @ApiModelProperty(value = "紧急联系人姓名")
     private String emergencyname;
@@ -58,7 +58,7 @@ public class CompleteVo {
     private Integer residentmanner;
 
     @ApiModelProperty(value = "首次来深日期")
-    private Date firsttime;
+    private String firsttime;
 
     @ApiModelProperty(value = "是否告知办理居住证(0是1否)")
     private Integer sfgzbljzz;
@@ -115,11 +115,11 @@ public class CompleteVo {
         this.culture = culture;
     }
 
-    public String getOccupation() {
+    public Integer getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(String occupation) {
+    public void setOccupation(Integer occupation) {
         this.occupation = occupation;
     }
 
@@ -188,11 +188,10 @@ public class CompleteVo {
     }
 
     @JSONField(format = "yyyy-MM-dd")
-    public Date getFirsttime() {
+    public String getFirsttime() {
         return firsttime;
     }
-
-    public void setFirsttime(Date firsttime) {
+    public void setFirsttime(String firsttime) {
         this.firsttime = firsttime;
     }
 

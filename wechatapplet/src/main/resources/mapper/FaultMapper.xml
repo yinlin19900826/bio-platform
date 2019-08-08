@@ -6,8 +6,10 @@
 
     <resultMap id="BaseResultMap" type="com.biocome.platform.wechatapplet.entity.Fault">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="building" jdbcType="VARCHAR" property="building"/>
-        <result column="access_device" jdbcType="VARCHAR" property="accessdevice"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="devicename" jdbcType="VARCHAR" property="devicename"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="declaration_type" jdbcType="VARCHAR" property="declarationtype"/>
         <result column="detail_description" jdbcType="VARCHAR" property="detaildescription"/>
     </resultMap>

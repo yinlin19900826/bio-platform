@@ -108,7 +108,7 @@ public class AuditOperateVo {
      * 职业
      */
     @ApiModelProperty(value="职业")
-    private String occupation;
+    private Integer occupation;
 
 
     /**
@@ -243,11 +243,11 @@ public class AuditOperateVo {
         this.culture = culture;
     }
 
-    public String getOccupation() {
+    public Integer getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(String occupation) {
+    public void setOccupation(Integer occupation) {
         this.occupation = occupation;
     }
 
