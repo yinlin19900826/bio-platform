@@ -48,6 +48,9 @@ public class VisitorController {
         if (ValidateUtils.isEmpty(req.getUsercode())) {
             req.setUsercode(BaseContextHandler.getUsercode());
         }
+        if (ValidateUtils.isEmpty(req.getRemark())){
+            req.setRemark("no remark");
+        }
         try {
             //远程调用，向小平台发送开门密码
             OpendoorpasswordResp opendoorpassword = biz.opendoorpassword(req);
