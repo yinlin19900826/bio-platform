@@ -6,4 +6,6 @@ package com.biocome.platform.wechatapplet.constant;
  */
 public class WechatConstant {
     public static Integer SMS_KEY_EXPIRE = 60 * 60;
+    public static String LESSEE_USERTYPE = "0";
+    public static String ADMIN_USERTYPE = "1";
 }

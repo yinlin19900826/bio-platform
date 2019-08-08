@@ -33,4 +33,6 @@ public interface BuildDetailMapper {
      * @Date 2019/8/7 17:30
      */
     List<LesseeVo> selectLesseeResp(@Param("houseCode") String houseCode);
+
+    List<BuildDetailResp> getAdminBuildByUsercode(@Param("usercode") String usercode);
 }

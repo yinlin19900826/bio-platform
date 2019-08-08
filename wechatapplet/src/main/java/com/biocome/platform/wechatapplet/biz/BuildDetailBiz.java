@@ -63,4 +63,8 @@ public class BuildDetailBiz {
         }
         return new LesseeResp(principals, lessees);
     }
+
+    public List<BuildDetailResp> getAdminBuildByUsercode(String usercode) {
+        return mapper.getAdminBuildByUsercode(usercode);
+    }
 }

@@ -28,6 +28,15 @@
         FROM base_lessee bl
         WHERE usercode = #{usercode}
     </select>
+    <select id="getAdminBuildByUsercode" resultMap="buildDetail">
+        SELECT
+            build_name buildname,
+            build_code buildcode
+        FROM
+            admin_building_bind
+        WHERE
+            usercode = #{usercode}
+    </select>
 
     <select id="selectHouseResp" resultMap="HouseRespMap">
         SELECT h.housecode,
