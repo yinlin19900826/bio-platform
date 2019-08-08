@@ -35,13 +35,13 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
     /**
      * 单个租户退租
      *
-     * @param cardNo    卡号
+     *
      *@param username   租户名
      * @return java.lang.String
      * @Author yinlin
      * @Date 2019/8/1 11:19
      */
-    public ObjectRestResponse refundRent(String cardNo, String username) throws Exception {
+    public ObjectRestResponse refundRent(String physicalcardno, String username) throws Exception {
         try {
             refundRentMapper.deleteByUserName(username);
             return new ObjectRestResponse().success();
