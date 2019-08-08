@@ -32,7 +32,7 @@ public class BuildDetailController {
 
     @ApiOperation("根据用户编号获取相关楼栋")
     @GetMapping("/getbuild")
-    public ObjectRestResponse<List<BuildDetailResp>> getBuild(@RequestParam String usercode, @RequestParam String usertype) {
+    public ObjectRestResponse<List<BuildDetailResp>> getBuild(@RequestParam(required = false) String usercode, @RequestParam String usertype) {
         if (ValidateUtils.isEmpty(usercode)) {
             usercode = BaseContextHandler.getUsercode();
         }
