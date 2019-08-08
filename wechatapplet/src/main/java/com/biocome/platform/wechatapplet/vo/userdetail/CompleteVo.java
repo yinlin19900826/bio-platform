@@ -21,6 +21,9 @@ public class CompleteVo {
     @ApiModelProperty(value = "手机号码")
     private String tel;
 
+    @ApiModelProperty(value = "验证码")
+    private String vertifyCode;
+
     @ApiModelProperty(value = "户口所在地类型（0：本地城镇1：本地农村2：省内城镇3：省内农村4：省外城镇5：省外农村）")
     private Integer domiciletype;
 
@@ -89,6 +92,14 @@ public class CompleteVo {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public String getVertifyCode() {
+        return vertifyCode;
+    }
+
+    public void setVertifyCode(String vertifyCode) {
+        this.vertifyCode = vertifyCode;
     }
 
     public Integer getDomiciletype() {
