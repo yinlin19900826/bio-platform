@@ -1,6 +1,7 @@
 package com.biocome.platform.wechatapplet.vo.userdetail;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,6 +24,7 @@ public class UserDetailReq {
     @ApiModelProperty(value = "民族")
     private String nation;
     @ApiModelProperty(value = "生日")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     @ApiModelProperty(value = "户籍地址")
     private String domicileaddress;
@@ -33,6 +35,7 @@ public class UserDetailReq {
     @ApiModelProperty(value = "无证原因")
     private String nopaperreason;
     @ApiModelProperty(value = "入住日期")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date checkintime;
     @ApiModelProperty(value = "门禁物理卡号")
     private String cardno;
