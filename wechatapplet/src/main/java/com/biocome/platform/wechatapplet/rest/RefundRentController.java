@@ -35,12 +35,12 @@ public class RefundRentController extends BaseController<CardManageBiz, CardMana
 
     @ApiOperation("单个租户退租(0失败，1成功)")
     @ApiImplicitParams({@ApiImplicitParam(name = "physicalcardno", value = "物理卡号", paramType = "path"),
-            @ApiImplicitParam(name = "username", value = "租户姓名", paramType = "path")})
+            @ApiImplicitParam(name = "usercode", value = "租户身份编码", paramType = "path")})
     @ResponseBody
     @RequestMapping(value = "/rent", method = RequestMethod.GET)
-    public BaseResponse refundRent( String physicalcardno, String username) {
+    public BaseResponse refundRent( String physicalcardno, String usercode) {
         try {
-            return refundRentBiz.refundRent(physicalcardno, username);
+            return refundRentBiz.refundRent(physicalcardno, usercode);
         } catch (Exception e) {
             log.info("单个租户退租失败，错误信息为：{}", e.getMessage());
             return new ObjectRestResponse().customError("单个租户退租失败!");
@@ -49,12 +49,12 @@ public class RefundRentController extends BaseController<CardManageBiz, CardMana
 
     @ApiOperation("全部退租(0失败，1成功)")
     @ApiImplicitParams({@ApiImplicitParam(name = "physicalcardno", value = "物理卡号", paramType = "path"),
-            @ApiImplicitParam(name = "username", value = "租户姓名", paramType = "path")})
+            @ApiImplicitParam(name = "usercode", value = "租户身份编码", paramType = "path")})
     @ResponseBody
     @RequestMapping(value = "/rentall", method = RequestMethod.GET)
-    public BaseResponse refundAllRent(String physicalcardno, String username) {
+    public BaseResponse refundAllRent(String physicalcardno, String usercode) {
         try {
-            return refundRentBiz.refundAllRent(physicalcardno, username);
+            return refundRentBiz.refundAllRent(physicalcardno, usercode);
         } catch (Exception e) {
             log.info("全部退租失败，错误信息为：{}", e.getMessage());
             //return AdminCommonConstant.BOOLEAN_NUMBER_FALSE;

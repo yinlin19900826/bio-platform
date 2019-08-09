@@ -49,7 +49,7 @@ public class AppUserController extends BaseController<AppUserBiz, AppUser> {
 
     @ApiOperation("任何人可查看用户信息详情（暂无权限控制）")
     @ApiImplicitParam(name = "usercode", value = "usercode")
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @RequestMapping(value = "/detailByUsercode", method = RequestMethod.GET)
     public @ResponseBody
     ObjectRestResponse<AppUserVo> detailByUsercode(String usercode){
         return appUserBiz.detail(usercode);

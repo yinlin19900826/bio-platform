@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface RefundRentMapper extends Mapper<Card> {
 
-    void deleteByUserName(@Param("physicalcardno") String physicalcardno,@Param("username") String username);
+    void deleteByUserName(@Param("physicalcardno") String physicalcardno,@Param("usercode") String usercode);
 
-    List<String> getHouseCode(@Param("physicalcardno") String physicalcardno,@Param("username") String username);
+    List<String> getHouseCode(@Param("physicalcardno") String physicalcardno,@Param("usercode") String usercode);
 
-    List<String> getAllUserName(@Param("housecode") String housecode);
+    List<String> getAllUserCode(@Param("housecode") String housecode);
 
     void deleteAllByUserName(@Param("usercode") String usercode);
 
