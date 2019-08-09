@@ -107,7 +107,7 @@ public class CardVoBiz {
                     for (Card card1 : list) {
                         //获取对应厂家token
                         logoutCardVo.setToken(token);
-                        logoutCardVo.setCardno(card1.getPhysicalCardno());
+                        logoutCardVo.setCardno(card1.getLogicCardno());
                         logoutCardVo.setCardtype(card1.getCardtype());
                         logoutCardVo.setUsercode(userCode);
                         List<CardSnVo> sns = new ArrayList<>();
