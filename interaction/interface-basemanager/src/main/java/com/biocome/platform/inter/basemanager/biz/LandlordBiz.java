@@ -1,21 +1,21 @@
 package com.biocome.platform.inter.basemanager.biz;
 
 import com.ace.cache.annotation.Cache;
-import com.biocome.platform.inter.basemanager.entity.Landlord;
-import com.biocome.platform.inter.basemanager.mapper.LandlordMapper;
-/*import com.bicome.platform.inter.basemanager.vo.admin.SimpleAdminVo;*/
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
-import com.biocome.platform.inter.basemanager.rpc.service.FileRpc;
-import com.biocome.platform.inter.basemanager.vo.admin.SimpleAdminVo;
+import com.biocome.platform.inter.basemanager.entity.Landlord;
+import com.biocome.platform.inter.basemanager.entity.Lessee;
+import com.biocome.platform.inter.basemanager.mapper.LandlordMapper;
+import com.biocome.platform.inter.basemanager.mapper.LesseeMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +34,8 @@ public class LandlordBiz extends BaseBiz<LandlordMapper, Landlord> {
 
     private Logger log = LoggerFactory.getLogger(LandlordBiz.class);
 
+    @Autowired
+    private LesseeMapper lesseeMapper;
     @Autowired
     private LandlordMapper landlordMapper;
     /**
@@ -94,11 +96,20 @@ public class LandlordBiz extends BaseBiz<LandlordMapper, Landlord> {
      * @Date 2019/5/22 19:47
      */
     public ObjectRestResponse insertLandlord(Landlord landlord) throws Exception {
+        landlord.setUsercode(landlord.getPapersnum());
         Landlord landlord1 = new Landlord();
         landlord1.setUsercode(landlord.getUsercode());
         List<Landlord> landlords = landlordMapper.select(landlord1);
         if (ValidateUtils.isEmpty(landlords)) {
             landlordMapper.insertSelective(landlord);
+            Lessee lessee = new Lessee();
+            lessee.setUsercode(landlord.getUsercode());
+            Lessee lessee1 = lesseeMapper.selectOne(lessee);
+            if (ValidateUtils.isNotEmpty(lessee1)) {
+                lesseeMapper.deleteByPrimaryKey(lessee1.getId());
+            }
+            BeanUtils.copyProperties(lessee, landlord);
+            lesseeMapper.insertSelective(lessee);
             return new ObjectRestResponse().success();
         } else {
             throw new Exception("保存失败！人员编号已存在！");
