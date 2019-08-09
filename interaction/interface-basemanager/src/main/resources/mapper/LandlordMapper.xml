@@ -12,6 +12,7 @@
         <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
         <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
         <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
         <result column="photo" jdbcType="VARCHAR" property="photo"/>
         <result column="papersphoto" jdbcType="VARCHAR" property="papersphoto"/>
         <result column="resideaddress" jdbcType="VARCHAR" property="resideaddress"/>
@@ -36,7 +37,7 @@
         SELECT
         l.id,l.username,l.usercode,l.usersex,l.paperstype,l.papersnum,l.tel,l.photo,l.papersphoto,l.resideaddress,
         l.roomcode,l.landlordtype,l.adminjurisdiction,l.remark,l.status,l.del,l.createtime,l.createcode,
-        l.createname,l.updatetime,l.updatecode,l.updatename,l.isapp,l.registertime,l.registerpeople
+        l.createname,l.updatetime,l.updatecode,l.updatename,l.isapp,l.registertime,l.registerpeople,l.domicileaddress
         FROM
         base_landlord l
         <where>

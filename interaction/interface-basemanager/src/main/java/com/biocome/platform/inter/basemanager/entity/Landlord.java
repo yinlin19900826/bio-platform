@@ -61,6 +61,12 @@ public class Landlord extends Base {
     private String tel;
 
     /**
+     * 户籍地址
+     */
+    @ApiModelProperty(value = "户籍地址")
+    private String domicileaddress;
+
+    /**
      * 人像照
      */
     @ApiModelProperty(value = "人像照")
@@ -381,5 +387,13 @@ public class Landlord extends Base {
      */
     public void setRegisterpeople(String registerpeople) {
         this.registerpeople = registerpeople;
+    }
+
+    public String getDomicileaddress() {
+        return domicileaddress;
+    }
+
+    public void setDomicileaddress(String domicileaddress) {
+        this.domicileaddress = domicileaddress;
     }
 }
