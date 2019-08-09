@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.biz;
 
+import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.wechatapplet.mapper.BuildDetailMapper;
 import com.biocome.platform.wechatapplet.vo.build.BuildDetailResp;
 import com.biocome.platform.wechatapplet.vo.build.HouseResp;
@@ -51,17 +52,21 @@ public class BuildDetailBiz {
      */
     public LesseeResp selectLesseeResp(String houseCode) throws Exception {
         List<LesseeVo> list = mapper.selectLesseeResp(houseCode);
-        List<LesseeVo> principals = new ArrayList<>();
-        List<LesseeVo> lessees = new ArrayList<>();
-        for (LesseeVo vo : list) {
-            //如果为5则是负责人
-            if (vo.getFlag() == 5) {
-                principals.add(vo);
-            } else {
-                lessees.add(vo);
+        LesseeResp lesseeResp = null;
+        if(ValidateUtils.isNotEmpty(list)){
+            List<LesseeVo> principals = new ArrayList<>();
+            List<LesseeVo> lessees = new ArrayList<>();
+            for (LesseeVo vo : list) {
+                //如果为5则是负责人
+                if (vo.getFlag() != null && vo.getFlag() == 5) {
+                    principals.add(vo);
+                } else {
+                    lessees.add(vo);
+                }
             }
+            lesseeResp =  new LesseeResp(principals, lessees);
         }
-        return new LesseeResp(principals, lessees);
+        return lesseeResp;
     }
 
     public List<BuildDetailResp> getAdminBuildByUsercode(String usercode) {
