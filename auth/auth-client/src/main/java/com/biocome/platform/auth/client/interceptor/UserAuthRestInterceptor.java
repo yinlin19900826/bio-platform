@@ -66,7 +66,6 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
         String effectiveCode = infoFromToken.getEffectiveCode();
         if(!ValidateUtils.isEmpty(effectiveCode)){
             String code = jedisCluster.get(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+infoFromToken.getUniqueName());
-            Assert.isTrue(code.equals(effectiveCode),"有效码验证通过！");
             if(!code.equals(effectiveCode)){
                 log.info("effective code from token : "+effectiveCode+" , "+"effective code from cache : "+code);
                 throw new UserTokenException("由于在其他客户端登录，您已经被迫下线!");
