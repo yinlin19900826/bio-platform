@@ -1,4 +1,4 @@
-package com.biocome.platform.guard.vo.upload;
+package com.biocome.platform.inter.basemanager.vo.upload;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

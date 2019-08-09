@@ -10,6 +10,8 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.inter.basemanager.rpc.service.FileRpc;
+import com.biocome.platform.inter.basemanager.vo.admin.SimpleAdminVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -34,9 +36,6 @@ public class LandlordBiz extends BaseBiz<LandlordMapper, Landlord> {
 
     @Autowired
     private LandlordMapper landlordMapper;
-    /*@Autowired
-    FastDFSClientUtil fastDFSClientUtil;*/
-
     /**
      * 根据姓名，手机号，证件号码，房东类型查询，查询全部时传参为null
      *
@@ -106,38 +105,4 @@ public class LandlordBiz extends BaseBiz<LandlordMapper, Landlord> {
         }
     }
 
-    /**
-     * 查找管理员信息
-     * @param username
-     * @param type
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    /*public TableResultResponse<SimpleAdminVo> simpleAdminList(String username, Integer type, int pageNum, int pageSize) {
-        try {
-            Page<SimpleAdminVo> result = PageHelper.startPage(pageNum, pageSize);
-            landlordMapper.selectSimpleAdminList(username, type);
-            return new TableResultResponse<SimpleAdminVo>(result.getTotal(), result.getResult());
-        }catch (Exception e){
-            log.info(e.getMessage());
-            e.printStackTrace();
-            return new TableResultResponse<SimpleAdminVo>(CommonConstants.EX_OTHER_CODE, "查找管理员列表失败，错误信息：数据库错误!");
-        }
-    }*/
-
-    /*public BaseRpcResponse changePic(ChangeLesseePicReq req) {
-        int result = mapper.changePic(req);
-        if (result == 0) {
-            return new BaseRpcResponse().failure();
-        } else {
-            try {
-                fastDFSClientUtil.deleteFile(req.getPhoto());
-                fastDFSClientUtil.deleteFile(req.getPapersphoto());
-            }catch (Exception e){
-                log.info("找不到文件路径，删除失败");
-            }
-            return new BaseRpcResponse().success();
-        }
-    }*/
 }

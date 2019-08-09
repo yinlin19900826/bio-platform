@@ -4,7 +4,7 @@ import com.biocome.platform.common.msg.MapMsgAndTableResultResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.guard.biz.DoorDeviceCardBiz;
-import com.biocome.platform.guard.vo.upload.ChangeLesseePicReq;
+import com.biocome.platform.inter.basemanager.vo.upload.ChangeLesseePicReq;
 import com.biocome.platform.inter.basemanager.LesseeCardMsgResp;
 import com.biocome.platform.inter.basemanager.vo.card.*;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseeCardVo;

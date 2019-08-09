@@ -3,6 +3,7 @@ package com.biocome.platform.wechatapplet.mapper;
 import com.biocome.platform.wechatapplet.vo.userdetail.CompleteVo;
 import org.apache.ibatis.annotations.Param;
 
+
 /**
  * @ClassName: UserDetailMapper
  * @Author: shenlele
@@ -20,4 +21,5 @@ public interface UserDetailMapper {
      * @Date 2019/8/2 10:28
      */
     void updateSelectiveById(@Param("vo") CompleteVo vo);
+
 }

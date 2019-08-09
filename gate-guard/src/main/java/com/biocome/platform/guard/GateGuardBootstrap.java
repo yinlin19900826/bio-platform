@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @SpringBootApplication(scanBasePackages = "com.biocome.platform.inter.*")
-@EnableFeignClients({"com.biocome.platform.auth.client.feign","com.biocome.platform.guard.rpc.service"})
+@EnableFeignClients({"com.biocome.platform.auth.client.feign","com.biocome.platform.guard.rpc.service","com.biocome.platform.inter.basemanager.rpc.service"})
 @EnableScheduling
 @EnableAceAuthClient
 @EnableTransactionManagement

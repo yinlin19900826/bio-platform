@@ -1,8 +1,12 @@
 package com.biocome.platform.inter.gateguard.mapper;
 
 import com.biocome.platform.inter.gateguard.entity.AppUser;
+import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
+import com.biocome.platform.inter.gateguard.vo.user.SimpleUserInfoVo;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  * @author zengqiang
@@ -21,5 +25,9 @@ public interface AppUserMapper extends Mapper<AppUser> {
      */
     void updateIsComplete(@Param("usercode") String usercode);
 
-    AppUser detail(@Param("username") String username);
+    AppUserVo detail(@Param("usercode") String usercode);
+
+    void changePassword(@Param("username") String username,@Param("password")  String password);
+
+    List<SimpleUserInfoVo> simpleUserInfoVo(@Param("usercode") String usercode);
 }

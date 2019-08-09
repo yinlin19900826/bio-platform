@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.biocome.platform.wechatapplet.mapper.AppUserMapper">
+<mapper namespace="com.biocome.platform.inter.gateguard.mapper.AppUserMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.biocome.platform.inter.gateguard.entity.AppUser" id="appUserMap">
@@ -24,10 +24,28 @@
     </update>
 
     <select id="detail" resultType="com.biocome.platform.inter.gateguard.vo.user.AppUserVo">
-        select a.username, a.usercode, a.iscomplete
+        select a.username, a.usercode,  a.iscomplete, a.type, l.username as name, l.tel as phone, l.domiciletype as domiciletype, l.maritalstatus as marriage, l.culture as education,
+        l.occupation as career, l.workunit as workOrganization, l.reason as comeReason, l.relation as realtionship, l.high as height, l.politicsstatus as politicPosition,
+        l.residentmanner as dwellType, l.firsttime as arriveDate, l.sfgzbljzz as residePermitNotify, l.sfgzdzgx as placeChangeNotify, l.fertility as reproduction,
+        l.birthcontrol as contraception, l.jzcslx as residenceType, l.lzdq as fromPlaceType, l.zc as professionalTitle, l.industry as profession,l.ckdt as cardDynamic
         from app_user a
 		left join base_lessee l
         on a.usercode = l.usercode
-        where a.username = #{username}
+        where a.usercode = #{usercode}
+    </select>
+
+    <update id="changePassword">
+        update app_user
+        set password = #{password}
+        where username = #{username}
+    </update>
+
+    <select id="simpleUserInfoVo" resultType="com.biocome.platform.inter.gateguard.vo.user.SimpleUserInfoVo">
+        select l.usercode, l.username as name , l.headphoto as headPhoto, l.tel as phone, DATE_FORMAT(l.checkintime,'%Y-%m-%d') as checkinTime, c.physical_cardno as cardNo,
+        case l.relation when '4' then true else false END isCharger
+        from base_lessee l
+        left join base_card c
+        on l.usercode = c.usercode
+        where l.usercode = #{usercode}
     </select>
 </mapper>

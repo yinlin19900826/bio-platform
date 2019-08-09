@@ -1,5 +1,8 @@
 package com.biocome.platform.inter.gateguard.vo.user;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
@@ -8,55 +11,59 @@ import java.util.Date;
  * @Date: 2019/8/5
  * @Description:
  */
+@ApiModel("app用户信息")
 public class AppUserVo {
+    @ApiModelProperty("id")
     private Integer id;
-
+    @ApiModelProperty("用户名")
     private String username;
-
+    @ApiModelProperty("usercode")
     private String usercode;
-
+    @ApiModelProperty("是否完成资料")
     private Integer iscomplete;
-
+    @ApiModelProperty("电话")
     private String phone;
-
-    private String residenceAddress;
-
-    private String marriage;
-
-    private String education;
-
-    private String career;
-
-    private String residenceType;
-
+    @ApiModelProperty("姓名")
+    private String name;
+    @ApiModelProperty("户口所在地类型")
+    private Integer domiciletype;
+    @ApiModelProperty("婚姻状况")
+    private Integer marriage;
+    @ApiModelProperty("文化程度")
+    private Integer education;
+    @ApiModelProperty("职业")
+    private Integer career;
+    @ApiModelProperty("居住处所类型")
+    private Integer residenceType;
+    @ApiModelProperty("工作单位")
     private String workOrganization;
-
-    private String fromPlace;
-
-    private String comeReason;
-
-    private String realtionship;
-
+    @ApiModelProperty("来自地区")
+    private Integer fromPlaceType;
+    @ApiModelProperty("来深居住事由")
+    private Integer comeReason;
+    @ApiModelProperty("与户主关系")
+    private Integer realtionship;
+    @ApiModelProperty("身高")
     private Double height;
-
-    private String politicPosition;
-
+    @ApiModelProperty("政治面貌")
+    private Integer politicPosition;
+    @ApiModelProperty("行业")
     private String profession;
-
-    private String dwellType;
-
-    private String professionalTitle;
-
-    private Date arriveDate;
-
-    private String residePermitNotify;
-
-    private String placeChangeNotify;
-
-    private String reproduction;
-
+    @ApiModelProperty("居住方式")
+    private Integer dwellType;
+    @ApiModelProperty("职称")
+    private Integer professionalTitle;
+    @ApiModelProperty("首次来深日期")
+    private String arriveDate;
+    @ApiModelProperty("是否告知办理居住证")
+    private Integer residePermitNotify;
+    @ApiModelProperty("是否告知地址改写")
+    private Integer placeChangeNotify;
+    @ApiModelProperty("生育动态")
+    private Integer reproduction;
+    @ApiModelProperty("避孕动态")
     private String contraception;
-
+    @ApiModelProperty("持卡动态")
     private String cardDynamic;
 
     public Integer getId() {
@@ -99,43 +106,51 @@ public class AppUserVo {
         this.phone = phone;
     }
 
-    public String getResidenceAddress() {
-        return residenceAddress;
+    public String getName() {
+        return name;
     }
 
-    public void setResidenceAddress(String residenceAddress) {
-        this.residenceAddress = residenceAddress;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMarriage() {
+    public Integer getDomiciletype() {
+        return domiciletype;
+    }
+
+    public void setDomiciletype(Integer domiciletype) {
+        this.domiciletype = domiciletype;
+    }
+
+    public Integer getMarriage() {
         return marriage;
     }
 
-    public void setMarriage(String marriage) {
+    public void setMarriage(Integer marriage) {
         this.marriage = marriage;
     }
 
-    public String getEducation() {
+    public Integer getEducation() {
         return education;
     }
 
-    public void setEducation(String education) {
+    public void setEducation(Integer education) {
         this.education = education;
     }
 
-    public String getCareer() {
+    public Integer getCareer() {
         return career;
     }
 
-    public void setCareer(String career) {
+    public void setCareer(Integer career) {
         this.career = career;
     }
 
-    public String getResidenceType() {
+    public Integer getResidenceType() {
         return residenceType;
     }
 
-    public void setResidenceType(String residenceType) {
+    public void setResidenceType(Integer residenceType) {
         this.residenceType = residenceType;
     }
 
@@ -147,27 +162,27 @@ public class AppUserVo {
         this.workOrganization = workOrganization;
     }
 
-    public String getFromPlace() {
-        return fromPlace;
+    public Integer getFromPlaceType() {
+        return fromPlaceType;
     }
 
-    public void setFromPlace(String fromPlace) {
-        this.fromPlace = fromPlace;
+    public void setFromPlaceType(Integer fromPlaceType) {
+        this.fromPlaceType = fromPlaceType;
     }
 
-    public String getComeReason() {
+    public Integer getComeReason() {
         return comeReason;
     }
 
-    public void setComeReason(String comeReason) {
+    public void setComeReason(Integer comeReason) {
         this.comeReason = comeReason;
     }
 
-    public String getRealtionship() {
+    public Integer getRealtionship() {
         return realtionship;
     }
 
-    public void setRealtionship(String realtionship) {
+    public void setRealtionship(Integer realtionship) {
         this.realtionship = realtionship;
     }
 
@@ -179,11 +194,11 @@ public class AppUserVo {
         this.height = height;
     }
 
-    public String getPoliticPosition() {
+    public Integer getPoliticPosition() {
         return politicPosition;
     }
 
-    public void setPoliticPosition(String politicPosition) {
+    public void setPoliticPosition(Integer politicPosition) {
         this.politicPosition = politicPosition;
     }
 
@@ -195,51 +210,51 @@ public class AppUserVo {
         this.profession = profession;
     }
 
-    public String getDwellType() {
+    public Integer getDwellType() {
         return dwellType;
     }
 
-    public void setDwellType(String dwellType) {
+    public void setDwellType(Integer dwellType) {
         this.dwellType = dwellType;
     }
 
-    public String getProfessionalTitle() {
+    public Integer getProfessionalTitle() {
         return professionalTitle;
     }
 
-    public void setProfessionalTitle(String professionalTitle) {
+    public void setProfessionalTitle(Integer professionalTitle) {
         this.professionalTitle = professionalTitle;
     }
 
-    public Date getArriveDate() {
+    public String getArriveDate() {
         return arriveDate;
     }
 
-    public void setArriveDate(Date arriveDate) {
+    public void setArriveDate(String arriveDate) {
         this.arriveDate = arriveDate;
     }
 
-    public String getResidePermitNotify() {
+    public Integer getResidePermitNotify() {
         return residePermitNotify;
     }
 
-    public void setResidePermitNotify(String residePermitNotify) {
+    public void setResidePermitNotify(Integer residePermitNotify) {
         this.residePermitNotify = residePermitNotify;
     }
 
-    public String getPlaceChangeNotify() {
+    public Integer getPlaceChangeNotify() {
         return placeChangeNotify;
     }
 
-    public void setPlaceChangeNotify(String placeChangeNotify) {
+    public void setPlaceChangeNotify(Integer placeChangeNotify) {
         this.placeChangeNotify = placeChangeNotify;
     }
 
-    public String getReproduction() {
+    public Integer getReproduction() {
         return reproduction;
     }
 
-    public void setReproduction(String reproduction) {
+    public void setReproduction(Integer reproduction) {
         this.reproduction = reproduction;
     }
 

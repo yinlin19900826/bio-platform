@@ -10,7 +10,8 @@ import com.biocome.platform.common.exception.auth.UserTokenException;
 import com.biocome.platform.common.exception.auth.UserTokenExpireException;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.ValidateUtils;
-import com.netflix.hystrix.contrib.javanica.utils.CommonUtils;
+import io.jsonwebtoken.lang.Assert;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import java.util.Date;
 /**
  * Created by ace on 2017/9/10.
  */
+@Slf4j
 public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
     private Logger logger = LoggerFactory.getLogger(UserAuthRestInterceptor.class);
 
@@ -64,7 +66,9 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
         String effectiveCode = infoFromToken.getEffectiveCode();
         if(!ValidateUtils.isEmpty(effectiveCode)){
             String code = jedisCluster.get(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+infoFromToken.getUniqueName());
+            Assert.isTrue(code.equals(effectiveCode),"有效码验证通过！");
             if(!code.equals(effectiveCode)){
+                log.info("effective code from token : "+effectiveCode+" , "+"effective code from cache : "+code);
                 throw new UserTokenException("由于在其他客户端登录，您已经被迫下线!");
             }
         }

@@ -1,15 +1,14 @@
 package com.biocome.platform.wechatapplet.rpc.service;
 
-import com.biocome.platform.auth.common.util.constatns.CommonConstants;
 import com.biocome.platform.common.biz.BaseBiz;
+import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.common.vo.user.AppUserInfo;
+import com.biocome.platform.inter.gateguard.biz.AppUserBiz;
 import com.biocome.platform.inter.gateguard.entity.AppUser;
-import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
-import com.biocome.platform.wechatapplet.biz.AppUserBiz;
-import com.biocome.platform.wechatapplet.mapper.AppUserMapper;
+import com.biocome.platform.inter.gateguard.mapper.AppUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,4 @@ public class AppUserService extends BaseBiz<AppUserMapper, AppUser> {
         return info;
     }
 
-    public AppUserVo detail(String username) {
-        return mapper.detail(username);
-    }
 }

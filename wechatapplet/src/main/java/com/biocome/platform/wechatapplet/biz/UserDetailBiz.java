@@ -5,6 +5,7 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.inter.gateguard.biz.AppUserBiz;
 import com.biocome.platform.inter.basemanager.biz.CardBiz;
 import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
 import com.biocome.platform.inter.basemanager.entity.Card;

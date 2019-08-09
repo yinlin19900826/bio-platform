@@ -2,6 +2,8 @@ package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Landlord;
 /*import com.bicome.platform.inter.basemanager.vo.admin.SimpleAdminVo;*/
+import com.biocome.platform.inter.basemanager.vo.admin.SimpleAdminVo;
+import com.biocome.platform.inter.basemanager.vo.upload.ChangeLesseePicReq;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -39,9 +41,9 @@ public interface LandlordMapper extends Mapper<Landlord> {
      */
     int deleteLandlord(@Param("list") List<Integer> list);
 
-    /*List<SimpleAdminVo> selectSimpleAdminList(@Param("username") String username, @Param("type") Integer type);*/
+    List<SimpleAdminVo> selectSimpleAdminList(@Param("username") String username, @Param("type") Integer type);
 
-    /*int changePic(@Param("req") ChangeLesseePicReq req);*/
+    int changePic(@Param("req") ChangeLesseePicReq req);
 
     List<Landlord> selectByUserCode(@Param("usercode") String usercode);
 }

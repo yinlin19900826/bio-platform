@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableAceAuthClient
 @EnableTransactionManagement
-@MapperScan({"com.biocome.platform.wechatapplet.mapper", "com.biocome.platform.inter.basemanager.mapper"})
+@MapperScan({"com.biocome.platform.wechatapplet.mapper", "com.biocome.platform.inter.*.mapper"})
 @EnableSwagger2Doc
 @ComponentScan({"com.biocome.platform"})
 public class WechatAppletBootstrap {

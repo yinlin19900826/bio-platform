@@ -1,7 +1,7 @@
-package com.biocome.platform.guard.rpc.fallbackfactory;
+package com.biocome.platform.inter.basemanager.rpc.fallbackfactory;
 
 import com.biocome.platform.common.msg.ObjectRestResponse;
-import com.biocome.platform.guard.rpc.service.FileRpc;
+import com.biocome.platform.inter.basemanager.rpc.service.FileRpc;
 import com.biocome.platform.inter.basemanager.vo.upload.FileVo;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;

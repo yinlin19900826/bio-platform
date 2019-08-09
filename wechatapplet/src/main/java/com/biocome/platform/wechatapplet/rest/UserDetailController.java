@@ -51,4 +51,5 @@ public class UserDetailController {
             return new ObjectRestResponse().customError("完善信息失败!");
         }
     }
+
 }

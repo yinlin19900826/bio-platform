@@ -1,6 +1,6 @@
 package com.biocome.platform.guard.mapper;
 
-import com.biocome.platform.guard.vo.upload.ChangeLesseePicReq;
+import com.biocome.platform.inter.basemanager.vo.upload.ChangeLesseePicReq;
 import com.biocome.platform.inter.basemanager.LesseeCardMsgResp;
 import com.biocome.platform.inter.basemanager.vo.card.OpenblukResp;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListReq;

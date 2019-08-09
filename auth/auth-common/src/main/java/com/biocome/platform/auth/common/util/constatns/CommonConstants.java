@@ -23,13 +23,11 @@ public class CommonConstants {
     public static final String JWT_KEY_USERCODE = "usercode";
     public static final String JWT_KEY_ENDTIME = "endtime";
 
-    public static final String JWT_REFRESH_TOKEN_KEY_PRIFIX = "refresh_token";
     public static final String JWT_ACCESS_TOKEN_EFFECTIVE_CODE = "effectiveCode";
-    public static final String ACCESS_TOKEN_HEADER = "ACCESS_TOKEN";
-    public static final String REFRESH_TOKEN_HEADER = "REFRESH_TOKEN";
     public static final String NEW_TOKEN = "NEW_TOKEN";
 
     //token有效期
     public static final Integer TOKEN_EFFETIVE_DAY = 30;
     public static final Integer TOKEN_CHANGE_MINITE = 5;
+
 }

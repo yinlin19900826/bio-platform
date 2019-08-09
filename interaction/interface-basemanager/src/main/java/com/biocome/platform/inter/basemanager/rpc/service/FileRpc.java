@@ -1,14 +1,13 @@
-package com.biocome.platform.guard.rpc.service;
+package com.biocome.platform.inter.basemanager.rpc.service;
 
 import com.biocome.platform.common.msg.ObjectRestResponse;
-import com.biocome.platform.guard.rpc.fallbackfactory.FileFallbackFactory;
 import com.biocome.platform.inter.basemanager.vo.upload.FileVo;
+import com.biocome.platform.inter.basemanager.rpc.fallbackfactory.FileFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.net.URI;
 import java.util.List;
 
 /**
