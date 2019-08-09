@@ -6,6 +6,7 @@
         UPDATE base_lessee
         <set>
             <if test="vo.tel != null and vo.tel != ''">tel = #{vo.tel,jdbcType=VARCHAR},</if>
+            <if test="vo.phonemodel != null and vo.phonemodel != ''">phonemodel = #{vo.phonemodel,jdbcType=VARCHAR},</if>
             <if test="vo.domiciletype != null and vo.domiciletype != ''">domiciletype = #{vo.domiciletype,jdbcType=INTEGER},</if>
             <if test="vo.maritalstatus != null and vo.maritalstatus != ''">maritalstatus = #{vo.maritalstatus,jdbcType=INTEGER},</if>
             <if test="vo.culture != null and vo.culture != ''">culture = #{vo.culture,jdbcType=INTEGER},</if>
