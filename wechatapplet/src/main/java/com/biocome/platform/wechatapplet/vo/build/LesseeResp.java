@@ -19,6 +19,9 @@ public class LesseeResp {
     @ApiModelProperty(value = "租户列表")
     private List<LesseeVo> lessees;
 
+    public LesseeResp() {
+    }
+
     public LesseeResp(List<LesseeVo> principals, List<LesseeVo> lessees) {
         this.principals = principals;
         this.lessees = lessees;
