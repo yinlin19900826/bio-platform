@@ -42,7 +42,7 @@
 
     <select id="simpleUserInfoVo" resultType="com.biocome.platform.inter.gateguard.vo.user.SimpleUserInfoVo">
         select l.usercode, l.username as name , l.headphoto as headPhoto, l.tel as phone, DATE_FORMAT(l.checkintime,'%Y-%m-%d') as checkinTime, c.physical_cardno as cardNo,
-        case l.relation when '4' then true else false END isCharger
+        case l.relation when '4' then true else false END isCharger, l.phonemodel as phoneModel, l.buildcode
         from base_lessee l
         left join base_card c
         on l.usercode = c.usercode

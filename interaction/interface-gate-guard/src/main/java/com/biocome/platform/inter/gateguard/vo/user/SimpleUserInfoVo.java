@@ -11,10 +11,11 @@ public class SimpleUserInfoVo {
     private String name;
     private String headPhoto;
     private String phone;
-    private String phoneType;
+    private String phoneModel;
     private String cardNo;
     private String checkinTime;
     private boolean isCharger;
+    private String buildcode;
 
     public String getUsercode() {
         return usercode;
@@ -48,12 +49,12 @@ public class SimpleUserInfoVo {
         this.phone = phone;
     }
 
-    public String getPhoneType() {
-        return phoneType;
+    public String getPhoneModel() {
+        return phoneModel;
     }
 
-    public void setPhoneType(String phoneType) {
-        this.phoneType = phoneType;
+    public void setPhoneModel(String phoneModel) {
+        this.phoneModel = phoneModel;
     }
 
     public String getCardNo() {
@@ -78,5 +79,13 @@ public class SimpleUserInfoVo {
 
     public void setCharger(boolean charger) {
         isCharger = charger;
+    }
+
+    public String getBuildcode() {
+        return buildcode;
+    }
+
+    public void setBuildcode(String buildcode) {
+        this.buildcode = buildcode;
     }
 }
