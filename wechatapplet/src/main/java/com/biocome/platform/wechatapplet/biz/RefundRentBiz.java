@@ -36,14 +36,14 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
      * 单个租户退租
      *
      *
-     *@param username   租户名
+     *@param usercode  租户身份编码
      * @return java.lang.String
      * @Author yinlin
      * @Date 2019/8/1 11:19
      */
-    public ObjectRestResponse refundRent(String physicalcardno, String username) throws Exception {
+    public ObjectRestResponse refundRent(String physicalcardno, String usercode) throws Exception {
         try {
-            refundRentMapper.deleteByUserName(physicalcardno,username);
+            refundRentMapper.deleteByUserName(physicalcardno,usercode);
             return new ObjectRestResponse().success();
         }catch(Exception e ) {
             throw new Exception("单个租户退租失败");
@@ -55,17 +55,17 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
      *
      *
      * @param
-     *@param username   租户名
+     *@param usercode   租户身份编码
      * @return java.lang.String
      * @Author yinlin
      * @Date 2019/7/31 11:19
      */
-    public ObjectRestResponse refundAllRent(String physicalcardno, String username) throws Exception {
+    public ObjectRestResponse refundAllRent(String physicalcardno, String usercode) throws Exception {
         try {
-            List<String> housecodes = refundRentMapper.getHouseCode(physicalcardno,username);
+            List<String> housecodes = refundRentMapper.getHouseCode(physicalcardno,usercode);
             List<String> allUserCodeList = new ArrayList<>();
             for(String housecode:housecodes){
-                List<String> usercodeList = refundRentMapper.getAllUserName(housecode);
+                List<String> usercodeList = refundRentMapper.getAllUserCode(housecode);
                 allUserCodeList.addAll(usercodeList);
 
             }
