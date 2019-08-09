@@ -1,6 +1,7 @@
 package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.msg.BaseResponse;
+import com.biocome.platform.wechatapplet.constant.WechatConstant;
 import com.biocome.platform.wechatapplet.service.SMSService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,10 +26,10 @@ public class SMSController {
     private SMSService smsService;
 
     @GetMapping("sendSMS")
-    public BaseResponse sendSMS() {
+    public BaseResponse sendSMS(@RequestParam String pre) {
         BaseResponse resp = new BaseResponse();
         try {
-            resp = smsService.sendSMS();
+            resp = smsService.sendSMS(pre);
         } catch (Exception e) {
             log.error("下发短信失败：{}", e.getMessage());
             e.printStackTrace();

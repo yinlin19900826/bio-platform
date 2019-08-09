@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.biocome.platform.wechatapplet.mapper.RefundRentMapper">
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.ChangeRoomMapper">
     <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Card">
         <!--
           WARNING - @mbggenerated
@@ -23,7 +23,15 @@
         <result column="remark" property="remark"/>
     </resultMap>
 
-    <select id="getHouseCode" resultType="java.lang.String">
+    <select id="getOriginBuildCode" resultType="java.lang.String">
+        SELECT
+          buildcode
+        FROM base_card
+        WHERE usercode=#{usercode}
+        and physical_cardno=#{physicalcardno}
+    </select>
+
+    <select id="getOriginHouseCode" resultType="java.lang.String">
         SELECT
           housecode
         FROM base_card
@@ -31,23 +39,26 @@
         and physical_cardno=#{physicalcardno}
     </select>
 
-    <select id="getAllUserCode" resultType="java.lang.String">
-        SELECT
-          usercode
-        FROM base_lessee
-        WHERE housecode=#{housecode}
-    </select>
+    <update id="changeRoom" parameterType="java.util.List">
+        UPDATE base_lessee a
+          LEFT JOIN base_card b ON a.usercode=b.usercode
+              SET
+				a.housecode=#{housecode},
+				b.housecode=#{housecode}
+          WHERE a.usercode=#{usercode}
+			    and a.housecode = #{originhousecode}
+    </update>
 
-    <delete id="deleteAllByUserName" parameterType="java.util.List">
-         delete a,b,c from base_lessee as a join base_card as b
-          on  a.usercode = b.usercode
-          join app_user as c on a.usercode = c.usercode
-          where a.usercode=#{usercode}
-    </delete>
-    <delete id="deleteByUserName" parameterType="java.util.List">
-         delete a,b,c from base_lessee as a join base_card as b
-          on a.username = b.username and a.usercode = b.usercode
-          join app_user as c on a.username = c.username
-          where a.usercode=#{usercode} and b.physical_cardno=#{physicalcardno}
-    </delete>
+    <update id="changeBuildRoom" parameterType="java.util.List">
+        UPDATE base_lessee a
+          LEFT JOIN base_card b ON a.usercode=b.usercode
+          SET
+			  a.buildcode=#{buildcode},
+			  b.buildcode=#{buildcode},
+			  a.buildname=#{buildname},
+			  b.buildname=#{buildname},
+			  a.housecode=#{housecode},
+			  b.housecode=#{housecode}
+          WHERE a.usercode=#{usercode}
+    </update>
 </mapper>

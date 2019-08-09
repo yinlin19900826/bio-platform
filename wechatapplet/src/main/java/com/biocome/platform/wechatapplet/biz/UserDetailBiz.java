@@ -11,6 +11,7 @@ import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
 import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.gateguard.entity.AppUser;
+import com.biocome.platform.wechatapplet.constant.WechatConstant;
 import com.biocome.platform.wechatapplet.mapper.UserDetailMapper;
 import com.biocome.platform.wechatapplet.service.SMSService;
 import com.biocome.platform.wechatapplet.vo.duanxin.VertifyResp;
@@ -71,7 +72,7 @@ public class UserDetailBiz {
                 || ValidateUtils.isEmpty(req.getBirthday())
                 || ValidateUtils.isEmpty(req.getDomicileaddress())
                 || ValidateUtils.isEmpty(req.getIspapers())
-        ) {
+                ) {
             result = false;
             return result;
         }
@@ -81,7 +82,7 @@ public class UserDetailBiz {
                     || ValidateUtils.isEmpty(req.getPhoto())
                     || ValidateUtils.isEmpty(req.getPapersnum())
                     || ValidateUtils.isEmpty(req.getCheckintime())
-            ) {
+                    ) {
                 result = false;
             }
         } else if ("1".equals(req.getIspapers())) {
@@ -150,7 +151,7 @@ public class UserDetailBiz {
      */
     public ObjectRestResponse updateSelectiveById(CompleteVo vo) throws Exception {
         //验证码校验
-        VertifyResp resp = smsService.vertifyCode(vo.getVertifyCode());
+        VertifyResp resp = smsService.vertifyCode(WechatConstant.SENDMAIL_USERDETAIL, vo.getVertifyCode());
         if (resp.isResult()) {
             //更新完善信息
             mapper.updateSelectiveById(vo);
