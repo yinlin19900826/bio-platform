@@ -69,11 +69,11 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
      * @Author yinlin
      * @Date 2019/7/31 14:08
      */
-    public TableResultResponse<CardManageVo> selectByAttribute(int pageSize, int pageNum, String username) {
+    public TableResultResponse<CardManageVo> selectByAttribute(int pageSize, int pageNum, String usercode) {
         TableResultResponse<CardManageVo> res;
         try {
             Page<CardManageVo> result = PageHelper.startPage(pageNum, pageSize);
-            cardManageMapper.selectByUserName(username);
+            cardManageMapper.selectByUserCode(usercode);
             res = new TableResultResponse<>(result.getTotal(), result.getResult());
         } catch (Exception e) {
             log.error("获取不同权限用户下的所有门禁卡失败，错误信息为：" + e.getMessage());
@@ -86,14 +86,13 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
      * 挂失卡操作
      *
      * @param
-     * @param cardNo    卡号
-     * @param buildCode 楼栋编号
+     * @param
      * @return java.lang.String
      * @Author yinlin
      * @Date 2019/7/31 11:19
      */
-    public ObjectRestResponse cardLossOperation(String cardNo, String buildCode) throws Exception {
-        Card model = cardManageMapper.selectCardByCardNo(cardNo);
+    public ObjectRestResponse cardLossOperation(String physicalcardno,String logiccardno,String buildname) throws Exception {
+        Card model = cardManageMapper.selectCardByCardNo(physicalcardno);
         if (model.getCardtype().equals("1")) {
             Device device = new Device();
             device.setSn(model.getSn());
@@ -112,7 +111,7 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
                     logoutCardVo.setCardtype(model.getCardtype());
                     List<String> sns = new ArrayList<>();
                     sns.add(model.getSn());
-                    BaseRpcResponse res = rpc.logoutCard(uriByBrand, logoutCardVo);
+                    /*BaseRpcResponse res = rpc.logoutCard(uriByBrand, logoutCardVo);
                     if (CommonConstants.RESP_RESULT_SUCCESS.equals(res.getResult())) {
                         //修改表该卡注销
                         model.setIsalive(AdminCommonConstant.DEFAULT_ZERO);
@@ -121,7 +120,7 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
 
                     } else {
                         throw new Exception("请求小平台注销接口失败");
-                    }
+                    }*/
                 }
 
             }

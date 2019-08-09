@@ -248,11 +248,11 @@ public class DoorDeviceCardBiz {
         if (result == 0) {
             return new BaseRpcResponse().failure();
         } else {
-            List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
-            ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
-            if (objectRestResponse.getStatus() != 200) {
-                throw new Exception("远程删除文件失败");
-            }
+//            List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
+//            ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
+//            if (objectRestResponse.getStatus() != 200) {
+//                throw new Exception("远程删除文件失败");
+//            }
             return new BaseRpcResponse().success();
         }
     }

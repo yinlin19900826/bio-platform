@@ -34,13 +34,13 @@ public class RefundRentController extends BaseController<CardManageBiz, CardMana
     private RefundRentBiz refundRentBiz;
 
     @ApiOperation("单个租户退租(0失败，1成功)")
-    @ApiImplicitParams({@ApiImplicitParam(name = "cardNo", value = "卡号", paramType = "path"),
+    @ApiImplicitParams({@ApiImplicitParam(name = "physicalcardno", value = "物理卡号", paramType = "path"),
             @ApiImplicitParam(name = "username", value = "租户姓名", paramType = "path")})
     @ResponseBody
-    @RequestMapping(value = "/rent/{cardNo}/{username}", method = RequestMethod.POST)
-    public BaseResponse refundRent(@PathVariable String cardNo, @PathVariable String username) {
+    @RequestMapping(value = "/rent", method = RequestMethod.GET)
+    public BaseResponse refundRent( String physicalcardno, String username) {
         try {
-            return refundRentBiz.refundRent(cardNo, username);
+            return refundRentBiz.refundRent(physicalcardno, username);
         } catch (Exception e) {
             log.info("单个租户退租失败，错误信息为：{}", e.getMessage());
             return new ObjectRestResponse().customError("单个租户退租失败!");
@@ -48,13 +48,13 @@ public class RefundRentController extends BaseController<CardManageBiz, CardMana
     }
 
     @ApiOperation("全部退租(0失败，1成功)")
-    @ApiImplicitParams({@ApiImplicitParam(name = "cardNo", value = "卡号", paramType = "path"),
+    @ApiImplicitParams({@ApiImplicitParam(name = "physicalcardno", value = "物理卡号", paramType = "path"),
             @ApiImplicitParam(name = "username", value = "租户姓名", paramType = "path")})
     @ResponseBody
-    @RequestMapping(value = "/rentall/{cardNo}/{username}", method = RequestMethod.POST)
-    public BaseResponse refundAllRent(@PathVariable String cardNo, @PathVariable String username) {
+    @RequestMapping(value = "/rentall", method = RequestMethod.GET)
+    public BaseResponse refundAllRent(String physicalcardno, String username) {
         try {
-            return refundRentBiz.refundAllRent(cardNo, username);
+            return refundRentBiz.refundAllRent(physicalcardno, username);
         } catch (Exception e) {
             log.info("全部退租失败，错误信息为：{}", e.getMessage());
             //return AdminCommonConstant.BOOLEAN_NUMBER_FALSE;

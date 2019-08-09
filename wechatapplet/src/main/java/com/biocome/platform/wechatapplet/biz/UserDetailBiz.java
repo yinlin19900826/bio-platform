@@ -12,6 +12,8 @@ import com.biocome.platform.inter.basemanager.entity.Card;
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.gateguard.entity.AppUser;
 import com.biocome.platform.wechatapplet.mapper.UserDetailMapper;
+import com.biocome.platform.wechatapplet.service.SMSService;
+import com.biocome.platform.wechatapplet.vo.duanxin.VertifyResp;
 import com.biocome.platform.wechatapplet.vo.userdetail.CompleteVo;
 import com.biocome.platform.wechatapplet.vo.userdetail.UserDetailReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +34,24 @@ public class UserDetailBiz {
     private final LesseeBiz lesseeBiz;
     private final CardBiz cardBiz;
     private final AppUserBiz appUserBiz;
+    private final SMSService smsService;
     private final UserDetailMapper mapper;
 
     @Autowired
-    public UserDetailBiz(LesseeBiz lesseeBiz, CardBiz cardBiz, AppUserBiz appUserBiz, UserDetailMapper mapper) {
-        this.lesseeBiz = lesseeBiz;
-        this.cardBiz = cardBiz;
-        this.appUserBiz = appUserBiz;
+    public UserDetailBiz(LesseeBiz lesseeBiz, CardBiz cardBiz, AppUserBiz appUserBiz, SMSService smsService, UserDetailMapper mapper) {
         this.mapper = mapper;
+        this.cardBiz = cardBiz;
+        this.lesseeBiz = lesseeBiz;
+        this.appUserBiz = appUserBiz;
+        this.smsService = smsService;
     }
 
     public ObjectRestResponse insertUserDetail(UserDetailReq req) throws Exception {
+        boolean result = validateReq(req);
+        if (!result) {
+            //如果没有通过校验
+            return new ObjectRestResponse().customError("缺少参数");
+        }
         //①添加租户信息
         Lessee lessee = insertLessee(req);
         //②添加租户与卡关联
@@ -52,6 +61,35 @@ public class UserDetailBiz {
         //③增加租户登录app
         insertAppUser(req, lessee);
         return new ObjectRestResponse();
+    }
+
+    private boolean validateReq(UserDetailReq req) {
+        boolean result = true;
+        if (ValidateUtils.isEmpty(req.getUsername())
+                || ValidateUtils.isEmpty(req.getSex())
+                || ValidateUtils.isEmpty(req.getNation())
+                || ValidateUtils.isEmpty(req.getBirthday())
+                || ValidateUtils.isEmpty(req.getDomicileaddress())
+                || ValidateUtils.isEmpty(req.getIspapers())
+        ) {
+            result = false;
+            return result;
+        }
+        if ("0".equals(req.getIspapers())) {
+            if (ValidateUtils.isEmpty(req.getPaperstype())
+                    || ValidateUtils.isEmpty(req.getPapersphoto())
+                    || ValidateUtils.isEmpty(req.getPhoto())
+                    || ValidateUtils.isEmpty(req.getPapersnum())
+                    || ValidateUtils.isEmpty(req.getCheckintime())
+            ) {
+                result = false;
+            }
+        } else if ("1".equals(req.getIspapers())) {
+            if (ValidateUtils.isEmpty(req.getNopaperreason())) {
+                result = false;
+            }
+        }
+        return result;
     }
 
     private void insertAppUser(UserDetailReq req, Lessee lessee) {
@@ -96,6 +134,7 @@ public class UserDetailBiz {
         lessee.setRegistertime(date);
         lessee.setCreatetime(date);
         lessee.setRegisterpeople(req.getRegistrant());
+        lessee.setIspapers(req.getIspapers());
         lesseeBiz.insertLessee(lessee);
         return lessee;
     }
@@ -110,11 +149,17 @@ public class UserDetailBiz {
      * @Date 2019/8/2 10:58
      */
     public ObjectRestResponse updateSelectiveById(CompleteVo vo) throws Exception {
-        //更新完善信息
-        mapper.updateSelectiveById(vo);
-        //设置为已完善信息
-        appUserBiz.updateIsComplete(vo.getUsercode());
-        return new ObjectRestResponse().success();
+        //验证码校验
+        VertifyResp resp = smsService.vertifyCode(vo.getVertifyCode());
+        if (resp.isResult()) {
+            //更新完善信息
+            mapper.updateSelectiveById(vo);
+            //设置为已完善信息
+            appUserBiz.updateIsComplete(vo.getUsercode());
+            return new ObjectRestResponse().success();
+        } else {
+            return new ObjectRestResponse().customError(resp.getMessage());
+        }
     }
 
 }

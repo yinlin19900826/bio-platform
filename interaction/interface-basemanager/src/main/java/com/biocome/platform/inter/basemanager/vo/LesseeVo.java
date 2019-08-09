@@ -48,7 +48,7 @@ public class LesseeVo {
      * 职业
      */
     @ApiModelProperty(value = "职业")
-    private String occupation;
+    private Integer occupation;
     /**
      * 政治面貌
      */
@@ -123,11 +123,11 @@ public class LesseeVo {
         this.estatecode = estatecode;
     }
 
-    public String getOccupation() {
+    public Integer getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(String occupation) {
+    public void setOccupation(Integer occupation) {
         this.occupation = occupation;
     }
 

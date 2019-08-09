@@ -130,7 +130,7 @@ public class Lessee extends Base {
      * 职业
      */
     @ApiModelProperty(value = "职业")
-    private String occupation;
+    private Integer occupation;
 
     /**
      * 手机号码
@@ -524,7 +524,7 @@ public class Lessee extends Base {
      *
      * @return occupation - 职业
      */
-    public String getOccupation() {
+    public Integer getOccupation() {
         return occupation;
     }
 
@@ -533,7 +533,7 @@ public class Lessee extends Base {
      *
      * @param occupation 职业
      */
-    public void setOccupation(String occupation) {
+    public void setOccupation(Integer occupation) {
         this.occupation = occupation;
     }
 

@@ -21,6 +21,9 @@ public class CompleteVo {
     @ApiModelProperty(value = "手机号码")
     private String tel;
 
+    @ApiModelProperty(value = "验证码")
+    private String vertifyCode;
+
     @ApiModelProperty(value = "户口所在地类型（0：本地城镇1：本地农村2：省内城镇3：省内农村4：省外城镇5：省外农村）")
     private Integer domiciletype;
 
@@ -31,7 +34,7 @@ public class CompleteVo {
     private Integer culture;
 
     @ApiModelProperty(value = "职业")
-    private String occupation;
+    private Integer occupation;
 
     @ApiModelProperty(value = "紧急联系人姓名")
     private String emergencyname;
@@ -58,7 +61,7 @@ public class CompleteVo {
     private Integer residentmanner;
 
     @ApiModelProperty(value = "首次来深日期")
-    private Date firsttime;
+    private String firsttime;
 
     @ApiModelProperty(value = "是否告知办理居住证(0是1否)")
     private Integer sfgzbljzz;
@@ -91,6 +94,14 @@ public class CompleteVo {
         this.tel = tel;
     }
 
+    public String getVertifyCode() {
+        return vertifyCode;
+    }
+
+    public void setVertifyCode(String vertifyCode) {
+        this.vertifyCode = vertifyCode;
+    }
+
     public Integer getDomiciletype() {
         return domiciletype;
     }
@@ -115,11 +126,11 @@ public class CompleteVo {
         this.culture = culture;
     }
 
-    public String getOccupation() {
+    public Integer getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(String occupation) {
+    public void setOccupation(Integer occupation) {
         this.occupation = occupation;
     }
 
@@ -188,11 +199,10 @@ public class CompleteVo {
     }
 
     @JSONField(format = "yyyy-MM-dd")
-    public Date getFirsttime() {
+    public String getFirsttime() {
         return firsttime;
     }
-
-    public void setFirsttime(Date firsttime) {
+    public void setFirsttime(String firsttime) {
         this.firsttime = firsttime;
     }
 

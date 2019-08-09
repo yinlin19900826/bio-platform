@@ -60,6 +60,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                 "/refund/**",
                 "/userDetail/**",
                 "/visit/**",
+                "/sms/**",
         };
         Collections.addAll(list, urls);
         return list;

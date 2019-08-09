@@ -38,7 +38,7 @@ public class UserDetailController {
         return resp;
     }
 
-    @ApiOperation("完善信息方法（0失败，1成功）")
+    @ApiOperation("完善信息方法")
     @ResponseBody
     @PostMapping("/complete")
     public BaseResponse complete(@RequestBody CompleteVo vo) {
