@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisCluster;
 
+import javax.swing.*;
+
 /**
  * @author hxy
  * @date 2019/8/7 18:23
@@ -27,7 +29,7 @@ public class EnterpriseWeChatBiz implements SMSService {
     private JedisCluster jedisCluster;
 
     @Override
-    public BaseResponse sendSMS() throws Exception {
+    public BaseResponse sendSMS(String pre) throws Exception {
         BaseResponse resp = new BaseResponse();
         int password = (int) ((Math.random() * 9 + 1) * 100000);
         IacsAlarmCommonVo vo = new IacsAlarmCommonVo();
@@ -40,15 +42,15 @@ public class EnterpriseWeChatBiz implements SMSService {
             resp.setMessage("短信发送失败");
             return resp;
         }
-        jedisCluster.setex("sms_" + BaseContextHandler.getUsercode(), WechatConstant.SMS_KEY_EXPIRE, String.valueOf(password));
+        jedisCluster.setex(pre + BaseContextHandler.getUsercode(), WechatConstant.SMS_KEY_EXPIRE, String.valueOf(password));
         return resp;
     }
 
     @Override
-    public VertifyResp vertifyCode(String code) {
+    public VertifyResp vertifyCode(String pre, String code) {
         VertifyResp resp = new VertifyResp();
         boolean result = false;
-        String value = jedisCluster.get("sms_" + BaseContextHandler.getUsercode());
+        String value = jedisCluster.get(pre + BaseContextHandler.getUsercode());
         if (ValidateUtils.isNotEmpty(value)) {
             if (code.equals(value)) {
                 result = true;
