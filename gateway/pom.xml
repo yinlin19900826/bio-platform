@@ -86,9 +86,10 @@
             <optional>true</optional>
         </dependency>
 
+        <!--nacos 客户端-->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
         </dependency>
 
         <!--nacos config-->

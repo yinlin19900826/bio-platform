@@ -3,12 +3,14 @@ package com.biocome.platform.guard.biz;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.context.BaseContextHandler;
+import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
-import com.biocome.platform.guard.constant.AppConstant;
+import com.biocome.platform.guard.constant.APPConstants;
+import com.biocome.platform.guard.feign.AppAccountService;
 import com.biocome.platform.inter.basemanager.rpc.service.FileRpc;
 import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
 import com.biocome.platform.inter.basemanager.entity.Landlord;
@@ -18,8 +20,7 @@ import com.biocome.platform.inter.basemanager.utils.FileUtils;
 import com.biocome.platform.inter.basemanager.vo.admin.SimpleAdminVo;
 import com.biocome.platform.inter.basemanager.vo.upload.ChangeLesseePicReq;
 import com.biocome.platform.inter.basemanager.vo.upload.FileVo;
-import com.biocome.platform.inter.gateguard.biz.AppUserBiz;
-import com.biocome.platform.inter.gateguard.entity.AppUser;
+import com.biocome.platform.inter.gateguard.vo.user.AppAccountVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,9 +45,9 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
     @Autowired
     FileRpc fileRpc;
     @Autowired
-    AppUserBiz appUserBiz;
-    @Autowired
     LesseeBiz lesseeBiz;
+    @Autowired
+    AppAccountService appAccountService;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -88,15 +88,18 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
     /**
      * 增加管理员
      */
-    public ObjectRestResponse addAdmin(Landlord landlord) throws Exception {
+    public BaseResponse addAdmin(Landlord landlord) throws Exception {
+        BaseResponse baseResponse = new BaseResponse(CommonConstants.CODE_OK, "添加管理员成功！");
         //验证证件号唯一
         String papersnum = landlord.getPapersnum();
         if(ValidateUtils.isEmpty(papersnum)){
-            return new ObjectRestResponse(CommonConstants.EX_CERTNO_NULL, "证件号码不能为空！");
+            baseResponse = new ObjectRestResponse(CommonConstants.EX_CERTNO_NULL, "证件号码不能为空！");
+            return baseResponse;
         }
         boolean exists = checkExists(papersnum);
         if(exists){
-            return new ObjectRestResponse(CommonConstants.EX_CERTNO_EXISTS, "证件号码已存在！");
+            baseResponse =  new ObjectRestResponse(CommonConstants.EX_CERTNO_EXISTS, "证件号码已存在！");
+            return baseResponse;
         }
         String usercode = UUIDUtils.generateShortUuid();
         //添加管理员
@@ -107,19 +110,18 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
         BeanUtils.copyProperties(landlord, lessee);
         lesseeBiz.insertSelective(lessee);
         //是否开通app账号
-        if(landlord.getIsapp() == AppConstant.OPEN_APP_ACCOUNT_TURE){
-            AppUser appUser = new AppUser();
-            String certNo = landlord.getPapersnum();
-            appUser.setUsername(certNo);
-            appUser.setPassword(encoder.encode(certNo.substring((certNo.length()-1) - 6)));
-            appUser.setUsercode(usercode);
-            appUser.setType(AppConstant.APP_USER_TYPE_ADMIN);
-            appUser.setIscomplete(AppConstant.APP_INFORMATION_NOT_COMPLETE);
-            appUser.setCreateUser(BaseContextHandler.getUsername());
-            appUser.setCreateTime(new Date());
-            appUserBiz.insert(appUser);
+        if(landlord.getIsapp() == APPConstants.CREATE_APP_ACCOUNT_TURE){
+            AppAccountVo accountVo = new AppAccountVo();
+            accountVo.setUsername(papersnum);
+            accountVo.setUsercode(landlord.getUsercode());
+            accountVo.setType(APPConstants.USER_TYPE_ADMIN);
+            accountVo.setCreateUser(BaseContextHandler.getUsercode());
+            baseResponse = appAccountService.createAppAccount(accountVo);
+            if(baseResponse.getStatus() != CommonConstants.CODE_OK){
+                throw new Exception("创建app账号失败！");
+            }
         }
-        return new ObjectRestResponse().success();
+        return baseResponse;
     }
 
     private boolean checkExists(String papersnum) {

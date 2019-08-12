@@ -1,8 +1,8 @@
-package com.biocome.platform.inter.gateguard.mapper;
+package com.biocome.platform.wechatapplet.mapper;
 
-import com.biocome.platform.inter.gateguard.entity.AppUser;
-import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
-import com.biocome.platform.inter.gateguard.vo.user.SimpleUserInfoVo;
+import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.wechatapplet.vo.user.AppUserVo;
+import com.biocome.platform.wechatapplet.vo.user.SimpleUserInfoVo;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 

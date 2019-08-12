@@ -74,6 +74,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
                 "/app/user/validate",
+                "/app/user/resetPassword",
+                "/app/user/createAppAccount",
                 "**/swagger**"
         };
         Collections.addAll(list, urls);

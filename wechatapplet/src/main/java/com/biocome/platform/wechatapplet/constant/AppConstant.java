@@ -1,4 +1,4 @@
-package com.biocome.platform.guard.constant;
+package com.biocome.platform.wechatapplet.constant;
 
 /**
  * @ClassName: AppConstant
@@ -20,4 +20,6 @@ public class AppConstant {
     public static final Integer APP_INFORMATION_COMPLETE = 0;
     //信息是否完善-否
     public static final Integer APP_INFORMATION_NOT_COMPLETE = 1;
+    //修改密码前缀
+    public static final String SMS_RESET_PASSWORD_PRE = "RESET_PWD";
 }

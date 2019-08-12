@@ -1,5 +1,6 @@
 package com.biocome.platform.guard.rest;
 
+import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
@@ -57,13 +58,13 @@ public class AdminController extends BaseController<AdminBiz, Landlord> {
     @ApiOperation("添加管理员")
     @ResponseBody
     @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
-    public ObjectRestResponse addAdmin(@RequestBody Landlord landlord) {
-        ObjectRestResponse res;
+    public BaseResponse addAdmin(@RequestBody Landlord landlord) {
+        BaseResponse res;
         try {
             res = adminBiz.addAdmin(landlord);
         } catch (Exception e) {
             log.error("保存失败！错误信息为：" + e.getMessage());
-            return new ObjectRestResponse(204, "保存失败！");
+            return new BaseResponse(204, "保存失败！");
         }
         return res;
     }
