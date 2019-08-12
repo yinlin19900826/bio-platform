@@ -5,12 +5,14 @@ import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.common.vo.user.AppUserInfo;
-import com.biocome.platform.inter.gateguard.entity.AppUser;
-import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
-import com.biocome.platform.inter.gateguard.vo.user.ResetPasswordParam;
-import com.biocome.platform.inter.gateguard.biz.AppUserBiz;
+import com.biocome.platform.inter.basemanager.entity.Landlord;
+import com.biocome.platform.inter.gateguard.vo.user.AppAccountVo;
+import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.wechatapplet.vo.user.AppUserVo;
+import com.biocome.platform.wechatapplet.vo.user.ResetPasswordParam;
+import com.biocome.platform.wechatapplet.biz.AppUserBiz;
 import com.biocome.platform.wechatapplet.rpc.service.AppUserService;
-import com.biocome.platform.inter.gateguard.vo.user.SimpleUserInfoVo;
+import com.biocome.platform.wechatapplet.vo.user.SimpleUserInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -35,8 +37,8 @@ public class AppUserController extends BaseController<AppUserBiz, AppUser> {
     AppUserBiz appUserBiz;
 
     @RequestMapping(value = "/validate", method = RequestMethod.POST)
-    public @ResponseBody AppUserInfo validate(@RequestBody Map<String,String> body){
-        return appUserService.validate(body.get("username"),body.get("password"));
+    public @ResponseBody ObjectRestResponse<AppUserInfo> validate(@RequestBody Map<String,String> body){
+        return appUserService.validate(body.get("username"),body.get("password"), body.get("type"));
     }
 
     @ApiOperation("用户详情 用户自查 无参数")
@@ -53,6 +55,13 @@ public class AppUserController extends BaseController<AppUserBiz, AppUser> {
     public @ResponseBody
     ObjectRestResponse<AppUserVo> detailByUsercode(String usercode){
         return appUserBiz.detail(usercode);
+    }
+
+    @ApiOperation("修改密码")
+    @RequestMapping(value = "/createAppAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse createAppAccount(@RequestBody AppAccountVo vo){
+        return appUserBiz.createAppAccount(vo);
     }
 
     @ApiOperation("修改密码")

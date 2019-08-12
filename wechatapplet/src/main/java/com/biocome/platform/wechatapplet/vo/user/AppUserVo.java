@@ -1,4 +1,4 @@
-package com.biocome.platform.inter.gateguard.vo.user;
+package com.biocome.platform.wechatapplet.vo.user;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

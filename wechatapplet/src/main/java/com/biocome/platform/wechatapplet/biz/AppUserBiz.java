@@ -1,23 +1,31 @@
-package com.biocome.platform.inter.gateguard.biz;
+package com.biocome.platform.wechatapplet.biz;
 
 import com.ace.cache.annotation.Cache;
 import com.ace.cache.annotation.CacheClear;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.ValidateUtils;
-import com.biocome.platform.inter.gateguard.entity.AppUser;
-import com.biocome.platform.inter.gateguard.mapper.AppUserMapper;
-import com.biocome.platform.inter.gateguard.vo.user.AppUserVo;
-import com.biocome.platform.inter.gateguard.vo.user.ResetPasswordParam;
-import com.biocome.platform.inter.gateguard.vo.user.SimpleUserInfoVo;
+import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
+import com.biocome.platform.inter.basemanager.entity.Landlord;
+import com.biocome.platform.inter.basemanager.entity.Lessee;
+import com.biocome.platform.inter.gateguard.vo.user.AppAccountVo;
+import com.biocome.platform.wechatapplet.constant.AppConstant;
+import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.wechatapplet.mapper.AppUserMapper;
+import com.biocome.platform.wechatapplet.vo.user.AppUserVo;
+import com.biocome.platform.wechatapplet.vo.user.ResetPasswordParam;
+import com.biocome.platform.wechatapplet.vo.user.SimpleUserInfoVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +41,11 @@ import java.util.List;
 public class AppUserBiz extends BaseBiz<AppUserMapper, AppUser> {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
+    @Autowired
+    LesseeBiz lesseeBiz;
+    @Autowired
+    EnterpriseWeChatBiz weChatBiz;
 
     /**
      * 根据用户编号修改完善信息状态
@@ -68,21 +81,33 @@ public class AppUserBiz extends BaseBiz<AppUserMapper, AppUser> {
     }
 
     public BaseResponse resetPassword(ResetPasswordParam param) {
+        String phoneNo = param.getPhoneNo();
+        if(ValidateUtils.isEmpty(phoneNo)){
+            return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "手机号码不能为空！");
+        }
         String certNo = param.getCertNo();
+        Lessee lessee = new Lessee();
+        lessee.setPapersnum(certNo);
+        lessee = lesseeBiz.selectOne(lessee);
+        if(ValidateUtils.isEmpty(lessee)){
+            return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "未找到用户信息！请核对证件号码！");
+        }
+        if(ValidateUtils.isEmpty(lessee.getTel())){
+            return new BaseResponse(CommonConstants.EX_APP_USER_PHONE_NOT_BIND, "用户未绑定电话号码！不可用改电话号码重置密码！");
+        }
         AppUserVo user = userDetail(certNo);
         if(ValidateUtils.isEmpty(user)){
-            return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "未找到用户！请核对证件号码！");
+            return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "未找到用户账号！请核对证件号码！");
         }
-        String phoneNo = param.getPhoneNo();
         String sms = param.getSms();
-        //TODO... 核对短信
+        weChatBiz.vertifyCode(AppConstant.SMS_RESET_PASSWORD_PRE,sms);
         String reset = param.getResetPassword();
         String confirm = param.getConfirmPassword();
         if(ValidateUtils.isEmpty(reset) || ValidateUtils.isEmpty(confirm)){
             return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "密码和确认密码不能为空！");
         }
         if(!reset.equals(confirm)){
-            return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "两次密码不一致！");
+            return new BaseResponse(CommonConstants.EX_APP_PASSWORD_NOT_MATCH, "两次密码不一致！");
         }
         String encrypPassword = encoder.encode(reset);
         try {
@@ -124,5 +149,24 @@ public class AppUserBiz extends BaseBiz<AppUserMapper, AppUser> {
 
     public ObjectRestResponse<AppUserVo> detailByUsercode(String usercode) {
         return null;
+    }
+
+    public BaseResponse createAppAccount(AppAccountVo vo) {
+        try {
+            AppUser appUser = new AppUser();
+            String certNo = vo.getUsername();
+            appUser.setUsername(certNo);
+            appUser.setPassword(encoder.encode(certNo.substring((certNo.length()) - 6)));
+            appUser.setUsercode(vo.getUsercode());
+            appUser.setType(vo.getType());
+            appUser.setIscomplete(AppConstant.APP_INFORMATION_NOT_COMPLETE);
+            appUser.setCreateUser(vo.getCreateUser());
+            appUser.setCreateTime(new Date());
+            insertSelective(appUser);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new BaseResponse(CommonConstants.EX_APP_DB_ERR, "数据库错误！");
+        }
+        return new BaseResponse(CommonConstants.CODE_OK, "创建成功！");
     }
 }

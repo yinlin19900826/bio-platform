@@ -35,7 +35,6 @@ public class CardManageController extends BaseController<CardManageBiz, CardMana
     private CardManageBiz cardManageBiz;
 
     @ApiOperation("获取不同权限用户下的所有门禁卡")
-   // @ApiImplicitParams(@ApiImplicitParam(name = "username", value = "用户名", paramType = "query"))
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public TableResultResponse<CardManageVo> list(@RequestParam(defaultValue = "20") int pageSize,
@@ -46,15 +45,12 @@ public class CardManageController extends BaseController<CardManageBiz, CardMana
 
     @ApiOperation("不同权限用户挂失其丢失的门禁卡(0失败，1成功)")
 
-    @ApiImplicitParams({@ApiImplicitParam(name = "physicalcardno", value = "物理卡号", paramType = "path"),
-            @ApiImplicitParam(name = "logiccardno", value = "逻辑卡号", paramType = "path"),
-            @ApiImplicitParam(name = "buildname", value = "楼栋名", paramType = "path")})
+    @ApiImplicitParams(@ApiImplicitParam(name = "physicalcardno", value = "物理卡号", paramType = "path"))
     @ResponseBody
     @RequestMapping(value = "/loss", method = RequestMethod.GET)
-    //@RequestMapping(value = "/loss", method = RequestMethod.POST)
-    public BaseResponse cardOperation(String physicalcardno, String logiccardno, String buildname) {
+    public BaseResponse cardOperation(String physicalcardno) {
         try {
-            return cardManageBiz.cardLossOperation(physicalcardno, logiccardno,buildname);
+            return cardManageBiz.cardLossOperation(physicalcardno);
             //return null;
         } catch (Exception e) {
             log.info("挂失卡操作失败，错误信息为：{}", e.getMessage());

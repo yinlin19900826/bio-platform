@@ -6,6 +6,7 @@ package com.biocome.platform.common.constant;
 public class CommonConstants {
     public final static String RESOURCE_TYPE_MENU = "menu";
     public final static String RESOURCE_TYPE_BTN = "button";
+    public static final Integer CODE_OK = 200;
     // 用户token异常
     public static final Integer EX_USER_INVALID_CODE = 40101;
     public static final Integer EX_USER_PASS_INVALID_CODE = 40001;
@@ -33,9 +34,13 @@ public class CommonConstants {
     //app
     public static final Integer EX_APP_DB_ERR = 50000;
     public static final Integer EX_APP_USER_NOT_EXIST = 50001;
+    public static final Integer EX_APP_PASSWORD_NOT_MATCH = 50002;
+    public static final Integer EX_APP_USER_PHONE_NOT_BIND = 50003;
+    public static final Integer EX_APP_USERTYPE_NOT_NULL = 50004;
 
     //common
     //证件号码为空
     public static final Integer EX_CERTNO_NULL = 10001;
     public static final Integer EX_CERTNO_EXISTS = 10002;
+
 }

@@ -2,13 +2,15 @@ package com.biocome.platform.wechatapplet.rpc.service;
 
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.common.vo.user.AppUserInfo;
-import com.biocome.platform.inter.gateguard.biz.AppUserBiz;
-import com.biocome.platform.inter.gateguard.entity.AppUser;
-import com.biocome.platform.inter.gateguard.mapper.AppUserMapper;
+import com.biocome.platform.wechatapplet.biz.AppUserBiz;
+import com.biocome.platform.wechatapplet.constant.AppConstant;
+import com.biocome.platform.wechatapplet.entity.AppUser;
+import com.biocome.platform.wechatapplet.mapper.AppUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,25 +34,40 @@ public class AppUserService extends BaseBiz<AppUserMapper, AppUser> {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public AppUserInfo validate(String username, String password) {
+    public ObjectRestResponse<AppUserInfo> validate(String username, String password, String type) {
+        ObjectRestResponse<AppUserInfo> res = new ObjectRestResponse<AppUserInfo>();
         AppUserInfo info = new AppUserInfo();
         try {
+            if(ValidateUtils.isEmpty(type)){
+                res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"请选择用户类型！");
+                return res;
+            }
             AppUser user = appUserBiz.getUserByUsername(username);
             if(ValidateUtils.isEmpty(user)){
-                throw new Exception("用户不存在");
+                res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"用户不存在！");
+                return res;
             }else{
+                if(user.getType() == AppConstant.APP_USER_TYPE_ADMIN && user.getType() != Integer.parseInt(type)){
+                    res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"该账号类型为租户！");
+                    return res;
+                }
+                if(user.getType() == AppConstant.APP_USER_TYPE_LESSEE && user.getType() != Integer.parseInt(type)){
+                    res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"该账号类型为管理员！");
+                    return res;
+                }
                 if (encoder.matches(password, user.getPassword())) {
                     BeanUtils.copyProperties(user, info);
                     info.setId(user.getId().toString());
                     info.setEffectiveCode(DateUtils.getCurrentTimeStr()+"_"+ UUIDUtils.generateShortUuid());
                     jedisCluster.del(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+info.getUsername());
+                    res.setData(info);
                 }
             }
         }catch (Exception e){
             e.printStackTrace();
             log.info(e.getMessage());
         }
-        return info;
+        return res;
     }
 
 }

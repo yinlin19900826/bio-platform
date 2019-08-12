@@ -3,11 +3,12 @@ package com.biocome.platform.guard.biz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.constant.UserConstant;
 import com.biocome.platform.common.context.BaseContextHandler;
-import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
+import com.biocome.platform.guard.constant.APPConstants;
+import com.biocome.platform.guard.feign.AppAccountService;
 import com.biocome.platform.guard.mapper.DoorDeviceCardMapper;
 import com.biocome.platform.guard.rpc.service.CardRpc;
 import com.biocome.platform.inter.basemanager.rpc.service.FileRpc;
@@ -25,14 +26,11 @@ import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.basemanager.mapper.CardMapper;
 import com.biocome.platform.inter.basemanager.mapper.DeviceMapper;
 import com.biocome.platform.inter.basemanager.mapper.LesseeMapper;
-import com.biocome.platform.inter.basemanager.utils.FileUtils;
 import com.biocome.platform.inter.basemanager.vo.card.*;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseeCardVo;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListReq;
 import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListResp;
-import com.biocome.platform.inter.basemanager.vo.upload.FileVo;
-import com.biocome.platform.inter.gateguard.entity.AppUser;
-import com.biocome.platform.inter.gateguard.mapper.AppUserMapper;
+import com.biocome.platform.inter.gateguard.vo.user.AppAccountVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +83,7 @@ public class DoorDeviceCardBiz {
     private FileRpc fileRpc;
 
     @Autowired
-    private AppUserMapper appUserMapper;
+    private AppAccountService appAccountService;
 
     /**
      * @param username
@@ -160,16 +158,24 @@ public class DoorDeviceCardBiz {
         int lesseeResult = lesseeMapper.insert(lessee);
 
         //加入APP登录默认信息
-        AppUser appUser = new AppUser();
+        /*AppUser appUser = new AppUser();*/
         String papersnum = vo.getPapersnum();
-        String password = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode(papersnum.substring(papersnum.length() - 6));
+        /*String password = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode(papersnum.substring(papersnum.length() - 6));
         appUser.setUsername(vo.getUsername());
         appUser.setUsercode(usercode);
         appUser.setCreateTime(DateUtils.getCurrentTime());
         appUser.setPassword(password);
         appUser.setCreateUser(BaseContextHandler.getUsercode());
         appUser.setType(2);
-        appUserMapper.insertSelective(appUser);
+        appUserMapper.insertSelective(appUser);*/
+        AppAccountVo accountVo = new AppAccountVo();
+        accountVo.setUsername(papersnum);
+        accountVo.setUsercode(usercode);
+        accountVo.setCreateTime(DateUtils.getCurrentTime());
+        /*accountVo.setPassword(password);*/
+        accountVo.setCreateUser(BaseContextHandler.getUsercode());
+        accountVo.setType(APPConstants.USER_TYPE_LESSEE);
+        appAccountService.createAppAccount(accountVo);
 
         if (cardResult == 1 && lesseeResult == 1) {
             //判断是否需要激活，并下发卡

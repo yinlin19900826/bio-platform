@@ -2,6 +2,7 @@ package com.biocome.platform.auth.feign;
 
 import com.biocome.platform.auth.configuration.FeignConfiguration;
 import com.biocome.platform.auth.util.user.JwtAuthenticationRequest;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.vo.user.AppUserInfo;
 import com.biocome.platform.common.vo.user.UserInfo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -19,5 +20,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(value = "wechat-applet",configuration = FeignConfiguration.class)
 public interface IAppService {
   @RequestMapping(value = "app/user/validate", method = RequestMethod.POST)
-  public AppUserInfo validate(@RequestBody JwtAuthenticationRequest authenticationRequest);
+  public ObjectRestResponse<AppUserInfo> validate(@RequestBody JwtAuthenticationRequest authenticationRequest);
 }

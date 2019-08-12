@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.biocome.platform.inter.gateguard.mapper.AppUserMapper">
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.AppUserMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.biocome.platform.inter.gateguard.entity.AppUser" id="appUserMap">
+    <resultMap type="com.biocome.platform.wechatapplet.entity.AppUser" id="appUserMap">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
@@ -23,7 +23,7 @@
         where usercode = #{usercode}
     </update>
 
-    <select id="detail" resultType="com.biocome.platform.inter.gateguard.vo.user.AppUserVo">
+    <select id="detail" resultType="com.biocome.platform.wechatapplet.vo.user.AppUserVo">
         select a.username, a.usercode,  a.iscomplete, a.type, l.username as name, l.tel as phone, l.domiciletype as domiciletype, l.maritalstatus as marriage, l.culture as education,
         l.occupation as career, l.workunit as workOrganization, l.reason as comeReason, l.relation as realtionship, l.high as height, l.politicsstatus as politicPosition,
         l.residentmanner as dwellType, l.firsttime as arriveDate, l.sfgzbljzz as residePermitNotify, l.sfgzdzgx as placeChangeNotify, l.fertility as reproduction,
@@ -40,7 +40,7 @@
         where username = #{username}
     </update>
 
-    <select id="simpleUserInfoVo" resultType="com.biocome.platform.inter.gateguard.vo.user.SimpleUserInfoVo">
+    <select id="simpleUserInfoVo" resultType="com.biocome.platform.wechatapplet.vo.user.SimpleUserInfoVo">
         select l.usercode, l.username as name , l.headphoto as headPhoto, l.tel as phone, DATE_FORMAT(l.checkintime,'%Y-%m-%d') as checkinTime, c.physical_cardno as cardNo,
         case l.relation when '4' then true else false END isCharger, l.phonemodel as phoneModel, l.buildcode
         from base_lessee l

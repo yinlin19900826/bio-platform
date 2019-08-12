@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.rpc;
 
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.vo.user.AppUserInfo;
 import com.biocome.platform.common.vo.user.UserInfo;
 import com.biocome.platform.wechatapplet.rpc.service.AppUserService;
@@ -22,8 +23,8 @@ public class AppUserRest {
 
     @RequestMapping(value = "/user/validate", method = RequestMethod.POST)
     public @ResponseBody
-    AppUserInfo validate(@RequestBody Map<String,String> body){
-        return appUserService.validate(body.get("username"),body.get("password"));
+    ObjectRestResponse<AppUserInfo> validate(@RequestBody Map<String,String> body){
+        return appUserService.validate(body.get("username"),body.get("password"),body.get("type"));
     }
 
 }
