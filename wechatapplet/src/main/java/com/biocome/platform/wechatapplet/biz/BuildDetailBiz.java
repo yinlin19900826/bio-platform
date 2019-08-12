@@ -52,8 +52,8 @@ public class BuildDetailBiz {
      */
     public LesseeResp selectLesseeResp(String houseCode) throws Exception {
         List<LesseeVo> list = mapper.selectLesseeResp(houseCode);
-        LesseeResp lesseeResp = new LesseeResp();
-        if(ValidateUtils.isNotEmpty(list)){
+        LesseeResp lesseeResp;
+        if (ValidateUtils.isNotEmpty(list)) {
             List<LesseeVo> principals = new ArrayList<>();
             List<LesseeVo> lessees = new ArrayList<>();
             for (LesseeVo vo : list) {
@@ -64,7 +64,9 @@ public class BuildDetailBiz {
                     lessees.add(vo);
                 }
             }
-            lesseeResp =  new LesseeResp(principals, lessees);
+            lesseeResp = new LesseeResp(principals, lessees);
+        } else {
+            lesseeResp = new LesseeResp();
         }
         return lesseeResp;
     }
