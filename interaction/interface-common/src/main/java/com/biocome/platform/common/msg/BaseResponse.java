@@ -31,5 +31,11 @@ public class BaseResponse {
         this.status = status;
     }
 
-
+    @Override
+    public String toString() {
+        return "BaseResponse{" +
+                "status=" + status +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
