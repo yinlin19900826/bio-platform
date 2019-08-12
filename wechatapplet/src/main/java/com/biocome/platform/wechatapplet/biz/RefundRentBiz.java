@@ -43,6 +43,16 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
      */
     public ObjectRestResponse refundRent(String physicalcardno, String usercode) throws Exception {
         try {
+            if("".equals(physicalcardno)||physicalcardno.isEmpty()
+                    ||null == physicalcardno
+                    ||"".equals(usercode)||usercode.isEmpty()
+                    ||null == usercode
+            ){
+               // throw new Exception("传入的参数存在空值");
+                return new ObjectRestResponse().customError("传入的参数存在空值!");
+               // return new ObjectRestResponse().customError("单个租户退租失败!");
+
+            }
             refundRentMapper.deleteByUserName(physicalcardno,usercode);
             return new ObjectRestResponse().success();
         }catch(Exception e ) {
@@ -62,6 +72,14 @@ public class RefundRentBiz extends BaseBiz<RefundRentMapper, Card> {
      */
     public ObjectRestResponse refundAllRent(String physicalcardno, String usercode) throws Exception {
         try {
+            if("".equals(physicalcardno)||physicalcardno.isEmpty()
+                    ||null == physicalcardno
+                    ||"".equals(usercode)||usercode.isEmpty()
+                    ||null == usercode){
+               // throw new Exception("传入的参数存在空值");
+                 return new ObjectRestResponse().customError("传入的参数存在空值!");
+
+            }
             List<String> housecodes = refundRentMapper.getHouseCode(physicalcardno,usercode);
             List<String> allUserCodeList = new ArrayList<>();
             for(String housecode:housecodes){

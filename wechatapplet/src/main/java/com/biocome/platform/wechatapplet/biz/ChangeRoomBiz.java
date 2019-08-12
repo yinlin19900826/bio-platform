@@ -49,6 +49,20 @@ public class ChangeRoomBiz extends BaseBiz<ChangeRoomMapper, Card> {
             String buildname = changeRoomVo.getBuildname();
             String buildcode = changeRoomVo.getBuildcode();
             String housecode = changeRoomVo.getHousecode();
+            if("".equals(physicalcardno)||physicalcardno.isEmpty()
+                    ||null == physicalcardno
+                    ||"".equals(usercode)||usercode.isEmpty()
+                    ||null == usercode
+                ||"".equals(buildname)||buildname.isEmpty()
+                    ||null == buildname
+                    ||"".equals(buildcode)||buildcode.isEmpty()
+                    ||null == buildcode
+                ||"".equals(housecode)||housecode.isEmpty()
+                    ||null == housecode){
+                // throw new Exception("传入的参数存在空值");
+                return new ObjectRestResponse().customError("传入的参数存在空值!");
+
+            }
             String originbuildcode = changeRoomMapper.getOriginBuildCode(physicalcardno,usercode);
             String originhousecode = changeRoomMapper.getOriginHouseCode(physicalcardno,usercode);
 
