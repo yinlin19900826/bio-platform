@@ -91,41 +91,41 @@ public class CardManageBiz extends BaseBiz<CardManageMapper, CardManageVo> {
      * @Author yinlin
      * @Date 2019/7/31 11:19
      */
-    public ObjectRestResponse cardLossOperation(String physicalcardno,String logiccardno,String buildname) throws Exception {
+    public ObjectRestResponse cardLossOperation(String physicalcardno) throws Exception {
         Card model = cardManageMapper.selectCardByCardNo(physicalcardno);
-        if (model.getCardtype().equals("1")) {
-            Device device = new Device();
-            device.setSn(model.getSn());
+        Device device = new Device();
+        device.setSn(model.getSn());
             //根据sn获取对应设备信息和厂家编号
-            List<Device> devices = deviceBiz.selectList(device);
-            if (devices.size() > 0) {
-                LogoutCardVo logoutCardVo = new LogoutCardVo();
-                //根据厂家编号获取URI
-                Device dev = devices.get(0);
-                URI uriByBrand = uriUtil.getUriByBrand(dev.getBrand());
-                if (uriByBrand != null) {
-                    //获取token
-                    String token = rpcTokenUtil.getRpcToken(dev.getBrand());
-                    logoutCardVo.setToken(token);
-                    logoutCardVo.setCardno(model.getPhysicalCardno());
-                    logoutCardVo.setCardtype(model.getCardtype());
-                    List<String> sns = new ArrayList<>();
-                    sns.add(model.getSn());
-                    /*BaseRpcResponse res = rpc.logoutCard(uriByBrand, logoutCardVo);
-                    if (CommonConstants.RESP_RESULT_SUCCESS.equals(res.getResult())) {
-                        //修改表该卡注销
-                        model.setIsalive(AdminCommonConstant.DEFAULT_ZERO);
-                        cardMapper.updateByPrimaryKey(model);
+        List<Device> devices = deviceBiz.selectList(device);
+        if (devices.size() > 0) {
+            LogoutCardVo logoutCardVo = new LogoutCardVo();
+            //根据厂家编号获取URI
+            Device dev = devices.get(0);
+            URI uriByBrand = uriUtil.getUriByBrand(dev.getBrand());
+            if (uriByBrand != null) {
+                //获取token
+                String token = rpcTokenUtil.getRpcToken(dev.getBrand());
+                logoutCardVo.setToken(token);
+                logoutCardVo.setCardno(model.getLogicCardno());
+                logoutCardVo.setCardtype(model.getCardtype());
+                List<String> sns = new ArrayList<>();
+                sns.add(model.getSn());
+                BaseRpcResponse res = rpc.logoutCard(uriByBrand, logoutCardVo);
+                if (CommonConstants.RESP_RESULT_SUCCESS.equals(res.getResult())) {
+                    //修改表该卡注销
+                    model.setIsalive(AdminCommonConstant.DEFAULT_ZERO);
+                    cardMapper.updateByPrimaryKey(model);
+                    return new ObjectRestResponse().success();
 
-
-                    } else {
-                        throw new Exception("请求小平台注销接口失败");
-                    }*/
+                }else{
+                    throw new Exception("请求小平台注销接口失败");
                 }
-
+            }else{
+                throw new Exception("设备品牌对应URI获取异常");
             }
-
+        }else{
+            throw new Exception("设备不存在");
         }
-        return new ObjectRestResponse().success();
+
     }
 }
