@@ -4,8 +4,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.util.Date;
-
 /**
  * @ClassName: CompleteVo
  * @Author: shenlele
@@ -20,6 +18,9 @@ public class CompleteVo {
 
     @ApiModelProperty(value = "手机号码")
     private String tel;
+
+    @ApiModelProperty(value = "手机型号")
+    private String phonemodel;
 
     @ApiModelProperty(value = "验证码")
     private String vertifyCode;
@@ -202,6 +203,7 @@ public class CompleteVo {
     public String getFirsttime() {
         return firsttime;
     }
+
     public void setFirsttime(String firsttime) {
         this.firsttime = firsttime;
     }
@@ -244,5 +246,13 @@ public class CompleteVo {
 
     public void setIscard(Integer iscard) {
         this.iscard = iscard;
+    }
+
+    public String getPhonemodel() {
+        return phonemodel;
+    }
+
+    public void setPhonemodel(String phonemodel) {
+        this.phonemodel = phonemodel;
     }
 }

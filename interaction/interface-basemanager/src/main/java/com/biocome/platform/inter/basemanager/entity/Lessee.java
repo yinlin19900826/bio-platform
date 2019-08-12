@@ -385,6 +385,12 @@ public class Lessee extends Base {
     private Integer ckdt;
 
     /**
+     * 手机型号
+     */
+    @ApiModelProperty(value = "手机型号")
+    private Integer phonemodel;
+
+    /**
      * 获取主键编号
      *
      * @return id - 主键编号
@@ -1227,5 +1233,13 @@ public class Lessee extends Base {
 
     public void setIndustry(Integer industry) {
         this.industry = industry;
+    }
+
+    public Integer getPhonemodel() {
+        return phonemodel;
+    }
+
+    public void setPhonemodel(Integer phonemodel) {
+        this.phonemodel = phonemodel;
     }
 }

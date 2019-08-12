@@ -52,7 +52,7 @@ public class BuildDetailBiz {
      */
     public LesseeResp selectLesseeResp(String houseCode) throws Exception {
         List<LesseeVo> list = mapper.selectLesseeResp(houseCode);
-        LesseeResp lesseeResp = null;
+        LesseeResp lesseeResp = new LesseeResp();
         if(ValidateUtils.isNotEmpty(list)){
             List<LesseeVo> principals = new ArrayList<>();
             List<LesseeVo> lessees = new ArrayList<>();
