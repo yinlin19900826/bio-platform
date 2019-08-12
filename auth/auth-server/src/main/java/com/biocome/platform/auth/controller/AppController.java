@@ -24,8 +24,8 @@ public class AppController {
     public ObjectRestResponse<String> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
         log.info(authenticationRequest.getUsername()+"app require logging...");
-        String token = authService.appLogin(authenticationRequest);
-        return new ObjectRestResponse<>().data(token);
+        ObjectRestResponse<String> res = authService.appLogin(authenticationRequest);
+        return res;
     }
 
     /*@RequestMapping(value = "refresh", method = RequestMethod.GET)

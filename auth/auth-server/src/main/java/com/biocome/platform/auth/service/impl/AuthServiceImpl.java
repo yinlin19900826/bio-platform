@@ -61,20 +61,20 @@ public class AuthServiceImpl implements AuthService {
      * @throws Exception
      */
     @Override
-    public String appLogin(JwtAuthenticationRequest authenticationRequest) throws Exception {
-        ObjectRestResponse<AppUserInfo> res = appService.validate(authenticationRequest);
-        if(res.getStatus() == CommonConstants.CODE_OK){
-            AppUserInfo info = res.getData();
+    public ObjectRestResponse<String> appLogin(JwtAuthenticationRequest authenticationRequest) throws Exception {
+        ObjectRestResponse<AppUserInfo> resp = appService.validate(authenticationRequest);
+        if(resp.getStatus() == CommonConstants.CODE_OK){
+            AppUserInfo info = resp.getData();
             if (!StringUtils.isEmpty(info.getId())) {
                 String token = jwtTokenUtil.generateToken(new JWTInfo(info.getUsername(), info.getId(), info.getName(), info.getUsercode(), info.getEffectiveCode(), DateUtils.getAddDaysDateStr(new Date(),CommonConstants.TOKEN_EFFETIVE_DAY)), appTokenExpire);
                 //将effectiveCode保存在redis
                 jedisCluster.set(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+info.getUsername(), info.getEffectiveCode());
-                return token;
+                ObjectRestResponse<String> res = new ObjectRestResponse<String>().success();
+                res.setData(token);
+                return res;
             }
-        }else{
-            throw new Exception(res.getMessage());
         }
-        throw new UserInvalidException("用户不存在或账户密码错误!");
+        return new ObjectRestResponse<String>(resp.getStatus(), resp.getMessage());
     }
 
     @Override

@@ -35,7 +35,7 @@ public class OpenDoorController {
 
     @ApiOperation("远程开门")
     @ResponseBody
-    @RequestMapping(value = "/openDoor/{sn}", method = RequestMethod.POST)
+    @RequestMapping(value = "/openDoor/{sn}", method = RequestMethod.GET)
     public BaseResponse openDoor(@PathVariable String sn) {
         try {
             String code = BaseContextHandler.getUsercode();
