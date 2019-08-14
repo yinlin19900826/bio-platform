@@ -32,7 +32,6 @@ public class SMSController {
             resp = smsService.sendSMS(pre);
         } catch (Exception e) {
             log.error("下发短信失败：{}", e.getMessage());
-            e.printStackTrace();
             resp.setStatus(204);
             resp.setMessage("下发短信失败，请稍后再试");
         }

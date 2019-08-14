@@ -47,24 +47,35 @@ public class ObjectRestResponse<T> extends BaseResponse {
         this.data = data;
     }
 
-    public ObjectRestResponse success(){
+    public ObjectRestResponse success() {
         this.setMessage("成功");
         this.setRel(true);
         return this;
     }
-    public ObjectRestResponse failure(){
+
+    public ObjectRestResponse failure() {
         this.setStatus(204);
         this.setMessage("失败");
         return this;
     }
-    public ObjectRestResponse error(){
+
+    public ObjectRestResponse error() {
         this.setStatus(500);
         this.setMessage("异常，请检查参数格式");
         return this;
     }
-    public ObjectRestResponse customError(String message){
+
+    public ObjectRestResponse customError(String message) {
         this.setStatus(204);
         this.setMessage(message);
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ObjectRestResponse{" + "status=" + super.getStatus() + "，message=" + super.getMessage()
+                + "，data=" + data +
+                ", rel=" + rel +
+                '}';
     }
 }
