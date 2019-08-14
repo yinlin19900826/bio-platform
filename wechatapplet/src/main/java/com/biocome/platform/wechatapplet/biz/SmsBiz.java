@@ -70,7 +70,9 @@ public class SmsBiz implements SMSService {
                 result = true;
                 resp.setMessage("短信验证码匹配");
                 //删除验证码
-                jedisCluster.del(pre);
+                if (jedisCluster.exists(pre)) {
+                    jedisCluster.del(pre);
+                }
             } else {
                 resp.setMessage("短信验证码不匹配");
             }
