@@ -56,7 +56,6 @@ public class SmsBiz implements SMSService {
         }
 
         jedisCluster.setex(pre, WechatConstant.SMS_KEY_EXPIRE, String.valueOf(code));
-        resp.setData(smsResp);
         return resp;
     }
 
