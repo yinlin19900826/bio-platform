@@ -100,7 +100,7 @@ public class AppUserBiz extends BaseBiz<AppUserMapper, AppUser> {
             return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "未找到用户账号！请核对证件号码！");
         }
         String sms = param.getSms();
-        weChatBiz.vertifyCode(AppConstant.SMS_RESET_PASSWORD_PRE,sms);
+        weChatBiz.vertifyCode(AppConstant.SMS_RESET_PASSWORD_PRE+"_"+phoneNo,sms);
         String reset = param.getResetPassword();
         String confirm = param.getConfirmPassword();
         if(ValidateUtils.isEmpty(reset) || ValidateUtils.isEmpty(confirm)){

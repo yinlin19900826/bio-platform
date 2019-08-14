@@ -38,6 +38,8 @@ public class CommonConstants {
     public static final Integer EX_APP_USER_PHONE_NOT_BIND = 50003;
     public static final Integer EX_APP_USERTYPE_NOT_NULL = 50004;
 
+    public static final Integer EX_APP_SMS_PHONE_NULL = 51001;
+
     //common
     //证件号码为空
     public static final Integer EX_CERTNO_NULL = 10001;

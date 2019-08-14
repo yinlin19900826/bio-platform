@@ -1,7 +1,10 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.BaseResponse;
+import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.wechatapplet.constant.AppConstant;
 import com.biocome.platform.wechatapplet.constant.WechatConstant;
 import com.biocome.platform.wechatapplet.service.SMSService;
 import io.swagger.annotations.Api;
@@ -25,6 +28,22 @@ public class SMSController {
 
     @Autowired
     private SMSService smsService;
+
+    @GetMapping("sendResetSMS")
+    public BaseResponse sendResetSMS(@RequestParam String phone) {
+        BaseResponse resp = new BaseResponse();
+        try {
+            if(ValidateUtils.isEmpty(phone)){
+                resp = new BaseResponse(CommonConstants.EX_APP_SMS_PHONE_NULL,"电话号码不能为空！");
+            }
+            resp = smsService.sendSMS(AppConstant.SMS_RESET_PASSWORD_PRE + "_"+phone);
+        } catch (Exception e) {
+            log.error("下发短信失败：{}", e.getMessage());
+            resp.setStatus(204);
+            resp.setMessage("下发短信失败，请稍后再试");
+        }
+        return resp;
+    }
 
     @GetMapping("sendSMS")
     public BaseResponse sendSMS(@RequestParam String pre) {

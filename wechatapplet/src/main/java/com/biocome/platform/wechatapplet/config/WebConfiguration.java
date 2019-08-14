@@ -76,6 +76,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                 "/app/user/validate",
                 "/app/user/resetPassword",
                 "/app/user/createAppAccount",
+                "/sms/sendResetSMS",
                 "**/swagger**"
         };
         Collections.addAll(list, urls);
