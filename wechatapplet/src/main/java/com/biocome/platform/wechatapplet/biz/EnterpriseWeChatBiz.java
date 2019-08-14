@@ -42,7 +42,7 @@ public class EnterpriseWeChatBiz implements SMSService {
             resp.setMessage("短信发送失败");
             return resp;
         }
-        jedisCluster.setex(pre + BaseContextHandler.getUsercode(), WechatConstant.SMS_KEY_EXPIRE, String.valueOf(password));
+        jedisCluster.setex(pre , WechatConstant.SMS_KEY_EXPIRE, String.valueOf(password));
         return resp;
     }
 
@@ -50,7 +50,7 @@ public class EnterpriseWeChatBiz implements SMSService {
     public VertifyResp vertifyCode(String pre, String code) {
         VertifyResp resp = new VertifyResp();
         boolean result = false;
-        String value = jedisCluster.get(pre + BaseContextHandler.getUsercode());
+        String value = jedisCluster.get(pre);
         if (ValidateUtils.isNotEmpty(value)) {
             if (code.equals(value)) {
                 result = true;

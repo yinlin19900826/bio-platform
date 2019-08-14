@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.rest;
 
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.wechatapplet.constant.WechatConstant;
 import com.biocome.platform.wechatapplet.service.SMSService;
@@ -29,7 +30,7 @@ public class SMSController {
     public BaseResponse sendSMS(@RequestParam String pre) {
         BaseResponse resp = new BaseResponse();
         try {
-            resp = smsService.sendSMS(pre);
+            resp = smsService.sendSMS(pre + BaseContextHandler.getUsercode());
         } catch (Exception e) {
             log.error("下发短信失败：{}", e.getMessage());
             resp.setStatus(204);

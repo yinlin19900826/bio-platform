@@ -1,6 +1,7 @@
 package com.biocome.platform.wechatapplet.biz;
 
 import com.biocome.platform.common.constant.UserConstant;
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.UUIDUtils;
@@ -150,7 +151,7 @@ public class UserDetailBiz {
      */
     public ObjectRestResponse updateSelectiveById(CompleteVo vo) throws Exception {
         //验证码校验
-        VertifyResp resp = smsService.vertifyCode(WechatConstant.SENDMAIL_USERDETAIL, vo.getVertifyCode());
+        VertifyResp resp = smsService.vertifyCode(WechatConstant.SENDMAIL_USERDETAIL + BaseContextHandler.getUsercode(), vo.getVertifyCode());
         if (resp.isResult()) {
             //更新完善信息
             mapper.updateSelectiveById(vo);
