@@ -2,8 +2,10 @@ package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.BaseResponse;
+import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.wechatapplet.constant.WechatConstant;
 import com.biocome.platform.wechatapplet.service.SMSService;
+import com.biocome.platform.wechatapplet.vo.duanxin.SmsResp;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +29,13 @@ public class SMSController {
     private SMSService smsService;
 
     @GetMapping("sendSMS")
-    public BaseResponse sendSMS(@RequestParam String pre) {
-        BaseResponse resp = new BaseResponse();
+    public ObjectRestResponse<SmsResp> sendSMS(@RequestParam String pre, @RequestParam String phone) {
+        ObjectRestResponse<SmsResp> resp = new ObjectRestResponse<>();
         try {
-            resp = smsService.sendSMS(pre + BaseContextHandler.getUsercode());
+            resp = smsService.sendSMS(pre + BaseContextHandler.getUsercode(), phone, WechatConstant.SENDMAIL_CONTENT );
         } catch (Exception e) {
             log.error("下发短信失败：{}", e.getMessage());
+            e.printStackTrace();
             resp.setStatus(204);
             resp.setMessage("下发短信失败，请稍后再试");
         }

@@ -1,6 +1,8 @@
 package com.biocome.platform.wechatapplet.service;
 
 import com.biocome.platform.common.msg.BaseResponse;
+import com.biocome.platform.common.msg.ObjectRestResponse;
+import com.biocome.platform.wechatapplet.vo.duanxin.SmsResp;
 import com.biocome.platform.wechatapplet.vo.duanxin.VertifyResp;
 
 /**
@@ -9,7 +11,7 @@ import com.biocome.platform.wechatapplet.vo.duanxin.VertifyResp;
  */
 public interface SMSService {
 
-    BaseResponse sendSMS(String pre) throws Exception;
+    ObjectRestResponse<SmsResp> sendSMS(String pre, String phone , String message) throws Exception;
 
     VertifyResp vertifyCode(String pre, String code);
 }

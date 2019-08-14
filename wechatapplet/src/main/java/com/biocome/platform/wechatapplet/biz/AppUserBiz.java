@@ -15,6 +15,7 @@ import com.biocome.platform.inter.gateguard.vo.user.AppAccountVo;
 import com.biocome.platform.wechatapplet.constant.AppConstant;
 import com.biocome.platform.wechatapplet.entity.AppUser;
 import com.biocome.platform.wechatapplet.mapper.AppUserMapper;
+import com.biocome.platform.wechatapplet.service.SMSService;
 import com.biocome.platform.wechatapplet.vo.user.AppUserVo;
 import com.biocome.platform.wechatapplet.vo.user.ResetPasswordParam;
 import com.biocome.platform.wechatapplet.vo.user.SimpleUserInfoVo;
@@ -45,7 +46,7 @@ public class AppUserBiz extends BaseBiz<AppUserMapper, AppUser> {
     @Autowired
     LesseeBiz lesseeBiz;
     @Autowired
-    EnterpriseWeChatBiz weChatBiz;
+    SMSService weChatBiz;
 
     /**
      * 根据用户编号修改完善信息状态
