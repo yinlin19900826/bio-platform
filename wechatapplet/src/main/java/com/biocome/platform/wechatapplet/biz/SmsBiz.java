@@ -1,5 +1,6 @@
 package com.biocome.platform.wechatapplet.biz;
 
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.JsonUtils;
@@ -61,6 +62,22 @@ public class SmsBiz implements SMSService {
 
     @Override
     public VertifyResp vertifyCode(String pre, String code) {
-        return null;
+        VertifyResp resp = new VertifyResp();
+        boolean result = false;
+        String value = jedisCluster.get(pre);
+        if (ValidateUtils.isNotEmpty(value)) {
+            if (code.equals(value)) {
+                result = true;
+                resp.setMessage("短信验证码匹配");
+                //删除验证码
+                jedisCluster.del(pre + BaseContextHandler.getUsercode());
+            } else {
+                resp.setMessage("短信验证码不匹配");
+            }
+        } else {
+            resp.setMessage("未发送短信验证码或验证码已过期");
+        }
+        resp.setResult(result);
+        return resp;
     }
 }
