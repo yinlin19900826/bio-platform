@@ -95,7 +95,9 @@ public class AppUserBiz extends BaseBiz<AppUserMapper, AppUser> {
         if(ValidateUtils.isEmpty(lessee.getTel())){
             return new BaseResponse(CommonConstants.EX_APP_USER_PHONE_NOT_BIND, "用户未绑定电话号码！不可用改电话号码重置密码！");
         }
-        AppUserVo user = userDetail(certNo);
+        AppUser entity = new AppUser();
+        entity.setUsername(certNo);
+        AppUser user = mapper.selectOne(entity);
         if(ValidateUtils.isEmpty(user)){
             return new BaseResponse(CommonConstants.EX_APP_USER_NOT_EXIST, "未找到用户账号！请核对证件号码！");
         }

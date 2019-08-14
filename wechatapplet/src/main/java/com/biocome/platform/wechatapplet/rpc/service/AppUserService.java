@@ -61,6 +61,9 @@ public class AppUserService extends BaseBiz<AppUserMapper, AppUser> {
                     info.setEffectiveCode(DateUtils.getCurrentTimeStr()+"_"+ UUIDUtils.generateShortUuid());
                     jedisCluster.del(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+info.getUsername());
                     res.setData(info);
+                }else{
+                    res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_ERR_PWD,"密码错误！");
+                    return res;
                 }
             }
         }catch (Exception e){
