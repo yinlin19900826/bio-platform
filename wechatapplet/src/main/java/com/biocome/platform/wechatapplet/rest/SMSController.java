@@ -36,7 +36,7 @@ public class SMSController {
             if (ValidateUtils.isEmpty(phone)) {
                 resp = new BaseResponse(CommonConstants.EX_APP_SMS_PHONE_NULL, "电话号码不能为空！");
             }
-            resp = smsService.sendSMS(AppConstant.SMS_RESET_PASSWORD_PRE + "_" + phone);
+            resp = smsService.sendSMS(AppConstant.SMS_RESET_PASSWORD_PRE + "_" + phone, phone, WechatConstant.SENDMAIL_CONTENT);
         } catch (Exception e) {
             log.error("下发短信失败：{}", e.getMessage());
             resp.setStatus(204);
