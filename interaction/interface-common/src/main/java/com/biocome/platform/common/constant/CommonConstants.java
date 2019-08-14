@@ -37,6 +37,9 @@ public class CommonConstants {
     public static final Integer EX_APP_PASSWORD_NOT_MATCH = 50002;
     public static final Integer EX_APP_USER_PHONE_NOT_BIND = 50003;
     public static final Integer EX_APP_USERTYPE_NOT_NULL = 50004;
+    public static final Integer EX_APP_ERR_PWD = 50005;
+
+    public static final Integer EX_APP_SMS_PHONE_NULL = 51001;
 
     //common
     //证件号码为空

@@ -2,10 +2,8 @@ package com.biocome.platform.wechatapplet.rest;
 
 import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.BaseResponse;
-import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.wechatapplet.constant.WechatConstant;
 import com.biocome.platform.wechatapplet.service.SMSService;
-import com.biocome.platform.wechatapplet.vo.duanxin.SmsResp;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,14 +26,29 @@ public class SMSController {
     @Autowired
     private SMSService smsService;
 
-    @GetMapping("sendSMS")
-    public ObjectRestResponse<SmsResp> sendSMS(@RequestParam String pre, @RequestParam String phone) {
-        ObjectRestResponse<SmsResp> resp = new ObjectRestResponse<>();
+    @GetMapping("sendResetSMS")
+    public BaseResponse sendResetSMS(@RequestParam String phone) {
+        BaseResponse resp = new BaseResponse();
         try {
-            resp = smsService.sendSMS(pre + BaseContextHandler.getUsercode(), phone, WechatConstant.SENDMAIL_CONTENT );
+            if(ValidateUtils.isEmpty(phone)){
+                resp = new BaseResponse(CommonConstants.EX_APP_SMS_PHONE_NULL,"电话号码不能为空！");
+            }
+            resp = smsService.sendSMS(AppConstant.SMS_RESET_PASSWORD_PRE + "_"+phone);
         } catch (Exception e) {
             log.error("下发短信失败：{}", e.getMessage());
-            e.printStackTrace();
+            resp.setStatus(204);
+            resp.setMessage("下发短信失败，请稍后再试");
+        }
+        return resp;
+    }
+
+    @GetMapping("sendSMS")
+    public BaseResponse sendSMS(@RequestParam String pre) {
+        BaseResponse resp = new BaseResponse();
+        try {
+            resp = smsService.sendSMS(pre + BaseContextHandler.getUsercode());
+        } catch (Exception e) {
+            log.error("下发短信失败：{}", e.getMessage());
             resp.setStatus(204);
             resp.setMessage("下发短信失败，请稍后再试");
         }

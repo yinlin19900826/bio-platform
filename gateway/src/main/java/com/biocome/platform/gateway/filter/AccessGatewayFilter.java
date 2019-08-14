@@ -103,17 +103,18 @@ public class AccessGatewayFilter implements GlobalFilter {
             ServerHttpRequest build = mutate.build();
             return gatewayFilterChain.filter(serverWebExchange.mutate().request(build).build());
         }
-        IJWTInfo user = null;
-        try {
-            user = getJWTUser(request, mutate);
-        } catch (Exception e) {
-            log.error("用户Token过期异常", e);
-            return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Token Forbidden or Expired!"));
-        }
         if(requestUri.contains(GATE_WAY_PREFIX_APPLET)){
             //后续加上小程序的权限约束
 
         }else{
+            IJWTInfo user = null;
+            try {
+                user = getJWTUser(request, mutate);
+            } catch (Exception e) {
+                log.error("用户Token过期异常", e);
+                return getVoidMono(serverWebExchange, new TokenForbiddenResponse("User Token Forbidden or Expired!"));
+            }
+
             List<PermissionInfo> permissionIfs = userService.getAllPermissionInfo();
             // 判断资源是否启用权限约束
             Stream<PermissionInfo> stream = getPermissionIfs(requestUri, method, permissionIfs);
@@ -129,7 +130,6 @@ public class AccessGatewayFilter implements GlobalFilter {
         mutate.header(serviceAuthConfig.getTokenHeader(), serviceAuthUtil.getClientToken());
         ServerHttpRequest build = mutate.build();
         return gatewayFilterChain.filter(serverWebExchange.mutate().request(build).build());
-
     }
 
     /**

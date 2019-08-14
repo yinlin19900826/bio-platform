@@ -90,6 +90,7 @@
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
+            <version>1.1.0</version>
         </dependency>
 
         <!--nacos config-->
