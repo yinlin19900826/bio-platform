@@ -40,7 +40,7 @@ public class SmsBiz implements SMSService {
     public ObjectRestResponse<SmsResp> sendSMS(String pre, String phone, String message) throws Exception {
         ObjectRestResponse<SmsResp> resp = new ObjectRestResponse<>();
 
-        int code = +(int) ((Math.random() * 9 + 1) * 100000);
+        int code = (int) ((Math.random() * 9 + 1) * 100000);
         SmsMessageDetail messageDetail = new SmsMessageDetail(message + code, phone);
         List<SmsMessageDetail> list = new ArrayList<>();
         list.add(messageDetail);

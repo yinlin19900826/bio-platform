@@ -80,4 +80,10 @@ public interface OtherRpc {
      */
     @RequestMapping(value = {"/token"}, method = {org.springframework.web.bind.annotation.RequestMethod.POST}, produces = {"application/json;charset=UTF-8"})
     TokenResp token(URI baseUri, @RequestBody TokenVo vo);
+
+    /**
+     * 下发蓝牙摘要
+     */
+    @RequestMapping(value = {"/updatebluetooth"}, method = {org.springframework.web.bind.annotation.RequestMethod.POST}, produces = {"application/json;charset=UTF-8"})
+    BaseRpcResponse updatebluetooth(URI baseUri, @RequestBody UpdateBluetoothVo vo);
 }

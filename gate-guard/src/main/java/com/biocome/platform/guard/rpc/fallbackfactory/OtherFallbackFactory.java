@@ -52,6 +52,11 @@ public class OtherFallbackFactory implements FallbackFactory<OtherRpc> {
                 return resp;
             }
 
+            @Override
+            public BaseRpcResponse updatebluetooth(URI baseUri, UpdateBluetoothVo vo) {
+                return error();
+            }
+
             private BaseRpcResponse error() {
                 BaseRpcResponse resp = new BaseRpcResponse();
                 resp.setErrorcode("105");
