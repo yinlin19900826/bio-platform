@@ -13,6 +13,10 @@ public class DeviceDetailResp {
     private String sn;
     @ApiModelProperty(value = "设备名称")
     private String deviceName;
+    @ApiModelProperty(value = "蓝牙mac")
+    private String bluetoothmac;
+    @ApiModelProperty(value = "蓝牙摘要")
+    private String devdigest;
 
     public String getSn() {
         return sn;
@@ -28,5 +32,21 @@ public class DeviceDetailResp {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
+    }
+
+    public String getBluetoothmac() {
+        return bluetoothmac;
+    }
+
+    public void setBluetoothmac(String bluetoothmac) {
+        this.bluetoothmac = bluetoothmac;
+    }
+
+    public String getDevdigest() {
+        return devdigest;
+    }
+
+    public void setDevdigest(String devdigest) {
+        this.devdigest = devdigest;
     }
 }
