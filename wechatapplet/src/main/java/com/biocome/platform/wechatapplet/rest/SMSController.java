@@ -8,6 +8,7 @@ import com.biocome.platform.wechatapplet.constant.AppConstant;
 import com.biocome.platform.wechatapplet.constant.WechatConstant;
 import com.biocome.platform.wechatapplet.service.SMSService;
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class SMSController {
     public BaseResponse sendSMS(@RequestParam String pre, @RequestParam String phone) {
         BaseResponse resp = new BaseResponse();
         try {
+            if (StringUtils.isBlank(phone)) {
+                return new BaseResponse(CommonConstants.EX_APP_SMS_PHONE_NULL, "电话号码不能为空！");
+            }
             resp = smsService.sendSMS(pre + BaseContextHandler.getUsercode(), phone, WechatConstant.SENDMAIL_CONTENT);
         } catch (Exception e) {
             log.error("下发短信失败：{}", e.getMessage());

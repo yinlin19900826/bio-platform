@@ -49,7 +49,9 @@ public class SmsBiz implements SMSService {
         SmsReq req = new SmsReq(UUIDUtils.generateShortUuid(), "send", detail);
         SmsResp smsResp = rpc.sendMail(req);
 
-        if (ValidateUtils.isNotEmpty(smsResp.getError())) {
+        if (ValidateUtils.isNotEmpty(smsResp.getError())
+                || smsResp.getResult().size() == 0
+                || !"0".equals(smsResp.getResult().get(0).getRet())) {
             resp.setStatus(204);
             resp.setMessage("短信发送失败");
             return resp;
