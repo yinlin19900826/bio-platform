@@ -3,16 +3,20 @@ package com.biocome.platform.guard.biz;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.CodeUtils;
+import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.rpc.service.OtherRpc;
 import com.biocome.platform.guard.utils.RpcTokenUtil;
 import com.biocome.platform.guard.utils.UriUtil;
 import com.biocome.platform.guard.vo.otherrpc.*;
 import com.biocome.platform.inter.basemanager.biz.DeviceBiz;
+import com.biocome.platform.inter.basemanager.biz.DictBiz;
 import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
 import com.biocome.platform.inter.basemanager.entity.Device;
+import com.biocome.platform.inter.basemanager.entity.Dictionary;
 import com.biocome.platform.inter.basemanager.vo.device.DeviceSnBrandVo;
 import com.biocome.platform.inter.basemanager.vo.device.DeviceSnVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,6 +46,8 @@ public class RpcBiz {
     OtherRpc rpc;
     @Autowired
     RpcTokenUtil rpcTokenUtil;
+    @Autowired
+    DictBiz dictBiz;
 
     public BaseRpcResponse openDoor(OpenDoorVo req) {
         BaseRpcResponse resp = new BaseRpcResponse();
@@ -165,7 +172,7 @@ public class RpcBiz {
 
     public BaseRpcResponse remoteUpdate(RemoteUpdateBrandVo vo) throws Exception {
         URI uri = uriUtil.getUriByBrand(vo.getBrandcode());
-        RemoteUpdateVo remoteUpdateVo = new RemoteUpdateVo(rpcTokenUtil.getRpcToken(vo.getBrandcode()),vo.getSn(),filepath,CodeUtils.getUUID());
+        RemoteUpdateVo remoteUpdateVo = new RemoteUpdateVo(rpcTokenUtil.getRpcToken(vo.getBrandcode()), vo.getSn(), filepath, CodeUtils.getUUID());
         return rpc.remoteupdate(uri, remoteUpdateVo);
     }
 }

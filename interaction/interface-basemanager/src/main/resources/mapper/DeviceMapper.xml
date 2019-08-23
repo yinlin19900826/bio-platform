@@ -188,6 +188,14 @@
             where sn = #{device.sn,jdbcType=VARCHAR} and ip = #{device.ip,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateBluetoothBySn" parameterType="com.biocome.platform.inter.basemanager.entity.Device">
+        update base_device
+        SET devdigest = #{device.devdigest,jdbcType=VARCHAR},
+        bluetoothmac = #{device.bluetoothmac,jdbcType=VARCHAR},
+        bluetooth_updatetime = #{device.bluetoothUpdatetime,jdbcType=VARCHAR}
+        where sn = #{device.sn,jdbcType=VARCHAR}
+    </update>
+
     <select id="selectSnByBuildCodes" resultType="com.biocome.platform.inter.basemanager.vo.card.CardSnVo">
         SELECT sn FROM base_device WHERE buildcode
         IN

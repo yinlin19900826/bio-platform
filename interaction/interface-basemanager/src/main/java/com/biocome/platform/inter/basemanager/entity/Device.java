@@ -106,6 +106,18 @@ public class Device {
     @Column(name = "c_number3")
     private String camera3;
 
+    @ApiModelProperty(value="蓝牙摘要")
+    @Column(name = "devdigest")
+    private String devdigest;
+
+    @ApiModelProperty(value="蓝牙mac")
+    @Column(name = "bluetoothmac")
+    private String bluetoothmac;
+
+    @ApiModelProperty(value="蓝牙摘要更新时间")
+    @Column(name = "bluetooth_updatetime")
+    private String bluetoothUpdatetime;
+
     public Integer getId() {
         return id;
     }
@@ -216,5 +228,37 @@ public class Device {
 
     public void setCamera3(String camera3) {
         this.camera3 = camera3;
+    }
+
+    public String getUnitcode() {
+        return unitcode;
+    }
+
+    public void setUnitcode(String unitcode) {
+        this.unitcode = unitcode;
+    }
+
+    public String getDevdigest() {
+        return devdigest;
+    }
+
+    public void setDevdigest(String devdigest) {
+        this.devdigest = devdigest;
+    }
+
+    public String getBluetoothmac() {
+        return bluetoothmac;
+    }
+
+    public void setBluetoothmac(String bluetoothmac) {
+        this.bluetoothmac = bluetoothmac;
+    }
+
+    public String getBluetoothUpdatetime() {
+        return bluetoothUpdatetime;
+    }
+
+    public void setBluetoothUpdatetime(String bluetoothUpdatetime) {
+        this.bluetoothUpdatetime = bluetoothUpdatetime;
     }
 }

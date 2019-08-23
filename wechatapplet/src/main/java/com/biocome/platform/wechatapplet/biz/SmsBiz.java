@@ -40,7 +40,7 @@ public class SmsBiz implements SMSService {
     public ObjectRestResponse<SmsResp> sendSMS(String pre, String phone, String message) throws Exception {
         ObjectRestResponse<SmsResp> resp = new ObjectRestResponse<>();
 
-        int code = +(int) ((Math.random() * 9 + 1) * 100000);
+        int code = (int) ((Math.random() * 9 + 1) * 100000);
         SmsMessageDetail messageDetail = new SmsMessageDetail(message + code, phone);
         List<SmsMessageDetail> list = new ArrayList<>();
         list.add(messageDetail);
@@ -49,14 +49,15 @@ public class SmsBiz implements SMSService {
         SmsReq req = new SmsReq(UUIDUtils.generateShortUuid(), "send", detail);
         SmsResp smsResp = rpc.sendMail(req);
 
-        if (ValidateUtils.isNotEmpty(smsResp.getError())) {
+        if (ValidateUtils.isNotEmpty(smsResp.getError())
+                || smsResp.getResult().size() == 0
+                || !"0".equals(smsResp.getResult().get(0).getRet())) {
             resp.setStatus(204);
             resp.setMessage("短信发送失败");
             return resp;
         }
 
         jedisCluster.setex(pre, WechatConstant.SMS_KEY_EXPIRE, String.valueOf(code));
-        resp.setData(smsResp);
         return resp;
     }
 
@@ -70,7 +71,9 @@ public class SmsBiz implements SMSService {
                 result = true;
                 resp.setMessage("短信验证码匹配");
                 //删除验证码
-                jedisCluster.del(pre + BaseContextHandler.getUsercode());
+                if (jedisCluster.exists(pre)) {
+                    jedisCluster.del(pre);
+                }
             } else {
                 resp.setMessage("短信验证码不匹配");
             }

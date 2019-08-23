@@ -52,6 +52,8 @@ public interface DeviceMapper extends Mapper<Device> {
      */
     int updateBySnAndIp(@Param("device") Device device);
 
+    int updateBluetoothBySn(@Param("device") Device device);
+
     List<CardSnVo> selectSnByBuildCode(@Param("buildcode") String buildcode);
 
     List<CardSnVo> selectSnByBuildCodes(@Param("codes") List<String> codes);
