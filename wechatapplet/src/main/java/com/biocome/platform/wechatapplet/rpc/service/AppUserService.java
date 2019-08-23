@@ -48,11 +48,11 @@ public class AppUserService extends BaseBiz<AppUserMapper, AppUser> {
                 return res;
             }else{
                 if(user.getType() == AppConstant.APP_USER_TYPE_ADMIN && user.getType() != Integer.parseInt(type)){
-                    res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"该账号类型为租户！");
+                    res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"该账号类型为管理员！");
                     return res;
                 }
                 if(user.getType() == AppConstant.APP_USER_TYPE_LESSEE && user.getType() != Integer.parseInt(type)){
-                    res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"该账号类型为管理员！");
+                    res = new ObjectRestResponse<AppUserInfo>(CommonConstants.EX_APP_USERTYPE_NOT_NULL,"该账号类型为租户！");
                     return res;
                 }
                 if (encoder.matches(password, user.getPassword())) {

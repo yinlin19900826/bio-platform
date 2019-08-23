@@ -4,6 +4,7 @@ import com.biocome.platform.auth.common.util.util.jwt.IJWTInfo;
 import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.auth.configuration.UserConfiguration;
 import com.biocome.platform.auth.util.user.JwtTokenUtil;
+import com.biocome.platform.common.exception.auth.UserTokenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,14 @@ public class UserAuthRestInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         String token = request.getHeader(userConfiguration.getUserTokenHeader());
-        IJWTInfo infoFromToken = jwtTokenUtil.getInfoFromToken(token);
-        BaseContextHandler.setUsername(infoFromToken.getUniqueName());
-        BaseContextHandler.setName(infoFromToken.getName());
-        BaseContextHandler.setUserID(infoFromToken.getId());
+        try {
+            IJWTInfo infoFromToken = jwtTokenUtil.getInfoFromToken(token);
+            BaseContextHandler.setUsername(infoFromToken.getUniqueName());
+            BaseContextHandler.setName(infoFromToken.getName());
+            BaseContextHandler.setUserID(infoFromToken.getId());
+        }catch (UserTokenException e){
+            e.printStackTrace();
+        }
         return super.preHandle(request, response, handler);
     }
 

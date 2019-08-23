@@ -10,6 +10,7 @@ import com.biocome.platform.auth.util.user.JwtTokenUtil;
 import com.biocome.platform.common.exception.auth.UserInvalidException;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.util.DateUtils;
+import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.common.vo.user.AppUserInfo;
 import com.biocome.platform.common.vo.user.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +76,20 @@ public class AuthServiceImpl implements AuthService {
             }
         }
         return new ObjectRestResponse<String>(resp.getStatus(), resp.getMessage());
+    }
+
+    @Override
+    public ObjectRestResponse appLogout(String username) {
+        if(ValidateUtils.isEmpty(username)){
+            return new ObjectRestResponse(CommonConstants.EX_USER_INVALID_CODE,"未知的用户！");
+        }
+        try{
+            jedisCluster.del(CommonConstants.JWT_ACCESS_TOKEN_EFFECTIVE_CODE+"_"+username);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ObjectRestResponse(CommonConstants.REDIS_CACH_OPERATION_ERR, "系统错误！");
+        }
+        return new ObjectRestResponse().success();
     }
 
     @Override
