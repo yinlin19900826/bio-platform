@@ -31,4 +31,5 @@ public class CommonConstants {
     public static final Integer TOKEN_EFFETIVE_DAY = 30;
     public static final Integer TOKEN_CHANGE_MINITE = 5;
 
+    public static final Integer REDIS_CACH_OPERATION_ERR = 40401;
 }

@@ -11,4 +11,5 @@ public interface AuthService {
     String refresh(String oldToken) throws Exception;
     void validate(String token) throws Exception;
     ObjectRestResponse<String> appLogin(JwtAuthenticationRequest authenticationRequest) throws Exception;
+    ObjectRestResponse appLogout(String username);
 }
