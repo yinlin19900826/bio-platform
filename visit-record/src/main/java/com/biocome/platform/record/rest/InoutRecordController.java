@@ -49,7 +49,7 @@ public class InoutRecordController extends BaseController<InoutRecordBiz, InoutR
     private String tags;
 
     @ApiOperation("出入记录上传")
-    @PostMapping("/recordinfo")
+    @PostMapping("/upload/recordinfo")
     @ResponseBody
     public BaseRpcResponse inoutRecordUpload(@RequestBody InoutRecordReq req) {
         BaseRpcResponse resp = new BaseRpcResponse();
@@ -81,7 +81,7 @@ public class InoutRecordController extends BaseController<InoutRecordBiz, InoutR
     }
 
     @ApiOperation("出入记录批量上传")
-    @PostMapping("/recordinfobulk")
+    @PostMapping("/upload/recordinfobulk")
     @ResponseBody
     public List<InoutRecordBulkResp> inoutRecordUploadBluk(@RequestBody InoutRecordBulkReq req) {
         InoutRecordBulkResp resp = new InoutRecordBulkResp();
