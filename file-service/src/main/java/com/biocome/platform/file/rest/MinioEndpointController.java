@@ -3,9 +3,11 @@ package com.biocome.platform.file.rest;
 import com.alibaba.rocketmq.client.producer.DefaultMQProducer;
 import com.alibaba.rocketmq.common.message.Message;
 import com.biocome.platform.common.msg.ObjectRestResponse;
+import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.JsonUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.file.biz.MinioTemplateBiz;
+import com.biocome.platform.file.constant.CommonConstant;
 import com.biocome.platform.file.entity.OpenDoorImages;
 import com.biocome.platform.file.entity.UserImages;
 import com.biocome.platform.file.vo.FileVo;
@@ -149,15 +151,15 @@ public class MinioEndpointController {
 
     @ApiOperation("上传开门图片")
     @PostMapping(value = "/object/uploadOpenDoor", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ObjectRestResponse userImg(@RequestPart("object") MultipartFile object) {
+    public BaseRpcResponse userImg(@RequestPart("object") MultipartFile object) {
         try {
             OpenDoorImages model = template.uploadOpenDoor(object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
             Message sendMsg = new Message(topics, openDoorTags, JsonUtils.beanToJson(model).getBytes());
             defaultMQProducer.send(sendMsg);
-            return new ObjectRestResponse().success().data(model.getUrl());
+            return new BaseRpcResponse(CommonConstant.DEFAULT_ONE, model.getUrl(), CommonConstant.SUCCESS);
         } catch (Exception e) {
             log.info("上传开门图片失败，错误信息为：{}", e.getMessage());
-            return new ObjectRestResponse().failure();
+            return new BaseRpcResponse(CommonConstant.DEFAULT_ZERO, "上传开门图片失败", CommonConstant.ERROR);
         }
     }
 

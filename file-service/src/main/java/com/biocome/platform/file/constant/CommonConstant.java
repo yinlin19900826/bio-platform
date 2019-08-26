@@ -36,4 +36,7 @@ public class CommonConstant {
     public final static String DEFAULT_TWO = "2";
     public final static int DEFAULT_INT_THREE = 3;
 
+    public final static String SUCCESS = "100";
+    public final static String ERROR = "101";
+
 }
