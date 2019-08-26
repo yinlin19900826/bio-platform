@@ -156,10 +156,10 @@ public class MinioEndpointController {
             OpenDoorImages model = template.uploadOpenDoor(object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
             Message sendMsg = new Message(topics, openDoorTags, JsonUtils.beanToJson(model).getBytes());
             defaultMQProducer.send(sendMsg);
-            return new BaseRpcResponse(CommonConstant.DEFAULT_ONE, model.getUrl(), CommonConstant.SUCCESS);
+            return new BaseRpcResponse(model.getUrl(), CommonConstant.DEFAULT_ONE, CommonConstant.SUCCESS);
         } catch (Exception e) {
             log.info("上传开门图片失败，错误信息为：{}", e.getMessage());
-            return new BaseRpcResponse(CommonConstant.DEFAULT_ZERO, "上传开门图片失败", CommonConstant.ERROR);
+            return new BaseRpcResponse("上传开门图片失败", CommonConstant.DEFAULT_ZERO, CommonConstant.ERROR);
         }
     }
 
