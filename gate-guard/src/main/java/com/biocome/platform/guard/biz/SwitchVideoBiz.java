@@ -35,11 +35,13 @@ public class SwitchVideoBiz {
      * @Author yinlin
      * @Date 2019/8/28 13:42
      */
-    public List<SwitchVideoVo> switchLiveVideo(String buildcode) throws Exception {
+    public SwitchVideoVo switchLiveVideo(String buildcode) throws Exception {
 
-        List<SwitchVideoVo> list = switchVideoMapper.switchLiveVideo(buildcode);
+       // SwitchVideoVo switchVideoVo = new SwitchVideoVo();
 
-        return list;
+        SwitchVideoVo switchVideoVo = switchVideoMapper.switchLiveVideo(buildcode);
+
+        return switchVideoVo;
     }
 
 

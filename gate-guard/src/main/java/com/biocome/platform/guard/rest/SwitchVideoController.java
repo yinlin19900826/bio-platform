@@ -32,10 +32,11 @@ public class SwitchVideoController {
     @ApiImplicitParam(name = "buildcode", value = "楼栋编码", paramType = "query")
     @ResponseBody
     @RequestMapping(value = "/livevideo", method = RequestMethod.GET)
-    public ObjectRestResponse<List<SwitchVideoVo>> switchLiveVideo(String buildcode) {
+    public ObjectRestResponse<SwitchVideoVo> switchLiveVideo(String buildcode) {
         try {
-            List<SwitchVideoVo> list = switchVideoBiz.switchLiveVideo(buildcode);
-            return new ObjectRestResponse<>(true).data(list);
+            //SwitchVideoVo switchVideoVo= new SwitchVideoVo();
+            SwitchVideoVo switchVideoVo = switchVideoBiz.switchLiveVideo(buildcode);
+            return new ObjectRestResponse<>(true).data(switchVideoVo);
         } catch (Exception e) {
             log.error("切换直播视频操作失败，错误信息为：" + e.getMessage());
             return new ObjectRestResponse<>().failure();

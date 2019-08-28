@@ -22,6 +22,6 @@ public interface SwitchVideoMapper {
      * @Author yinlin
      * @Date 2019/8/28 14:39
      */
-    List<SwitchVideoVo> switchLiveVideo(@Param("buildcode") String buildcode);
+    SwitchVideoVo switchLiveVideo(@Param("buildcode") String buildcode);
 
 }
