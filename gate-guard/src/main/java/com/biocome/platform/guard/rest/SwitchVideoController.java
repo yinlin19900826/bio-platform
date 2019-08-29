@@ -43,4 +43,19 @@ public class SwitchVideoController {
         }
     }
 
+    @ApiOperation("切换门禁回播视频")
+    @ApiImplicitParam(name = "buildcode", value = "楼栋编码", paramType = "query")
+    @ResponseBody
+    @RequestMapping(value = "/playbackvideo", method = RequestMethod.GET)
+    public ObjectRestResponse<SwitchVideoVo> switchPlayBackVideo(String buildcode) {
+        try {
+            SwitchVideoVo switchVideoVo = switchVideoBiz.switchPlayBackVideo(buildcode);
+            switchVideoVo.setSeconds(10);
+            return new ObjectRestResponse<>(true).data(switchVideoVo);
+        } catch (Exception e) {
+            log.error("切换直播视频操作失败，错误信息为：" + e.getMessage());
+            return new ObjectRestResponse<>().failure();
+        }
+    }
+
 }

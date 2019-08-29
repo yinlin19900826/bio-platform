@@ -44,20 +44,19 @@ public class SwitchVideoVo {
     @ApiModelProperty(value = "摄像机所处VCN的ip")
     private String vcnip;
 
+
+    /**
+     * 门禁摄像机录播前后多少秒
+     */
+    @ApiModelProperty(value = "门禁摄像机录播前后多少秒")
+    private Integer seconds;
+
     public String getChannelcode() {
         return channelcode;
     }
 
     public void setChannelcode(String channelcode) {
         this.channelcode = channelcode;
-    }
-
-    public String getVanip() {
-        return lanip;
-    }
-
-    public void setVanip(String vanip) {
-        this.lanip = vanip;
     }
 
     public String getChannelname() {
@@ -83,4 +82,21 @@ public class SwitchVideoVo {
     public void setVcnip(String vcnip) {
         this.vcnip = vcnip;
     }
+
+    public String getLanip() {
+        return lanip;
+    }
+
+    public void setLanip(String lanip) {
+        this.lanip = lanip;
+    }
+
+    public Integer getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(Integer seconds) {
+        this.seconds = seconds;
+    }
+
 }

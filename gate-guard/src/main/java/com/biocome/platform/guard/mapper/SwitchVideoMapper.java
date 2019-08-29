@@ -24,4 +24,14 @@ public interface SwitchVideoMapper {
      */
     SwitchVideoVo switchLiveVideo(@Param("buildcode") String buildcode);
 
+    /**
+     * 根据楼栋编码查询对应的门禁摄像机录播相关信息
+     *
+     * @param buildcode 楼栋编码
+     * @return java.util.List<SwitchVideoVO>
+     * @Author yinlin
+     * @Date 2019/8/29 13:42
+     */
+    SwitchVideoVo switchPlayBackVideo(@Param("buildcode") String buildcode);
+
 }
