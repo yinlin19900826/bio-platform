@@ -388,7 +388,7 @@ public class Lessee extends Base {
      * 手机型号
      */
     @ApiModelProperty(value = "手机型号")
-    private Integer phonemodel;
+    private String phonemodel;
 
     /**
      * 获取主键编号
@@ -1235,11 +1235,11 @@ public class Lessee extends Base {
         this.industry = industry;
     }
 
-    public Integer getPhonemodel() {
+    public String getPhonemodel() {
         return phonemodel;
     }
 
-    public void setPhonemodel(Integer phonemodel) {
+    public void setPhonemodel(String phonemodel) {
         this.phonemodel = phonemodel;
     }
 }
