@@ -46,5 +46,8 @@ public class CommonConstants {
     //证件号码为空
     public static final Integer EX_CERTNO_NULL = 10001;
     public static final Integer EX_CERTNO_EXISTS = 10002;
-
+    //检索类型不能为空
+    public static final Integer EX_ES_SEARCH_TYPE_IS_NULL = 10010;
+    public static final Integer EX_ES_SEARCH_NAME_IS_NULL = 10011;
+    public static final Integer EX_ES_DATA_ERR = 10012;
 }

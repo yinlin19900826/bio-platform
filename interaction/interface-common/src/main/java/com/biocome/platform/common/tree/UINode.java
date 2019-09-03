@@ -153,16 +153,34 @@ public class UINode {
         return ids;
     }
 
-    public UINode getNodeById(String id) {
+    public UINode getNodeById(String id, UINode currentNode) {
         if(this.id.equals(id)){
-            return this;
+            currentNode = this;
         }else{
             if(ValidateUtils.isNotEmpty(getChildList())){
                 for(UINode node : getChildList()){
-                    return node.getNodeById(id);
+                    if(id.equals(node.getId())){
+                        currentNode = node;
+                        break;
+                    }else{
+                        node.getNodeById(id, currentNode);
+                    }
                 }
             }
         }
-        return null;
+        return currentNode;
     }
+
+    public void getChildIdsByNodeId(String id, List<String> list){
+        if(this.id.equals(id)){
+            list.addAll(getChildIds());
+        }else{
+            if(ValidateUtils.isNotEmpty(getChildList())){
+                for(UINode node : getChildList()){
+                    node.getChildIdsByNodeId(id, list);
+                }
+            }
+        }
+    }
+
 }

@@ -60,13 +60,9 @@ public class UITree {
         }else{
             if(ValidateUtils.isNotEmpty(root.getChildList())){
                 for(UINode node : root.getChildList()){
-                    target = node.getNodeById(id);
+                    node.getChildIdsByNodeId(id, ids);
                 }
             }
-        }
-        if(ValidateUtils.isNotEmpty(target)){
-            List<String> childIds = target.getChildIds();
-            ids.addAll(childIds);
         }
         return ids;
     }

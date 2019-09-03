@@ -106,6 +106,7 @@ public class CameraGroupBiz extends BaseBiz<CameraGroupMapper,CameraGroup> {
      * @param vos
      * @throws Exception
      */
+    @CacheClear(key = "tree:camera_group")
     public void add2Group(List<AddGroupVo> vos) throws Exception{
         if(ValidateUtils.isNotEmpty(vos)){
             for(AddGroupVo vo : vos){
@@ -126,10 +127,12 @@ public class CameraGroupBiz extends BaseBiz<CameraGroupMapper,CameraGroup> {
     /**
      * 根据id批量删除
      */
+    @CacheClear(key = "tree:camera_group")
     public void batchDeleteByIds(List<Integer> ids) throws Exception{
         mapper.deleteByIds(ids);
     }
 
+    @CacheClear(key = "tree:camera_group")
     public BaseResponse rename(Integer id, String name) {
         if(ValidateUtils.isEmpty(name)){
             return new BaseResponse(CommonConstants.EX_OTHER_CODE, "名称不能为空！");
@@ -165,6 +168,7 @@ public class CameraGroupBiz extends BaseBiz<CameraGroupMapper,CameraGroup> {
      * 移除树及树下所有分支
      * @param id
      */
+    @CacheClear(key = "tree:camera_group")
     public void removeGroup(Integer id) {
         UITree tree = getTree();
         List<String> subGroupIds = tree.findBranchById(String.valueOf(id));

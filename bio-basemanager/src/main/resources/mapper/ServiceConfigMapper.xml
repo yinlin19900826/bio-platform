@@ -20,7 +20,7 @@
     </resultMap>
 
     <select id="selectServiceConfigList" resultType="com.biocome.platform.basemanager.vo.camera.ServiceConfigVo">
-        SELECT c.id, c.`name`, c.`type`,t.dict_value AS typeName, c.sub_type AS subType, s.dict_value AS subTypeName, c.lan_ip AS lanIp,
+        SELECT c.id, c.`name`, c.`type`,t.dict_value AS type, c.sub_type AS subType, s.dict_value AS subTypeName, c.lan_ip AS lanIp,
          c.lan_port AS lanPort, c.wan_ip AS wanIp, c.wan_port AS wanPort, c.max_conn AS maxConn, c.max_dispatch AS maxDispatch, c.`description`
         FROM
         (
