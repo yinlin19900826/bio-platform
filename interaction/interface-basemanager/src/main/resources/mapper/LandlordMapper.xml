@@ -44,9 +44,9 @@
             <if test="username != null and username.trim() != ''">and l.username like concat('%',
                 #{username,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="tel != null">and l.tel = #{tel,jdbcType=VARCHAR}</if>
-            <if test="papersnum !=null">and l.papersnum = #{papersnum,jdbcType=VARCHAR}</if>
-            <if test="landlordtype !=null">and l.landlordtype = #{landlordtype,jdbcType=VARCHAR}</if>
+            <if test="tel != null and tel.trim() != ''">and l.tel = #{tel,jdbcType=VARCHAR}</if>
+            <if test="papersnum !=null and papersnum.trim() != ''">and l.papersnum = #{papersnum,jdbcType=VARCHAR}</if>
+            <if test="landlordtype !=null and landlordtype.trim() != ''">and l.landlordtype = #{landlordtype,jdbcType=VARCHAR}</if>
         </where>
         ORDER BY
         l.updatetime DESC
