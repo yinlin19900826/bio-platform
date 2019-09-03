@@ -40,6 +40,7 @@ public class AdminCommonConstant {
     public final static String DISTRICT_POLICESTATIO = "5";
     public final static String DISTRICT_ESTATE = "6";
     public final static String DISTRICT_BUILD = "7";
+    public final static String DISTRICT_UNIT= "8";
 
     /**
      * 公用字符串数字

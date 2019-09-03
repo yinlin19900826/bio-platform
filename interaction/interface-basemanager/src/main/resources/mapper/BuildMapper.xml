@@ -62,6 +62,14 @@
         ORDER BY
         b.updatetime DESC
     </select>
+
+    <select id="selectDistrict" resultType="com.biocome.platform.inter.basemanager.vo.DistrictResp">
+        SELECT buildcode as code, buildname as name
+        FROM base_build
+        WHERE estatecode = #{code,jdbcType=VARCHAR}
+        ORDER BY updatetime DESC
+    </select>
+
     <!--删除方法-->
     <delete id="deleteBuild" parameterType="java.util.List">
         delete from base_build where id in
@@ -71,7 +79,11 @@
     </delete>
 
     <select id="selectByTree" resultMap="TreeBuildVoMap">
-        SELECT b.id, b.buildcode, b.buildname, b.estatecode,(select count(1) from base_device d where d.buildcode = b.buildcode) as countdevice
+        SELECT b.id,
+               b.buildcode,
+               b.buildname,
+               b.estatecode,
+               (select count(1) from base_device d where d.buildcode = b.buildcode) as countdevice
         FROM base_build b
         WHERE b.estatecode = #{estatecode,jdbcType=VARCHAR}
     </select>

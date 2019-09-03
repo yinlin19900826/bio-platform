@@ -1,9 +1,10 @@
 package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Build;
-import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
+import com.biocome.platform.inter.basemanager.vo.DistrictResp;
 import com.biocome.platform.inter.basemanager.vo.syncho.BuildAndBrandVo;
 import com.biocome.platform.inter.basemanager.vo.syncho.BuildVo;
+import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -70,4 +71,14 @@ public interface BuildMapper extends Mapper<Build> {
     List<BuildVo> selectByBuild(@Param("vo") BuildAndBrandVo vo);
 
     List<Build> queryBuildByBuildcode(@Param("list") List<String> needBuildcodeList);
+
+    /**
+     * 根据小区编号查询楼栋信息，返回特定实体类
+     *
+     * @param code 编码
+     * @return com.biocome.platform.inter.basemanager.vo.DistrictResp
+     * @Author shenlele
+     * @Date 2019/9/3 10:54
+     */
+    List<DistrictResp> selectDistrict(@Param("code") String code);
 }

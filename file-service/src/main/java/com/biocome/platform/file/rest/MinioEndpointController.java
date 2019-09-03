@@ -10,6 +10,7 @@ import com.biocome.platform.file.biz.MinioTemplateBiz;
 import com.biocome.platform.file.constant.CommonConstant;
 import com.biocome.platform.file.entity.OpenDoorImages;
 import com.biocome.platform.file.entity.UserImages;
+import com.biocome.platform.file.utils.FileNameUtil;
 import com.biocome.platform.file.vo.FileVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -111,7 +112,7 @@ public class MinioEndpointController {
     public ObjectRestResponse createObject(@RequestPart("object") MultipartFile object, @PathVariable String type) {
         try {
             String name = object.getOriginalFilename();
-            String path = template.uploadAdvert(name, object.getInputStream(), object.getSize(), object.getContentType(), type);
+            String path = template.uploadAdvert(FileNameUtil.updateName(name), object.getInputStream(), object.getSize(), object.getContentType(), type);
             return new ObjectRestResponse().success().data(path);
         } catch (Exception e) {
             log.info("上传文件失败，错误信息为：{}", e.getMessage());
@@ -126,7 +127,7 @@ public class MinioEndpointController {
     @PostMapping(value = "/object/{objectName}/{type}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ObjectRestResponse createObject(@RequestPart("object") MultipartFile object, @PathVariable String objectName, @PathVariable String type) {
         try {
-            String path = template.uploadAdvert(objectName, object.getInputStream(), object.getSize(), object.getContentType(), type);
+            String path = template.uploadAdvert(FileNameUtil.updateName(objectName), object.getInputStream(), object.getSize(), object.getContentType(), type);
             return new ObjectRestResponse().success().data(path);
         } catch (Exception e) {
             log.info("上传广告素材文件或升级文件并重命名失败，错误信息为：{}", e.getMessage());
@@ -139,7 +140,7 @@ public class MinioEndpointController {
     @PostMapping(value = "/object/userImg/{estateCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ObjectRestResponse userImg(@RequestPart("object") MultipartFile object, @PathVariable String estateCode) {
         try {
-            UserImages model = template.uploadUser(estateCode, object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
+            UserImages model = template.uploadUser(estateCode, FileNameUtil.updateName(object.getOriginalFilename()), object.getInputStream(), object.getSize(), object.getContentType());
             Message sendMsg = new Message(topics, userTags, JsonUtils.beanToJson(model).getBytes());
             defaultMQProducer.send(sendMsg);
             return new ObjectRestResponse().success().data(model.getUrl());
@@ -153,7 +154,7 @@ public class MinioEndpointController {
     @PostMapping(value = "/object/uploadOpenDoor", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseRpcResponse userImg(@RequestPart("object") MultipartFile object) {
         try {
-            OpenDoorImages model = template.uploadOpenDoor(object.getOriginalFilename(), object.getInputStream(), object.getSize(), object.getContentType());
+            OpenDoorImages model = template.uploadOpenDoor(FileNameUtil.updateName(object.getOriginalFilename()), object.getInputStream(), object.getSize(), object.getContentType());
             Message sendMsg = new Message(topics, openDoorTags, JsonUtils.beanToJson(model).getBytes());
             defaultMQProducer.send(sendMsg);
             return new BaseRpcResponse(model.getUrl(), CommonConstant.DEFAULT_ONE, CommonConstant.SUCCESS);

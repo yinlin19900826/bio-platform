@@ -50,6 +50,9 @@ public class RpcBiz {
     DictBiz dictBiz;
 
     public BaseRpcResponse openDoor(OpenDoorVo req) {
+        if (ValidateUtils.isEmpty(req.getUserdesc())){
+            req.setUserdesc(req.getUsercode());
+        }
         BaseRpcResponse resp = new BaseRpcResponse();
         try {
             if (req.getSn() != null) {
