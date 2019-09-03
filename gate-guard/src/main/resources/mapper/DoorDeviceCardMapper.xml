@@ -146,7 +146,7 @@
         SELECT
         bc.id,
         bc.physical_cardno,
-        bdd1.dict_value cardtype,
+        bdd1.dict_key cardtype,
         bl.checkintime,
         bl.usercode,
         bl.username,
