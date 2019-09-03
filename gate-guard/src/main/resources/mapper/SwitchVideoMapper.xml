@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.guard.mapper.SwitchVideoMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.vo.showmanage.SwitchVideoVo">
+        <result column="channel_code" jdbcType="VARCHAR" property="channelcode"/>
+        <result column="lan_ip" jdbcType="VARCHAR" property="lanip"/>
+        <result column="channel_name" jdbcType="VARCHAR" property="channelname"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="vcn_ip" jdbcType="VARCHAR" property="vcnip"/>
+    </resultMap>
+    <!--根据楼栋编码查询对应的摄像机信息-->
+    <select id="switchLiveVideo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        c.channel_code,c.lan_ip,c.channel_name,c.status,c.vcn_ip
+        FROM
+        base_channel c
+        <where>
+            <if test="buildcode != null">
+                and c.buildcode = #{buildcode,jdbcType=VARCHAR}
+            </if>
+            and c.type = 0
+        </where>
+    </select>
+
+    <select id="switchPlayBackVideo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        c.channel_code,c.lan_ip,c.channel_name,c.status,c.vcn_ip
+        FROM
+        base_channel c
+        <where>
+            <if test="buildcode != null">
+                and c.buildcode = #{buildcode,jdbcType=VARCHAR}
+            </if>
+            and c.type = 1
+        </where>
+    </select>
+</mapper>

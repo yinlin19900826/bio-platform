@@ -49,6 +49,8 @@
             usercode = #{usercode}
         AND
             overduetime > #{createtime}
+        AND
+            `status` = #{status}
     </select>
 
     <select id="getInactiveRecord" resultMap="active" parameterType="com.biocome.platform.inter.basemanager.entity.VisitorRecord">

@@ -51,6 +51,7 @@
         <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
         <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
         <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+        <result column="phonemodel" jdbcType="VARCHAR" property="phonemodel"/>
     </resultMap>
 
     <resultMap id="UserVoMap" type="com.biocome.platform.inter.basemanager.vo.syncho.LesseeUserVo">
