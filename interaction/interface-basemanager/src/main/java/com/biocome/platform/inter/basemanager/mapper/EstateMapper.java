@@ -1,6 +1,7 @@
 package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Estate;
+import com.biocome.platform.inter.basemanager.vo.DistrictResp;
 import com.biocome.platform.inter.basemanager.vo.syncho.EstateVo;
 import com.biocome.platform.inter.basemanager.vo.syncho.SynchoVo;
 import com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO;
@@ -78,5 +79,15 @@ public interface EstateMapper extends Mapper<Estate> {
      * @Date 2019/5/14 18:33
      */
     List<EstateVo> selectByEstate(@Param("estate") Estate estate);
+
+
+    /**
+     * 查询所有小区，返回特定类
+     *
+     * @return com.biocome.platform.inter.basemanager.vo.DistrictResp
+     * @Author shenlele
+     * @Date 2019/9/3 10:54
+     */
+    List<DistrictResp> selectDistrict();
 
 }

@@ -46,6 +46,14 @@
         ORDER BY
         u.updatetime DESC
     </select>
+
+    <select id="selectDistrict" resultType="com.biocome.platform.inter.basemanager.vo.DistrictResp">
+        SELECT unitcode as code, unitname as name
+        FROM base_unit
+        WHERE buildcode = #{code,jdbcType=VARCHAR}
+        ORDER BY updatetime DESC
+    </select>
+
     <!--删除方法-->
     <delete id="deleteUnit" parameterType="java.util.List">
         delete from base_unit where id in

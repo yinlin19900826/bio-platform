@@ -1,14 +1,16 @@
 package com.biocome.platform.inter.basemanager.biz;
 
 import com.ace.cache.annotation.Cache;
-import com.biocome.platform.inter.basemanager.entity.Build;
-import com.biocome.platform.inter.basemanager.mapper.BuildMapper;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.inter.basemanager.entity.Build;
+import com.biocome.platform.inter.basemanager.entity.Estate;
+import com.biocome.platform.inter.basemanager.mapper.BuildMapper;
+import com.biocome.platform.inter.basemanager.mapper.EstateMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -33,6 +35,8 @@ public class BuildBiz extends BaseBiz<BuildMapper, Build> {
 
     @Autowired
     private BuildMapper buildMapper;
+    @Autowired
+    private EstateMapper estateMapper;
 
     /**
      * 根据楼栋名称或楼栋地址查询所有楼栋信息，查询所有时传参都为null
@@ -117,6 +121,16 @@ public class BuildBiz extends BaseBiz<BuildMapper, Build> {
         bu.setBuildcode(build.getBuildcode());
         List<Build> builds = buildMapper.select(bu);
         if (ValidateUtils.isEmpty(builds)) {
+            //查询插入省市区等信息
+            Estate estate = new Estate();
+            estate.setEstatecode(build.getEstatecode());
+            Estate estate1 = estateMapper.selectOne(estate);
+            build.setProvince(estate1.getProvince());
+            build.setCity(estate1.getCity());
+            build.setCounty(estate1.getCounty());
+            build.setStreet(estate1.getStreet());
+            build.setPolicestatio(estate1.getPolicestatio());
+            build.setEstatename(estate1.getEstatename());
             buildMapper.insertSelective(build);
             return new ObjectRestResponse().success();
         } else {

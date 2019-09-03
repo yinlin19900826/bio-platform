@@ -1,6 +1,7 @@
 package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Unit;
+import com.biocome.platform.inter.basemanager.vo.DistrictResp;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -35,5 +36,15 @@ public interface UnitMapper extends Mapper<Unit> {
      * @Date 2019/5/8 13:56
      */
     void deleteUnit(@Param("list") List<Integer> list);
+
+    /**
+     * 根据楼栋编号查询单元信息，返回特定实体类
+     *
+     * @param code 编码
+     * @return com.biocome.platform.inter.basemanager.vo.DistrictResp
+     * @Author shenlele
+     * @Date 2019/9/3 10:54
+     */
+    List<DistrictResp> selectDistrict(@Param("code") String code);
 
 }

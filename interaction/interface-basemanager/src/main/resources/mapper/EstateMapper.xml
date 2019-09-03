@@ -80,6 +80,16 @@
         ORDER BY
         e.updatetime DESC
     </select>
+
+    <select id="selectDistrict" resultType="com.biocome.platform.inter.basemanager.vo.DistrictResp">
+        SELECT
+        e.estatecode as code,e.estatename as name
+        FROM
+        base_estate e
+        ORDER BY
+        e.updatetime DESC
+    </select>
+
     <!--删除方法-->
     <delete id="deleteEstate" parameterType="java.util.List">
         delete from base_estate where id in
@@ -142,7 +152,8 @@
         </if>
     </select>
 
-    <select id="selectByEstate" resultMap="EstateVoMap" parameterType="com.biocome.platform.inter.basemanager.entity.Estate">
+    <select id="selectByEstate" resultMap="EstateVoMap"
+            parameterType="com.biocome.platform.inter.basemanager.entity.Estate">
         SELECT
         e.estatecode,e.estatename,e.areacode,e.province,e.city,e.county,
         (SELECT count(b.estatecode) FROM base_build b WHERE b.estatecode = e.estatecode) as buildnum,
