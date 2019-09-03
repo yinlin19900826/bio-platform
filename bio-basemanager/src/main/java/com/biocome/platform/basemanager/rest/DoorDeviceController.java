@@ -1,6 +1,8 @@
 package com.biocome.platform.basemanager.rest;
 
+import com.biocome.platform.inter.basemanager.biz.BuildBiz;
 import com.biocome.platform.inter.basemanager.biz.DeviceBiz;
+import com.biocome.platform.inter.basemanager.biz.EstateBiz;
 import com.biocome.platform.inter.basemanager.entity.Device;
 import com.biocome.platform.basemanager.constant.BrandEnum;
 import com.biocome.platform.basemanager.vo.resp.device.DeviceInfoResp;
@@ -17,6 +19,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +36,10 @@ import java.util.Map;
 @Api(value = "门禁设备", tags = {"门禁设备操作"})
 public class DoorDeviceController extends BaseController<DeviceBiz, Device> {
     Logger log = LoggerFactory.getLogger(DoorDeviceController.class);
+    @Autowired
+    EstateBiz estateBiz;
+    @Autowired
+    BuildBiz buildBiz;
 
     @ApiOperation("获取设备列表,查询所有参数传null")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "主键ID", paramType = "query"),
@@ -55,6 +62,8 @@ public class DoorDeviceController extends BaseController<DeviceBiz, Device> {
         try {
             if (id == null) {
                 //如果id不传，说明是获取页面，则要封装楼栋信息、小区信息、品牌信息
+                map.put("estates", estateBiz.selectListAll());
+                map.put("builds", buildBiz.selectListAll());
                 map.put("brands", BrandEnum.getAllBrand());
             }
             Page<DeviceInfoResp> result = PageHelper.startPage(pageNum, pageSize);
