@@ -81,4 +81,20 @@ public class EsPage {
             }
         }
     }
+
+    public int getRecordCount() {
+        return recordCount;
+    }
+
+    public void setRecordCount(int recordCount) {
+        this.recordCount = recordCount;
+    }
+
+    public List<Map<String, Object>> getRecordList() {
+        return recordList;
+    }
+
+    public void setRecordList(List<Map<String, Object>> recordList) {
+        this.recordList = recordList;
+    }
 }

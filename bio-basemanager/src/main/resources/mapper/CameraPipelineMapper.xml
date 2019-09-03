@@ -22,7 +22,7 @@
 
     <!--    查找管道列表-->
     <select id="selectCameraPiplineList" resultType="com.biocome.platform.basemanager.vo.camera.CameraPipelineVo">
-        SELECT p.id, p.`name`,p.serial_code AS serialCode,  p.serial_no AS serialNo,  p.`type`, t.dict_value AS typeName, p.shot_encode AS encode,
+        SELECT p.id, p.`name`,p.serial_code AS serialCode,  p.serial_no AS serialNo,  p.`type`, t.dict_value AS type, p.shot_encode AS encode,
         e.dict_value AS encodeName, p.shot_decode as decode,d.dict_value AS decodeName,  p.shot_type AS shotType, c.dict_value AS shotTypeName,
         p.related_serial AS relatedSerial,platform_ctrl AS platformCtrl,camera_connect AS cameraConnect,camera_id AS comeraId
         FROM

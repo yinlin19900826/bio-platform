@@ -63,7 +63,11 @@ public class WebConfiguration implements WebMvcConfigurer {
                 "/menu/**",
 //                "/user/**",
                 "/api/permissions",
-                "/api/user/un/**"
+                "/api/user/un/**",
+                "camera",
+                "cameraGroup",
+                "cameraPipeline",
+                ""
         };
         Collections.addAll(list, urls);
         return list;
