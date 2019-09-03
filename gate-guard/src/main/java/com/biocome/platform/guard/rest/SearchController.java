@@ -43,10 +43,10 @@ public class SearchController {
     private SearchBiz searchBiz;
 
     @ApiOperation("根据名称检索")
-    @ApiImplicitParams(
-            {@ApiImplicitParam(name = "types", value = "检索类型", paramType = "query" )},
-            {@ApiImplicitParam(name = "name", value = "名称", paramType = "query" )}
-    )
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "types", value = "检索类型", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "名称", paramType = "query")
+    })
     @ResponseBody
     @RequestMapping(value = "/searchByName", method = RequestMethod.POST)
     public TableResultResponse<Map<String, Object>> searchByName(List<String> types, String name, @RequestParam(defaultValue = "20") int pageSize, @RequestParam(defaultValue = "1") int pageNum) {
