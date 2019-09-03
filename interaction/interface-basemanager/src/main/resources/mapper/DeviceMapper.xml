@@ -76,6 +76,7 @@
         bd.buildcode,
         bd.ip,
         bd.device_type,
+        bbrand.brandcode brandcode,
         bbrand.brandname brand,
         bb.buildname,
         be.estatename
