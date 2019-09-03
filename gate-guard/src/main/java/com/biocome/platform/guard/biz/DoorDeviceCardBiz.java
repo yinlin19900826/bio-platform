@@ -132,6 +132,7 @@ public class DoorDeviceCardBiz {
         lessee.setHeadphoto(vo.getHeadphoto());
         lessee.setPapersphoto(vo.getPapersphoto());
         lessee.setCreatetime(DateUtils.getCurrentTime());
+        lessee.setRegistertime(DateUtils.getCurrentTime());
 
         Card card = new Card();
         card.setBuildcode(vo.getBuildcode());
