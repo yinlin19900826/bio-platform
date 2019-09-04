@@ -154,6 +154,13 @@ public class DoorDeviceCardBiz {
             //如果之前有卡信息，则删除对应的卡，重新绑定
             cardMapper.deleteByPrimaryKey(cardList.get(0).getId());
         }
+        Lessee lessee1 = new Lessee();
+        lessee1.setPapersnum(vo.getPapersnum());
+        List<Lessee> lesseeList = lesseeMapper.select(lessee1);
+        if (lesseeList != null && lesseeList.size() > 0) {
+            //如果之前有租户信息，则删除该租户
+            lesseeMapper.deleteByPrimaryKey(lesseeList.get(0).getId());
+        }
         //加入卡和租户
         int cardResult = cardMapper.insert(card);
         int lesseeResult = lesseeMapper.insert(lessee);
@@ -335,6 +342,7 @@ public class DoorDeviceCardBiz {
         try {
             List<CardSnVo> snList = req.getSnList();
             if (snList.size() > 0) {
+                req.setList(req.getSnList());
                 String sn = snList.get(0).getSn();
                 Device device = new Device();
                 device.setSn(sn);
@@ -384,6 +392,7 @@ public class DoorDeviceCardBiz {
         try {
             List<CardSnVo> snList = req.getSnList();
             if (snList.size() > 0) {
+                req.setList(req.getSnList());
                 String sn = snList.get(0).getSn();
                 Device device = new Device();
                 device.setSn(sn);
@@ -398,7 +407,11 @@ public class DoorDeviceCardBiz {
                     if (uriByBrand != null) {
                         BaseRpcResponse baseRpcResponse = cardRpc.manageCard(uriByBrand, req);
                         if (CommonConstants.RESP_RESULT_SUCCESS.equals(baseRpcResponse.getResult())) {
-                            doorDeviceCardMapper.updateIsaliveByCardno(Integer.valueOf(req.getOperation()), req.getCardno());
+                            if (Integer.valueOf(req.getOperation()) == 1){
+                                doorDeviceCardMapper.updateIsaliveByCardno(3 , req.getCardno());
+                            }else if (Integer.valueOf(req.getOperation()) == 2){
+                                doorDeviceCardMapper.updateIsaliveByCardno(1 , req.getCardno());
+                            }
                         }
                         return baseRpcResponse;
                     } else {

@@ -37,6 +37,7 @@ public class ManagerCardVo {
      */
     @ApiModelProperty(value="设备编号")
     private List<CardSnVo> snList;
+    private List<CardSnVo> list;
     /**
      * 禁用开始时间
      */
@@ -52,6 +53,14 @@ public class ManagerCardVo {
      */
     @ApiModelProperty(value="行为 1：禁用 2：恢复")
     private String operation;
+
+    public List<CardSnVo> getList() {
+        return list;
+    }
+
+    public void setList(List<CardSnVo> list) {
+        this.list = list;
+    }
 
     public String getToken() {
         return token;
