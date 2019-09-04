@@ -6,6 +6,7 @@ import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.DateUtils;
+import com.biocome.platform.common.util.ThreadManager;
 import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.guard.constant.APPConstants;
 import com.biocome.platform.guard.feign.AppAccountService;
@@ -154,44 +155,40 @@ public class DoorDeviceCardBiz {
             //如果之前有卡信息，则删除对应的卡，重新绑定
             cardMapper.deleteByPrimaryKey(cardList.get(0).getId());
         }
+
+
         Lessee lessee1 = new Lessee();
         lessee1.setPapersnum(vo.getPapersnum());
         List<Lessee> lesseeList = lesseeMapper.select(lessee1);
+        int lesseeResult = 0;
         if (lesseeList != null && lesseeList.size() > 0) {
-            //如果之前有租户信息，则删除该租户
-            lesseeMapper.deleteByPrimaryKey(lesseeList.get(0).getId());
-        }
-        //加入卡和租户
-        int cardResult = cardMapper.insert(card);
-        int lesseeResult = lesseeMapper.insert(lessee);
-
-        //加入APP登录默认信息
-        /*AppUser appUser = new AppUser();*/
-        String papersnum = vo.getPapersnum();
-        /*String password = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode(papersnum.substring(papersnum.length() - 6));
-        appUser.setUsername(vo.getUsername());
-        appUser.setUsercode(usercode);
-        appUser.setCreateTime(DateUtils.getCurrentTime());
-        appUser.setPassword(password);
-        appUser.setCreateUser(BaseContextHandler.getUsercode());
-        appUser.setType(2);
-        appUserMapper.insertSelective(appUser);*/
-        AppAccountVo accountVo = new AppAccountVo();
-        accountVo.setUsername(papersnum);
-        accountVo.setUsercode(usercode);
-        accountVo.setCreateTime(DateUtils.getCurrentTime());
-        /*accountVo.setPassword(password);*/
-        accountVo.setCreateUser(BaseContextHandler.getUsercode());
-        accountVo.setType(APPConstants.USER_TYPE_LESSEE);
-        appAccountService.createAppAccount(accountVo);
-
-        if (cardResult == 1 && lesseeResult == 1) {
-            //判断是否需要激活，并下发卡
-            return ifaliveAndOpenCard(vo, sns);
+            //如果之前有租户信息，则不变
+            card.setUsercode(lesseeList.get(0).getUsercode());
         } else {
-            //存库失败，事务回滚
-            throw new Exception("存库失败");
+            //没有则添加
+            lesseeResult = lesseeMapper.insert(lessee);
+
+            //加入APP登录默认信息
+            String papersnum = vo.getPapersnum();
+            AppAccountVo accountVo = new AppAccountVo();
+            accountVo.setUsername(papersnum);
+            accountVo.setUsercode(usercode);
+            accountVo.setCreateTime(DateUtils.getCurrentTime());
+            accountVo.setCreateUser(BaseContextHandler.getUsercode());
+            accountVo.setType(APPConstants.USER_TYPE_LESSEE);
+            appAccountService.createAppAccount(accountVo);
         }
+        //判断并下发卡
+        BaseRpcResponse baseRpcResponse = ifaliveAndOpenCard(vo, sns);
+        if (baseRpcResponse != null && CommonConstants.RESP_RESULT_SUCCESS.equals(baseRpcResponse.getResult())) {
+            card.setIsalive("1");
+        } else if (baseRpcResponse == null) {
+            baseRpcResponse = new BaseRpcResponse().success();
+        }
+        cardMapper.insert(card);
+
+        return baseRpcResponse;
+
     }
 
     private BaseRpcResponse ifaliveAndOpenCard(LesseeCardVo vo, List<CardSnVo> sns) throws Exception {
@@ -205,7 +202,7 @@ public class DoorDeviceCardBiz {
             log.info("激活门禁卡结果{}", baseRpcResponse.toString());
             return baseRpcResponse;
         }
-        return new BaseRpcResponse().success();
+        return null;
     }
 
     public BaseRpcResponse openCard(OpenCardVo req) {
@@ -407,10 +404,10 @@ public class DoorDeviceCardBiz {
                     if (uriByBrand != null) {
                         BaseRpcResponse baseRpcResponse = cardRpc.manageCard(uriByBrand, req);
                         if (CommonConstants.RESP_RESULT_SUCCESS.equals(baseRpcResponse.getResult())) {
-                            if (Integer.valueOf(req.getOperation()) == 1){
-                                doorDeviceCardMapper.updateIsaliveByCardno(3 , req.getCardno());
-                            }else if (Integer.valueOf(req.getOperation()) == 2){
-                                doorDeviceCardMapper.updateIsaliveByCardno(1 , req.getCardno());
+                            if (Integer.valueOf(req.getOperation()) == 1) {
+                                doorDeviceCardMapper.updateIsaliveByCardno(3, req.getCardno());
+                            } else if (Integer.valueOf(req.getOperation()) == 2) {
+                                doorDeviceCardMapper.updateIsaliveByCardno(1, req.getCardno());
                             }
                         }
                         return baseRpcResponse;
