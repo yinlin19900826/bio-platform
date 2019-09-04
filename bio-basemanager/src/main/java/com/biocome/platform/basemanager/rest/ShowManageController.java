@@ -68,7 +68,7 @@ public class ShowManageController {
 
     @ApiOperation("行政区划字典操作")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "类型(1:省,2:市,3:县/区,4:乡/街道,5:村/派出所,6:组/小区,7:楼栋)", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "类型(1:省,2:市,3:县/区,4:乡/街道,5:村/派出所,6:组/小区,7:楼栋,8:单元)", paramType = "query"),
             @ApiImplicitParam(name = "code", value = "父级代码，省的父级传空", paramType = "query")
     })
     @ResponseBody

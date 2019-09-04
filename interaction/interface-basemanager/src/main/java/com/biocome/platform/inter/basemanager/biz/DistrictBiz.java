@@ -40,7 +40,7 @@ public class DistrictBiz {
     /**
      * 根据type与code查询行政区划信息
      *
-     * @param type 类型(1:省,2:市,3:县/区,4:乡/街道,5:村/派出所,6:组/小区,7:楼栋)
+     * @param type 类型(1:省,2:市,3:县/区,4:乡/街道,5:村/派出所,6:组/小区,7:楼栋,8:单元)
      * @param code 编码
      * @return com.biocome.platform.inter.basemanager.vo.DistrictResp
      * @throws Exception 异常信息

@@ -107,6 +107,7 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
         estate1.setEstatecode(estate.getEstatecode());
         List<Estate> estates = estateMapper.select(estate1);
         if (ValidateUtils.isEmpty(estates)) {
+            estate.setAreacode(estate.getPolicestatio());
             estateMapper.insertSelective(estate);
             return new ObjectRestResponse().success();
         } else {
