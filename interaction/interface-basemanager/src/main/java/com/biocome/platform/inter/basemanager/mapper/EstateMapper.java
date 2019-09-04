@@ -21,13 +21,12 @@ public interface EstateMapper extends Mapper<Estate> {
     /**
      * 根据小区编号或小区名称查询所有小区信息，查询所有时传参都为null
      *
-     * @param estatename 小区名称
-     * @param estatecode 小区编号
+     * @param estate 查询条件
      * @return java.util.List<Estate>
      * @Author shenlele
      * @Date 2019/5/8 13:59
      */
-    List<Estate> selectByAttribute(@Param("estatename") String estatename, @Param("estatecode") String estatecode);
+    List<Estate> selectByAttribute(@Param("model") Estate estate);
 
 
     /**

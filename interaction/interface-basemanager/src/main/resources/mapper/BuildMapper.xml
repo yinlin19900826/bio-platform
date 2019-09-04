@@ -52,11 +52,27 @@
         FROM
         base_build b
         <where>
-            <if test="buildaddress != null and buildaddress.trim() != ''">and b.buildaddress like concat(concat('%',
-                #{buildaddress,jdbcType=VARCHAR}), '%')
+            <if test="model.buildaddress != null and model.buildaddress.trim() != ''">and b.buildaddress like
+                concat(concat('%',
+                #{model.buildaddress,jdbcType=VARCHAR}), '%')
             </if>
-            <if test="buildname != null and buildname.trim() != ''">and b.buildname like concat(concat('%',
-                #{buildname,jdbcType=VARCHAR}), '%')
+            <if test="model.buildname != null and model.buildname.trim() != ''">and b.buildname like concat(concat('%',
+                #{model.buildname,jdbcType=VARCHAR}), '%')
+            </if>
+            <if test="model.province != null and model.province.trim() != ''">and b.province =
+                #{model.province,jdbcType=VARCHAR}
+            </if>
+            <if test="model.city != null and model.city.trim() != ''">and b.city =
+                #{model.city,jdbcType=VARCHAR}
+            </if>
+            <if test="model.county != null and model.county.trim() != ''">and b.county =
+                #{model.county,jdbcType=VARCHAR}
+            </if>
+            <if test="model.street != null and model.street.trim() != ''">and b.street =
+                #{model.street,jdbcType=VARCHAR}
+            </if>
+            <if test="model.policestatio != null and model.policestatio.trim() != ''">and b.policestatio =
+                #{model.policestatio,jdbcType=VARCHAR}
             </if>
         </where>
         ORDER BY
