@@ -88,4 +88,19 @@
         WHERE b.estatecode = #{estatecode,jdbcType=VARCHAR}
     </select>
 
+    <select id="queryBuildByBuildcode" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        b.id,b.buildcode,b.buildname,b.buildaddress,b.buildtype,b.buildnature,b.estatecode,b.estatename,
+        b.province,b.city,b.county,b.street,b.policestatio,b.floornum,b.islift,
+        (SELECT count(u.buildcode) FROM base_unit u WHERE u.buildcode = b.buildcode) as unitnum,
+        (SELECT count(h.buildcode) FROM base_house h WHERE h.buildcode = b.buildcode) as housenum,
+        b.remark,b.status,b.del,b.createtime,b.createcode,b.createname,b.updatetime,b.updatecode,b.updatename
+        FROM
+        base_build b
+        WHERE
+        b.buildcode IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
