@@ -158,6 +158,7 @@ public class AdvertPlanController extends BaseController<AdvertPlanBiz, AdvertPl
             resp.setData(advertPlanPreviewResp);
         } catch (Exception e) {
             log.info("------获取预览素材列表时发生异常------");
+            e.printStackTrace();
             log.info("异常信息:{}", e.getMessage());
             resp.setStatus(401);
             resp.setMessage("无法获取广告计划列表，请联系管理员");

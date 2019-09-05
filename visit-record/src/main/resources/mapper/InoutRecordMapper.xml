@@ -103,7 +103,7 @@
                         #{cardno,jdbcType=VARCHAR},
                     </when>
                     <otherwise>
-                        (SELECT physical_cardno FROM base_card bc WHERE bc.logic_cardno = #{cardno,jdbcType=VARCHAR}),
+                        (SELECT physical_cardno FROM ag_admin_v1.base_card bc WHERE bc.logic_cardno = #{cardno,jdbcType=VARCHAR}),
                     </otherwise>
                 </choose>
             </if>
