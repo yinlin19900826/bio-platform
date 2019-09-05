@@ -133,7 +133,7 @@ public class BuildBiz extends BaseBiz<BuildMapper, Build> {
             buildMapper.insertSelective(build);
             return new ObjectRestResponse().success();
         } else {
-            throw new Exception("保存失败！楼栋编号已存在！");
+            return new ObjectRestResponse(204, "保存失败！楼栋编号已存在！");
         }
     }
 }

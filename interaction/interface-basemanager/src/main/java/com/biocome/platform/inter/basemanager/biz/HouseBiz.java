@@ -1,13 +1,13 @@
 package com.biocome.platform.inter.basemanager.biz;
 
-import com.biocome.platform.inter.basemanager.entity.House;
-import com.biocome.platform.inter.basemanager.mapper.HouseMapper;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.inter.basemanager.entity.House;
+import com.biocome.platform.inter.basemanager.mapper.HouseMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -110,7 +110,7 @@ public class HouseBiz extends BaseBiz<HouseMapper, House> {
             houseMapper.insertSelective(house);
             return new ObjectRestResponse().success();
         } else {
-            throw new Exception("保存失败！房屋编号已存在！");
+            return new ObjectRestResponse(204, "保存失败！房屋编号已存在！");
         }
     }
 }

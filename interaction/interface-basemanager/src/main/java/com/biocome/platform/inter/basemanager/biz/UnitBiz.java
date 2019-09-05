@@ -111,7 +111,7 @@ public class UnitBiz extends BaseBiz<UnitMapper, Unit> {
             unitMapper.insertSelective(unit);
             return new ObjectRestResponse().success();
         } else {
-            throw new Exception("保存失败！单元编号已存在！");
+            return new ObjectRestResponse(204, "保存失败！单元编号已存在！");
         }
     }
 }

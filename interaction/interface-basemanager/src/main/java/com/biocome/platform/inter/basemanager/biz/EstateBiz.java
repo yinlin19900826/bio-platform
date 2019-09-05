@@ -110,7 +110,7 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
             estateMapper.insertSelective(estate);
             return new ObjectRestResponse().success();
         } else {
-            throw new Exception("保存失败！小区编号已存在！");
+            return new ObjectRestResponse(204, "保存失败！小区编号已存在！");
         }
     }
 }
