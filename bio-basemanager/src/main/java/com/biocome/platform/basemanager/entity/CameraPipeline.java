@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * @email zengqiang724@163.com
  * @date 2019-06-04 11:10:46
  */
-@Table(name = "base_camera_pipeline")
+@Table(name = "base_channel")
 public class CameraPipeline {
 	private static final long serialVersionUID = 1L;
 	
@@ -21,20 +21,20 @@ public class CameraPipeline {
     private Integer id;
 	
 	    //编号
-    @Column(name = "serial_code")
-    private String serialCode;
+    @Column(name = "channel_code")
+    private String channelCode;
 	
 	    //序号
     @Column(name = "serial_no")
     private Integer serialNo;
 	
 	    //名称
-    @Column(name = "name")
-    private String name;
+    @Column(name = "channel_name")
+    private String channelName;
 	
-	    //类型
-    @Column(name = "type")
-    private Integer type;
+	    //点位类型
+    @Column(name = "point_type")
+    private Integer pointType;
 	
 	    //镜头编码
     @Column(name = "shot_encode")
@@ -49,8 +49,8 @@ public class CameraPipeline {
     private Integer shotType;
 	
 	    //球机地址
-    @Column(name = "ball_address")
-    private String ballAddress;
+    @Column(name = "lan_ip")
+    private String lanIp;
 	
 	    //模数关联编号
     @Column(name = "related_serial")
@@ -67,7 +67,10 @@ public class CameraPipeline {
 	//有镜头接入（0 是 1 否）
 	@Column(name = "camera_id")
 	private Integer cameraId;
-	
+
+	//vcpIp
+	@Column(name = "vcn_ip")
+	private String vcnIp;
 
 	/**
 	 * 设置：
@@ -82,18 +85,6 @@ public class CameraPipeline {
 		return id;
 	}
 	/**
-	 * 设置：编号
-	 */
-	public void setSerialCode(String serialCode) {
-		this.serialCode = serialCode;
-	}
-	/**
-	 * 获取：编号
-	 */
-	public String getSerialCode() {
-		return serialCode;
-	}
-	/**
 	 * 设置：序号
 	 */
 	public void setSerialNo(Integer serialNo) {
@@ -104,30 +95,6 @@ public class CameraPipeline {
 	 */
 	public Integer getSerialNo() {
 		return serialNo;
-	}
-	/**
-	 * 设置：名称
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/**
-	 * 获取：名称
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * 设置：类型
-	 */
-	public void setType(Integer type) {
-		this.type = type;
-	}
-	/**
-	 * 获取：类型
-	 */
-	public Integer getType() {
-		return type;
 	}
 	/**
 	 * 设置：镜头编码
@@ -164,18 +131,6 @@ public class CameraPipeline {
 	 */
 	public Integer getShotType() {
 		return shotType;
-	}
-	/**
-	 * 设置：球机地址
-	 */
-	public void setBallAddress(String ballAddress) {
-		this.ballAddress = ballAddress;
-	}
-	/**
-	 * 获取：球机地址
-	 */
-	public String getBallAddress() {
-		return ballAddress;
 	}
 	/**
 	 * 设置：模数关联编号
@@ -220,5 +175,45 @@ public class CameraPipeline {
 
 	public void setCameraId(Integer cameraId) {
 		this.cameraId = cameraId;
+	}
+
+	public String getChannelCode() {
+		return channelCode;
+	}
+
+	public void setChannelCode(String channelCode) {
+		this.channelCode = channelCode;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public Integer getPointType() {
+		return pointType;
+	}
+
+	public void setPointType(Integer pointType) {
+		this.pointType = pointType;
+	}
+
+	public String getLanIp() {
+		return lanIp;
+	}
+
+	public void setLanIp(String lanIp) {
+		this.lanIp = lanIp;
+	}
+
+	public String getVcnIp() {
+		return vcnIp;
+	}
+
+	public void setVcnIp(String vcnIp) {
+		this.vcnIp = vcnIp;
 	}
 }

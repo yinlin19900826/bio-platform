@@ -9,15 +9,11 @@ package com.biocome.platform.guard.rest;
 
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.guard.biz.SearchBiz;
-import com.biocome.platform.guard.utils.EsPage;
-import com.biocome.platform.guard.vo.search.SearchResultVo;
-import com.biocome.platform.inter.basemanager.vo.admin.SimpleAdminVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

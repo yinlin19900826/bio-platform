@@ -57,7 +57,7 @@ public class AppUserController extends BaseController<AppUserBiz, AppUser> {
         return appUserBiz.detail(usercode);
     }
 
-    @ApiOperation("修改密码")
+    @ApiOperation("创建用户账户")
     @RequestMapping(value = "/createAppAccount", method = RequestMethod.POST)
     @ResponseBody
     public BaseResponse createAppAccount(@RequestBody AppAccountVo vo){

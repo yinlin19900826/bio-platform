@@ -50,7 +50,11 @@
         insert into admin_house_bind
         (`build_code`, `build_name`, `house_code`, `house_name`, `community_code`, `community_name`, `unit_code`, `unit_name`)
         select buildcode,buildname,housecode,housename,estatecode,estatename,unitcode,unitname
-        from base_house WHERE buildcode = #{buildcode}
+        from base_house WHERE buildcode = #{buildcode} and `housecode` not in
+        (
+            select house_code from admin_house_bind
+            where build_code = #{buildcode}
+        )
     </insert>
 
     <delete id="removeAll">

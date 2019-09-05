@@ -21,6 +21,10 @@ public class AddGroupVo {
     private Integer parentId;
     @ApiModelProperty(value = "该参数不用传递")
     private Integer id;
+    @ApiModelProperty(value = "该参数不用传递")
+    private Integer cameraId;
+    @ApiModelProperty(value = "该参数不用传递")
+    private Integer pipelineId;
 
     public String getFromParentId() {
         return fromParentId;
@@ -84,5 +88,21 @@ public class AddGroupVo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCameraId() {
+        return cameraId;
+    }
+
+    public void setCameraId(Integer cameraId) {
+        this.cameraId = cameraId;
+    }
+
+    public Integer getPipelineId() {
+        return pipelineId;
+    }
+
+    public void setPipelineId(Integer pipelineId) {
+        this.pipelineId = pipelineId;
     }
 }
