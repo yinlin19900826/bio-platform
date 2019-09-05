@@ -1,13 +1,13 @@
 package com.biocome.platform.inter.basemanager.biz;
 
-import com.biocome.platform.inter.basemanager.entity.Estate;
-import com.biocome.platform.inter.basemanager.mapper.EstateMapper;
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.util.IdUtils;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.inter.basemanager.entity.Estate;
+import com.biocome.platform.inter.basemanager.mapper.EstateMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -34,19 +34,18 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
     /**
      * 根据小区编号或小区名称查询所有小区信息，查询所有时传参都为null
      *
-     * @param pageSize   分页数量
-     * @param pageNum    分页页码
-     * @param estatename 小区名称
-     * @param estatecode 小区编号
+     * @param pageSize 分页数量
+     * @param pageNum  分页页码
+     * @param estate   查询参数
      * @return com.github.wxiaoqi.security.TableResultResponse<Estate>
      * @Author shenlele
      * @Date 2019/5/8 14:09
      */
-    public TableResultResponse<Estate> selectByAttribute(int pageSize, int pageNum, String estatename, String estatecode) {
+    public TableResultResponse<Estate> selectByAttribute(int pageSize, int pageNum, Estate estate) {
         TableResultResponse<Estate> res;
         try {
             Page<Estate> result = PageHelper.startPage(pageNum, pageSize);
-            estateMapper.selectByAttribute(estatename, estatecode);
+            estateMapper.selectByAttribute(estate);
             res = new TableResultResponse<>(result.getTotal(), result.getResult());
         } catch (Exception e) {
             log.error("查询小区信息失败，错误信息为：" + e.getMessage());
@@ -111,7 +110,7 @@ public class EstateBiz extends BaseBiz<EstateMapper, Estate> {
             estateMapper.insertSelective(estate);
             return new ObjectRestResponse().success();
         } else {
-            throw new Exception("保存失败！小区编号已存在！");
+            return new ObjectRestResponse(204, "保存失败！小区编号已存在！");
         }
     }
 }

@@ -112,7 +112,7 @@ public class LandlordBiz extends BaseBiz<LandlordMapper, Landlord> {
             lesseeMapper.insertSelective(lessee);
             return new ObjectRestResponse().success();
         } else {
-            throw new Exception("保存失败！人员编号已存在！");
+            return new ObjectRestResponse(204, "保存失败！人员编号已存在！");
         }
     }
 

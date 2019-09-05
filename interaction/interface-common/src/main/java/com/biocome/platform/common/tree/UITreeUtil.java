@@ -176,7 +176,29 @@ public class UITreeUtil {
      * @param map
      */
     public static void addNodes(UINode parent, int level, Map<String, List<UINode>> map) {
-        parent.setLevel(level);
+        if(map.size() == 0){
+            return;
+        }
+        List<UINode> list = parent.getChildList();
+        if(ValidateUtils.isNotEmpty(list)){
+            for(UINode node : list){
+                String nodeId = node.getId();
+                List<UINode> addNodes = map.get(nodeId);
+                if(ValidateUtils.isNotEmpty(addNodes)){
+                    List<UINode> childList = node.getChildList();
+                    if(ValidateUtils.isEmpty(childList)){
+                        childList = new ArrayList<UINode>();
+                        node.setChildList(childList);
+                    }
+                    childList.addAll(addNodes);
+                    map.remove(nodeId);
+                }
+            }
+            for(UINode node : list){
+                addNodes(node, level+1, map);
+            }
+        }
+        /*parent.setLevel(level);
         List<UINode> childList = map.get(parent.getId());
         if(ValidateUtils.isEmpty(childList)){
             List<UINode> nodes = parent.getChildList();
@@ -195,8 +217,7 @@ public class UITreeUtil {
             }
             parent.getChildList().addAll(childList);
             //parent.setChildList(childList);
-        }
-
+        }*/
     }
 
     public static Map<String, List<UINode>> list2Map(UITree tree, List<UINodeVo> list) {

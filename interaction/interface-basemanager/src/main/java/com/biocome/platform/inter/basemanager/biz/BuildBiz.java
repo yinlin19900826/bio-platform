@@ -41,19 +41,18 @@ public class BuildBiz extends BaseBiz<BuildMapper, Build> {
     /**
      * 根据楼栋名称或楼栋地址查询所有楼栋信息，查询所有时传参都为null
      *
-     * @param pageSize     分页数量
-     * @param pageNum      分页页码
-     * @param buildaddress 楼栋地址
-     * @param buildname    楼栋名称
+     * @param pageSize 分页数量
+     * @param pageNum  分页页码
+     * @param build    查询参数
      * @return com.github.wxiaoqi.security.common.msg.TableResultResponse<Build>
      * @Author shenlele
      * @Date 2019/5/8 14:08
      */
-    public TableResultResponse<Build> selectByAttribute(int pageSize, int pageNum, String buildaddress, String buildname) {
+    public TableResultResponse<Build> selectByAttribute(int pageSize, int pageNum, Build build) {
         TableResultResponse<Build> res;
         try {
             Page<Build> result = PageHelper.startPage(pageNum, pageSize);
-            buildMapper.selectByAttribute(buildaddress, buildname);
+            buildMapper.selectByAttribute(build);
             res = new TableResultResponse<>(result.getTotal(), result.getResult());
         } catch (Exception e) {
             log.error("查询楼栋信息失败，错误信息为：" + e.getMessage());
@@ -134,7 +133,7 @@ public class BuildBiz extends BaseBiz<BuildMapper, Build> {
             buildMapper.insertSelective(build);
             return new ObjectRestResponse().success();
         } else {
-            throw new Exception("保存失败！楼栋编号已存在！");
+            return new ObjectRestResponse(204, "保存失败！楼栋编号已存在！");
         }
     }
 }

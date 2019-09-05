@@ -11,8 +11,8 @@ public class CameraPipelineVo {
     private String name;
     @ApiModelProperty(value = "通道序号")
     private String serailNo;
-    @ApiModelProperty(value = "类型")
-    private Integer type;
+    /*@ApiModelProperty(value = "镜头类型")
+    private Integer type;*/
     @ApiModelProperty(value = "类型名称")
     private String typeName;
     @ApiModelProperty(value = "镜头编码")
@@ -62,13 +62,13 @@ public class CameraPipelineVo {
         this.serailNo = serailNo;
     }
 
-    public Integer getType() {
+    /*public Integer getType() {
         return type;
     }
 
     public void setType(Integer type) {
         this.type = type;
-    }
+    }*/
 
     public String getTypeName() {
         return typeName;

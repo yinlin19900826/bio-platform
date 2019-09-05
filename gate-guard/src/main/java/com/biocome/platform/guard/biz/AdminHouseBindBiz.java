@@ -58,6 +58,9 @@ public class AdminHouseBindBiz extends BaseBiz<AdminHouseBindMapper, AdminHouseB
      * @return
      */
     public ObjectRestResponse updateHouseBind(String buildcode, List<AdminHouseVo> houseVos) {
+        if(ValidateUtils.isEmpty(buildcode)){
+            return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "楼栋编码不能为空！");
+        }
         try{
             List<AdminHouseVo> addHouseVos = new ArrayList<AdminHouseVo>();
             List<AdminHouseVo> removeHouseVos = new ArrayList<AdminHouseVo>();
@@ -70,7 +73,7 @@ public class AdminHouseBindBiz extends BaseBiz<AdminHouseBindMapper, AdminHouseB
             }
             Build build = buildBiz.selectByBuildcode(buildcode);
             if(ValidateUtils.isEmpty(build)){
-                new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "未知的楼栋!楼栋编码号："+buildcode);
+                return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "未知的楼栋!楼栋编码："+buildcode);
             }
             if(ValidateUtils.isNotEmpty(addHouseVos)){
                 List<AdminHouseBind> bindList = new ArrayList<AdminHouseBind>();

@@ -72,4 +72,23 @@
         select * from base_landlord
         where usercode = #{usercode}
     </select>
+
+    <select id="selectSimpleAdminList" resultType="com.biocome.platform.inter.basemanager.vo.admin.SimpleAdminVo">
+        select l.username, l.tel as phone, l.resideaddress as address, d.dict_value as adminType, l.usercode
+        from base_landlord l
+        left join
+        (
+        select dict_key, dict_value from base_dict_detail
+        where dict_code in
+        (select dict_code from base_dict where dict_code_name = "管理员类型" )
+        ) d
+        on l.landlordtype = d.dict_key
+        where (1=1)
+        <if test="username != null and username.trim() != ''">
+            and l.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="type !=null">
+            and l.landlordtype = #{type}
+        </if>
+    </select>
 </mapper>

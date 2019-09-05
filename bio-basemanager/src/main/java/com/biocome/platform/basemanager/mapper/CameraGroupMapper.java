@@ -19,9 +19,11 @@ public interface CameraGroupMapper extends Mapper<CameraGroup> {
 
     List<UINodeVo> selectableList();
 
-    void add2Group(@Param("vos") List<AddGroupVo> vos);
+    int add2Group(@Param("vo") AddGroupVo vo);
 
     void deleteByIds(@Param("ids") List<Integer> ids);
 
     int getDupilicationCount(@Param("parentId") Integer parentId, @Param("name") String name);
+
+    void batchAdd2Group(@Param("vos") List<AddGroupVo> voList);
 }

@@ -142,7 +142,7 @@ public class UINode {
         return jArr;
     }
 
-    public List<String> getChildIds() {
+    protected List<String> getChildIds() {
         List<String> ids = new ArrayList<String>();
         if(ValidateUtils.isNotEmpty(childList)){
             for(UINode node : childList){

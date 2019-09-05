@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -109,19 +110,36 @@ public class CameraGroupBiz extends BaseBiz<CameraGroupMapper,CameraGroup> {
     @CacheClear(key = "tree:camera_group")
     public void add2Group(List<AddGroupVo> vos) throws Exception{
         if(ValidateUtils.isNotEmpty(vos)){
+            Map<String, Integer> idMap = new HashMap<String, Integer>();
             for(AddGroupVo vo : vos){
+                if(ValidateUtils.isEmpty(vo.getFromType())){
+                    continue;
+                }
                 int type = vo.getFromType();
                 if(type == UINodeType.BRANCH.getValue()){
                     if(ValidateUtils.isNotEmpty(vo.getFromParentId())){
-                        vo.setParentId(Integer.parseInt(vo.getFromId()));
+                        vo.setParentId(Integer.parseInt(vo.getToParentId()));
                     }
-                }else if(type == UINodeType.LEAF.getValue()){
-                    vo.setParentId(Integer.parseInt(vo.getFromParentId().split(IdUtils.SEPERATOR_UNDERLINE)[1]));
+                    vo.setCameraId(Integer.parseInt(vo.getFromId().split(IdUtils.SEPERATOR_UNDERLINE)[1]));
+                    mapper.add2Group(vo);
+                    idMap.put(vo.getFromId(), vo.getId());
                 }
-                vo.setId(Integer.parseInt(vo.getFromId().split(IdUtils.SEPERATOR_UNDERLINE)[1]));
             }
+            List<AddGroupVo> voList = new ArrayList<AddGroupVo>();
+            for(AddGroupVo vo : vos){
+                if(ValidateUtils.isEmpty(vo.getFromType())){
+                    continue;
+                }
+                int type = vo.getFromType();
+                if(type == UINodeType.LEAF.getValue()){
+                    vo.setCameraId(Integer.parseInt(vo.getFromParentId().split(IdUtils.SEPERATOR_UNDERLINE)[1]));
+                    vo.setPipelineId(Integer.parseInt(vo.getFromId().split(IdUtils.SEPERATOR_UNDERLINE)[1]));
+                    vo.setParentId(idMap.get(vo.getFromParentId()));
+                    voList.add(vo);
+                }
+            }
+            mapper.batchAdd2Group(voList);
         }
-        mapper.add2Group(vos);
     }
 
     /**

@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface CameraPipelineMapper extends Mapper<CameraPipeline> {
 
-    List<CameraPipelineVo> selectCameraPiplineList(@Param("cameraId") String cameraId, @Param("serialNo") String serialNo, @Param("name") String name);
+    List<CameraPipelineVo> selectCameraPiplineList(@Param("cameraId") int cameraId, @Param("serialNo") String serialNo, @Param("name") String name);
 }
