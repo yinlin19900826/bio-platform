@@ -70,11 +70,26 @@
         FROM
         base_estate e
         <where>
-            <if test="estatename != null and estatename.trim() != ''">and e.estatename like concat('%',
-                #{estatename,jdbcType=VARCHAR}, '%')
+            <if test="model.estatename != null and model.estatename.trim() != ''">and e.estatename like concat('%',
+                #{model.estatename,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="estatecode != null and estatecode.trim() != ''">and e.estatecode =
-                #{estatecode,jdbcType=VARCHAR}
+            <if test="model.estatecode != null and model.estatecode.trim() != ''">and e.estatecode =
+                #{model.estatecode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.province != null and model.province.trim() != ''">and e.province =
+                #{model.province,jdbcType=VARCHAR}
+            </if>
+            <if test="model.city != null and model.city.trim() != ''">and e.city =
+                #{model.city,jdbcType=VARCHAR}
+            </if>
+            <if test="model.county != null and model.county.trim() != ''">and e.county =
+                #{model.county,jdbcType=VARCHAR}
+            </if>
+            <if test="model.street != null and model.street.trim() != ''">and e.street =
+                #{model.street,jdbcType=VARCHAR}
+            </if>
+            <if test="model.policestatio != null and model.policestatio.trim() != ''">and e.policestatio =
+                #{model.policestatio,jdbcType=VARCHAR}
             </if>
         </where>
         ORDER BY

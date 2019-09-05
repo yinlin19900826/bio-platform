@@ -21,13 +21,12 @@ public interface BuildMapper extends Mapper<Build> {
     /**
      * 根据楼栋名称或楼栋地址查询所有楼栋信息，查询所有时传参都为null
      *
-     * @param buildaddress 楼栋地址
-     * @param buildname    楼栋名称
+     * @param build 查询参数
      * @return java.util.List<Build>
      * @Author shenlele
      * @Date 2019/5/8 13:53
      */
-    List<Build> selectByAttribute(@Param("buildaddress") String buildaddress, @Param("buildname") String buildname);
+    List<Build> selectByAttribute(@Param("model") Build build);
 
 
     /**

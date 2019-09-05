@@ -37,6 +37,16 @@ public class LogoutCardVo {
     @ApiModelProperty(value="设备编号集合")
     private List<CardSnVo> snList;
 
+    private List<CardSnVo> list;
+
+    public List<CardSnVo> getList() {
+        return list;
+    }
+
+    public void setList(List<CardSnVo> list) {
+        this.list = list;
+    }
+
     public String getToken() {
         return token;
     }

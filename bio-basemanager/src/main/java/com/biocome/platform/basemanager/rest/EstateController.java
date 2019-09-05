@@ -1,12 +1,13 @@
 package com.biocome.platform.basemanager.rest;
 
-import com.biocome.platform.inter.basemanager.biz.EstateBiz;
-import com.biocome.platform.inter.basemanager.entity.Estate;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.rest.BaseController;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.platform.inter.basemanager.biz.EstateBiz;
+import com.biocome.platform.inter.basemanager.constant.AdminCommonConstant;
+import com.biocome.platform.inter.basemanager.entity.Estate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -33,13 +34,31 @@ public class EstateController extends BaseController<EstateBiz, Estate> {
 
     @ApiOperation("获取小区列表,查询所有参数传null")
     @ApiImplicitParams({@ApiImplicitParam(name = "estatename", value = "小区名称", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "类型(1:省,2:市,3:县/区,4:乡/街道,5:村/派出所,6:组/小区,7:楼栋)", paramType = "query"),
+            @ApiImplicitParam(name = "code", value = "行政区划代码", paramType = "query"),
             @ApiImplicitParam(name = "estatecode", value = "小区编号", paramType = "query")})
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public TableResultResponse<Estate> list(@RequestParam(defaultValue = "20") int pageSize,
                                             @RequestParam(defaultValue = "1") int pageNum,
-                                            String estatename, String estatecode) {
-        return estateBiz.selectByAttribute(pageSize, pageNum, estatename, estatecode);
+                                            String estatename, String estatecode, String type, String code) {
+        Estate estate = new Estate();
+        estate.setEstatecode(estatecode);
+        estate.setEstatename(estatename);
+        if (ValidateUtils.isNotEmpty(type) && ValidateUtils.isNotEmpty(code)) {
+            if (AdminCommonConstant.DISTRICT_PROVINCE.equals(type)) {
+                estate.setProvince(code);
+            } else if (AdminCommonConstant.DISTRICT_CITY.equals(type)) {
+                estate.setCity(code);
+            } else if (AdminCommonConstant.DISTRICT_COUNTY.equals(type)) {
+                estate.setCounty(code);
+            } else if (AdminCommonConstant.DISTRICT_STREET.equals(type)) {
+                estate.setStreet(code);
+            } else if (AdminCommonConstant.DISTRICT_POLICESTATIO.equals(type)) {
+                estate.setPolicestatio(code);
+            }
+        }
+        return estateBiz.selectByAttribute(pageSize, pageNum, estate);
     }
 
     @ApiOperation("批量删除数据")
