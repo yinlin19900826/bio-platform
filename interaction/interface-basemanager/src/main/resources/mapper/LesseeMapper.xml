@@ -141,4 +141,12 @@
             AND b.buildcode = #{vo.buildcode,jdbcType=VARCHAR}
         </if>
     </select>
+
+    <update id="updateByPapernum" parameterType="com.biocome.platform.inter.basemanager.vo.LesseeVo">
+        UPDATE base_lessee
+        SET buildcode = #{buildcode} ,
+        estatecode = #{estatecode} ,
+        housecode = #{housecode}
+        WHERE papersnum = #{papersnum}
+    </update>
 </mapper>

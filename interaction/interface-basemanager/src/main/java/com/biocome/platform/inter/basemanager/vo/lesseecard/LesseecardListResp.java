@@ -20,6 +20,11 @@ public class LesseecardListResp {
     @ApiModelProperty(value = "物理卡号", notes = "物理卡号")
     private String physicalCardno;
     /**
+     * 逻辑卡号
+     */
+    @ApiModelProperty(value = "物理卡号", notes = "物理卡号")
+    private String logicCardno;
+    /**
      * 用户编号
      */
     @ApiModelProperty(value = "用户编号", notes = "用户编号")
@@ -76,6 +81,14 @@ public class LesseecardListResp {
      */
     @ApiModelProperty(value = "手机号码", notes = "手机号码")
     private String tel;
+
+    public String getLogicCardno() {
+        return logicCardno;
+    }
+
+    public void setLogicCardno(String logicCardno) {
+        this.logicCardno = logicCardno;
+    }
 
     public Integer getId() {
         return id;

@@ -125,6 +125,7 @@ public class DoorDeviceCardBiz {
         lessee.setEstatename(vo.getEstatename());
         lessee.setUsername(vo.getUsername());
         lessee.setUsercode(usercode);
+        vo.setUsercode(usercode);
         lessee.setUsersex(vo.getUsersex());
         lessee.setPaperstype(vo.getPaperstype());
         lessee.setPapersnum(vo.getPapersnum());
@@ -134,6 +135,7 @@ public class DoorDeviceCardBiz {
         lessee.setPapersphoto(vo.getPapersphoto());
         lessee.setCreatetime(DateUtils.getCurrentTime());
         lessee.setRegistertime(DateUtils.getCurrentTime());
+        lessee.setHousecode(vo.getHousecode());
 
         Card card = new Card();
         card.setBuildcode(vo.getBuildcode());
@@ -162,7 +164,8 @@ public class DoorDeviceCardBiz {
         List<Lessee> lesseeList = lesseeMapper.select(lessee1);
         int lesseeResult = 0;
         if (lesseeList != null && lesseeList.size() > 0) {
-            //如果之前有租户信息，则不变
+            //如果之前有租户信息，则更新楼栋信息
+            lesseeMapper.updateByPapernum(vo);
             card.setUsercode(lesseeList.get(0).getUsercode());
         } else {
             //没有则添加
