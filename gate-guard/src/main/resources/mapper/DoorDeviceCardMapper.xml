@@ -138,6 +138,7 @@
     <resultMap id="lesseecardListResultMap" type="com.biocome.platform.inter.basemanager.vo.lesseecard.LesseecardListResp">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="physical_cardno" jdbcType="VARCHAR" property="physicalCardno"/>
+        <result column="logic_cardno" jdbcType="VARCHAR" property="logicCardno"/>
         <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
         <result column="username" jdbcType="VARCHAR" property="userName"/>
         <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
@@ -155,6 +156,7 @@
         SELECT
         bc.id,
         bc.physical_cardno,
+        bc.logic_cardno,
         bdd1.dict_key cardtype,
         bl.checkintime,
         bl.usercode,

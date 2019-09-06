@@ -2,6 +2,7 @@ package com.biocome.platform.inter.basemanager.mapper;
 
 import com.biocome.platform.inter.basemanager.entity.Lessee;
 import com.biocome.platform.inter.basemanager.vo.LesseeVo;
+import com.biocome.platform.inter.basemanager.vo.lesseecard.LesseeCardVo;
 import com.biocome.platform.inter.basemanager.vo.syncho.BuildAndBrandVo;
 import com.biocome.platform.inter.basemanager.vo.syncho.LesseeUserVo;
 import org.apache.ibatis.annotations.Param;
@@ -47,4 +48,5 @@ public interface LesseeMapper extends Mapper<Lessee> {
      */
     List<LesseeUserVo> selectByVo(@Param("vo") BuildAndBrandVo vo);
 
+    int updateByPapernum(LesseeCardVo vo);
 }
