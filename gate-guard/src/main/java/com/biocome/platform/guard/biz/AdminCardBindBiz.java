@@ -208,12 +208,17 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
     public ObjectRestResponse<AdminCardBind> removeCard(AdminCardVo vo) {
         try {
             doRemove(vo.getUsercode(), vo.getCardNo());
-            return new ObjectRestResponse<>().success();
         } catch (Exception e) {
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "移除卡失败！错误信息：数据库错误！");
         }
+        //注销卡通知
+        BaseRpcResponse rpcResp = unregisterAdminCardNotify(vo.getUsercode(), vo.getCardNo());
+        if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
+            return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "通知注销卡失败！");
+        }
+        return new ObjectRestResponse<>().success();
     }
 
     /**

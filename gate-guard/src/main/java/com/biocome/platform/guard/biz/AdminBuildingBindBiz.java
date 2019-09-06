@@ -60,7 +60,7 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
     public TableResultResponse<AdminSummaryVo> selectAdminListOnbuilding(String code, Integer type) {
         try {
             List<AdminSummaryVo> list = adminBuildingBindMapper.selectAdminListOnBuilding(code, type);
-            //getAdminCardInfo(list);
+            getAdminCardInfo(list);
             return new TableResultResponse<>(list.size(), list);
         }catch (Exception e){
             log.info(e.getMessage());
