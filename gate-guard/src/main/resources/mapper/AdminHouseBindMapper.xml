@@ -60,4 +60,8 @@
     <delete id="removeAll">
         delete from admin_house_bind where build_code = #{buildcode}
     </delete>
+
+    <select id="getBindedList" resultType="java.lang.String">
+        select house_code from admin_house_bind where build_code =#{buildcode}
+    </select>
 </mapper>

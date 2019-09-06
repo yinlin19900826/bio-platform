@@ -40,4 +40,5 @@ public interface AdminBuildingBindMapper extends Mapper<AdminBuildingBind> {
 
     List<AdminBuildingBind> selectByAdmin(@Param("usercode") String usercode, @Param("buildcode") String buildcode);
 
+    AdminSummaryVo adminDetail(@Param("usercode") String usercode);
 }

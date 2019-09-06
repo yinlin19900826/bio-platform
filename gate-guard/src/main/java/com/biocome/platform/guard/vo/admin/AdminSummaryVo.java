@@ -36,9 +36,9 @@ public class AdminSummaryVo {
     @ApiModelProperty(value = "自用卡")
     private List<String> cardList;
     @ApiModelProperty(value = "门禁卡数量")
-    private int cardNum;
+    private Integer cardNum;
     @ApiModelProperty(value = "楼栋数量")
-    private int buildingNum;
+    private Integer buildingNum;
     @ApiModelProperty(value = "是否开通app")
     private String appOpen;
     @ApiModelProperty(value = "登记人")
@@ -121,19 +121,19 @@ public class AdminSummaryVo {
         this.cardList = cardList;
     }
 
-    public int getCardNum() {
+    public Integer getCardNum() {
         return cardNum;
     }
 
-    public void setCardNum(int cardNum) {
+    public void setCardNum(Integer cardNum) {
         this.cardNum = cardNum;
     }
 
-    public int getBuildingNum() {
+    public Integer getBuildingNum() {
         return buildingNum;
     }
 
-    public void setBuildingNum(int buildingNum) {
+    public void setBuildingNum(Integer buildingNum) {
         this.buildingNum = buildingNum;
     }
 
