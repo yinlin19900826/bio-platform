@@ -25,4 +25,6 @@ public interface AdminHouseBindMapper extends Mapper<AdminHouseBind> {
     void bindAll(@Param("buildcode") String buildcode);
 
     void removeAll(@Param("buildcode") String buildcode);
+
+    List<String> getBindedList(@Param("buildcode") String buildcode);
 }

@@ -1,7 +1,6 @@
 package com.biocome.platform.guard.rest;
 
 import com.biocome.platform.common.msg.BaseResponse;
-import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.rest.BaseController;
@@ -68,4 +67,5 @@ public class AdminController extends BaseController<AdminBiz, Landlord> {
         }
         return res;
     }
+
 }

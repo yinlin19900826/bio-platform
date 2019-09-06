@@ -107,9 +107,10 @@ public class Camera {
 	
 	    //
     @Column(name = "total_channels")
-    private String totalChannels;
+    private Integer totalChannels;
 
-	    //上级代码
+
+	//上级代码
     @Column(name = "parentcode")
     private String parentcode;
 
@@ -368,15 +369,7 @@ public class Camera {
 	/**
 	 * 设置：
 	 */
-	public void setTotalChannels(String totalChannels) {
-		this.totalChannels = totalChannels;
-	}
-	/**
-	 * 获取：
-	 */
-	public String getTotalChannels() {
-		return totalChannels;
-	}
+
 	/**
 	 * 设置：上级代码
 	 */
@@ -496,5 +489,13 @@ public class Camera {
 	 */
 	public String getVideocode() {
 		return videocode;
+	}
+
+	public Integer getTotalChannels() {
+		return totalChannels;
+	}
+
+	public void setTotalChannels(Integer totalChannels) {
+		this.totalChannels = totalChannels;
 	}
 }

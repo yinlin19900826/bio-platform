@@ -88,4 +88,11 @@ public class AdminBuildingBindController extends BaseController<AdminBuildingBin
         return adminBuildingBindBiz.removeBingding(usercode, buildings);
     }
 
+    @ApiOperation("管理员信息详情")
+    @ApiImplicitParam(name = "usercode", value = "用户编码", paramType = "query", required = true)
+    @ResponseBody
+    @RequestMapping(value = "adminDetail" , method = RequestMethod.GET)
+    public ObjectRestResponse adminDetail(String usercode){
+        return adminBuildingBindBiz.adminDetail(usercode);
+    }
 }

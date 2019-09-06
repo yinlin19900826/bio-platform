@@ -60,7 +60,7 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
     public TableResultResponse<AdminSummaryVo> selectAdminListOnbuilding(String code, Integer type) {
         try {
             List<AdminSummaryVo> list = adminBuildingBindMapper.selectAdminListOnBuilding(code, type);
-            getAdminCardInfo(list);
+            //getAdminCardInfo(list);
             return new TableResultResponse<>(list.size(), list);
         }catch (Exception e){
             log.info(e.getMessage());
@@ -245,4 +245,28 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
         }
     }
 
+    /**
+     * 管理员详情
+     * @param usercode
+     * @return
+     */
+    public ObjectRestResponse<AdminSummaryVo> adminDetail(String usercode) {
+        if(ValidateUtils.isEmpty(usercode)){
+            return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "管理编码不能为空！");
+        }
+        try {
+            AdminSummaryVo vo = adminBuildingBindMapper.adminDetail(usercode);
+            if(ValidateUtils.isEmpty(vo)){
+                return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "未查到管理员信息！");
+            }
+            List<AdminSummaryVo> list = new ArrayList<AdminSummaryVo>();
+            list.add(vo);
+            getAdminCardInfo(list);
+            return new ObjectRestResponse<AdminSummaryVo>().data(vo).success();
+        }catch (Exception e){
+            e.printStackTrace();
+            log.info(e.getMessage());
+            return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "查找信息失败，原因：数据库错误！");
+        }
+    }
 }

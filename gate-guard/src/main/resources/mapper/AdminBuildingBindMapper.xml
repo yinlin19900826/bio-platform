@@ -36,7 +36,12 @@
 
     <!--    楼栋管理员列表-->
     <select id="selectAdminListOnBuilding" resultMap="adminResultMap">
-        SELECT info.adminId, info.usercode, info.username, info.landlordtype,info.landlordtypename, info.tel, info.gendar, info.authName, info.paperstype,info.papersnum,info.photo,
+        SELECT b.id as adminId, b.usercode as usercode, b.username as username FROM admin_building_bind b, base_landlord l
+        WHERE b.usercode = l.usercode AND b.build_code = #{code}
+        <if test="type != null">
+            AND user_type = #{type}
+        </if>
+        <!--SELECT info.adminId, info.usercode, info.username, info.landlordtype,info.landlordtypename, info.tel, info.gendar, info.authName, info.paperstype,info.papersnum,info.photo,
         info.papersphoto,info.isapp AS appOpen, info.registerpeople AS regPerson, bind.num AS buildingNum
         FROM
         (
@@ -77,7 +82,7 @@
         </if>
         ) GROUP BY usercode
         ) bind
-        WHERE info.usercode =  bind.usercode
+        WHERE info.usercode =  bind.usercode-->
     </select>
 
     <select id="selectBindlessBuilding" resultType="com.biocome.platform.guard.vo.admin.AdminBuildingVo">
@@ -210,5 +215,37 @@
         <if test="communityname != null and communityname.trim() != '' ">
             AND b.estatename like CONCAT('%',#{communityname},'%')
         </if>
+    </select>
+
+    <select id="adminDetail" resultMap="adminResultMap">
+        SELECT info.adminId, info.usercode, info.username, info.landlordtype,info.landlordtypename, info.tel, info.gendar, info.authName, info.paperstype,info.papersnum,info.photo,
+        info.papersphoto,info.isapp AS appOpen, info.registerpeople AS regPerson, bind.num AS buildingNum
+        FROM
+        (
+        select id as adminId, usercode,username, tel, papersnum,photo,papersphoto, registerpeople, landlordtype,
+        case paperstype
+        WHEN 0 THEN "身份证" WHEN 1 THEN "港澳通行证"
+        end paperstype,
+        case isapp
+        WHEN 0 THEN "是" WHEN 1 THEN "否"
+        end isapp,
+        case landlordtype
+        WHEN 0 THEN "未知" WHEN 1 THEN "原房东" WHEN 2 THEN "管理员" WHEN 3 THEN "房东家属" WHEN 4 THEN "网格员"
+        WHEN 5 THEN "警务人员" WHEN 6 THEN "治安科" WHEN 72 THEN "保洁人员" WHEN 8 THEN "代管" WHEN 9 THEN "维修人员"
+        WHEN 10 THEN "申报义务人" WHEN 11 THEN "送气人员" WHEN 12 THEN "集成单位"
+        END landlordtypename ,
+        CASE usersex
+        WHEN 0 THEN "男" WHEN 1 THEN "女" WHEN 2 THEN "未知"
+        END gendar,
+        CASE adminjurisdiction
+        WHEN 0 THEN "所有权限" WHEN 1 THEN "只读权限" WHEN 2 THEN "无权限"
+        END authName
+        FROM base_landlord
+        WHERE usercode = #{usercode}
+        ) info,
+        (
+            SELECT usercode, COUNT(0) AS num FROM admin_building_bind bind WHERE usercode =#{usercode}
+        ) bind
+        WHERE info.usercode =  bind.usercode
     </select>
 </mapper>

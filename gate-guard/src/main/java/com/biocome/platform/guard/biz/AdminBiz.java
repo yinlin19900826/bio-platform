@@ -11,6 +11,7 @@ import com.biocome.platform.common.util.UUIDUtils;
 import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.constant.APPConstants;
 import com.biocome.platform.guard.feign.AppAccountService;
+import com.biocome.platform.guard.vo.admin.AdminSummaryVo;
 import com.biocome.platform.inter.basemanager.rpc.service.FileRpc;
 import com.biocome.platform.inter.basemanager.biz.LesseeBiz;
 import com.biocome.platform.inter.basemanager.entity.Landlord;
@@ -48,6 +49,7 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
     LesseeBiz lesseeBiz;
     @Autowired
     AppAccountService appAccountService;
+
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -129,4 +131,5 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
         entity.setPapersnum(papersnum);
         return (mapper.selectCount(entity) == 0) ? false : true;
     }
+
 }

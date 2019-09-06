@@ -62,6 +62,7 @@ public class AdminHouseBindBiz extends BaseBiz<AdminHouseBindMapper, AdminHouseB
             return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "楼栋编码不能为空！");
         }
         try{
+            List<String> bindedList = mapper.getBindedList(buildcode);
             List<AdminHouseVo> addHouseVos = new ArrayList<AdminHouseVo>();
             List<AdminHouseVo> removeHouseVos = new ArrayList<AdminHouseVo>();
             for(AdminHouseVo houseVo : houseVos){
@@ -143,4 +144,5 @@ public class AdminHouseBindBiz extends BaseBiz<AdminHouseBindMapper, AdminHouseB
             return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "绑定所有房间失败，错误信息，数据库错误！");
         }
     }
+
 }
