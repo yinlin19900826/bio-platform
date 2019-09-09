@@ -181,7 +181,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         try {
             //注销卡通知
             BaseRpcResponse rpcResp = unregisterAdminCardNotify(vo.getUsercode(), vo.getCardNo());
-            if(rpcResp.getResult().equals(CommonConstants.RESP_RESULT_SUCCESS)){
+            if(!rpcResp.getResult().equals(CommonConstants.RESP_RESULT_SUCCESS)){
                 return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "注销卡失败！失败原因："+ rpcResp.getMessage());
             }
             doUnregister(vo.getUsercode(), vo.getCardNo());
@@ -215,7 +215,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         try {
             //注销卡通知
             BaseRpcResponse rpcResp = unregisterAdminCardNotify(vo.getUsercode(), vo.getCardNo());
-            if(rpcResp.getResult().equals(CommonConstants.RESP_RESULT_SUCCESS)){
+            if(!rpcResp.getResult().equals(CommonConstants.RESP_RESULT_SUCCESS)){
                 return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "移除卡失败！失败原因："+ rpcResp.getMessage());
             }
             doRemove(vo.getUsercode(), vo.getCardNo());
