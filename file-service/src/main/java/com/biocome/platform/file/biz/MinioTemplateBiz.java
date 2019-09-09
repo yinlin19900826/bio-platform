@@ -202,8 +202,7 @@ public class MinioTemplateBiz {
         }
         //上传文件
         String path = this.uploadFile(bucketName, objectName, stream, size, contentType);
-        UserImages model = new UserImages(objectName, bucketName, path);
-        return model;
+        return new UserImages(objectName, bucketName, path);
     }
 
     /**
