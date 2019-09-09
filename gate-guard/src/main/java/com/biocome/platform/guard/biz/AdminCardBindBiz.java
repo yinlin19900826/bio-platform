@@ -416,7 +416,6 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         }
         card = new Card();
         BeanUtils.copyProperties(param,card);
-        card.setAdmincode(BaseContextHandler.getUsercode());
         card.setPhysicalCardno(param.getCardNo());
         card.setCreatetime(new Date());
         card.setIsalive(com.biocome.platform.inter.basemanager.constant.CardStatusEnum.PUBLISHING.getCardStatusCode());
