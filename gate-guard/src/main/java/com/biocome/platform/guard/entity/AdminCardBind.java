@@ -39,7 +39,7 @@ public class AdminCardBind {
 
     //卡种类(1、IC卡 2、CPU卡 3、深圳通卡)
     @Column(name = "cardkind")
-    private String cardkind;
+    private Integer cardkind;
 
     //管理员编码
     @Column(name = "usercode")
@@ -130,11 +130,11 @@ public class AdminCardBind {
     /**
      * 设置：卡种类(1、IC卡 2、CPU卡 3、深圳通卡)
      */
-    public String getCardkind() {
+    public Integer getCardkind() {
         return cardkind;
     }
 
-    public void setCardkind(String cardkind) {
+    public void setCardkind(Integer cardkind) {
         this.cardkind = cardkind;
     }
 
