@@ -67,7 +67,8 @@ public class WebConfiguration implements WebMvcConfigurer {
                 "/menu/**",
 //                "/user/**",
                 "/api/permissions",
-                "/api/user/un/**"
+                "/api/user/un/**",
+                "/adminCardBind/addCard"
         };
         Collections.addAll(list, urls);
         return list;

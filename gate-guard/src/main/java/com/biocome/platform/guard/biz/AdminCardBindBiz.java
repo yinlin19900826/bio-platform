@@ -2,6 +2,7 @@ package com.biocome.platform.guard.biz;
 
 import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.constant.CommonConstants;
+import com.biocome.platform.common.context.BaseContextHandler;
 import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
@@ -415,6 +416,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
         }
         card = new Card();
         BeanUtils.copyProperties(param,card);
+        card.setAdmincode(BaseContextHandler.getUsercode());
         card.setPhysicalCardno(param.getCardNo());
         card.setCreatetime(new Date());
         card.setIsalive(com.biocome.platform.inter.basemanager.constant.CardStatusEnum.PUBLISHING.getCardStatusCode());
