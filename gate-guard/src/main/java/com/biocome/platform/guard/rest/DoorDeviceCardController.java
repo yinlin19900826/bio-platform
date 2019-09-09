@@ -1,5 +1,6 @@
 package com.biocome.platform.guard.rest;
 
+import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.MapMsgAndTableResultResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
@@ -86,12 +87,13 @@ public class DoorDeviceCardController {
     @ResponseBody
     @ApiOperation(value = "修改租户图片")
     @RequestMapping(value = "/changeLesseePic", method = RequestMethod.POST)
-    public BaseRpcResponse changeLesseePic(@RequestBody ChangeLesseePicReq req) {
+    public BaseResponse changeLesseePic(@RequestBody ChangeLesseePicReq req) {
         try {
             return doorDeviceCardBiz.changeLesseePic(req);
         } catch (Exception e) {
             log.error("修改出现异常！错误信息为：" + e.getMessage());
-            return new BaseRpcResponse().error();
+            BaseResponse resp = new BaseResponse(500,"发生异常");
+            return resp;
         }
     }
     @ApiOperation("开卡")

@@ -3,6 +3,7 @@ package com.biocome.platform.guard.biz;
 import com.biocome.platform.common.constant.CommonConstants;
 import com.biocome.platform.common.constant.UserConstant;
 import com.biocome.platform.common.context.BaseContextHandler;
+import com.biocome.platform.common.msg.BaseResponse;
 import com.biocome.platform.common.msg.TableResultResponse;
 import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.DateUtils;
@@ -258,17 +259,22 @@ public class DoorDeviceCardBiz {
         }
     }
 
-    public BaseRpcResponse changeLesseePic(ChangeLesseePicReq req) throws Exception {
+    public BaseResponse changeLesseePic(ChangeLesseePicReq req) throws Exception {
+        BaseResponse resp = new BaseResponse();
         int result = doorDeviceCardMapper.changeLesseePic(req);
         if (result == 0) {
-            return new BaseRpcResponse().failure();
+            resp.setStatus(204);
+            resp.setMessage("更改图片失败");
+            return resp;
         } else {
 //            List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
 //            ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
 //            if (objectRestResponse.getStatus() != 200) {
 //                throw new Exception("远程删除文件失败");
 //            }
-            return new BaseRpcResponse().success();
+            resp.setStatus(200);
+            resp.setMessage("成功");
+            return resp;
         }
     }
 
