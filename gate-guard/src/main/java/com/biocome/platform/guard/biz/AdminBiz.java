@@ -98,18 +98,18 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
     /**
      * 增加管理员
      */
-    public BaseResponse addAdmin(Landlord landlord) throws Exception {
-        BaseResponse baseResponse = new BaseResponse(CommonConstants.CODE_OK, "添加管理员成功！");
+    public ObjectRestResponse<String> addAdmin(Landlord landlord) throws Exception {
+        ObjectRestResponse resp = new ObjectRestResponse(CommonConstants.CODE_OK, "添加管理员成功！");
         //验证证件号唯一
         String papersnum = landlord.getPapersnum();
         if(ValidateUtils.isEmpty(papersnum)){
-            baseResponse = new ObjectRestResponse(CommonConstants.EX_CERTNO_NULL, "证件号码不能为空！");
-            return baseResponse;
+            resp = new ObjectRestResponse(CommonConstants.EX_CERTNO_NULL, "证件号码不能为空！");
+            return resp;
         }
         boolean exists = checkExists(papersnum);
         if(exists){
-            baseResponse =  new ObjectRestResponse(CommonConstants.EX_CERTNO_EXISTS, "证件号码已存在！");
-            return baseResponse;
+            resp =  new ObjectRestResponse(CommonConstants.EX_CERTNO_EXISTS, "证件号码已存在！");
+            return resp;
         }
         String usercode = UUIDUtils.generateShortUuid();
         //添加管理员
@@ -126,12 +126,13 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
             accountVo.setUsercode(landlord.getUsercode());
             accountVo.setType(APPConstants.USER_TYPE_ADMIN);
             accountVo.setCreateUser(BaseContextHandler.getUsercode());
-            baseResponse = appAccountService.createAppAccount(accountVo);
+            BaseResponse baseResponse = appAccountService.createAppAccount(accountVo);
             if(baseResponse.getStatus() != CommonConstants.CODE_OK){
-                throw new Exception("创建app账号失败！");
+                return new ObjectRestResponse<String>(CommonConstants.EX_OTHER_CODE, "创建app账号失败！");
             }
         }
-        return baseResponse;
+        resp.data(usercode);
+        return resp;
     }
 
     private boolean checkExists(String papersnum) {
