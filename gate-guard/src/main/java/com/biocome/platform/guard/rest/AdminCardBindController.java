@@ -89,14 +89,14 @@ public class AdminCardBindController extends BaseController<AdminCardBindBiz, Ad
     @ApiOperation("管理员批量发卡")
     @ResponseBody
     @RequestMapping(value = "/batchDeliverAdminCard" , method = RequestMethod.POST)
-    public ObjectRestResponse batchDeliverAdminCard(@RequestParam List<AdminSimpleCardVo> list){
+    public ObjectRestResponse batchDeliverAdminCard(@RequestBody List<AdminSimpleCardVo> list){
         return adminCardBindBiz.batchDeliverAdminCardNotify(list);
     }
 
     @ApiOperation("管理员批量注销卡")
     @ResponseBody
     @RequestMapping(value = "/batchUnregisterAdminCard" , method = RequestMethod.POST)
-    public BaseRpcResponse batchUnregisterAdminCard(@RequestParam List<AdminSimpleCardVo> list){
+    public BaseRpcResponse batchUnregisterAdminCard(@RequestBody List<AdminSimpleCardVo> list){
         return adminCardBindBiz.batchUnregisterAdminCard(list);
     }
 

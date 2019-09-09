@@ -83,16 +83,16 @@
     <select id="cardDeviceList" resultType="com.biocome.platform.inter.basemanager.vo.device.CardDeviceVo">
         SELECT c.usercode, c.cardtype,c.physical_cardno as cardNo, GROUP_CONCAT(d.sn SEPARATOR ",") AS sn
         FROM (
-            SELECT usercode, physical_cardno, cardtype, buildcode
-            FROM base_card
+            SELECT usercode, physical_cardno, cardtype, build_code
+            FROM admin_card_bind
             WHERE physical_cardno in
             <foreach collection="cardNoList" item="cardNo" open="(" separator="," close=")">
                 #{cardNo}
             </foreach>
         ) c,
         base_device d
-        WHERE c.buildcode = d.buildcode
-        GROUP BY c.usercode, c.buildcode, c.cardtype, cardNo
+        WHERE c.build_code = d.buildcode
+        GROUP BY c.usercode, c.build_code, c.cardtype, cardNo
     </select>
 
     <!--    查询管理员名下门禁卡数量-->

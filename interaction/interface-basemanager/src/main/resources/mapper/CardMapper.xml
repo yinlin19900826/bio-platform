@@ -99,4 +99,17 @@
     <update id="updateUserByCardNo" parameterType="com.biocome.platform.inter.basemanager.entity.Card">
         update base_card set usercode = #{usercode} , username = #{username} where physical_cardno = #{physicalCardno}
     </update>
+
+    <!--注销卡-->
+    <update id="updateCardStatus">
+        update base_card
+        set isalive = #{isalive}
+        where usercode = #{usercode} and physical_cardno = #{cardNo}
+    </update>
+
+    <!--移除卡-->
+    <update id="removeCard">
+        delete from base_card
+        where usercode = #{usercode} and physical_cardno = #{cardNo}
+    </update>
 </mapper>

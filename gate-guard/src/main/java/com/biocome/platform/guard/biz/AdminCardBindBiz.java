@@ -99,6 +99,41 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             if (ValidateUtils.isEmpty(card)) {
                 new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "未知的门禁卡!门禁卡号：" + cardNo);
             }
+            //1.通知
+            try{
+                BaseRpcResponse rpcResp = null;
+                if(ValidateUtils.isNotEmpty(bindVos)){
+                    List<String> codes = new ArrayList<String>();
+                    for(AdminCardBindVo bindVo : bindVos){
+                        if (!bindVo.isBind()) {
+                            codes.add(bindVo.getBuildCode());
+                        }
+                    }
+                    if(ValidateUtils.isNotEmpty(codes)){
+                        rpcResp = deliverAdminCardNotify(card, codes);
+                    }
+                }
+                if(ValidateUtils.isNotEmpty(removeVos)){
+                    List<String> codes = new ArrayList<String>();
+                    for(AdminCardBindVo bindVo : bindVos){
+                        if (bindVo.isBind()) {
+                            codes.add(bindVo.getBuildCode());
+                        }
+                    }
+                    if(ValidateUtils.isNotEmpty(codes)){
+                        rpcResp = unregisterAdminCardNotify(card, codes);
+                    }
+                }
+                if(ValidateUtils.isNotEmpty(rpcResp)){
+                    if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
+                        return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, rpcResp.getMessage());
+                    }
+                }
+            }catch (Exception e){
+                log.info(e.getMessage());
+                return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "门禁卡下发、注销失败，失败原因："+e.getMessage());
+            }
+            //2.数据库通知
             if (ValidateUtils.isNotEmpty(bindVos)) {
                 List<AdminCardBind> bindList = new ArrayList<AdminCardBind>();
                 for (AdminCardBindVo bindVo : bindVos) {
@@ -109,7 +144,7 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
                         entity.setUsercode(usercode);
                         entity.setCreatetime(card.getCreatetime());
                         entity.setIsalive(Integer.parseInt(card.getIsalive()));
-                        entity.setCardkind(card.getCardkind());
+                        entity.setCardkind(Integer.parseInt(card.getCardkind()));
                         entity.setCardtype(card.getCardtype());
                         entity.setBuildCode(bindVo.getBuildCode());
                         entity.setBuildName(bindVo.getBuildName());
@@ -128,39 +163,10 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
                 mapper.batchDeleteByIdsAndUsercode(ids, usercode);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "更新门禁卡失败，错误信息：数据库错误！");
-        }
-        //TODO(待调整) 下发卡、注销卡
-        try{
-            BaseRpcResponse rpcResp = null;
-            if(ValidateUtils.isNotEmpty(bindVos)){
-                List<String> codes = new ArrayList<String>();
-                for(AdminCardBindVo bindVo : bindVos){
-                    if (!bindVo.isBind()) {
-                        codes.add(bindVo.getBuildCode());
-                    }
-                }
-                rpcResp = deliverAdminCardNotify(card, codes);
-            }
-            if(ValidateUtils.isNotEmpty(removeVos)){
-                List<String> codes = new ArrayList<String>();
-                for(AdminCardBindVo bindVo : bindVos){
-                    if (bindVo.isBind()) {
-                        codes.add(bindVo.getBuildCode());
-                    }
-                }
-                rpcResp = unregisterAdminCardNotify(card, codes);
-            }
-            if(ValidateUtils.isNotEmpty(rpcResp)){
-                if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
-                    return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, rpcResp.getMessage());
-                }
-            }
-        }catch (Exception e){
-            log.info(e.getMessage());
-            return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "门禁卡下发、注销失败，失败原因："+e.getMessage());
         }
         return new ObjectRestResponse<>().success();
     }
@@ -173,16 +179,16 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
      */
     public ObjectRestResponse<AdminCardBind> unregisterCard(AdminCardVo vo) {
         try {
+            //注销卡通知
+            BaseRpcResponse rpcResp = unregisterAdminCardNotify(vo.getUsercode(), vo.getCardNo());
+            if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
+                return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "注销卡失败！失败原因："+ rpcResp.getMessage());
+            }
             doUnregister(vo.getUsercode(), vo.getCardNo());
         } catch (Exception e) {
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "注销卡失败！错误信息：数据库错误！");
-        }
-        //注销卡通知
-        BaseRpcResponse rpcResp = unregisterAdminCardNotify(vo.getUsercode(), vo.getCardNo());
-        if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
-            return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "通知注销卡失败！");
         }
         return new ObjectRestResponse<>().success();
     }
@@ -207,13 +213,18 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
      */
     public ObjectRestResponse<AdminCardBind> removeCard(AdminCardVo vo) {
         try {
+            //注销卡通知
+            BaseRpcResponse rpcResp = unregisterAdminCardNotify(vo.getUsercode(), vo.getCardNo());
+            if(rpcResp.getErrorcode() != CommonConstants.RESP_RESULT_SUCCESS){
+                return new ObjectRestResponse<>(CommonConstants.EX_OTHER_CODE, "移除卡失败！失败原因："+ rpcResp.getMessage());
+            }
             doRemove(vo.getUsercode(), vo.getCardNo());
-            return new ObjectRestResponse<>().success();
         } catch (Exception e) {
             log.info(e.getMessage());
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new ObjectRestResponse(CommonConstants.EX_OTHER_CODE, "移除卡失败！错误信息：数据库错误！");
         }
+        return new ObjectRestResponse<>().success();
     }
 
     /**
@@ -476,8 +487,10 @@ public class AdminCardBindBiz extends BaseBiz<AdminCardBindMapper,AdminCardBind>
             }
             logoutCardVo.setUsercode(usercode);
             logoutCardVo.setCardno(cardNo);
-            logoutCardVo.setCardtype(card.getCardtype());
+            logoutCardVo.setCardtype(String.valueOf(map.get(cardNo).getCardtype()));
             logoutCardVo.setSnList(map.get(cardNo).getSnList());
+        }else{
+            return new BaseRpcResponse("此楼栋没有门禁机信息", "0", "204");
         }
         return doorDeviceCardBiz.logoutCard(logoutCardVo);
     }

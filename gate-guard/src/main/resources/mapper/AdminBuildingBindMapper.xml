@@ -32,20 +32,16 @@
         <result property="papersphoto" column="papersphoto"/>
         <result property="appOpen" column="appOpen"/>
         <result property="regPerson" column="regPerson"/>
+        <result property="domicileAddress" column="domicileAddress"/>
     </resultMap>
 
     <!--    楼栋管理员列表-->
     <select id="selectAdminListOnBuilding" resultMap="adminResultMap">
-        SELECT b.id as adminId, b.usercode as usercode, b.username as username FROM admin_building_bind b, base_landlord l
-        WHERE b.usercode = l.usercode AND b.build_code = #{code}
-        <if test="type != null">
-            AND user_type = #{type}
-        </if>
-        <!--SELECT info.adminId, info.usercode, info.username, info.landlordtype,info.landlordtypename, info.tel, info.gendar, info.authName, info.paperstype,info.papersnum,info.photo,
-        info.papersphoto,info.isapp AS appOpen, info.registerpeople AS regPerson, bind.num AS buildingNum
+        SELECT info.adminId, info.usercode, info.username, info.landlordtype,info.landlordtypename, info.tel, info.gendar, info.authName, info.paperstype,info.papersnum,info.photo,
+        info.papersphoto,info.isapp AS appOpen, info.registerpeople AS regPerson, bind.num AS buildingNum, info.domicileaddress as domicileAddress
         FROM
         (
-        select id as adminId, usercode,username, tel, papersnum,photo,papersphoto, registerpeople, landlordtype,
+        select id as adminId, usercode,username, tel, papersnum,photo,papersphoto, registerpeople, landlordtype,domicileaddress,
         case paperstype
         WHEN 0 THEN "身份证" WHEN 1 THEN "港澳通行证"
         end paperstype,
@@ -82,7 +78,7 @@
         </if>
         ) GROUP BY usercode
         ) bind
-        WHERE info.usercode =  bind.usercode-->
+        WHERE info.usercode =  bind.usercode
     </select>
 
     <select id="selectBindlessBuilding" resultType="com.biocome.platform.guard.vo.admin.AdminBuildingVo">

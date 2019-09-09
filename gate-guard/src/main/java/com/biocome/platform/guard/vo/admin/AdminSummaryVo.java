@@ -43,6 +43,8 @@ public class AdminSummaryVo {
     private String appOpen;
     @ApiModelProperty(value = "登记人")
     private String regPerson;
+    @ApiModelProperty(value = "户籍地址")
+    private String domicileAddress;
 
     public String getUsercode() {
         return usercode;
@@ -191,5 +193,13 @@ public class AdminSummaryVo {
 
     public void setLandlordtypename(String landlordtypename) {
         this.landlordtypename = landlordtypename;
+    }
+
+    public String getDomicileAddress() {
+        return domicileAddress;
+    }
+
+    public void setDomicileAddress(String domicileAddress) {
+        this.domicileAddress = domicileAddress;
     }
 }
