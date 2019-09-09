@@ -53,14 +53,16 @@
             END
             ) AS usersex,
             bl.tel,
-            bl.buildcode,
-            bl.buildname,
+            bb.buildcode,
+            bb.buildname,
             bir.picpath,
             bir.videopath
             FROM
             ag_inout_record_v1.base_inout_record bir
             LEFT JOIN ag_admin_v1.base_lessee bl ON bir.usercode = bl.usercode
             LEFT JOIN ag_admin_v1.base_dict_detail bdd ON bdd.dict_code = '007' AND bir.opentype = bdd.dict_key
+            LEFT JOIN ag_admin_v1.base_device bd ON bir.sn = bd.sn
+            LEFT JOIN ag_admin_v1.base_build bb ON bd.buildcode = bb.buildcode
         <where>
             1=1
             <if test="id != null and '' != id">and bir.id = #{id,jdbcType=VARCHAR}</if>
@@ -68,7 +70,7 @@
             <if test="cardno != null and '' != cardno">and bir.cardno = #{cardno,jdbcType=VARCHAR}</if>
             <if test="starttime != null"><![CDATA[and bir.createtime >= #{starttime,jdbcType=TIMESTAMP}]]></if>
             <if test="endtime != null"><![CDATA[and bir.createtime <= #{endtime,jdbcType=TIMESTAMP}]]></if>
-            <if test="buildcode != null and '' != buildcode">and  bl.buildcode = #{buildcode,jdbcType=VARCHAR}</if>
+            <if test="buildcode != null and '' != buildcode">and  bb.buildcode = #{buildcode,jdbcType=VARCHAR}</if>
         </where>
     </select>
     <insert id="addInoutRecord" parameterType="com.biocome.platform.inter.basemanager.entity.InoutRecord">
