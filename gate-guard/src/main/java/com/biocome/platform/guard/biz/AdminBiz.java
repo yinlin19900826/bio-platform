@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.List;
 
@@ -73,18 +74,25 @@ public class AdminBiz extends BaseBiz<LandlordMapper, Landlord> {
         }
     }
 
-    public BaseRpcResponse changePic(ChangeLesseePicReq req)  throws Exception{
-        int result = mapper.changePic(req);
-        if (result == 0) {
-            return new BaseRpcResponse().failure();
-        } else {
-            List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
-            ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
-            if (objectRestResponse.getStatus() != 200) {
-                throw new Exception("远程删除文件失败");
-            }
-            return new BaseRpcResponse().success();
+    public BaseResponse changePic(ChangeLesseePicReq req) {
+        try {
+            int result = mapper.changePic(req);
+            /*if (result == 0) {
+                return new BaseResponse(CommonConstants.EX_OTHER_CODE, "更换头像失败，错误原因：数据库未查到该数据！");
+            } else {
+                List<FileVo> fileVos = FileUtils.getFileDetailByUrls("1", req.getHeadphoto(), req.getPhoto(), req.getPapersphoto());
+                ObjectRestResponse objectRestResponse = fileRpc.fileDel(fileVos);
+                if (objectRestResponse.getStatus() != 200) {
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    return new BaseResponse(CommonConstants.EX_OTHER_CODE, "更换头像失败，错误原因：远程删除文件失败！");
+                }
+            }*/
+        }catch (Exception e){
+            log.info(e.getMessage());
+            e.printStackTrace();
+            return new BaseResponse(CommonConstants.EX_OTHER_CODE, "更换头像失败，错误原因：数据库错误！");
         }
+        return new BaseResponse(CommonConstants.CODE_OK, "更新成功！");
     }
 
     /**
