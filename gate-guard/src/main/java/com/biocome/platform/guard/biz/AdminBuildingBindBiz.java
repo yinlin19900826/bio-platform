@@ -105,7 +105,6 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
                 }
             }
         }
-        System.out.println("list.size()"+list.size());
     }
 
     /***
