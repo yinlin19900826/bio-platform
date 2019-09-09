@@ -8,6 +8,7 @@ import com.biocome.platform.common.msg.auth.BaseRpcResponse;
 import com.biocome.platform.common.util.DateUtils;
 import com.biocome.platform.common.util.ThreadManager;
 import com.biocome.platform.common.util.UUIDUtils;
+import com.biocome.platform.common.util.ValidateUtils;
 import com.biocome.platform.guard.constant.APPConstants;
 import com.biocome.platform.guard.feign.AppAccountService;
 import com.biocome.platform.guard.mapper.DoorDeviceCardMapper;
@@ -292,7 +293,9 @@ public class DoorDeviceCardBiz {
                         log.info("批量开卡远程调用响应:{}", resultList.toString());
                         List<OpenblukResp> successlist = resultList.stream().filter(OpenblukResp -> CommonConstants.RESP_RESULT_SUCCESS.equals(OpenblukResp.getResult()) && OpenblukResp.getCardno() != null).collect(Collectors.toList());
                         log.info("修改卡为生效列表:{}", successlist.toString());
-                        doorDeviceCardMapper.updateIsaliveByCardnoList(1, successlist);
+                        if (ValidateUtils.isNotEmpty(successlist)){
+                            doorDeviceCardMapper.updateIsaliveByCardnoList(1, successlist);
+                        }
                         return resultList;
                     } else {
                         resp.setResult("0");
