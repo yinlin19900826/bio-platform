@@ -99,6 +99,14 @@
     <select id="selectAdminCardCount" resultType="java.util.Map">
         SELECT b.usercode, COUNT(b.usercode) AS num FROM
         (
+        SELECT usercode, build_code FROM `admin_card_bind`
+        WHERE `usercode` IN
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) b
+        LEFT JOIN
+        (
         SELECT usercode, buildcode FROM base_card
         WHERE buildcode IN
         (
@@ -109,14 +117,6 @@
         </foreach>
         )
         ) a
-        LEFT JOIN
-        (
-        SELECT usercode, build_code FROM `admin_card_bind`
-        WHERE `usercode` IN
-        <foreach collection="codes" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        ) b
         ON a.buildcode = b.build_code
         GROUP BY b.usercode
     </select>

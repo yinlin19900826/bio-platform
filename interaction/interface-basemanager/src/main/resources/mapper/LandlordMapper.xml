@@ -14,6 +14,7 @@
         <result column="tel" jdbcType="VARCHAR" property="tel"/>
         <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
         <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="headphoto" jdbcType="VARCHAR" property="headphoto"/>
         <result column="papersphoto" jdbcType="VARCHAR" property="papersphoto"/>
         <result column="resideaddress" jdbcType="VARCHAR" property="resideaddress"/>
         <result column="roomcode" jdbcType="VARCHAR" property="roomcode"/>
@@ -35,7 +36,7 @@
     <!--根据姓名，手机号，证件号码，房东类型查询，查询全部时传参为null-->
     <select id="selectByAttribute" resultMap="BaseResultMap">
         SELECT
-        l.id,l.username,l.usercode,l.usersex,l.paperstype,l.papersnum,l.tel,l.photo,l.papersphoto,l.resideaddress,
+        l.id,l.username,l.usercode,l.usersex,l.paperstype,l.papersnum,l.tel,l.photo,l.headphoto,l.papersphoto,l.resideaddress,
         l.roomcode,l.landlordtype,l.adminjurisdiction,l.remark,l.status,l.del,l.createtime,l.createcode,
         l.createname,l.updatetime,l.updatecode,l.updatename,l.isapp,l.registertime,l.registerpeople,l.domicileaddress
         FROM
@@ -64,6 +65,7 @@
         <set>
             <if test="req.photo != null">photo = #{req.photo,jdbcType=VARCHAR}, </if>
             <if test="req.papersphoto != null">papersphoto = #{req.papersphoto,jdbcType=VARCHAR}, </if>
+            <if test="req.headphoto != null">headphoto = #{req.headphoto,jdbcType=VARCHAR}, </if>
         </set>
         WHERE usercode = #{req.usercode,jdbcType=VARCHAR}
     </update>

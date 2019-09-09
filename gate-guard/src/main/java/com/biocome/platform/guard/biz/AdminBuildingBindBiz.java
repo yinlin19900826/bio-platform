@@ -86,7 +86,7 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
                     for(int i = 0 ; i < cntListMap.size(); i++){
                         Map<String, Object> map = cntListMap.get(i);
                         Object usercode = map.get("usercode");
-                        if(ValidateUtils.isNotEmpty(usercode)){
+                        if(ValidateUtils.isNotEmpty(usercode) && usercode.equals(vo.getUsercode())){
                            vo.setCardNum(Integer.parseInt(map.get("num").toString()));
                         }
                     }
@@ -98,7 +98,7 @@ public class AdminBuildingBindBiz extends BaseBiz<AdminBuildingBindMapper, Admin
                     for(int i = 0 ; i < ownCardListMap.size(); i++){
                         Map<String, Object> map = ownCardListMap.get(i);
                         Object usercode = map.get("usercode");
-                        if(ValidateUtils.isNotEmpty(usercode)){
+                        if(ValidateUtils.isNotEmpty(usercode)&& usercode.equals(vo.getUsercode())){
                             vo.setCards(map.get("cards").toString());
                         }
                     }

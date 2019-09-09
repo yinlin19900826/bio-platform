@@ -45,13 +45,8 @@ public class AdminController extends BaseController<AdminBiz, Landlord> {
     @ResponseBody
     @ApiOperation(value = "修改管理员图片")
     @RequestMapping(value = "/changeAdminPic", method = RequestMethod.POST)
-    public BaseRpcResponse changeAdminPic(@RequestBody ChangeLesseePicReq req) {
-        try {
-            return adminBiz.changePic(req);
-        } catch (Exception e) {
-            log.error("修改出现异常！错误信息为：" + e.getMessage());
-            return new BaseRpcResponse().error();
-        }
+    public BaseResponse changeAdminPic(@RequestBody ChangeLesseePicReq req) {
+        return adminBiz.changePic(req);
     }
 
     @ApiOperation("添加管理员")
