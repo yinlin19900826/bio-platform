@@ -113,13 +113,13 @@
     <update id="updateIsaliveByCardno">
         update base_card
         set isalive = #{isalive}
-        where physical_cardno = #{cardNo}
+        where logic_cardno = #{cardNo}
     </update>
 
     <update id="updateIsaliveByCardnoList" parameterType="java.util.List">
         update base_card
         set isalive = #{isalive}
-        where physical_cardno in
+        where logic_cardno in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.cardno}
         </foreach>
