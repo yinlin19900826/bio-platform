@@ -235,7 +235,7 @@ public class MinioEndpointController {
 
     @ApiOperation("删除指定桶内全部文件(因插件问题，现在这个接口无效)")
     @ApiImplicitParams({@ApiImplicitParam(name = "bucketName", value = "桶名称", paramType = "path"),
-            @ApiImplicitParam(name = "type", value = "删除的类型（0:广告或升级文件，1:用户图片，2:开门图片）", paramType = "path")})
+            @ApiImplicitParam(name = "type", value = "删除的类型（0:广告或升级文件，1:用户图片，2:开门图片）·", paramType = "path")})
     @DeleteMapping("/object/all/{bucketName}/{type}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ObjectRestResponse deleteObjectAll(@PathVariable String bucketName, @PathVariable String type) {
