@@ -72,6 +72,7 @@
             <if test="endtime != null"><![CDATA[and bir.createtime <= #{endtime,jdbcType=TIMESTAMP}]]></if>
             <if test="buildcode != null and '' != buildcode">and  bb.buildcode = #{buildcode,jdbcType=VARCHAR}</if>
         </where>
+        ORDER BY bdd.dict_key ,bir.createtime DESC
     </select>
     <insert id="addInoutRecord" parameterType="com.biocome.platform.inter.basemanager.entity.InoutRecord">
         INSERT INTO base_inout_record  <trim prefix="(" suffix=")" suffixOverrides="," >
