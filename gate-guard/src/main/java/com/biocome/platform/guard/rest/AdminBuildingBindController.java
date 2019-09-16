@@ -67,7 +67,7 @@ public class AdminBuildingBindController extends BaseController<AdminBuildingBin
             @ApiImplicitParam(name = "buildcode", value = "楼栋编号", paramType = "query", required = true)
     })
     @ResponseBody
-    @RequestMapping(value = "adminBindBuilding" , method = RequestMethod.POST)
+    @RequestMapping(value = "adminBindBuilding" , method = RequestMethod.GET)
     public ObjectRestResponse adminBindBuild(String usercode, String buildcode){
         return adminBuildingBindBiz.adminBindBuilding(usercode, buildcode);
     }

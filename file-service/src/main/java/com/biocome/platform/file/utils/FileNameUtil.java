@@ -14,8 +14,9 @@ public class FileNameUtil {
     public static final SimpleDateFormat YYYYMMDDHHMMSSS = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
     public static String updateName(String name) {
-        String[] strArr = name.split("\\.");
-        StringBuilder sb = new StringBuilder(strArr[0]).append("-").append(YYYYMMDDHHMMSSS.format(new Date())).append(".").append(strArr[1]);
+        StringBuilder sb = new StringBuilder(YYYYMMDDHHMMSSS.format(new Date())).append("-").append(name);
+//        String[] strArr = name.split("\\.");
+//        StringBuilder sb = new StringBuilder(strArr[0]).append("-").append(YYYYMMDDHHMMSSS.format(new Date())).append(".").append(strArr[1]);
         return sb.toString();
     }
 }
