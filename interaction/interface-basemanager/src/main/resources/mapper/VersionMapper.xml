@@ -39,6 +39,7 @@
             <if test="deadtime!= null">deadtime,</if>
             <if test="isalive!= null">isalive,</if>
             <if test="filename!= null">filename,</if>
+            <if test="comment!= null">comment,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id!= null">#{id,jdbcType=INTEGER}, </if>
@@ -48,6 +49,7 @@
             <if test="deadtime!= null">#{deadtime,jdbcType=TIMESTAMP}, </if>
             <if test="isalive!= null">#{isalive,jdbcType=VARCHAR}, </if>
             <if test="filename!= null">#{filename,jdbcType=VARCHAR}, </if>
+            <if test="comment!= null">#{comment,jdbcType=VARCHAR}, </if>
         </trim>
     </insert>
 
@@ -60,6 +62,7 @@
             <if test="deadtime != null">deadtime = #{deadtime,jdbcType=TIMESTAMP}, </if>
             <if test="isalive != null">isalive = #{isalive,jdbcType=VARCHAR}, </if>
             <if test="filename != null">filename = #{filename,jdbcType=VARCHAR}, </if>
+            <if test="comment != null">comment = #{comment,jdbcType=VARCHAR}, </if>
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
@@ -72,7 +75,8 @@
             createtime,
             deadtime,
             isalive,
-            filename
+            filename,
+            comment
         FROM base_version
         WHERE isalive = '1' OR  isalive = '2'
     </select>

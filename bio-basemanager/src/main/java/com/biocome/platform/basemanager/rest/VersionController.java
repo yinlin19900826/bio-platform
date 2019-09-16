@@ -33,7 +33,7 @@ public class VersionController extends BaseController<VersionBiz, Version> {
     @ApiOperation(value = "上传客户端版本")
     @ResponseBody
     public BaseResponse uploadClient(@RequestPart("object") MultipartFile object
-            , String filename, String version) {
+            , String filename, String version, String comment) {
         BaseResponse resp = new BaseResponse();
         String newVersion = baseBiz.verifyVersion(version);
         if (newVersion.equals("0")) {
@@ -42,7 +42,7 @@ public class VersionController extends BaseController<VersionBiz, Version> {
             return resp;
         }
         try {
-            versionBiz.uploadClient(object, filename, newVersion);
+            versionBiz.uploadClient(object, filename, newVersion, comment);
         } catch (Exception e) {
             logger.error("上传客户端版本发生异常：{}", e.getMessage());
             resp.setMessage("上传失败");

@@ -26,6 +26,8 @@ public class Version {
     private String isalive;
     @Column(name = "filename")
     private String filename;
+    @Column(name = "comment")
+    private String comment;
 
     public Integer getId() {
         return id;
@@ -81,5 +83,13 @@ public class Version {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

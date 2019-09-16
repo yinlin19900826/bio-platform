@@ -45,7 +45,7 @@ public class VersionBiz extends BaseBiz<VersionMapper, Version> {
         return mapper.updateAllMilestone(version);
     }
 
-    public void uploadClient(MultipartFile object, String filename, String version) throws Exception {
+    public void uploadClient(MultipartFile object, String filename, String version, String    comment) throws Exception {
         ObjectRestResponse objectRestResponse = fileRpc.fileUpload(object, "4");
         String str = objectRestResponse.getData().toString();
                 //存库
@@ -55,6 +55,7 @@ public class VersionBiz extends BaseBiz<VersionMapper, Version> {
         v.setVersion(version);
         v.setCreatetime(DateUtils.getCurrentTime());
         v.setFilename(filename);
+        v.setComment(comment);
 
         if (result == null) {
             //获取版本号所对应的的版本类型
