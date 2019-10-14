@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.guard.mapper.AdvertListMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="BaseResultMap" type="com.biocome.platform.guard.entity.Advert">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="adno" jdbcType="VARCHAR" property="adno"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="adname" jdbcType="VARCHAR" property="adname"/>
+        <result column="materialname" jdbcType="VARCHAR" property="materialname"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="filepath" jdbcType="INTEGER" property="filepath"/>
+        <result column="begintime" jdbcType="TIMESTAMP" property="begintime"/>
+        <result column="endtime" jdbcType="TIMESTAMP" property="endtime"/>
+        <result column="speed" jdbcType="VARCHAR" property="speed"/>
+        <result column="issue" jdbcType="VARCHAR" property="issue"/>
+        <result column="priority" jdbcType="VARCHAR" property="priority"/>
+        <result column="fileid" jdbcType="VARCHAR" property="fileid"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
+    <select id="selectByAttribute" resultMap="BaseResultMap" parameterType="com.biocome.platform.guard.vo.advert.AdvertVo">
+        SELECT
+        id,adno,sn,adname,materialname,type,filepath,begintime,endtime,speed,issue,priority,fileid,remark,
+        status,del,createtime,createcode,createname,updatetime,updatecode,updatename
+        FROM
+        base_advert
+        <where>
+            <if test="model.adno != null and model.adno.trim() != ''">
+                and adno = #{model.adno,jdbcType=VARCHAR}
+            </if>
+            <if test="model.sn != null and model.sn.trim() != ''">
+                and sn = #{model.sn,jdbcType=VARCHAR}
+            </if>
+            <if test="model.sn == null or model.sn.trim() == ''">
+                and sn = (SELECT sn FROM base_device WHERE buildcode = #{model.buildCode,jdbcType=VARCHAR} LIMIT 1)
+            </if>
+            <if test="model.adname != null and model.adname.trim() != ''">and adname like concat(concat('%',
+                #{model.adname,jdbcType=VARCHAR}), '%')
+            </if>
+            <if test="model.type != null and model.type.trim() != ''">
+                and type = #{model.type,jdbcType=VARCHAR}
+            </if>
+            <if test="model.filepath != null and model.filepath.trim() != ''">
+                and filepath = #{model.filepath,jdbcType=VARCHAR}
+            </if>
+            <if test="model.begintime != null">
+                <![CDATA[and begintime >= #{model.begintime,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="model.endtime != null">
+                <![CDATA[and endtime <= #{model.endtime,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="model.speed != null and model.speed.trim() != ''">
+                and speed = #{model.speed,jdbcType=VARCHAR}
+            </if>
+            <if test="model.issue != null and model.issue.trim() != ''">
+                and issue = #{model.issue,jdbcType=VARCHAR}
+            </if>
+            <if test="model.priority != null and model.priority.trim() != ''">
+                and priority = #{model.priority,jdbcType=VARCHAR}
+            </if>
+            <if test="model.fileid != null and model.fileid.trim() != ''">
+                and fileid = #{model.fileid,jdbcType=VARCHAR}
+            </if>
+            <if test="model.createcode != null and model.createcode.trim() != ''">
+                and createcode = #{model.createcode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.createname != null and model.createname.trim() != ''">
+                and createname = #{model.createname,jdbcType=VARCHAR}
+            </if>
+            <if test="model.updatecode != null and model.updatecode.trim() != ''">
+                and updatecode = #{model.updatecode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.updatename != null and model.updatename.trim() != ''">
+                and updatename = #{model.updatename,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY
+        updatetime DESC
+    </select>
+
+    <!--批量删除方法-->
+    <delete id="deleteByParam">
+        delete from base_advert where sn = #{sn,jdbcType=VARCHAR}
+        <if test="adno != null and adno.trim() != ''">
+            and adno = #{adno,jdbcType=VARCHAR}
+        </if>
+    </delete>
+
+    <!--批量插入方法-->
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO base_advert (
+            adno,
+            sn,
+            adname,
+            materialname,
+            `type`,
+            filepath,
+            begintime,
+            endtime,
+            speed,
+            issue,
+            priority,
+            fileid,
+            remark,
+            `status`,
+            del,
+            createtime,
+            createcode,
+            createname,
+            updatetime
+        ) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.adno,jdbcType=VARCHAR},
+            #{item.sn,jdbcType=VARCHAR},
+            #{item.adname,jdbcType=VARCHAR},
+            #{item.materialname,jdbcType=VARCHAR},
+            #{item.type,jdbcType=VARCHAR},
+            #{item.filepath,jdbcType=VARCHAR},
+            #{item.begintime,jdbcType=TIMESTAMP},
+            #{item.endtime,jdbcType=TIMESTAMP},
+            #{item.speed,jdbcType=VARCHAR},
+            #{item.issue,jdbcType=VARCHAR},
+            #{item.priority,jdbcType=VARCHAR},
+            #{item.fileid,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.status,jdbcType=INTEGER},
+            #{item.del,jdbcType=INTEGER},
+            #{item.createtime,jdbcType=TIMESTAMP},
+            #{item.createcode,jdbcType=VARCHAR},
+            #{item.createname,jdbcType=VARCHAR},
+            #{item.updatetime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+    <update id="updateList" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update base_advert
+            <set>
+                `issue`= #{item.result}
+            </set>
+            where sn = #{item.sn} and adno = #{item.adno}
+        </foreach>
+    </update>
+</mapper>

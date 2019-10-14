@@ -18,4 +18,6 @@ public interface CameraMapper extends Mapper<Camera> {
     List<CameraVo> selectCameraList(@Param("institutioncode") String institutioncode, @Param("name") String name, @Param("ip") String ip);
 
     List<CameraVo> selectByTree(@Param("parentcode") String parentcode);
+
+    List<CameraVo> getVideoDevice(@Param("cameraId") Integer cameraId);
 }

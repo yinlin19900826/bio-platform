@@ -1,17 +1,23 @@
 package com.biocome.video.biz;
 
+import com.biocome.platform.common.biz.BaseBiz;
 import com.biocome.platform.common.util.ValidateUtils;
+import com.biocome.video.entity.CameraGroup;
+import com.biocome.video.mapper.CameraGroupMapper;
 import com.biocome.video.mapper.CameraMapper;
 import com.biocome.video.mapper.TreeVideoMapper;
 import com.biocome.video.mapper.VideoMapper;
-import com.biocome.video.vo.CameraVo;
-import com.biocome.video.vo.TreeVideoVO;
+import com.biocome.video.vo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: TreeDistrictBiz
@@ -21,8 +27,9 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class TreeDistrictBiz {
+public class TreeDistrictBiz extends BaseBiz<CameraGroupMapper,CameraGroup> {
 
+    private static Logger log = LoggerFactory.getLogger(TreeDistrictBiz.class);
     @Autowired
     private VideoMapper videoMapper;
     @Autowired
@@ -30,6 +37,9 @@ public class TreeDistrictBiz {
 
     @Autowired
     private TreeVideoMapper treeVideoMapper;
+
+    @Autowired
+    private CameraGroupMapper cameraGroupMapper;
 
     /**
      *
@@ -85,7 +95,7 @@ public class TreeDistrictBiz {
                             List<TreeVideoVO> subs = videoMapper.selectTree(tree.getType() + 1, tree.getCode());
 
                             for(TreeVideoVO cameratree : subs){
-                                    //该返回中查询了楼栋所有的设备，如果countdevice为0，则表示没有设备，页面显示标志为无设备标志
+
                                     List<CameraVo> bl = cameraMapper.selectByTree(cameratree.getCode());
                                     //allSubs.addAll(bl);
                                     cameratree.setChildren(bl);
@@ -115,6 +125,123 @@ public class TreeDistrictBiz {
             }
             if (ValidateUtils.isNotEmpty(allSubs)) {
                 getTreeVideo(allSubs);
+            }
+        }
+    }
+
+
+    /**
+     * 获取树形结构
+     * @return
+     */
+    //@Cache(key = "tree:camera_group")
+    public UITree getTree() {
+        try {
+            List<CameraGroup> list = mapper.selectAll();
+            if(ValidateUtils.isNotEmpty(list)){
+                List<UINodeVo> vos = new ArrayList<UINodeVo>();
+                for(CameraGroup entity : list){
+                    UINodeVo vo = new UINodeVo();
+                    vo.setId(entity.getId());
+                    vo.setName(entity.getName());
+                    vo.setParentId(entity.getParentId());
+                    vo.setType(entity.getNodeType());
+                    vo.setCameraId(entity.getCameraId());
+                    vo.setPipeline_id(entity.getPipelineId());
+                    vos.add(vo);
+                }
+                UITree tree = buildTreeFromRoot(vos);
+                return tree;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 从根节点创建树
+     * @return
+     */
+    public  UITree buildTreeFromRoot(List<UINodeVo> list){
+        UITree tree = new UITree();
+        if(ValidateUtils.isNotEmpty(list)){
+            //将列表改成应映射结构
+            Map<Integer, List<UINode>> map = new HashMap<Integer, List<UINode>>();
+            List<UINode> lst = new ArrayList<>();
+            for(UINodeVo vo : list){
+                UINode node = new UINode();
+                node.setId(vo.getId());
+                List<Integer> Ids = cameraGroupMapper.getAllChildIds(vo.getId());
+                int sumAllOnLineCameras = 0;
+                int sumAllCameras = 0;
+                for(Integer id :Ids){
+                    int countOnLineCameraAmount = cameraGroupMapper.getOnLineCameraAmount(id);
+                    int countCameraAmount = cameraGroupMapper.getCameraAmount(id);
+                    if(countOnLineCameraAmount!=0 ){
+                        sumAllOnLineCameras+=countOnLineCameraAmount;
+                    }
+                    if(countCameraAmount!=0 ){
+                        sumAllCameras+=countCameraAmount;
+                    }
+                }
+                node.setCountlivevideo(sumAllOnLineCameras);
+                node.setCountcamera(sumAllCameras);
+                node.setName(vo.getName());
+                node.setAttach(vo.getAttach());
+                node.setType(vo.getType());
+                node.setCameraId(vo.getCameraId());
+                node.setPipeline_id(vo.getPipeline_id());
+                if(ValidateUtils.isNotEmpty(vo.getParentId())){
+                    node.setParentId(vo.getParentId());
+                }
+                Integer parentId = vo.getParentId();
+                if(ValidateUtils.isNotEmpty(parentId)){
+                    List<UINode> nodeList = map.get(parentId);
+                    if(ValidateUtils.isEmpty(nodeList)){
+                        nodeList = new ArrayList<UINode>();
+                        map.put(parentId, nodeList);
+                    }
+                    nodeList.add(node);
+                }else{
+                    lst.add(node);
+                }
+            }
+            if(lst.size() != 1){
+                log.info("错误的根节点数，根节点数量："+lst.size());
+            }
+            int level = 1;
+            UINode root = lst.get(0);
+            setChildList(root, level, map);
+            tree.setRoot(root);
+        }
+        return tree;
+    }
+
+    /**
+     * 迭代设置子节点
+     * @param parent
+     * @param level
+     * @param map
+     */
+    public  void setChildList(UINode parent, int level, Map<Integer, List<UINode>> map) {
+        parent.setLevel(level);
+        // List<String> subGroupIds = tree.findBranchById(String.valueOf(vo.getId()));
+        List<UINode> childList = map.get(parent.getId());
+        if(ValidateUtils.isNotEmpty(childList)){
+            if(ValidateUtils.isEmpty(parent.getChildList())){
+                parent.setChildList(new ArrayList<UINode>());
+            }
+            parent.getChildList().addAll(childList);
+            if(ValidateUtils.isNotEmpty(childList)){
+                for(UINode node : childList){
+                    if(level == 4){
+
+                        List<CameraVo> videoDevice = cameraMapper.getVideoDevice(node.getCameraId());
+                        node.setChildList(videoDevice);
+                    }
+                    setChildList(node, level+1, map);
+                }
             }
         }
     }

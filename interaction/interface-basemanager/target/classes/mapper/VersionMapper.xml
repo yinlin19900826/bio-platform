@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.inter.basemanager.mapper.VersionMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Version">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="version" jdbcType="VARCHAR" property="version"/>
+        <result column="filepath" jdbcType="VARCHAR" property="filepath"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="deadtime" jdbcType="TIMESTAMP" property="deadtime"/>
+        <result column="isalive" jdbcType="VARCHAR" property="isalive"/>
+        <result column="filename" jdbcType="VARCHAR" property="filename"/>
+    </resultMap>
+    <select id="selectByVersion" resultMap="BaseResultMap">
+        SELECT
+            id,
+            version,
+            filepath,
+            createtime,
+            deadtime,
+            isalive,
+            filename
+        FROM base_version
+        WHERE version = #{version}
+    </select>
+    <update id="updateAllIsalive" parameterType="com.biocome.platform.inter.basemanager.entity.Version">
+        UPDATE base_version SET isalive = '0' , deadtime = #{deadtime} WHERE  isalive = '1'
+    </update>
+    <update id="updateAllMilestone" parameterType="com.biocome.platform.inter.basemanager.entity.Version">
+        UPDATE base_version SET isalive = '3' , deadtime = #{deadtime} WHERE  isalive = '2'
+    </update>
+    <insert id="insertVersion" parameterType="com.biocome.platform.inter.basemanager.entity.Version">
+        INSERT INTO base_version
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!= null">id,</if>
+            <if test="version!= null">version,</if>
+            <if test="filepath!= null">filepath,</if>
+            <if test="createtime!= null">createtime,</if>
+            <if test="deadtime!= null">deadtime,</if>
+            <if test="isalive!= null">isalive,</if>
+            <if test="filename!= null">filename,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!= null">#{id,jdbcType=INTEGER}, </if>
+            <if test="version!= null">#{version,jdbcType=VARCHAR}, </if>
+            <if test="filepath!= null">#{filepath,jdbcType=VARCHAR}, </if>
+            <if test="createtime!= null">#{createtime,jdbcType=TIMESTAMP}, </if>
+            <if test="deadtime!= null">#{deadtime,jdbcType=TIMESTAMP}, </if>
+            <if test="isalive!= null">#{isalive,jdbcType=VARCHAR}, </if>
+            <if test="filename!= null">#{filename,jdbcType=VARCHAR}, </if>
+        </trim>
+    </insert>
+
+    <update id="updateVersion" parameterType="com.biocome.platform.inter.basemanager.entity.Version">
+        UPDATE base_version
+        <set>
+            <if test="version != null">version = #{version,jdbcType=VARCHAR}, </if>
+            <if test="filepath != null">filepath = #{filepath,jdbcType=VARCHAR}, </if>
+            <if test="createtime != null">createtime = #{createtime,jdbcType=TIMESTAMP}, </if>
+            <if test="deadtime != null">deadtime = #{deadtime,jdbcType=TIMESTAMP}, </if>
+            <if test="isalive != null">isalive = #{isalive,jdbcType=VARCHAR}, </if>
+            <if test="filename != null">filename = #{filename,jdbcType=VARCHAR}, </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getVersionList" resultMap="BaseResultMap">
+        SELECT
+            id,
+            version,
+            filepath,
+            createtime,
+            deadtime,
+            isalive,
+            filename
+        FROM base_version
+        WHERE isalive = '1' OR  isalive = '2'
+    </select>
+
+    <select id="getAliveMilestoneVersion" resultMap="BaseResultMap">
+       SELECT
+            id,
+            version,
+            filepath,
+            createtime,
+            deadtime,
+            isalive,
+            filename
+        FROM base_version
+        WHERE  isalive = '2'
+    </select>
+</mapper>

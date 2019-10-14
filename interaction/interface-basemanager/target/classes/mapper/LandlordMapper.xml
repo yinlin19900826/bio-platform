@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.inter.basemanager.mapper.LandlordMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Landlord">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="usercode" jdbcType="VARCHAR" property="usercode"/>
+        <result column="usersex" jdbcType="INTEGER" property="usersex"/>
+        <result column="paperstype" jdbcType="INTEGER" property="paperstype"/>
+        <result column="papersnum" jdbcType="VARCHAR" property="papersnum"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="domicileaddress" jdbcType="VARCHAR" property="domicileaddress"/>
+        <result column="photo" jdbcType="VARCHAR" property="photo"/>
+        <result column="headphoto" jdbcType="VARCHAR" property="headphoto"/>
+        <result column="papersphoto" jdbcType="VARCHAR" property="papersphoto"/>
+        <result column="resideaddress" jdbcType="VARCHAR" property="resideaddress"/>
+        <result column="roomcode" jdbcType="VARCHAR" property="roomcode"/>
+        <result column="landlordtype" jdbcType="INTEGER" property="landlordtype"/>
+        <result column="isapp" jdbcType="INTEGER" property="isapp"/>
+        <result column="registertime" jdbcType="TIMESTAMP" property="registertime"/>
+        <result column="registerpeople" jdbcType="VARCHAR" property="registerpeople"/>
+        <result column="adminjurisdiction" jdbcType="INTEGER" property="adminjurisdiction"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+    <!--根据姓名，手机号，证件号码，房东类型查询，查询全部时传参为null-->
+    <select id="selectByAttribute" resultMap="BaseResultMap">
+        SELECT
+        l.id,l.username,l.usercode,l.usersex,l.paperstype,l.papersnum,l.tel,l.photo,l.headphoto,l.papersphoto,l.resideaddress,
+        l.roomcode,l.landlordtype,l.adminjurisdiction,l.remark,l.status,l.del,l.createtime,l.createcode,
+        l.createname,l.updatetime,l.updatecode,l.updatename,l.isapp,l.registertime,l.registerpeople,l.domicileaddress
+        FROM
+        base_landlord l
+        <where>
+            <if test="username != null and username.trim() != ''">and l.username like concat('%',
+                #{username,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="tel != null and tel.trim() != ''">and l.tel = #{tel,jdbcType=VARCHAR}</if>
+            <if test="papersnum !=null and papersnum.trim() != ''">and l.papersnum = #{papersnum,jdbcType=VARCHAR}</if>
+            <if test="landlordtype !=null and landlordtype.trim() != ''">and l.landlordtype = #{landlordtype,jdbcType=VARCHAR}</if>
+        </where>
+        ORDER BY
+        l.updatetime DESC
+    </select>
+    <!--删除方法-->
+    <delete id="deleteLandlord" parameterType="java.util.List">
+        delete from base_landlord where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+    <update id="changePic">
+        UPDATE base_landlord
+        <set>
+            <if test="req.photo != null">photo = #{req.photo,jdbcType=VARCHAR}, </if>
+            <if test="req.papersphoto != null">papersphoto = #{req.papersphoto,jdbcType=VARCHAR}, </if>
+            <if test="req.headphoto != null">headphoto = #{req.headphoto,jdbcType=VARCHAR}, </if>
+        </set>
+        WHERE usercode = #{req.usercode,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByUserCode" resultMap="BaseResultMap">
+        select * from base_landlord
+        where usercode = #{usercode}
+    </select>
+
+    <select id="selectSimpleAdminList" resultType="com.biocome.platform.inter.basemanager.vo.admin.SimpleAdminVo">
+        select l.username, l.tel as phone, l.resideaddress as address, d.dict_value as adminType, l.usercode
+        from base_landlord l
+        left join
+        (
+        select dict_key, dict_value from base_dict_detail
+        where dict_code in
+        (select dict_code from base_dict where dict_code_name = "管理员类型" )
+        ) d
+        on l.landlordtype = d.dict_key
+        where (1=1)
+        <if test="username != null and username.trim() != ''">
+            and l.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="type !=null">
+            and l.landlordtype = #{type}
+        </if>
+    </select>
+</mapper>

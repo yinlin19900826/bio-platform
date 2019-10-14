@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.video.mapper.CameraGroupMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.video.entity.CameraGroup" id="cameraGroupMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="nodeLevel" column="node_level"/>
+        <result property="nodeType" column="node_type"/>
+        <result property="pipelineId" column="pipeline_id"/>
+    </resultMap>
+
+    <select id="getAllChildIds" resultType="java.lang.Integer">
+        select id from (
+              select t1.id,
+              if(find_in_set(parent_id, @pids) > 0, @pids := concat(@pids, ',', id), 0) as ischild
+              from (
+                   select id,parent_id from base_camera_group t order by parent_id, id
+                  ) t1,
+                  (select @pids := #{id}) t2
+             ) t3 where ischild != 0
+    </select>
+
+    <select id="getCameraAmount" resultType="java.lang.Integer">
+       select count(1) from base_camera_group g
+		where  g.id=#{id}
+		 and g.pipeline_id is not null
+    </select>
+    <select id="getOnLineCameraAmount" resultType="java.lang.Integer">
+        select count(1) from base_camera_group g,base_channel c
+          where  g.id=#{id}
+              and g.pipeline_id=c.id
+              and c.status=1
+        </select>
+</mapper>

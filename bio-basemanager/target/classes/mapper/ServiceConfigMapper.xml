@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.basemanager.mapper.ServiceConfigMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.basemanager.entity.ServiceConfig" id="serviceConfigMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="subType" column="sub_type"/>
+        <result property="lanIp" column="lan_ip"/>
+        <result property="lanPort" column="lan_port"/>
+        <result property="wanIp" column="wan_ip"/>
+        <result property="wanPort" column="wan_port"/>
+        <result property="maxConn" column="max_conn"/>
+        <result property="maxDispatch" column="max_dispatch"/>
+        <result property="description" column="description"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="selectServiceConfigList" resultType="com.biocome.platform.basemanager.vo.camera.ServiceConfigVo">
+        SELECT c.id, c.`name`, c.`type`,t.dict_value AS type, c.sub_type AS subType, s.dict_value AS subTypeName, c.lan_ip AS lanIp,
+         c.lan_port AS lanPort, c.wan_ip AS wanIp, c.wan_port AS wanPort, c.max_conn AS maxConn, c.max_dispatch AS maxDispatch, c.`description`
+        FROM
+        (
+            SELECT id, `name`, `type`, sub_type, lan_ip, lan_port, wan_ip, wan_port, max_conn, max_dispatch, `description`
+            FROM base_service_config
+            WHERE (1=1)
+            <if test="name != null and name.trim() != '' ">
+                AND `name` LIKE CONCAT('%',#{name},'%')
+            </if>
+            <if test="ip != null and ip.trim() != '' ">
+                AND lan_ip LIKE CONCAT('%',#{ip},'%')
+            </if>
+        ) c
+        LEFT JOIN
+        (
+        SELECT dict_key, dict_value FROM base_dict_detail
+        WHERE dict_code =
+            (
+            SELECT dict_code FROM base_dict
+            WHERE dict_code_name = "服务配置类型"
+            )
+        ) t
+        ON t.dict_key = c.`type`
+        LEFT JOIN
+        (
+        SELECT dict_key, dict_value FROM base_dict_detail
+        WHERE dict_code =
+            (
+            SELECT dict_code FROM base_dict
+            WHERE dict_code_name = "服务配置子类型"
+            )
+        ) s
+        ON s.dict_key = c.sub_type
+    </select>
+</mapper>

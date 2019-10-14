@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.inter.basemanager.mapper.EstateMapper">
+    <resultMap id="BaseResultMap" type="com.biocome.platform.inter.basemanager.entity.Estate">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="estatetype" jdbcType="VARCHAR" property="estatetype"/>
+        <result column="areacode" jdbcType="VARCHAR" property="areacode"/>
+        <result column="detailedaddress" jdbcType="VARCHAR" property="detailedaddress"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="county" jdbcType="VARCHAR" property="county"/>
+        <result column="street" jdbcType="VARCHAR" property="street"/>
+        <result column="policestatio" jdbcType="VARCHAR" property="policestatio"/>
+        <result column="carnum" jdbcType="VARCHAR" property="carnum"/>
+        <result column="buildnum" jdbcType="VARCHAR" property="buildnum"/>
+        <result column="housenum" jdbcType="VARCHAR" property="housenum"/>
+        <result column="lng" jdbcType="VARCHAR" property="lng"/>
+        <result column="lat" jdbcType="VARCHAR" property="lat"/>
+        <result column="managecode" jdbcType="VARCHAR" property="managecode"/>
+        <result column="managetel" jdbcType="VARCHAR" property="managetel"/>
+        <result column="servicetel" jdbcType="VARCHAR" property="servicetel"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="del" jdbcType="INTEGER" property="del"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="createcode" jdbcType="VARCHAR" property="createcode"/>
+        <result column="createname" jdbcType="VARCHAR" property="createname"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="updatecode" jdbcType="VARCHAR" property="updatecode"/>
+        <result column="updatename" jdbcType="VARCHAR" property="updatename"/>
+    </resultMap>
+
+    <resultMap id="EstateVoMap" type="com.biocome.platform.inter.basemanager.vo.syncho.EstateVo">
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="estatename" jdbcType="VARCHAR" property="estatename"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="county" jdbcType="VARCHAR" property="county"/>
+        <result column="carnum" jdbcType="VARCHAR" property="carnum"/>
+        <result column="buildnum" jdbcType="VARCHAR" property="buildnum"/>
+        <result column="housenum" jdbcType="VARCHAR" property="housenum"/>
+        <result column="lng" jdbcType="VARCHAR" property="lng"/>
+        <result column="lat" jdbcType="VARCHAR" property="lat"/>
+        <result column="managecode" jdbcType="VARCHAR" property="managecode"/>
+        <result column="areacode" jdbcType="VARCHAR" property="areacode"/>
+    </resultMap>
+
+    <resultMap id="TreeEstateVoMap" type="com.biocome.platform.inter.basemanager.vo.tree.TreeDistrictVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="code"/>
+        <result column="estatename" jdbcType="VARCHAR" property="name"/>
+        <result column="areacode" jdbcType="VARCHAR" property="parentcode"/>
+        <result column="countbuild" jdbcType="VARCHAR" property="countbuild"/>
+        <result column="countdevice" jdbcType="VARCHAR" property="countdevice"/>
+    </resultMap>
+
+    <!--根据小区编号或小区名称查询所有小区信息，查询所有时传参都为null-->
+    <select id="selectByAttribute" resultMap="BaseResultMap">
+        SELECT
+        e.id,e.estatecode,e.estatename,e.estatetype,e.areacode,e.detailedaddress,e.province,e.city,e.county,
+        (SELECT count(b.estatecode) FROM base_build b WHERE b.estatecode = e.estatecode) as buildnum,
+        (SELECT count(h.estatecode) FROM base_house h WHERE h.estatecode = e.estatecode) as housenum,
+        e.carnum,e.street,e.policestatio,e.lng,e.lat,e.managecode,e.managetel,e.servicetel,e.remark,e.status,e.del,
+        e.createtime,e.createcode,e.createname,e.updatetime,e.updatecode,e.updatename
+        FROM
+        base_estate e
+        <where>
+            <if test="model.estatename != null and model.estatename.trim() != ''">and e.estatename like concat('%',
+                #{model.estatename,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="model.estatecode != null and model.estatecode.trim() != ''">and e.estatecode =
+                #{model.estatecode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.province != null and model.province.trim() != ''">and e.province =
+                #{model.province,jdbcType=VARCHAR}
+            </if>
+            <if test="model.city != null and model.city.trim() != ''">and e.city =
+                #{model.city,jdbcType=VARCHAR}
+            </if>
+            <if test="model.county != null and model.county.trim() != ''">and e.county =
+                #{model.county,jdbcType=VARCHAR}
+            </if>
+            <if test="model.street != null and model.street.trim() != ''">and e.street =
+                #{model.street,jdbcType=VARCHAR}
+            </if>
+            <if test="model.policestatio != null and model.policestatio.trim() != ''">and e.policestatio =
+                #{model.policestatio,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY
+        e.updatetime DESC
+    </select>
+
+    <select id="selectDistrict" resultType="com.biocome.platform.inter.basemanager.vo.DistrictResp">
+        SELECT
+        e.estatecode as code,e.estatename as name
+        FROM
+        base_estate e
+        ORDER BY
+        e.updatetime DESC
+    </select>
+
+    <!--删除方法-->
+    <delete id="deleteEstate" parameterType="java.util.List">
+        delete from base_estate where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+    <!--根据所属行政区划代码查询所有小区，构建树-->
+    <select id="selectByTree" resultMap="TreeEstateVoMap">
+        SELECT e.id,
+               e.estatecode,
+               e.estatename,
+               e.areacode,
+               (select count(1) from base_build where estatecode = e.estatecode)  as countbuild,
+               (select count(1) from base_device where estatecode = e.estatecode) as countdevice
+        FROM base_estate e
+        WHERE areacode = #{areacode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryEstateByEstatecode" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        e.id,e.estatecode,e.estatename,e.estatetype,e.areacode,e.detailedaddress,e.province,e.city,e.county,
+        (SELECT count(b.estatecode) FROM base_build b WHERE b.estatecode = e.estatecode) as buildnum,
+        (SELECT count(h.estatecode) FROM base_house h WHERE h.estatecode = e.estatecode) as housenum,
+        e.carnum,e.street,e.policestatio,e.lng,e.lat,e.managecode,e.managetel,e.servicetel,e.remark,e.status,e.del,
+        e.createtime,e.createcode,e.createname,e.updatetime,e.updatecode,e.updatename
+        FROM
+        base_estate e
+        WHERE
+        e.estatecode IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--根据SynchoVo返回所属小区信息特定实体类-->
+    <select id="selectBySynchoVo" resultMap="EstateVoMap"
+            parameterType="com.biocome.platform.inter.basemanager.vo.syncho.SynchoVo">
+        SELECT
+        e.estatecode,
+        e.estatename,
+        e.areacode,
+        e.province,
+        e.city,
+        e.county,
+        (SELECT count(b.estatecode) FROM base_build b WHERE b.estatecode = e.estatecode) as buildnum,
+        (SELECT count(h.estatecode) FROM base_house h WHERE h.estatecode = e.estatecode) as housenum,
+        e.carnum,
+        e.lng,
+        e.lat,
+        e.managecode
+        FROM base_estate e
+        WHERE
+        <if test="vo.type == '6'.toString()">
+            e.estatecode = #{vo.code,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.type == '7'.toString()">
+            e.estatecode = (select b.estatecode from base_build b where b.buildcode = #{vo.code,jdbcType=VARCHAR})
+        </if>
+    </select>
+
+    <select id="selectByEstate" resultMap="EstateVoMap"
+            parameterType="com.biocome.platform.inter.basemanager.entity.Estate">
+        SELECT
+        e.estatecode,e.estatename,e.areacode,e.province,e.city,e.county,
+        (SELECT count(b.estatecode) FROM base_build b WHERE b.estatecode = e.estatecode) as buildnum,
+        (SELECT count(h.estatecode) FROM base_house h WHERE h.estatecode = e.estatecode) as housenum,
+        e.carnum,e.lng,e.lat,e.managecode
+        FROM
+        base_estate e
+        <where>
+            <if test="estate.province != null and estate.province.trim() != ''">
+                and e.province = #{estate.province,jdbcType=VARCHAR}
+            </if>
+            <if test="estate.city != null and estate.city.trim() != ''">
+                and e.city = #{estate.city,jdbcType=VARCHAR}
+            </if>
+            <if test="estate.county != null and estate.county.trim() != ''">
+                and e.county = #{estate.county,jdbcType=VARCHAR}
+            </if>
+            <if test="estate.street != null and estate.street.trim() != ''">
+                and e.street = #{estate.street,jdbcType=VARCHAR}
+            </if>
+            <if test="estate.policestatio != null and estate.policestatio.trim() != ''">
+                and e.policestatio = #{estate.policestatio,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

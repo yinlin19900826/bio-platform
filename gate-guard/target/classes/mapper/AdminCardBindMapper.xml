@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.guard.mapper.AdminCardBindMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.guard.entity.AdminCardBind" id="adminCardBindMap">
+        <result property="id" column="id"/>
+        <result property="logicCardno" column="logic_cardno"/>
+        <result property="physicalCardno" column="physical_cardno"/>
+        <result property="isalive" column="isalive"/>
+        <result property="createtime" column="createtime"/>
+        <result property="cardkind" column="cardkind"/>
+        <result property="usercode" column="usercode"/>
+        <result property="buildCode" column="build_code"/>
+        <result property="buildName" column="build_name"/>
+        <result property="cardtype" column="cardtype"/>
+    </resultMap>
+
+    <select id="cardBindBuildingList" resultType="com.biocome.platform.guard.vo.admin.AdminCardBindVo">
+        SELECT a.build_code AS buildCode, a.build_name AS buildName, a.usercode, IF(IFNULL(b.usercode, NULL), 1, 0) AS bind, b.id
+		FROM
+		(
+			SELECT id, build_code, build_name, usercode FROM admin_building_bind WHERE usercode = #{usercode}
+		) a
+		LEFT JOIN
+		(
+			SELECT id, build_code, build_name, usercode, physical_cardno FROM admin_card_bind WHERE usercode = #{usercode} and physical_cardno =#{cardNo}
+		) b
+		ON a.build_code = b.build_code AND a.usercode = b.usercode
+		ORDER BY a.id
+    </select>
+
+    <!--    批量插入-->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into admin_card_bind
+        (`logic_cardno`, `physical_cardno`, `isalive`, `createtime`, `cardkind`, `cardtype`,`usercode`, `build_code`, `build_name`)
+        values
+        <foreach collection="list" item="item" separator="," >
+            (#{item.logicCardno}, #{item.physicalCardno}, #{item.isalive},#{item.createtime},#{item.cardkind},#{item.cardtype},#{item.usercode},#{item.buildCode},
+            #{item.buildName})
+        </foreach>
+    </insert>
+
+    <!--    批量删除-->
+    <delete id="batchDeleteByIdsAndUsercode">
+        delete from admin_card_bind
+        where usercode = #{usercode}
+        and id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!--注销卡-->
+    <update id="updateCardStatus">
+        update admin_card_bind
+        set isalive = #{isalive}
+        where physical_cardno = #{cardNo} and usercode = #{admincode}
+    </update>
+
+    <!--删除卡-->
+    <delete id="removeCard">
+        delete from admin_card_bind
+        where physical_cardno = #{cardNo} and usercode = #{usercode}
+    </delete>
+
+    <!--  楼栋管理员门禁卡列表  -->
+    <select id="adminCardListOnBuilding" resultType="com.biocome.platform.guard.vo.admin.AdminCardVo">
+        SELECT a.usercode, a.username, a.tel, a.resideaddress as address, c.isalive, c.physical_cardno AS cardNo, c.createtime,
+        CASE c.cardkind WHEN 1 THEN 'IC卡' WHEN 2 THEN 'CPU卡' WHEN 3 THEN '深圳通卡' END cardkind,
+        CASE c.isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        CASE a.landlordtype
+        WHEN 0 THEN "未知" WHEN 1 THEN "原房东" WHEN 2 THEN "管理员" WHEN 3 THEN "房东家属" WHEN 4 THEN "网格员"
+                            WHEN 5 THEN "警务人员" WHEN 6 THEN "治安科" WHEN 72 THEN "保洁人员" WHEN 8 THEN "代管" WHEN 9 THEN "维修人员"
+                            WHEN 10 THEN "申报义务人" WHEN 11 THEN "送气人员" WHEN 12 THEN "集成单位"
+        END adminType
+        FROM base_landlord a,
+        admin_card_bind c
+        WHERE c.usercode = a.usercode AND cardtype = 2 AND build_code = #{buildcode}
+    </select>
+
+    <select id="cardDeviceList" resultType="com.biocome.platform.inter.basemanager.vo.device.CardDeviceVo">
+        SELECT c.usercode, c.cardtype,c.physical_cardno as cardNo, GROUP_CONCAT(d.sn SEPARATOR ",") AS sn
+        FROM (
+            SELECT usercode, physical_cardno, cardtype, buildcode
+            FROM base_card
+            WHERE physical_cardno in
+            <foreach collection="cardNoList" item="cardNo" open="(" separator="," close=")">
+                #{cardNo}
+            </foreach>
+        ) c,
+        base_device d
+        WHERE c.buildcode = d.buildcode
+        GROUP BY c.usercode, c.buildcode, c.cardtype, cardNo
+    </select>
+
+    <!--    查询管理员名下门禁卡数量-->
+    <select id="selectAdminCardCount" resultType="java.util.Map">
+        SELECT b.usercode, COUNT(b.usercode) AS num FROM
+        (
+        SELECT usercode, buildcode FROM base_card
+        WHERE buildcode IN
+        (
+        SELECT build_code FROM `admin_card_bind`
+        WHERE `usercode` IN
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+        ) a
+        LEFT JOIN
+        (
+        SELECT usercode, build_code FROM `admin_card_bind`
+        WHERE `usercode` IN
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) b
+        ON a.buildcode = b.build_code
+        GROUP BY b.usercode
+    </select>
+
+    <!--    查询管理员自用卡-->
+    <select id="selectAdminOwnCards" resultType="java.util.Map">
+        select usercode, group_concat(physical_cardno separator ',') as cards from base_card
+        where usercode in
+        <foreach collection="codes" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by usercode
+    </select>
+
+    <!--    查询管理员所有门禁卡-->
+    <select id="selectAdminCardList" resultType="com.biocome.platform.guard.vo.admin.AdminSimpleCardVo">
+        SELECT usercode, physical_cardno AS cardNo,
+        CASE isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        DATE_FORMAT(createtime,'%Y-%m-%d %H:%i:%s') AS createTime FROM base_card
+        WHERE (1=1) AND usercode = #{admincode}
+        <if test="cardNo != null and cardNo.trim() != '' ">
+            AND physical_cardno like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="isalive != null">
+            AND isalive = #{isalive}
+        </if>
+    </select>
+
+    <!--    管理员管理的卡-->
+    <select id="adminManageCardList" resultType="com.biocome.platform.guard.vo.admin.AdminSimpleCardVo">
+        SELECT usercode, physical_cardno AS cardNo, DATE_FORMAT(createtime,'%Y-%m-%d %H:%i:%s') AS createTime,CASE isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus
+        FROM base_card
+        WHERE buildcode IN
+        (
+        SELECT build_code FROM `admin_card_bind`
+        WHERE `usercode` = #{admincode}
+        )
+        <if test="cardNo != null and cardNo.trim() != '' ">
+            AND physical_cardno like CONCAT('%',#{cardNo},'%')
+        </if>
+        <if test="isalive != null">
+            AND isalive = #{isalive}
+        </if>
+    </select>
+
+    <!--    所有管理卡（通卡）-->
+    <select id="superCardList"  resultType="com.biocome.platform.guard.vo.admin.AdminCardVo">
+        SELECT a.usercode, a.username, a.tel, a.resideaddress as address, a.papersnum AS certNo, c.physical_cardno AS cardNo, b.estatename AS communityName, c.buildcode,
+        CASE c.isalive WHEN 0 THEN '注销' WHEN 1 THEN '有效' WHEN 2 THEN '发卡' WHEN 3 THEN '禁用' WHEN 4 THEN '黑名单' END cardStatus,
+        CASE a.landlordtype
+        WHEN 0 THEN "未知" WHEN 1 THEN "原房东" WHEN 2 THEN "管理员" WHEN 3 THEN "房东家属" WHEN 4 THEN "网格员"
+        WHEN 5 THEN "警务人员" WHEN 6 THEN "治安科" WHEN 72 THEN "保洁人员" WHEN 8 THEN "代管" WHEN 9 THEN "维修人员"
+        WHEN 10 THEN "申报义务人" WHEN 11 THEN "送气人员" WHEN 12 THEN "集成单位"
+        END adminType
+        FROM base_landlord a,
+        base_card c,
+        base_build b
+        WHERE c.usercode = a.usercode AND c.buildcode = b.buildcode AND cardtype = 4
+        <if test="username != null and username.trim() != '' ">
+            AND a.username like CONCAT('%',#{username},'%')
+        </if>
+        <if test="certNo != null and certNo.trim() != ''">
+            AND a.papersnum = like CONCAT('%',#{certNo},'%')
+        </if>
+        <if test="communityname != null and communityname.trim() != '' ">
+            AND b.estatename like CONCAT('%',#{communityname},'%')
+        </if>
+    </select>
+</mapper>

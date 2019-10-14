@@ -14,6 +14,9 @@ import java.util.List;
  */
 public interface RefundRentMapper extends Mapper<Card> {
 
+
+    Card selectCardByUserCode(@Param("usercode") String usercode);
+
     void deleteByUserName(@Param("physicalcardno") String physicalcardno,@Param("usercode") String usercode);
 
     List<String> getHouseCode(@Param("physicalcardno") String physicalcardno,@Param("usercode") String usercode);

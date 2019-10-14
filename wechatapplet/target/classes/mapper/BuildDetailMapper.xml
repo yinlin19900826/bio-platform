@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.BuildDetailMapper">
+    <resultMap id="buildDetail" type="com.biocome.platform.wechatapplet.vo.build.BuildDetailResp">
+        <result property="buildName" column="buildName"/>
+        <result property="buildCode" column="buildCode"/>
+    </resultMap>
+
+    <resultMap id="HouseRespMap" type="com.biocome.platform.wechatapplet.vo.build.HouseResp">
+        <result column="housecode" jdbcType="VARCHAR" property="houseCode"/>
+        <result column="housename" jdbcType="VARCHAR" property="houseName"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildCode"/>
+        <result column="countLessee" jdbcType="VARCHAR" property="countLessee"/>
+    </resultMap>
+
+    <resultMap id="LesseeRespMap" type="com.biocome.platform.wechatapplet.vo.build.LesseeVo">
+        <result column="usercode" jdbcType="VARCHAR" property="code"/>
+        <result column="username" jdbcType="VARCHAR" property="name"/>
+        <result column="checkintime" jdbcType="TIMESTAMP" property="time"/>
+        <result column="headphoto" jdbcType="VARCHAR" property="photo"/>
+        <result column="relation" jdbcType="INTEGER" property="flag"/>
+        <result column="isaudit" jdbcType="INTEGER" property="isAudit"/>
+        <result column="iscomplete" jdbcType="INTEGER" property="isComplete"/>
+    </resultMap>
+
+    <select id="getBuildByUsercode" resultMap="buildDetail">
+        SELECT buildname, buildcode
+        FROM base_lessee bl
+        WHERE usercode = #{usercode}
+    </select>
+    <select id="getAdminBuildByUsercode" resultMap="buildDetail">
+        SELECT
+            build_name buildname,
+            build_code buildcode
+        FROM
+            admin_building_bind
+        WHERE
+            usercode = #{usercode}
+    </select>
+
+    <select id="selectHouseResp" resultMap="HouseRespMap">
+        SELECT h.housecode,
+               h.housename,
+               h.buildcode,
+               (select count(1) from base_lessee l where l.buildcode = h.buildcode
+                                                     and l.housecode = h.housecode) as countLessee
+        FROM base_house h
+        WHERE h.buildcode = #{buildCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectLesseeResp" resultMap="LesseeRespMap">
+        SELECT l.usercode, l.username, l.checkintime, l.headphoto, l.relation, a.iscomplete, l.isaudit
+        FROM base_lessee l,
+             app_user a
+        WHERE l.usercode = a.usercode
+          AND l.isaudit != 2
+          AND l.housecode = #{houseCode,jdbcType=VARCHAR}
+    </select>
+</mapper>

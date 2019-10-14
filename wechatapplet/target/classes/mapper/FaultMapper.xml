@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.FaultMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.biocome.platform.wechatapplet.entity.Fault">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="buildname" jdbcType="VARCHAR" property="buildname"/>
+        <result column="devicename" jdbcType="VARCHAR" property="devicename"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="declaration_type" jdbcType="VARCHAR" property="declarationtype"/>
+        <result column="detail_description" jdbcType="VARCHAR" property="detaildescription"/>
+    </resultMap>
+
+
+</mapper>

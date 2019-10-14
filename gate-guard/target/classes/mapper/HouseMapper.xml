@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biocome.platform.guard.mapper.HouseMapper">
+    <resultMap id="HouseVoMap" type="com.biocome.platform.guard.vo.showmanage.HouseVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="housecode" jdbcType="VARCHAR" property="housecode"/>
+        <result column="housename" jdbcType="VARCHAR" property="housename"/>
+        <result column="buildcode" jdbcType="VARCHAR" property="buildcode"/>
+        <result column="estatecode" jdbcType="VARCHAR" property="estatecode"/>
+        <result column="countlessee" jdbcType="VARCHAR" property="countlessee"/>
+    </resultMap>
+
+    <select id="selectHouseVo" resultMap="HouseVoMap">
+        SELECT h.id, h.housecode, h.housename, h.buildcode, h.estatecode, (select count(1)
+                                                                           from base_lessee l
+                                                                           where l.estatecode = h.estatecode
+                                                                             and l.buildcode = h.buildcode
+                                                                             and l.housecode = h.housecode) as countlessee
+        FROM base_house h
+        WHERE h.buildcode = #{buildcode,jdbcType=VARCHAR}
+    </select>
+</mapper>

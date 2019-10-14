@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.wechatapplet.mapper.DeviceDetailMapper">
+    <resultMap id="deviceDetail" type="com.biocome.platform.wechatapplet.vo.device.DeviceDetailResp">
+        <result property="deviceName" column="device_name"/>
+        <result property="sn" column="sn"/>
+        <result property="devdigest" column="devdigest"/>
+        <result property="bluetoothmac" column="bluetoothmac"/>
+    </resultMap>
+    <select id="getDeviceByBuildcode" resultMap="deviceDetail">
+        SELECT
+            sn,
+            device_name,
+            bluetoothmac,
+            devdigest
+        FROM
+            base_device
+        WHERE
+            buildcode = #{buildcode}
+    </select>
+    <select id="getDeviceNameBySn" resultType="java.lang.String">
+        SELECT
+        device_name
+        FROM
+        base_device
+        WHERE
+        sn = #{sn}
+    </select>
+</mapper>

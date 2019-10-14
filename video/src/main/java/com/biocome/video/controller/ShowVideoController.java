@@ -4,6 +4,7 @@ import com.biocome.platform.common.msg.ObjectRestResponse;
 import com.biocome.video.biz.TreeDistrictBiz;
 import com.biocome.video.vo.TreeDistrictVO;
 import com.biocome.video.vo.TreeVideoVO;
+import com.biocome.video.vo.UINode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,5 +46,14 @@ public class ShowVideoController {
             log.error("视频监控和视频回放展示导航树操作失败，错误信息为：" + e.getMessage());
             return new ObjectRestResponse<>().failure();
         }
+    }
+
+    @ApiOperation("监控相关的导航树")
+    @ResponseBody
+    @RequestMapping(value = "/treeformonitor", method = RequestMethod.GET)
+    public ObjectRestResponse<List<UINode>> tree() {
+        List<UINode> list = new ArrayList<UINode>();
+        list.add(treeDistrictBiz.getTree().getRoot());
+        return new ObjectRestResponse<List<UINode>>().data(list);
     }
 }

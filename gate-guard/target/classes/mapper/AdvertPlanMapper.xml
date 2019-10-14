@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biocome.platform.guard.mapper.AdvertPlanMapper">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.biocome.platform.guard.entity.AdvertPlan" id="advertPlanMap">
+        <id property="id" column="id"/>
+        <result property="planname" column="planname"/>
+        <result property="downestate" column="downestate"/>
+        <result property="isaudit" column="isaudit"/>
+        <result property="auditidea" column="auditidea"/>
+        <result property="audittime" column="audittime"/>
+        <result property="auditcode" column="auditcode"/>
+        <result property="auditname" column="auditname"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+        <result property="del" column="del"/>
+        <result property="createtime" column="createtime"/>
+        <result property="createcode" column="createcode"/>
+        <result property="createname" column="createname"/>
+        <result property="updatetime" column="updatetime"/>
+        <result property="updatecode" column="updatecode"/>
+        <result property="updatename" column="updatename"/>
+    </resultMap>
+    <select id="getAdvertPlanList" resultMap="advertPlanMap">
+        SELECT
+        id,
+        planname,
+        downestate,
+        (
+        CASE bap.isaudit
+        WHEN '0' THEN
+        '通过'
+        WHEN '1' THEN
+        '未通过'
+        WHEN '2' THEN
+        '未审核'
+        ELSE
+        ''
+        END
+        ) AS isaudit,
+        auditidea,
+        audittime,
+        auditcode,
+        auditname,
+        remark,
+        `status`,
+        del,
+        createtime,
+        createcode,
+        createname,
+        createname,
+        updatetime,
+        updatecode,
+        updatename
+        FROM
+        base_advert_plan bap
+        <where>
+            1=1
+            <if test="id != null and '' != id">and bap.id = #{id,jdbcType=VARCHAR}</if>
+            <if test="planname != null and '' != planname">and bap.planname LIKE
+                concat(concat('%',#{planname,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="isaudit != null and '' != isaudit">and bap.isaudit = #{isaudit,jdbcType=VARCHAR}</if>
+            <if test="starttime != null"><![CDATA[and bap.createtime >= #{starttime,jdbcType=TIMESTAMP}]]></if>
+            <if test="endtime != null"><![CDATA[and bap.createtime <= #{endtime,jdbcType=TIMESTAMP}]]></if>
+        </where>
+    </select>
+    <delete id="deleteAdvertPlan" parameterType="java.util.List">
+        delete from base_advert_plan where 1>2
+        or id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insertAdvertResultMapper" parameterType="java.util.List">
+        INSERT INTO base_advert_result (adno,sn,issue) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.adno,jdbcType=VARCHAR},
+            #{item.sn,jdbcType=VARCHAR},
+            #{item.result,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <insert id="insertReturnId" useGeneratedKeys="true" keyColumn="id" keyProperty="plan.id" parameterType="com.biocome.platform.guard.entity.AdvertPlan">
+        INSERT INTO base_advert_plan
+        (
+            id,
+            planname,
+            downestate,
+            begintime,
+            endtime,
+            speed,
+            priority,
+            isaudit,
+            auditidea,
+            audittime,
+            auditcode,
+            auditname,
+            remark,
+            `status`,
+            del,
+            createtime,
+            createcode,
+            createname,
+            updatetime,
+            updatecode
+        )
+        VALUES
+        (
+            #{plan.id},
+            #{plan.planname},
+            #{plan.downestate},
+            #{plan.begintime},
+            #{plan.endtime},
+            #{plan.speed},
+            #{plan.priority},
+            #{plan.isaudit},
+            #{plan.auditidea},
+            #{plan.audittime},
+            #{plan.auditcode},
+            #{plan.auditname},
+            #{plan.remark},
+            #{plan.status},
+            #{plan.del},
+            #{plan.createtime},
+            #{plan.createcode},
+            #{plan.createname},
+            #{plan.updatetime},
+            #{plan.updatecode}
+        )
+    </insert>
+</mapper>
